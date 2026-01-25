@@ -1,0 +1,42 @@
+# Ignore .NET build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node modules and build outputs for Next.js
+node_modules/
+.next/
+
+# Dependency directories
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Log files
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Misc
+*.swp
+*.tmp
+
+# Ignore test coverage
+coverage/
+
+# Ignore local settings
+appsettings.Development.json
