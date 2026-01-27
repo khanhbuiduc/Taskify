@@ -48,5 +48,30 @@ namespace TaskifyAPI.Repositories
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
         }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<TaskItem>> GetAllOrderedByDueDateAsync(string? userId)
+        {
+            var query = _dbSet.AsQueryable();
+
+            // If userId is provided, filter by it
+            if (!string.IsNullOrEmpty(userId))
+            {
+                query = query.Where(t => t.UserId == userId);
+            }
+
+            return await query
+                .OrderBy(t => t.DueDate)
+                .ToListAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task<IEnumerable<TaskItem>> GetByUserIdAsync(string userId)
+        {
+            return await _dbSet
+                .Where(t => t.UserId == userId)
+                .OrderBy(t => t.DueDate)
+                .ToListAsync();
+        }
     }
 }

@@ -1,14 +1,16 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskifyAPI.Model;
 
 namespace TaskifyAPI.Data
 {
     /// <summary>
-    /// Application database context for Entity Framework Core
+    /// Application database context for Entity Framework Core with Identity support
     /// </summary>
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
@@ -26,7 +28,7 @@ namespace TaskifyAPI.Data
             modelBuilder.Entity<TaskItem>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                
+
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(200);
@@ -45,91 +47,65 @@ namespace TaskifyAPI.Data
 
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                // Configure relationship with IdentityUser
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // Seed initial data matching frontend sample tasks
-            modelBuilder.Entity<TaskItem>().HasData(
-                new TaskItem
+            // Seed roles
+            var adminRoleId = Guid.NewGuid().ToString();
+            var userRoleId = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
                 {
-                    Id = 1,
-                    Title = "Design system documentation",
-                    Description = "Create comprehensive documentation for the design system components",
-                    Priority = TaskPriority.High,
-                    Status = TaskItemStatus.InProgress,
-                    DueDate = new DateTime(2026, 1, 25),
-                    CreatedAt = new DateTime(2026, 1, 15)
+                    Id = adminRoleId,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
                 },
-                new TaskItem
+                new IdentityRole
                 {
-                    Id = 2,
-                    Title = "User authentication flow",
-                    Description = "Implement OAuth 2.0 authentication with Google and GitHub providers",
-                    Priority = TaskPriority.High,
-                    Status = TaskItemStatus.Todo,
-                    DueDate = new DateTime(2026, 1, 23),
-                    CreatedAt = new DateTime(2026, 1, 14)
-                },
-                new TaskItem
-                {
-                    Id = 3,
-                    Title = "API endpoint testing",
-                    Description = "Write unit tests for all REST API endpoints",
-                    Priority = TaskPriority.Medium,
-                    Status = TaskItemStatus.Completed,
-                    DueDate = new DateTime(2026, 1, 20),
-                    CreatedAt = new DateTime(2026, 1, 10)
-                },
-                new TaskItem
-                {
-                    Id = 4,
-                    Title = "Mobile responsive design",
-                    Description = "Ensure all pages are fully responsive on mobile devices",
-                    Priority = TaskPriority.Medium,
-                    Status = TaskItemStatus.InProgress,
-                    DueDate = new DateTime(2026, 1, 28),
-                    CreatedAt = new DateTime(2026, 1, 12)
-                },
-                new TaskItem
-                {
-                    Id = 5,
-                    Title = "Database optimization",
-                    Description = "Optimize database queries and add proper indexing",
-                    Priority = TaskPriority.Low,
-                    Status = TaskItemStatus.Todo,
-                    DueDate = new DateTime(2026, 1, 30),
-                    CreatedAt = new DateTime(2026, 1, 18)
-                },
-                new TaskItem
-                {
-                    Id = 6,
-                    Title = "Code review meeting",
-                    Description = "Review pull requests and discuss code quality improvements",
-                    Priority = TaskPriority.Low,
-                    Status = TaskItemStatus.Completed,
-                    DueDate = new DateTime(2026, 1, 19),
-                    CreatedAt = new DateTime(2026, 1, 16)
-                },
-                new TaskItem
-                {
-                    Id = 7,
-                    Title = "Performance monitoring setup",
-                    Description = "Configure application performance monitoring with alerts",
-                    Priority = TaskPriority.Medium,
-                    Status = TaskItemStatus.Todo,
-                    DueDate = new DateTime(2026, 1, 26),
-                    CreatedAt = new DateTime(2026, 1, 17)
-                },
-                new TaskItem
-                {
-                    Id = 8,
-                    Title = "User feedback analysis",
-                    Description = "Analyze user feedback and prioritize feature requests",
-                    Priority = TaskPriority.High,
-                    Status = TaskItemStatus.Todo,
-                    DueDate = new DateTime(2026, 1, 22),
-                    CreatedAt = new DateTime(2026, 1, 13)
+                    Id = userRoleId,
+                    Name = "User",
+                    NormalizedName = "USER"
                 }
             );
+
+            // Seed admin user
+            var adminUserId = Guid.NewGuid().ToString();
+            var hasher = new PasswordHasher<IdentityUser>();
+            var adminUser = new IdentityUser
+            {
+                Id = adminUserId,
+                UserName = "admin@taskify.com",
+                NormalizedUserName = "ADMIN@TASKIFY.COM",
+                Email = "admin@taskify.com",
+                NormalizedEmail = "ADMIN@TASKIFY.COM",
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+            adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin@123");
+
+            modelBuilder.Entity<IdentityUser>().HasData(adminUser);
+
+            // Assign admin role to admin user
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = adminUserId,
+                    RoleId = adminRoleId
+                }
+            );
+
+            // Note: Seed data for TaskItems will be removed as they need UserId
+
         }
     }
 }

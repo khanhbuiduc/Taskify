@@ -12,7 +12,7 @@ using TaskifyAPI.Data;
 namespace TaskifyAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260124125703_InitialMigration")]
+    [Migration("20260126091526_Initial-Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace TaskifyAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "8.0.0-rc.2.23480.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

@@ -26,5 +26,17 @@ namespace TaskifyAPI.Repositories.IRepositories
         /// Get all tasks ordered by due date
         /// </summary>
         Task<IEnumerable<TaskItem>> GetAllOrderedByDueDateAsync();
+
+        /// <summary>
+        /// Get all tasks ordered by due date, optionally filtered by user ID
+        /// </summary>
+        /// <param name="userId">User ID to filter by. If null, returns all tasks (for Admin)</param>
+        Task<IEnumerable<TaskItem>> GetAllOrderedByDueDateAsync(string? userId);
+
+        /// <summary>
+        /// Get tasks by user ID
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        Task<IEnumerable<TaskItem>> GetByUserIdAsync(string userId);
     }
 }

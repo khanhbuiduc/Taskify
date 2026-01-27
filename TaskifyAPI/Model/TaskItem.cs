@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace TaskifyAPI.Model
 {
@@ -27,5 +29,17 @@ namespace TaskifyAPI.Model
         public DateTime DueDate { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// User ID who owns this task
+        /// </summary>
+        [Required]
+        public string UserId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Navigation property to the user who owns this task
+        /// </summary>
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser? User { get; set; }
     }
 }
