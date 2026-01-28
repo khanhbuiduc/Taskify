@@ -8,7 +8,7 @@ namespace TaskifyAPI.Data
     /// <summary>
     /// Application database context for Entity Framework Core with Identity support
     /// </summary>
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -80,20 +80,21 @@ namespace TaskifyAPI.Data
 
             // Seed admin user
             var adminUserId = Guid.NewGuid().ToString();
-            var hasher = new PasswordHasher<IdentityUser>();
-            var adminUser = new IdentityUser
+            var hasher = new PasswordHasher<ApplicationUser>();
+            var adminUser = new ApplicationUser
             {
                 Id = adminUserId,
-                UserName = "admin@taskify.com",
-                NormalizedUserName = "ADMIN@TASKIFY.COM",
+                UserName = "Admin User",
+                NormalizedUserName = "ADMIN USER",
                 Email = "admin@taskify.com",
                 NormalizedEmail = "ADMIN@TASKIFY.COM",
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
+                AvatarUrl = null
             };
             adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin@123");
 
-            modelBuilder.Entity<IdentityUser>().HasData(adminUser);
+            modelBuilder.Entity<ApplicationUser>().HasData(adminUser);
 
             // Assign admin role to admin user
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(

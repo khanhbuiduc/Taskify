@@ -51,6 +51,37 @@ namespace TaskifyAPI.Model.ViewModel
     {
         public string UserId { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string? AvatarUrl { get; set; }
         public List<string> Roles { get; set; } = new();
+    }
+
+    /// <summary>
+    /// DTO for updating user profile
+    /// </summary>
+    public class UpdateProfileDto
+    {
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
+        public string FullName { get; set; } = string.Empty;
+        
+        public string? AvatarUrl { get; set; }
+    }
+
+    /// <summary>
+    /// DTO for changing password
+    /// </summary>
+    public class ChangePasswordDto
+    {
+        [Required]
+        public string CurrentPassword { get; set; } = string.Empty;
+
+        [Required]
+        [MinLength(6)]
+        public string NewPassword { get; set; } = string.Empty;
+
+        [Required]
+        [Compare(nameof(NewPassword), ErrorMessage = "New password and confirmation password do not match")]
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
 }

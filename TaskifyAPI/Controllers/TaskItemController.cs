@@ -17,9 +17,9 @@ namespace TaskifyAPI.Controllers
     public class TaskItemController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TaskItemController(IUnitOfWork unitOfWork, UserManager<IdentityUser> userManager)
+        public TaskItemController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = unitOfWork;
             _userManager = userManager;

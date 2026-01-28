@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\HP PC\\source\\repos\\Taskify\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|solutionrelative:taskifyapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\model\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|solutionrelative:taskifyapi\\model\\taskitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|solutionrelative:taskifyapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|solutionrelative:taskifyapi\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\model\\viewmodel\\taskitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -45,10 +49,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\taskifyapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
       "RelativeMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|solutionrelative:taskifyapi\\taskifyapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|c:\\users\\hp pc\\source\\repos\\taskify\\taskifyapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{59AD7F90-ED13-E1A9-EFDC-2462156C9BBF}|TaskifyAPI\\TaskifyAPI.csproj|solutionrelative:taskifyapi\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -82,7 +82,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "TaskItem.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Model\\TaskItem.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Model\\TaskItem.cs",
@@ -95,7 +95,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "TaskItemDto.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Model\\ViewModel\\TaskItemDto.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Model\\ViewModel\\TaskItemDto.cs",
@@ -103,12 +103,11 @@
               "RelativeToolTip": "TaskifyAPI\\Model\\ViewModel\\TaskItemDto.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-27T06:19:14.521Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-27T06:19:14.521Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "AuthDto.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Model\\ViewModel\\AuthDto.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Model\\ViewModel\\AuthDto.cs",
@@ -116,12 +115,11 @@
               "RelativeToolTip": "TaskifyAPI\\Model\\ViewModel\\AuthDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-27T06:19:13.645Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-27T06:19:13.645Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Enums.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Model\\Enums.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Model\\Enums.cs",
@@ -129,12 +127,11 @@
               "RelativeToolTip": "TaskifyAPI\\Model\\Enums.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-27T06:19:11.234Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-27T06:19:11.234Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "20260126091526_Initial-Migration.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Migrations\\20260126091526_Initial-Migration.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Migrations\\20260126091526_Initial-Migration.cs",
@@ -142,25 +139,24 @@
               "RelativeToolTip": "TaskifyAPI\\Migrations\\20260126091526_Initial-Migration.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-26T09:15:26.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-26T09:15:26.967Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Data\\ApplicationDbContext.cs*",
-              "RelativeToolTip": "TaskifyAPI\\Data\\ApplicationDbContext.cs*",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAwwHYAAAAcAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "TaskifyAPI\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAwwG8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-26T08:48:00.591Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "TaskItemController.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Controllers\\TaskItemController.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Controllers\\TaskItemController.cs",
@@ -172,7 +168,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "TaskifyAPI.csproj",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\TaskifyAPI.csproj",
               "RelativeDocumentMoniker": "TaskifyAPI\\TaskifyAPI.csproj",
@@ -184,7 +180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\Program.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\Program.cs",
@@ -196,7 +192,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "TaskifyAPI.http",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\TaskifyAPI.http",
               "RelativeDocumentMoniker": "TaskifyAPI\\TaskifyAPI.http",
@@ -208,7 +204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\appsettings.json",
               "RelativeDocumentMoniker": "TaskifyAPI\\appsettings.json",
@@ -220,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 1,
               "Title": "WeatherForecast.cs",
               "DocumentMoniker": "C:\\Users\\HP PC\\source\\repos\\Taskify\\TaskifyAPI\\WeatherForecast.cs",
               "RelativeDocumentMoniker": "TaskifyAPI\\WeatherForecast.cs",
@@ -228,7 +224,8 @@
               "RelativeToolTip": "TaskifyAPI\\WeatherForecast.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-24T12:52:25.311Z"
+              "WhenOpened": "2026-01-24T12:52:25.311Z",
+              "EditorCaption": ""
             }
           ]
         },

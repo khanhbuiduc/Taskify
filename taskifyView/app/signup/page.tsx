@@ -1,26 +1,93 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Mail, Lock, User } from "lucide-react"
+import { Mail, Lock, User, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useAuthStore } from "@/lib/auth-store"
 
 export default function SignUpPage() {
   const router = useRouter()
-  const [fullName, setFullName] = useState("")
+  const { register, isLoading, error, isAuthenticated, clearError, checkAuth, isInitialized } = useAuthStore()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [localError, setLocalError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Check if already authenticated
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isInitialized && isAuthenticated) {
+      router.push("/")
+    }
+  }, [isAuthenticated, isInitialized, router])
+
+  // Clear errors when inputs change
+  useEffect(() => {
+    if (error) {
+      clearError()
+    }
+    if (localError) {
+      setLocalError(null)
+    }
+  }, [email, password, confirmPassword])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Redirect to main page immediately
-    router.push("/")
+    
+    // Validate password match
+    if (password !== confirmPassword) {
+      setLocalError("Passwords do not match")
+      return
+    }
+
+    // Validate password strength
+    if (password.length < 6) {
+      setLocalError("Password must be at least 6 characters")
+      return
+    }
+
+    if (!/[0-9]/.test(password)) {
+      setLocalError("Password must contain at least one digit")
+      return
+    }
+
+    if (!/[a-z]/.test(password)) {
+      setLocalError("Password must contain at least one lowercase letter")
+      return
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      setLocalError("Password must contain at least one uppercase letter")
+      return
+    }
+    
+    const success = await register({ email, password, confirmPassword })
+    
+    if (success) {
+      router.push("/")
+    }
+  }
+
+  const displayError = localError || error
+
+  // Show loading while checking auth
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    )
   }
 
   return (
@@ -34,21 +101,12 @@ export default function SignUpPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Full Name Field */}
-            <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground size-4" />
-                <Input
-                  id="fullName"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
+            {/* Error Alert */}
+            {displayError && (
+              <Alert variant="destructive">
+                <AlertDescription>{displayError}</AlertDescription>
+              </Alert>
+            )}
 
             {/* Email Field */}
             <div className="space-y-2">
@@ -62,6 +120,8 @@ export default function SignUpPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"
+                  disabled={isLoading}
+                  required
                 />
               </div>
             </div>
@@ -74,12 +134,17 @@ export default function SignUpPage() {
                 <Input
                   id="password"
                   type="password"
-                  placeholder="At least 8 characters"
+                  placeholder="At least 6 characters"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10"
+                  disabled={isLoading}
+                  required
                 />
               </div>
+              <p className="text-xs text-muted-foreground">
+                Must contain: 6+ chars, 1 digit, 1 lowercase, 1 uppercase
+              </p>
             </div>
 
             {/* Confirm Password Field */}
@@ -94,6 +159,8 @@ export default function SignUpPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="pl-10"
+                  disabled={isLoading}
+                  required
                 />
               </div>
             </div>
@@ -103,8 +170,16 @@ export default function SignUpPage() {
               type="submit"
               className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
               size="lg"
+              disabled={isLoading}
             >
-              Sign up
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                "Sign up"
+              )}
             </Button>
           </form>
 

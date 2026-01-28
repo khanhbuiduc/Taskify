@@ -9,9 +9,11 @@ import { CalendarView } from "@/components/tasks/calendar-view"
 import { DashboardView } from "@/components/tasks/dashboard-view"
 import { TableView } from "@/components/tasks/table-view"
 import { AIChatView } from "@/components/tasks/ai-chat-view"
+import { SettingsView } from "@/components/settings/settings-view"
+import { AuthGuard } from "@/components/auth-guard"
 import { useTaskStore } from "@/lib/task-store"
 
-type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat"
+type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat" | "settings"
 
 export default function TaskManagementApp() {
   const [currentView, setCurrentView] = useState<View>("dashboard")
@@ -37,28 +39,35 @@ export default function TaskManagementApp() {
         return <TableView />
       case "ai-chat":
         return <AIChatView />
+      case "settings":
+        return <SettingsView />
       default:
         return <DashboardView />
     }
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Sidebar
-        currentView={currentView}
-        onViewChange={setCurrentView}
-        isCollapsed={isSidebarCollapsed}
-        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-      />
-      <main
-        className={cn(
-          "transition-all duration-300",
-          isSidebarCollapsed ? "ml-16" : "ml-64"
-        )}
-      >
-        <TopBar currentView={currentView} />
-        <div className="p-6">{renderView()}</div>
-      </main>
-    </div>
+    <AuthGuard>
+      <div className="min-h-screen bg-background">
+        <Sidebar
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        />
+        <main
+          className={cn(
+            "transition-all duration-300",
+            isSidebarCollapsed ? "ml-16" : "ml-64"
+          )}
+        >
+          <TopBar
+            currentView={currentView}
+            onOpenSettings={() => setCurrentView("settings")}
+          />
+          <div className="p-6">{renderView()}</div>
+        </main>
+      </div>
+    </AuthGuard>
   )
 }

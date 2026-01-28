@@ -40,6 +40,6 @@ namespace TaskifyAPI.Model
         /// Navigation property to the user who owns this task
         /// </summary>
         [ForeignKey(nameof(UserId))]
-        public IdentityUser? User { get; set; }
+        public ApplicationUser? User { get; set; }
     }
 }

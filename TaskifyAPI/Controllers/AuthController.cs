@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using TaskifyAPI.Model;
 using TaskifyAPI.Model.ViewModel;
 
 namespace TaskifyAPI.Controllers
@@ -16,15 +17,15 @@ namespace TaskifyAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
 
         public AuthController(
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<IdentityUser> signInManager,
+            SignInManager<ApplicationUser> signInManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
@@ -55,11 +56,12 @@ namespace TaskifyAPI.Controllers
             }
 
             // Create new user
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 UserName = dto.Email,
                 Email = dto.Email,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                AvatarUrl = null
             };
 
             var result = await _userManager.CreateAsync(user, dto.Password);
@@ -163,6 +165,207 @@ namespace TaskifyAPI.Controllers
             {
                 UserId = user.Id,
                 Email = user.Email ?? string.Empty,
+                UserName = user.UserName ?? string.Empty,
+                AvatarUrl = user.AvatarUrl,
+                Roles = roles.ToList()
+            });
+        }
+
+        /// <summary>
+        /// Update user profile (FullName stored in UserName)
+        /// </summary>
+        /// <param name="dto">Profile update data</param>
+        /// <returns>Updated user info</returns>
+        [HttpPut("profile")]
+        [Authorize]
+        public async Task<ActionResult<UserInfoDto>> UpdateProfile([FromBody] UpdateProfileDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { message = "User not found" });
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            // Update UserName with FullName
+            user.UserName = dto.FullName;
+            user.NormalizedUserName = dto.FullName.ToUpperInvariant();
+            
+            // Update AvatarUrl if provided
+            if (dto.AvatarUrl != null)
+            {
+                user.AvatarUrl = dto.AvatarUrl;
+            }
+            
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { message = "Failed to update profile", errors = result.Errors });
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new UserInfoDto
+            {
+                UserId = user.Id,
+                Email = user.Email ?? string.Empty,
+                UserName = user.UserName ?? string.Empty,
+                AvatarUrl = user.AvatarUrl,
+                Roles = roles.ToList()
+            });
+        }
+
+        /// <summary>
+        /// Change user password
+        /// </summary>
+        /// <param name="dto">Password change data</param>
+        /// <returns>Success message</returns>
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { message = "User not found" });
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            // Verify current password
+            var passwordCheck = await _signInManager.CheckPasswordSignInAsync(user, dto.CurrentPassword, lockoutOnFailure: false);
+            if (!passwordCheck.Succeeded)
+            {
+                return BadRequest(new { message = "Current password is incorrect" });
+            }
+
+            // Change password
+            var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { message = "Failed to change password", errors = result.Errors });
+            }
+
+            return Ok(new { message = "Password changed successfully" });
+        }
+
+        /// <summary>
+        /// Upload avatar image
+        /// </summary>
+        /// <param name="file">Avatar image file</param>
+        /// <returns>Updated user info with new avatar URL</returns>
+        [HttpPost("avatar")]
+        [Authorize]
+        public async Task<ActionResult<UserInfoDto>> UploadAvatar(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest(new { message = "No file uploaded" });
+            }
+
+            // Validate file type
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".webp" };
+            var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                return BadRequest(new { message = "Invalid file type. Allowed: jpg, jpeg, png, gif, webp" });
+            }
+
+            // Validate file size (max 5MB)
+            if (file.Length > 5 * 1024 * 1024)
+            {
+                return BadRequest(new { message = "File size exceeds 5MB limit" });
+            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized(new { message = "User not found" });
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
+
+            // Create avatars directory if it doesn't exist
+            var avatarsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "avatars");
+            if (!Directory.Exists(avatarsDirectory))
+            {
+                Directory.CreateDirectory(avatarsDirectory);
+            }
+
+            // Generate unique filename
+            var fileName = $"{userId}{fileExtension}";
+            var filePath = Path.Combine(avatarsDirectory, fileName);
+
+            // Delete old avatar if exists
+            if (!string.IsNullOrEmpty(user.AvatarUrl) && System.IO.File.Exists(user.AvatarUrl.Replace("/avatars/", "").Insert(0, Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))))
+            {
+                try
+                {
+                    var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", user.AvatarUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
+                }
+                catch
+                {
+                    // Ignore errors when deleting old file
+                }
+            }
+
+            // Save new file
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            // Update user's avatar URL
+            user.AvatarUrl = $"/avatars/{fileName}";
+            var result = await _userManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
+            {
+                // Delete uploaded file if update failed
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                return BadRequest(new { message = "Failed to update avatar", errors = result.Errors });
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new UserInfoDto
+            {
+                UserId = user.Id,
+                Email = user.Email ?? string.Empty,
+                UserName = user.UserName ?? string.Empty,
+                AvatarUrl = user.AvatarUrl,
                 Roles = roles.ToList()
             });
         }
@@ -172,7 +375,7 @@ namespace TaskifyAPI.Controllers
         /// <summary>
         /// Generate JWT token for user
         /// </summary>
-        private string GenerateJwtToken(IdentityUser user)
+        private string GenerateJwtToken(ApplicationUser user)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is not configured");

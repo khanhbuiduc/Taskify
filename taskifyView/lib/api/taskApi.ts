@@ -1,4 +1,5 @@
 import { getApiUrl } from './config'
+import { getAuthHeaders, tokenStorage } from './authApi'
 import type { Task, TaskStatus, TaskPriority } from '../types'
 
 /**
@@ -35,7 +36,7 @@ export class ApiError extends Error {
 }
 
 /**
- * Fetch wrapper with error handling
+ * Fetch wrapper with error handling and authentication
  */
 async function fetchApi<T>(
   endpoint: string,
@@ -47,12 +48,21 @@ async function fetchApi<T>(
     const response = await fetch(url, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
         ...options?.headers,
       },
     })
 
     if (!response.ok) {
+      // Handle 401 Unauthorized - clear token and redirect to login
+      if (response.status === 401) {
+        tokenStorage.clear()
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login'
+        }
+        throw new ApiError('Session expired. Please login again.', 401, response)
+      }
+
       let errorMessage = `API Error: ${response.status} ${response.statusText}`
       try {
         const errorData = await response.json()

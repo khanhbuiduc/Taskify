@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { Bell, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,8 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ThemeToggle } from "./theme-toggle"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { useAuthStore } from "@/lib/auth-store"
+import { API_CONFIG } from "@/lib/api/config"
 
-type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat"
+type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat" | "settings"
 
 const viewTitles: Record<View, { title: string; subtitle: string }> = {
   dashboard: { title: "Dashboard", subtitle: "Overview of your tasks" },
@@ -20,15 +24,53 @@ const viewTitles: Record<View, { title: string; subtitle: string }> = {
   calendar: { title: "Calendar", subtitle: "View tasks by date" },
   table: { title: "Table View", subtitle: "View tasks in a data table" },
   "ai-chat": { title: "AI Assistant", subtitle: "Chat with AI to manage tasks" },
+  settings: { title: "Account Settings", subtitle: "Manage your account and preferences" },
 }
 
 interface TopBarProps {
   currentView: View
   onNewTask?: () => void
+  onOpenSettings?: () => void
 }
 
-export function TopBar({ currentView, onNewTask }: TopBarProps) {
+export function TopBar({ currentView, onNewTask, onOpenSettings }: TopBarProps) {
+  const router = useRouter()
   const { title, subtitle } = viewTitles[currentView]
+  const { user, logout } = useAuthStore()
+
+  const getInitials = () => {
+    if (!user) return "U"
+    if (user.userName) {
+      return user.userName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    }
+    return user.email
+      .split("@")[0]
+      .split(".")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+
+  const getAvatarUrl = () => {
+    if (!user?.avatarUrl) return null
+    // If avatarUrl is absolute URL, use it directly
+    if (user.avatarUrl.startsWith('http')) {
+      return user.avatarUrl
+    }
+    // Otherwise, prepend API base URL
+    return `${API_CONFIG.baseURL}${user.avatarUrl}`
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    router.push("/login")
+  }
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 backdrop-blur-sm px-6">
@@ -41,7 +83,7 @@ export function TopBar({ currentView, onNewTask }: TopBarProps) {
       {/* Actions */}
       <div className="flex items-center gap-3">
         {/* Add Task Button */}
-        {onNewTask && (
+        {onNewTask && currentView !== "settings" && (
           <Button onClick={onNewTask} size="sm" className="gap-2 bg-accent hover:bg-accent/90 text-accent-foreground">
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">New Task</span>
@@ -83,18 +125,25 @@ export function TopBar({ currentView, onNewTask }: TopBarProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="rounded-full">
-              <div className="h-8 w-8 rounded-full bg-accent/20 flex items-center justify-center">
-                <span className="text-sm font-medium text-accent">JD</span>
-              </div>
+              <Avatar className="h-8 w-8">
+                {getAvatarUrl() && (
+                  <AvatarImage src={getAvatarUrl()!} alt={user?.userName || user?.email || "User"} />
+                )}
+                <AvatarFallback className="bg-accent/20 text-accent text-sm font-medium">
+                  {getInitials()}
+                </AvatarFallback>
+              </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem onClick={onOpenSettings}>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={onOpenSettings}>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">Log out</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive" onClick={handleLogout}>
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

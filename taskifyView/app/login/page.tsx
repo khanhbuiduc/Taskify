@@ -1,24 +1,59 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { Mail, Lock } from "lucide-react"
+import { Mail, Lock, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useAuthStore } from "@/lib/auth-store"
 
 export default function SignInPage() {
   const router = useRouter()
+  const { login, isLoading, error, isAuthenticated, clearError, checkAuth, isInitialized } = useAuthStore()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Check if already authenticated
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isInitialized && isAuthenticated) {
+      router.push("/")
+    }
+  }, [isAuthenticated, isInitialized, router])
+
+  // Clear error when inputs change
+  useEffect(() => {
+    if (error) {
+      clearError()
+    }
+  }, [email, password])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Redirect to main page immediately
-    router.push("/")
+    
+    const success = await login({ email, password })
+    
+    if (success) {
+      router.push("/")
+    }
+  }
+
+  // Show loading while checking auth
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    )
   }
 
   return (
@@ -32,6 +67,13 @@ export default function SignInPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Error Alert */}
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
             {/* Email Field */}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
@@ -44,6 +86,8 @@ export default function SignInPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10"
+                  disabled={isLoading}
+                  required
                 />
               </div>
             </div>
@@ -60,6 +104,8 @@ export default function SignInPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10"
+                  disabled={isLoading}
+                  required
                 />
               </div>
             </div>
@@ -69,8 +115,16 @@ export default function SignInPage() {
               type="submit"
               className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
               size="lg"
+              disabled={isLoading}
             >
-              Sign in
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign in"
+              )}
             </Button>
           </form>
 
@@ -139,8 +193,10 @@ export default function SignInPage() {
           </div>
 
           {/* Demo Credentials */}
-          <div className="mt-4 text-center text-xs text-muted-foreground">
-            Demo: email: demo@example.com, password: password123
+          <div className="mt-4 p-3 bg-muted rounded-lg text-center text-xs text-muted-foreground">
+            <p className="font-medium mb-1">Demo Admin Account:</p>
+            <p>Email: admin@taskify.com</p>
+            <p>Password: Admin@123</p>
           </div>
         </CardContent>
       </Card>

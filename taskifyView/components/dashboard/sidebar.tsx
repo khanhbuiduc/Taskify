@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -16,14 +17,17 @@ import {
   ChevronRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useAuthStore } from "@/lib/auth-store"
+import { API_CONFIG } from "@/lib/api/config"
 
-type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat"
+type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat" | "settings"
 
 const taskViewItems: { icon: React.ElementType; label: string; view: View }[] = [
   { icon: LayoutDashboard, label: "Dashboard", view: "dashboard" },
@@ -45,6 +49,51 @@ interface SidebarProps {
 }
 
 export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollapse }: SidebarProps) {
+  const router = useRouter()
+  const { user, logout } = useAuthStore()
+
+  const getInitials = (email: string, userName?: string) => {
+    if (userName) {
+      return userName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    }
+    return email
+      .split("@")[0]
+      .split(".")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2)
+  }
+
+  const getAvatarUrl = () => {
+    if (!user?.avatarUrl) return null
+    // If avatarUrl is absolute URL, use it directly
+    if (user.avatarUrl.startsWith('http')) {
+      return user.avatarUrl
+    }
+    // Otherwise, prepend API base URL
+    return `${API_CONFIG.baseURL}${user.avatarUrl}`
+  }
+
+  const getDisplayName = () => {
+    if (user?.userName) return user.userName
+    return user?.email || ""
+  }
+
+  const handleSettingsClick = () => {
+    onViewChange("settings")
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    router.push("/login")
+  }
+
   const NavButton = ({
     icon: Icon,
     label,
@@ -163,31 +212,55 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
 
         {/* Bottom Navigation */}
         <div className="border-t border-border px-3 py-4 space-y-1">
-          {bottomNavItems.map((item) => (
-            <NavButton key={item.label} icon={item.icon} label={item.label} />
-          ))}
-          <NavButton icon={LogOut} label="Log Out" variant="destructive" />
+          <NavButton
+            icon={Settings}
+            label="Settings"
+            onClick={handleSettingsClick}
+          />
+          <NavButton
+            icon={HelpCircle}
+            label="Help"
+          />
+          <NavButton
+            icon={LogOut}
+            label="Log Out"
+            variant="destructive"
+            onClick={handleLogout}
+          />
         </div>
 
-        {/* User Profile */}
-        <div className="border-t border-border p-3">
-          <div
-            className={cn(
-              "flex items-center gap-3",
-              isCollapsed && "justify-center"
-            )}
-          >
-            <div className="h-9 w-9 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
-              <span className="text-sm font-medium text-accent">JD</span>
-            </div>
-            {!isCollapsed && (
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-sidebar-foreground truncate">John Doe</p>
-                <p className="text-xs text-muted-foreground truncate">Admin</p>
-              </div>
-            )}
+        {/* User Profile - click to open Account Settings */}
+        {user && (
+          <div className="border-t border-border p-3">
+            <button
+              type="button"
+              onClick={() => onViewChange("settings")}
+              className={cn(
+                "flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-sidebar-accent/60",
+                isCollapsed && "justify-center px-0"
+              )}
+            >
+              <Avatar className="h-9 w-9 shrink-0">
+                {getAvatarUrl() && (
+                  <AvatarImage src={getAvatarUrl()!} alt={getDisplayName()} />
+                )}
+                <AvatarFallback className="bg-accent/20 text-accent text-sm font-medium">
+                  {getInitials(user.email, user.userName)}
+                </AvatarFallback>
+              </Avatar>
+              {!isCollapsed && (
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-sidebar-foreground truncate">
+                    {getDisplayName()}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {user.roles.join(", ")}
+                  </p>
+                </div>
+              )}
+            </button>
           </div>
-        </div>
+        )}
 
         {/* Expand Button (when collapsed) */}
         {isCollapsed && (

@@ -26,6 +26,7 @@ interface TaskStore {
   setTasks: (tasks: Task[]) => void
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
+  reset: () => void
 }
 
 export const useTaskStore = create<TaskStore>((set, get) => ({
@@ -244,4 +245,17 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   setTasks: (tasks) => set({ tasks }),
   setLoading: (isLoading) => set({ isLoading }),
   setError: (error) => set({ error }),
+  
+  /**
+   * Reset task store to initial state
+   * Used when logging out or switching users
+   */
+  reset: () => {
+    set({
+      tasks: [],
+      isLoading: false,
+      error: null,
+      isInitialized: false,
+    })
+  },
 }))
