@@ -3,6 +3,7 @@
 import { create } from "zustand"
 import type { Task, TaskStatus, TaskPriority } from "./types"
 import { taskApi, ApiError } from "./api/taskApi"
+import { getDueDatePart, getDueTimePart } from "./utils"
 import { toast } from "sonner"
 
 interface TaskStore {
@@ -20,7 +21,7 @@ interface TaskStore {
   deleteTask: (id: string) => Promise<void>
   reorderTasks: (startIndex: number, endIndex: number) => void
   updateTaskStatus: (id: string, status: TaskStatus) => Promise<void>
-  updateTaskDueDate: (id: string, dueDate: string) => Promise<void>
+  updateTaskDueDate: (id: string, dueDate: string, dueTime?: string | null) => Promise<void>
   
   // Internal helpers
   setTasks: (tasks: Task[]) => void
@@ -71,7 +72,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
         description: task.description,
         priority: task.priority,
         status: task.status,
-        dueDate: task.dueDate,
+        dueDate: getDueDatePart(task.dueDate),
+        dueTime: getDueTimePart(task.dueDate),
       })
       // Replace temp task with real task from API
       set((state) => ({
@@ -118,7 +120,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
           description: updates.description,
           priority: updates.priority as TaskPriority,
           status: updates.status as TaskStatus,
-          dueDate: updates.dueDate,
+          dueDate: getDueDatePart(updates.dueDate),
+          dueTime: getDueTimePart(updates.dueDate),
         })
         set((state) => ({
           tasks: state.tasks.map((task) =>
@@ -214,17 +217,21 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   /**
    * Update task due date only
    */
-  updateTaskDueDate: async (id, dueDate) => {
+  updateTaskDueDate: async (id, dueDate, dueTime) => {
     const previousTasks = get().tasks
+    const task = previousTasks.find((t) => t.id === id)
+    const datePart = getDueDatePart(dueDate)
+    const timePart = dueTime ?? (task ? getDueTimePart(task.dueDate) : undefined) ?? getDueTimePart(dueDate)
+    const fullDue = timePart ? `${datePart}T${timePart}:00` : `${datePart}T23:59:59`
     // Optimistic update
     set((state) => ({
       tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, dueDate } : task
+        task.id === id ? { ...task, dueDate: fullDue } : task
       ),
     }))
     
     try {
-      const updatedTask = await taskApi.updateDueDate(id, dueDate)
+      const updatedTask = await taskApi.updateDueDate(id, datePart, timePart)
       set((state) => ({
         tasks: state.tasks.map((task) =>
           task.id === id ? updatedTask : task

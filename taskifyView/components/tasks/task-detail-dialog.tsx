@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { PriorityBadge } from "./priority-badge"
 import { StatusBadge } from "./status-badge"
-import { cn } from "@/lib/utils"
+import { cn, sanitizeHtml, formatDueDisplay } from "@/lib/utils"
 import type { Task } from "@/lib/types"
 import { Pencil, Trash2 } from "lucide-react"
 
@@ -23,6 +23,20 @@ interface TaskDetailDialogProps {
 }
 
 export function TaskDetailDialog({ open, onOpenChange, task, onEdit, onDelete }: TaskDetailDialogProps) {
+  const [safeDescription, setSafeDescription] = useState<string>("")
+
+  useEffect(() => {
+    if (!task?.description) {
+      setSafeDescription("")
+      return
+    }
+    let cancelled = false
+    sanitizeHtml(task.description).then((html) => {
+      if (!cancelled) setSafeDescription(html)
+    })
+    return () => { cancelled = true }
+  }, [task?.description])
+
   if (!task) return null
 
   const formatDate = (dateStr: string) => {
@@ -67,11 +81,10 @@ export function TaskDetailDialog({ open, onOpenChange, task, onEdit, onDelete }:
         </DialogHeader>
         <div className="space-y-4 py-4">
           {task.description && (
-            <div>
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                {task.description}
-              </p>
-            </div>
+            <div
+              className="text-sm text-muted-foreground [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-muted-foreground/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_a]:text-primary [&_a]:underline"
+              dangerouslySetInnerHTML={{ __html: safeDescription }}
+            />
           )}
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -86,7 +99,7 @@ export function TaskDetailDialog({ open, onOpenChange, task, onEdit, onDelete }:
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">Due Date:</span>
-              <span className="text-sm">{formatDate(task.dueDate)}</span>
+              <span className="text-sm">{formatDueDisplay(task.dueDate)}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">Created:</span>

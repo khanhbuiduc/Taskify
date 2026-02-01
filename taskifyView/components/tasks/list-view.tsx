@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { cn } from "@/lib/utils"
+import { cn, stripHtml, formatDueDisplay } from "@/lib/utils"
 import {
   Search,
   Plus,
@@ -46,10 +46,13 @@ export function ListView() {
   const filteredAndSortedTasks = useMemo(() => {
     let result = [...tasks]
 
-    // Search filter
+    // Search filter (description: strip HTML for plain-text search)
     if (search) {
-      result = result.filter((task) =>
-        task.title.toLowerCase().includes(search.toLowerCase())
+      const q = search.toLowerCase()
+      result = result.filter(
+        (task) =>
+          task.title.toLowerCase().includes(q) ||
+          stripHtml(task.description).toLowerCase().includes(q)
       )
     }
 
@@ -150,9 +153,9 @@ export function ListView() {
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   }
 
-  const isOverdue = (dateStr: string, status: TaskStatus) => {
+  const isOverdue = (dueDate: string, status: TaskStatus) => {
     if (status === "completed") return false
-    return new Date(dateStr) < new Date()
+    return new Date(dueDate) < new Date()
   }
 
   return (
@@ -251,7 +254,7 @@ export function ListView() {
                     {task.title}
                   </p>
                   {task.description && (
-                    <p className="text-sm text-muted-foreground truncate">{task.description}</p>
+                    <p className="text-sm text-muted-foreground truncate">{stripHtml(task.description)}</p>
                   )}
                 </div>
 
@@ -262,7 +265,7 @@ export function ListView() {
                     isOverdue(task.dueDate, task.status) ? "text-destructive" : "text-muted-foreground"
                   )}>
                     <Calendar className="h-3 w-3" />
-                    {formatDate(task.dueDate)}
+                    {formatDueDisplay(task.dueDate)}
                   </div>
                 </div>
               </div>

@@ -96,7 +96,7 @@ namespace TaskifyAPI.Controllers
                 Description = dto.Description,
                 Priority = ParsePriority(dto.Priority),
                 Status = ParseStatus(dto.Status),
-                DueDate = DateTime.Parse(dto.DueDate),
+                DueDate = ParseDueDateTime(dto.DueDate, dto.DueTime),
                 CreatedAt = DateTime.UtcNow,
                 UserId = userId
             };
@@ -146,7 +146,7 @@ namespace TaskifyAPI.Controllers
             task.Description = dto.Description;
             task.Priority = ParsePriority(dto.Priority);
             task.Status = ParseStatus(dto.Status);
-            task.DueDate = DateTime.Parse(dto.DueDate);
+            task.DueDate = ParseDueDateTime(dto.DueDate, dto.DueTime);
 
             _unitOfWork.Tasks.Update(task);
             await _unitOfWork.SaveChangesAsync();
@@ -224,7 +224,7 @@ namespace TaskifyAPI.Controllers
                 return Forbid("You do not have permission to update this task");
             }
 
-            task.DueDate = DateTime.Parse(dto.DueDate);
+            task.DueDate = ParseDueDateTime(dto.DueDate, dto.DueTime);
 
             _unitOfWork.Tasks.Update(task);
             await _unitOfWork.SaveChangesAsync();
@@ -277,9 +277,21 @@ namespace TaskifyAPI.Controllers
                 Description = task.Description,
                 Priority = MapPriorityToString(task.Priority),
                 Status = MapStatusToString(task.Status),
-                DueDate = task.DueDate.ToString("yyyy-MM-dd"),
+                DueDate = task.DueDate.ToString("yyyy-MM-ddTHH:mm:ss"),
                 CreatedAt = task.CreatedAt.ToString("yyyy-MM-dd")
             };
+        }
+
+        /// <summary>
+        /// Parse DueDate (yyyy-MM-dd) + optional DueTime (HH:mm). If no time, use end of day (23:59:59).
+        /// </summary>
+        private static DateTime ParseDueDateTime(string dueDate, string? dueTime)
+        {
+            var datePart = DateOnly.Parse(dueDate.Trim());
+            if (string.IsNullOrWhiteSpace(dueTime))
+                return datePart.ToDateTime(new TimeOnly(23, 59, 59));
+            var timePart = TimeOnly.ParseExact(dueTime.Trim(), "HH:mm", null);
+            return datePart.ToDateTime(timePart);
         }
 
         /// <summary>

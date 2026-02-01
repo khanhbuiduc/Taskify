@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { DescriptionEditor } from "@/components/tasks/description-editor"
 import {
   Dialog,
   DialogContent,
@@ -22,7 +22,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { getDueDatePart, getDueTimePart } from "@/lib/utils"
 import type { Task, TaskPriority, TaskStatus } from "@/lib/types"
+
+/** Today in local YYYY-MM-DD (for default due date when creating outside calendar). */
+function getTodayDateString(): string {
+  const t = new Date()
+  const y = t.getFullYear()
+  const m = String(t.getMonth() + 1).padStart(2, "0")
+  const d = String(t.getDate()).padStart(2, "0")
+  return `${y}-${m}-${d}`
+}
 
 interface TaskModalProps {
   open: boolean
@@ -30,14 +40,17 @@ interface TaskModalProps {
   task?: Task | null
   onSave: (task: Omit<Task, "id" | "createdAt">) => void
   mode: "create" | "edit"
+  /** When creating: pre-fill due date (e.g. calendar passes selected date). Omit = today. */
+  initialDueDate?: string | null
 }
 
-export function TaskModal({ open, onOpenChange, task, onSave, mode }: TaskModalProps) {
+export function TaskModal({ open, onOpenChange, task, onSave, mode, initialDueDate }: TaskModalProps) {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState<TaskPriority>("medium")
   const [status, setStatus] = useState<TaskStatus>("todo")
   const [dueDate, setDueDate] = useState("")
+  const [dueTime, setDueTime] = useState("")
 
   useEffect(() => {
     if (task && mode === "edit") {
@@ -45,26 +58,33 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode }: TaskModalP
       setDescription(task.description)
       setPriority(task.priority)
       setStatus(task.status)
-      setDueDate(task.dueDate)
+      setDueDate(getDueDatePart(task.dueDate))
+      setDueTime(getDueTimePart(task.dueDate) ?? "")
     } else {
       setTitle("")
       setDescription("")
       setPriority("medium")
       setStatus("todo")
-      setDueDate("")
+      setDueDate(initialDueDate ? getDueDatePart(initialDueDate) : getTodayDateString())
+      setDueTime(initialDueDate ? (getDueTimePart(initialDueDate) ?? "") : "")
     }
-  }, [task, mode, open])
+  }, [task, mode, open, initialDueDate])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!title.trim() || !dueDate) return
+
+    const timePart = dueTime.trim() || null
+    const dueDateValue = timePart
+      ? `${dueDate}T${timePart}:00`
+      : `${dueDate}T23:59:59`
 
     onSave({
       title: title.trim(),
       description: description.trim(),
       priority,
       status,
-      dueDate,
+      dueDate: dueDateValue,
     })
     onOpenChange(false)
   }
@@ -94,12 +114,11 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode }: TaskModalP
             </div>
             <div className="grid gap-2">
               <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
+              <DescriptionEditor
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={setDescription}
                 placeholder="Enter task description"
-                rows={3}
+                editable={true}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -130,15 +149,27 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode }: TaskModalP
                 </Select>
               </div>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="dueDate">Due Date</Label>
-              <Input
-                id="dueDate"
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                required
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="dueDate">Due Date</Label>
+                <Input
+                  id="dueDate"
+                  type="date"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="dueTime">Due Time (optional)</Label>
+                <Input
+                  id="dueTime"
+                  type="time"
+                  value={dueTime}
+                  onChange={(e) => setDueTime(e.target.value)}
+                  title="Leave empty for end of day"
+                />
+              </div>
             </div>
           </div>
           <DialogFooter>

@@ -11,7 +11,7 @@ namespace TaskifyAPI.Model.ViewModel
         [MaxLength(200)]
         public string Title { get; set; } = string.Empty;
 
-        [MaxLength(1000)]
+        [MaxLength(4000)]
         public string Description { get; set; } = string.Empty;
 
         [Required]
@@ -22,6 +22,9 @@ namespace TaskifyAPI.Model.ViewModel
 
         [Required]
         public string DueDate { get; set; } = string.Empty;
+
+        /// <summary>Optional time "HH:mm". If null/empty, deadline is end of that day (23:59:59).</summary>
+        public string? DueTime { get; set; }
     }
 
     /// <summary>
@@ -33,7 +36,7 @@ namespace TaskifyAPI.Model.ViewModel
         [MaxLength(200)]
         public string Title { get; set; } = string.Empty;
 
-        [MaxLength(1000)]
+        [MaxLength(4000)]
         public string Description { get; set; } = string.Empty;
 
         [Required]
@@ -44,6 +47,9 @@ namespace TaskifyAPI.Model.ViewModel
 
         [Required]
         public string DueDate { get; set; } = string.Empty;
+
+        /// <summary>Optional time "HH:mm". If null/empty, deadline is end of that day (23:59:59).</summary>
+        public string? DueTime { get; set; }
     }
 
     /// <summary>
@@ -62,6 +68,9 @@ namespace TaskifyAPI.Model.ViewModel
     {
         [Required]
         public string DueDate { get; set; } = string.Empty;
+
+        /// <summary>Optional time "HH:mm". If null/empty, deadline is end of that day (23:59:59).</summary>
+        public string? DueTime { get; set; }
     }
 
     /// <summary>

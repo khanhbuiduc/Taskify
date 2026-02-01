@@ -10,7 +10,7 @@ import { TaskDetailDialog } from "./task-detail-dialog"
 import { DeleteDialog } from "./delete-dialog"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
+import { cn, getDueDatePart, getDueTimePart } from "@/lib/utils"
 import {
   ChevronLeft,
   ChevronRight,
@@ -99,7 +99,7 @@ export function CalendarView() {
   const tasksByDate = useMemo(() => {
     const map: Record<string, Task[]> = {}
     tasks.forEach((task) => {
-      const dateKey = task.dueDate
+      const dateKey = getDueDatePart(task.dueDate)
       if (!map[dateKey]) map[dateKey] = []
       map[dateKey].push(task)
     })
@@ -134,8 +134,12 @@ export function CalendarView() {
     setCurrentDate(new Date())
   }
 
+  /** Format date as YYYY-MM-DD in local time (avoid UTC off-by-one). */
   const formatDateKey = (date: Date) => {
-    return date.toISOString().split("T")[0]
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, "0")
+    const d = String(date.getDate()).padStart(2, "0")
+    return `${y}-${m}-${d}`
   }
 
   const isToday = (date: Date) => {
@@ -199,9 +203,12 @@ export function CalendarView() {
   const handleSaveTask = async (taskData: Omit<Task, "id" | "createdAt">) => {
     try {
       if (modalMode === "create") {
+        const dueDate = selectedDate
+          ? `${selectedDate}T23:59:59`
+          : taskData.dueDate
         await addTask({
           ...taskData,
-          dueDate: selectedDate || taskData.dueDate,
+          dueDate,
         })
         setModalOpen(false)
         setSelectedDate(null)
@@ -226,8 +233,8 @@ export function CalendarView() {
 
   const handleDrop = (e: React.DragEvent, dateKey: string) => {
     e.preventDefault()
-    if (draggedTask && draggedTask.dueDate !== dateKey) {
-      updateTaskDueDate(draggedTask.id, dateKey)
+    if (draggedTask && getDueDatePart(draggedTask.dueDate) !== dateKey) {
+      updateTaskDueDate(draggedTask.id, dateKey, getDueTimePart(draggedTask.dueDate))
     }
     setDraggedTask(null)
   }
@@ -388,6 +395,7 @@ export function CalendarView() {
         task={selectedTask}
         onSave={handleSaveTask}
         mode={modalMode}
+        initialDueDate={selectedDate}
       />
       <DeleteDialog
         open={deleteDialogOpen}

@@ -26,7 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { cn } from "@/lib/utils"
+import { cn, stripHtml, formatDueDisplay } from "@/lib/utils"
 import {
   Search,
   Plus,
@@ -54,12 +54,13 @@ export function TableView() {
   const filteredAndSortedTasks = useMemo(() => {
     let result = [...tasks]
 
-    // Search filter
+    // Search filter (description: strip HTML for plain-text search)
     if (search) {
+      const q = search.toLowerCase()
       result = result.filter(
         (task) =>
-          task.title.toLowerCase().includes(search.toLowerCase()) ||
-          task.description.toLowerCase().includes(search.toLowerCase())
+          task.title.toLowerCase().includes(q) ||
+          stripHtml(task.description).toLowerCase().includes(q)
       )
     }
 
@@ -192,9 +193,9 @@ export function TableView() {
     })
   }
 
-  const isOverdue = (dateStr: string, status: TaskStatus) => {
+  const isOverdue = (dueDate: string, status: TaskStatus) => {
     if (status === "completed") return false
-    return new Date(dateStr) < new Date()
+    return new Date(dueDate) < new Date()
   }
 
   return (
@@ -297,7 +298,7 @@ export function TableView() {
                         </p>
                         {task.description && (
                           <p className="text-sm text-muted-foreground truncate">
-                            {task.description}
+                            {stripHtml(task.description)}
                           </p>
                         )}
                       </div>
@@ -337,7 +338,7 @@ export function TableView() {
                         "text-sm",
                         isOverdue(task.dueDate, task.status) && "text-destructive font-medium"
                       )}>
-                        {formatDate(task.dueDate)}
+                        {formatDueDisplay(task.dueDate)}
                       </span>
                     </TableCell>
                     <TableCell>

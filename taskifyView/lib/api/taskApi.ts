@@ -11,6 +11,8 @@ export interface CreateTaskInput {
   priority: TaskPriority
   status: TaskStatus
   dueDate: string
+  /** Optional "HH:mm". If omitted, deadline is end of that day. */
+  dueTime?: string | null
 }
 
 export interface UpdateTaskInput {
@@ -19,6 +21,7 @@ export interface UpdateTaskInput {
   priority: TaskPriority
   status: TaskStatus
   dueDate: string
+  dueTime?: string | null
 }
 
 /**
@@ -149,10 +152,10 @@ export const taskApi = {
   /**
    * Update task due date only
    */
-  updateDueDate: async (id: string, dueDate: string): Promise<Task> => {
+  updateDueDate: async (id: string, dueDate: string, dueTime?: string | null): Promise<Task> => {
     const response = await fetchApi<Task>(`/api/TaskItem/${id}/duedate`, {
       method: 'PATCH',
-      body: JSON.stringify({ dueDate }),
+      body: JSON.stringify({ dueDate, dueTime }),
     })
     return response
   },
