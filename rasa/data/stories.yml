@@ -1,0 +1,44 @@
+# Stories for Taskify assistant
+version: "3.1"
+
+stories:
+- story: greet and ask help
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: utter_ask_howcanhelp
+
+- story: user asks how can help
+  steps:
+  - intent: ask_howcanhelp
+  - action: utter_ask_howcanhelp
+
+- story: goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: list overdue tasks
+  steps:
+  - intent: list_overdue_tasks
+  - action: action_list_tasks
+
+- story: summarize week
+  steps:
+  - intent: summarize_week
+  - action: action_summarize_week
+
+- story: help prioritize
+  steps:
+  - intent: help_prioritize
+  - action: action_list_tasks
+
+- story: create task
+  steps:
+  - intent: create_task
+  - action: action_create_task
+
+- story: fallback
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default

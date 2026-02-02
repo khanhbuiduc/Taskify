@@ -1,42 +1,79 @@
-# Ignore .NET build results
+# =========================
+# .NET / C#
+# =========================
 bin/
 obj/
-
-# User-specific files
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
 
+# =========================
+# Visual Studio
+# =========================
+.vs/
+
 # Visual Studio Code
 .vscode/
 
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Node modules and build outputs for Next.js
+# =========================
+# Node.js / Next.js
+# =========================
 node_modules/
 .next/
+out/
 
-# Dependency directories
-pnpm-lock.yaml
-yarn.lock
-package-lock.json
+# Dependency lock files (optional - uncomment if you want to track them)
+# pnpm-lock.yaml
+# yarn.lock
+# package-lock.json
 
+# =========================
+# Python / Rasa
+# =========================
+# Virtual environment
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Rasa specific
+.rasa/
+rasa/models/
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
 # Log files
+# =========================
 *.log
+logs/
 
+# =========================
 # Environment files
+# =========================
 .env
 .env.*
+!.env.example
 
+# =========================
 # Misc
+# =========================
 *.swp
 *.tmp
+*.bak
 
-# Ignore test coverage
+# Test coverage
 coverage/
 
-# Ignore local settings
+# Local settings
 appsettings.Development.json

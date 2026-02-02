@@ -1,0 +1,78 @@
+# NLU training data for Taskify assistant (English)
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - good morning
+    - good evening
+    - hey there
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you
+    - see you later
+    - have a good one
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - yep
+    - sure
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - not really
+
+- intent: ask_howcanhelp
+  examples: |
+    - how can you help
+    - what can you do
+    - help me
+    - I need help
+
+- intent: list_overdue_tasks
+  examples: |
+    - What tasks are overdue?
+    - Show overdue tasks
+    - Do I have any overdue tasks?
+    - List overdue tasks
+    - Which tasks are late?
+
+- intent: summarize_week
+  examples: |
+    - Summarize my week
+    - How did my week go?
+    - Weekly summary
+    - Give me a summary of my week
+    - What did I accomplish this week?
+
+- intent: help_prioritize
+  examples: |
+    - Help me prioritize tasks
+    - What should I do first?
+    - Prioritize my tasks
+    - Which tasks are most important?
+    - What's urgent?
+
+- intent: create_task
+  examples: |
+    - Create a new task for tomorrow
+    - I want to create a task
+    - Add a new task
+    - Create a task
+    - New task
+
+- intent: nlu_fallback
+  examples: |
+    - asdf
+    - qwerty

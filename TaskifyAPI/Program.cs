@@ -8,6 +8,7 @@ using TaskifyAPI.Data;
 using TaskifyAPI.Model;
 using TaskifyAPI.Repositories;
 using TaskifyAPI.Repositories.IRepositories;
+using TaskifyAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,15 @@ builder.Services.AddAuthorization(options =>
 // Register repositories and Unit of Work
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// Rasa chat proxy: HttpClient configured with Rasa base URL and timeout
+builder.Services.AddHttpClient<IRasaChatService, RasaChatService>((sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var baseUrl = config["Rasa:BaseUrl"]?.TrimEnd('/') ?? "http://localhost:5005";
+    client.BaseAddress = new Uri(baseUrl);
+    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Rasa:TimeoutSeconds", 15));
+});
 
 // Configure CORS for frontend (Next.js on localhost:3000)
 // Configure CORS for frontend (Next.js on localhost:3000)

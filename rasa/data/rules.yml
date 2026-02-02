@@ -1,0 +1,13 @@
+# Rules for Taskify assistant (single-turn responses)
+version: "3.1"
+
+rules:
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say default when out of scope
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default

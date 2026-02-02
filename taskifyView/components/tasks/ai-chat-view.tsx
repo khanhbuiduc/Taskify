@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+import { sendChatMessage } from "@/lib/api/chatApi"
 
 interface Message {
   id: string
@@ -29,7 +30,7 @@ export function AIChatView() {
       id: "1",
       role: "assistant",
       content:
-        "Hello! I'm your AI assistant for TaskFlow. I can help you manage tasks, analyze your productivity, and answer questions about your projects. How can I help you today?",
+        "Hello! I'm your AI assistant for Taskify. I can help you manage tasks, analyze your productivity, and answer questions about your projects. How can I help you today?",
       timestamp: new Date(),
     },
   ])
@@ -56,28 +57,36 @@ export function AIChatView() {
     }
 
     setMessages((prev) => [...prev, userMessage])
+    const messageToSend = input
     setInput("")
     setIsTyping(true)
 
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        "I've analyzed your tasks and found 3 items that need attention today. Would you like me to list them?",
-        "Based on your current workload, I'd recommend focusing on the high-priority tasks first. You have 2 urgent items pending.",
-        "I can help you create a new task. What's the task title and when is it due?",
-        "Your productivity this week has been great! You've completed 12 tasks, which is 20% more than last week.",
-      ]
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: responses[Math.floor(Math.random() * responses.length)],
+    try {
+      const { messages: replyMessages } = await sendChatMessage(messageToSend)
+      const now = Date.now()
+      const assistantMessages: Message[] = (replyMessages?.length
+        ? replyMessages
+        : [{ text: "The assistant is temporarily unavailable. Please try again later." }]
+      ).map((m, i) => ({
+        id: `${now + i}`,
+        role: "assistant" as const,
+        content: typeof m === "string" ? m : (m?.text ?? ""),
         timestamp: new Date(),
-      }
-
-      setMessages((prev) => [...prev, assistantMessage])
+      }))
+      setMessages((prev) => [...prev, ...assistantMessages])
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `${Date.now()}`,
+          role: "assistant",
+          content: "Something went wrong. Please try again later.",
+          timestamp: new Date(),
+        },
+      ])
+    } finally {
       setIsTyping(false)
-    }, 1500)
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

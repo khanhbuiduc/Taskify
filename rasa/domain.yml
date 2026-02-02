@@ -1,0 +1,42 @@
+# Taskify Rasa domain: intents, responses, and actions for task-management assistant
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - ask_howcanhelp
+  - list_overdue_tasks
+  - summarize_week
+  - help_prioritize
+  - create_task
+  - nlu_fallback
+
+responses:
+  utter_greet:
+    - text: "Hello! I'm your AI assistant for Taskify. I can help you manage tasks, analyze your productivity, and answer questions about your projects."
+  utter_ask_howcanhelp:
+    - text: "How can I help you today? You can ask about overdue tasks, get a weekly summary, prioritize work, or create a new task."
+  utter_goodbye:
+    - text: "Goodbye! Feel free to come back when you need help with your tasks."
+  utter_default:
+    - text: "I'm not sure how to help with that. Try asking about your tasks, a weekly summary, or creating a new task."
+  utter_overdue_info:
+    - text: "I can help you see overdue tasks. In a future update I'll list them here. For now, check your task list or dashboard."
+  utter_summarize_info:
+    - text: "I can summarize your week. In a future update I'll show stats here. For now, check your dashboard for progress."
+  utter_prioritize_info:
+    - text: "I'd recommend focusing on high-priority tasks first. Check your task list and sort by priority."
+  utter_create_task_info:
+    - text: "I can help you create a task. What's the task title and when is it due? (Creating tasks via chat will be available in a future update.)"
+
+# Custom actions (phase 2 - enabled)
+actions:
+  - action_list_tasks
+  - action_create_task
+  - action_summarize_week
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

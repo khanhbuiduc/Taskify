@@ -1,0 +1,3 @@
+# Action server (phase 2 - enabled)
+action_endpoint:
+  url: "http://localhost:5055/webhook"
