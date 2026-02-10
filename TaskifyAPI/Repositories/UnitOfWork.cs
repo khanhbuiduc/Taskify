@@ -12,6 +12,8 @@ namespace TaskifyAPI.Repositories
         private readonly ApplicationDbContext _context;
         private IDbContextTransaction? _transaction;
         private ITaskRepository? _taskRepository;
+        private IFocusSessionRepository? _focusSessionRepository;
+        private IDailyGoalRepository? _dailyGoalRepository;
         private bool _disposed = false;
 
         public UnitOfWork(ApplicationDbContext context)
@@ -26,6 +28,26 @@ namespace TaskifyAPI.Repositories
             {
                 _taskRepository ??= new TaskRepository(_context);
                 return _taskRepository;
+            }
+        }
+
+        /// <inheritdoc />
+        public IFocusSessionRepository FocusSessions
+        {
+            get
+            {
+                _focusSessionRepository ??= new FocusSessionRepository(_context);
+                return _focusSessionRepository;
+            }
+        }
+
+        /// <inheritdoc />
+        public IDailyGoalRepository DailyGoals
+        {
+            get
+            {
+                _dailyGoalRepository ??= new DailyGoalRepository(_context);
+                return _dailyGoalRepository;
             }
         }
 

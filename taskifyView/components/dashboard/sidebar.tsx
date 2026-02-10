@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import React from "react"
-import { useRouter } from "next/navigation"
-import { cn } from "@/lib/utils"
+import React from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   CheckSquare,
@@ -15,42 +15,56 @@ import {
   MessageSquare,
   ChevronLeft,
   ChevronRight,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+  Timer,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { useAuthStore } from "@/lib/auth-store"
-import { API_CONFIG } from "@/lib/api/config"
+} from "@/components/ui/tooltip";
+import { useAuthStore } from "@/lib/auth-store";
+import { API_CONFIG } from "@/lib/api/config";
 
-type View = "dashboard" | "list" | "calendar" | "table" | "ai-chat" | "settings"
+type View =
+  | "dashboard"
+  | "list"
+  | "calendar"
+  | "table"
+  | "ai-chat"
+  | "settings"
+  | "focus";
 
-const taskViewItems: { icon: React.ElementType; label: string; view: View }[] = [
-  { icon: LayoutDashboard, label: "Dashboard", view: "dashboard" },
-  { icon: List, label: "List", view: "list" },
-  { icon: Calendar, label: "Calendar", view: "calendar" },
-  { icon: Table2, label: "Table", view: "table" },
-]
+const taskViewItems: { icon: React.ElementType; label: string; view: View }[] =
+  [
+    { icon: LayoutDashboard, label: "Dashboard", view: "dashboard" },
+    { icon: List, label: "List", view: "list" },
+    { icon: Calendar, label: "Calendar", view: "calendar" },
+    { icon: Table2, label: "Table", view: "table" },
+  ];
 
 const bottomNavItems = [
   { icon: Settings, label: "Settings" },
   { icon: HelpCircle, label: "Help" },
-]
+];
 
 interface SidebarProps {
-  currentView: View
-  onViewChange: (view: View) => void
-  isCollapsed: boolean
-  onToggleCollapse: () => void
+  currentView: View;
+  onViewChange: (view: View) => void;
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
-export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollapse }: SidebarProps) {
-  const router = useRouter()
-  const { user, logout } = useAuthStore()
+export function Sidebar({
+  currentView,
+  onViewChange,
+  isCollapsed,
+  onToggleCollapse,
+}: SidebarProps) {
+  const router = useRouter();
+  const { user, logout } = useAuthStore();
 
   const getInitials = (email: string, userName?: string) => {
     if (userName) {
@@ -59,7 +73,7 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
         .map((n) => n[0])
         .join("")
         .toUpperCase()
-        .slice(0, 2)
+        .slice(0, 2);
     }
     return email
       .split("@")[0]
@@ -67,32 +81,32 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
       .map((n) => n[0])
       .join("")
       .toUpperCase()
-      .slice(0, 2)
-  }
+      .slice(0, 2);
+  };
 
   const getAvatarUrl = () => {
-    if (!user?.avatarUrl) return null
+    if (!user?.avatarUrl) return null;
     // If avatarUrl is absolute URL, use it directly
-    if (user.avatarUrl.startsWith('http')) {
-      return user.avatarUrl
+    if (user.avatarUrl.startsWith("http")) {
+      return user.avatarUrl;
     }
     // Otherwise, prepend API base URL
-    return `${API_CONFIG.baseURL}${user.avatarUrl}`
-  }
+    return `${API_CONFIG.baseURL}${user.avatarUrl}`;
+  };
 
   const getDisplayName = () => {
-    if (user?.userName) return user.userName
-    return user?.email || ""
-  }
+    if (user?.userName) return user.userName;
+    return user?.email || "";
+  };
 
   const handleSettingsClick = () => {
-    onViewChange("settings")
-  }
+    onViewChange("settings");
+  };
 
   const handleLogout = async () => {
-    await logout()
-    router.push("/login")
-  }
+    await logout();
+    router.push("/login");
+  };
 
   const NavButton = ({
     icon: Icon,
@@ -101,11 +115,11 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
     onClick,
     variant = "default",
   }: {
-    icon: React.ElementType
-    label: string
-    isActive?: boolean
-    onClick?: () => void
-    variant?: "default" | "destructive"
+    icon: React.ElementType;
+    label: string;
+    isActive?: boolean;
+    onClick?: () => void;
+    variant?: "default" | "destructive";
   }) => {
     const button = (
       <button
@@ -117,13 +131,13 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
             ? "text-destructive hover:bg-destructive/10"
             : isActive
               ? "bg-sidebar-accent text-sidebar-primary"
-              : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground",
         )}
       >
         <Icon className="h-5 w-5 shrink-0" />
         {!isCollapsed && <span>{label}</span>}
       </button>
-    )
+    );
 
     if (isCollapsed) {
       return (
@@ -133,28 +147,35 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
             {label}
           </TooltipContent>
         </Tooltip>
-      )
+      );
     }
 
-    return button
-  }
+    return button;
+  };
 
   return (
     <TooltipProvider>
       <aside
         className={cn(
           "fixed left-0 top-0 z-40 h-screen border-r border-border bg-sidebar flex flex-col transition-all duration-300",
-          isCollapsed ? "w-16" : "w-64"
+          isCollapsed ? "w-16" : "w-64",
         )}
       >
         {/* Logo & Collapse Toggle */}
         <div className="flex h-16 items-center justify-between border-b border-border px-3">
-          <div className={cn("flex items-center gap-2", isCollapsed && "justify-center w-full")}>
+          <div
+            className={cn(
+              "flex items-center gap-2",
+              isCollapsed && "justify-center w-full",
+            )}
+          >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent shrink-0">
               <CheckSquare className="h-5 w-5 text-accent-foreground" />
             </div>
             {!isCollapsed && (
-              <span className="text-lg font-semibold text-sidebar-foreground">TaskFlow</span>
+              <span className="text-lg font-semibold text-sidebar-foreground">
+                TaskFlow
+              </span>
             )}
           </div>
           {!isCollapsed && (
@@ -208,6 +229,24 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
               ))}
             </div>
           </div>
+
+          {/* Divider */}
+          <div className="border-t border-border" />
+
+          {/* Focus Session Section */}
+          <div>
+            {!isCollapsed && (
+              <p className="mb-2 px-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Focus
+              </p>
+            )}
+            <NavButton
+              icon={Timer}
+              label="Focus Session"
+              isActive={currentView === "focus"}
+              onClick={() => onViewChange("focus")}
+            />
+          </div>
         </nav>
 
         {/* Bottom Navigation */}
@@ -217,10 +256,7 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
             label="Settings"
             onClick={handleSettingsClick}
           />
-          <NavButton
-            icon={HelpCircle}
-            label="Help"
-          />
+          <NavButton icon={HelpCircle} label="Help" />
           <NavButton
             icon={LogOut}
             label="Log Out"
@@ -237,7 +273,7 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
               onClick={() => onViewChange("settings")}
               className={cn(
                 "flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-sidebar-accent/60",
-                isCollapsed && "justify-center px-0"
+                isCollapsed && "justify-center px-0",
               )}
             >
               <Avatar className="h-9 w-9 shrink-0">
@@ -277,5 +313,5 @@ export function Sidebar({ currentView, onViewChange, isCollapsed, onToggleCollap
         )}
       </aside>
     </TooltipProvider>
-  )
+  );
 }

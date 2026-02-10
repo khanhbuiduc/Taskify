@@ -1,78 +1,194 @@
-# NLU training data for Taskify assistant (English)
+# NLU training data for Taskify assistant (Bilingual: English + Vietnamese)
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - good morning
-    - good evening
-    - hey there
+  - intent: greet
+    examples: |
+      - hey
+      - hello
+      - hi
+      - good morning
+      - good evening
+      - hey there
+      - xin chào
+      - chào bạn
+      - chào
 
-- intent: goodbye
-  examples: |
-    - bye
-    - goodbye
-    - see you
-    - see you later
-    - have a good one
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you
+      - see you later
+      - have a good one
+      - tạm biệt
+      - bye bye
+      - hẹn gặp lại
 
-- intent: affirm
-  examples: |
-    - yes
-    - yeah
-    - yep
-    - sure
-    - correct
+  - intent: affirm
+    examples: |
+      - yes
+      - yeah
+      - yep
+      - sure
+      - correct
+      - có
+      - đúng
+      - ok
+      - được
 
-- intent: deny
-  examples: |
-    - no
-    - nope
-    - not really
+  - intent: deny
+    examples: |
+      - no
+      - nope
+      - not really
+      - không
+      - không phải
+      - thôi
 
-- intent: ask_howcanhelp
-  examples: |
-    - how can you help
-    - what can you do
-    - help me
-    - I need help
+  - intent: ask_howcanhelp
+    examples: |
+      - how can you help
+      - what can you do
+      - help me
+      - I need help
+      - bạn có thể giúp gì
+      - giúp tôi
+      - cần trợ giúp
 
-- intent: list_overdue_tasks
-  examples: |
-    - What tasks are overdue?
-    - Show overdue tasks
-    - Do I have any overdue tasks?
-    - List overdue tasks
-    - Which tasks are late?
+  - intent: list_overdue_tasks
+    examples: |
+      - What tasks are overdue?
+      - Show overdue tasks
+      - Do I have any overdue tasks?
+      - List overdue tasks
+      - Which tasks are late?
+      - task nào quá hạn
+      - nhiệm vụ quá hạn
+      - việc nào trễ
 
-- intent: summarize_week
-  examples: |
-    - Summarize my week
-    - How did my week go?
-    - Weekly summary
-    - Give me a summary of my week
-    - What did I accomplish this week?
+  - intent: summarize_week
+    examples: |
+      - Summarize my week
+      - How did my week go?
+      - Weekly summary
+      - Give me a summary of my week
+      - What did I accomplish this week?
+      - tóm tắt tuần
+      - tuần này thế nào
+      - báo cáo tuần
 
-- intent: help_prioritize
-  examples: |
-    - Help me prioritize tasks
-    - What should I do first?
-    - Prioritize my tasks
-    - Which tasks are most important?
-    - What's urgent?
+  - intent: help_prioritize
+    examples: |
+      - Help me prioritize tasks
+      - What should I do first?
+      - Prioritize my tasks
+      - Which tasks are most important?
+      - What's urgent?
+      - việc nào quan trọng
+      - ưu tiên gì trước
+      - làm gì trước
 
-- intent: create_task
-  examples: |
-    - Create a new task for tomorrow
-    - I want to create a task
-    - Add a new task
-    - Create a task
-    - New task
+  - intent: create_task
+    examples: |
+      - Create a task [finish report](task_title) for [tomorrow](due_date)
+      - Add [buy groceries](task_title) with [high](priority) priority
+      - New task [call mom](task_title)
+      - Create [meeting prep](task_title) due [next Monday](due_date)
+      - I want to add a task [submit proposal](task_title) [urgent](priority)
+      - Add a [low](priority) priority task [clean room](task_title)
+      - Create task [review code](task_title) for [today](due_date)
+      - New [high](priority) priority task [fix bug](task_title)
+      - [Write documentation](task_title) task with [medium](priority) priority
+      - Schedule [team standup](task_title) for [next week](due_date)
+      - Create task [send email](task_title) by [3pm](due_time)
+      - Add [meeting](task_title) at [14:00](due_time)
+      - Create [presentation](task_title) due [tomorrow](due_date) at [10am](due_time)
+      - Add task [call client](task_title) [high](priority) by [5pm](due_time)
+      - New task [write tests](task_title) for [today](due_date) [urgent](priority)
+      - thêm nhiệm vụ [học thuộc sql interview](task_title) trước [16h](due_time)
+      - tạo task [hoàn thành báo cáo](task_title) hạn [ngày mai](due_date)
+      - thêm task [gọi điện cho khách](task_title) lúc [10h sáng](due_time)
+      - tạo nhiệm vụ [review code](task_title) [khẩn cấp](priority)
+      - thêm [dọn phòng](task_title) với độ ưu tiên [thấp](priority)
+      - nhiệm vụ mới [nộp đề xuất](task_title) trước [18h30](due_time) [hôm nay](due_date)
+      - tạo task [họp team](task_title) vào [thứ hai tuần sau](due_date) lúc [9h](due_time)
+      - thêm việc [mua đồ](task_title) [quan trọng](priority) hạn [chiều nay](due_date)
+      - tạo task [viết tài liệu](task_title) [bình thường](priority)
+      - thêm nhiệm vụ [fix bug](task_title) trước [15h](due_time) [cao](priority)
+      - task mới [chuẩn bị slide](task_title) cho [ngày kia](due_date)
+      - tạo [gửi email](task_title) hạn [tối nay](due_date)
+      - thêm task [kiểm tra code](task_title) [gấp](priority) lúc [14h](due_time)
+      - nhiệm vụ [họp khách hàng](task_title) [quan trọng](priority) [ngày mai](due_date) [9h30](due_time)
+      - tạo task [làm bài tập](task_title) trước [20h](due_time)
+      - tạo task
+      - thêm nhiệm vụ
+      - tạo nhiệm vụ mới
+      - thêm task mới
+      - create task
+      - new task
+      - add task
+      - I want to create a task
+      - tôi muốn tạo task
+      - tạo việc mới
+      - thêm công việc
+      - Create a new task
+      - Add a new task
+      - I want to add a task
 
-- intent: nlu_fallback
-  examples: |
-    - asdf
-    - qwerty
+  # Entity synonyms - Priority
+  - synonym: high
+    examples: |
+      - urgent
+      - critical
+      - important
+      - asap
+      - high priority
+      - khẩn cấp
+      - quan trọng
+      - gấp
+      - ưu tiên cao
+      - cao
+
+  - synonym: low
+    examples: |
+      - minor
+      - not urgent
+      - whenever
+      - low priority
+      - không gấp
+      - ưu tiên thấp
+      - khi nào cũng được
+      - thấp
+
+  - synonym: medium
+    examples: |
+      - normal
+      - regular
+      - standard
+      - medium priority
+      - bình thường
+      - trung bình
+
+  # Regex patterns for entity extraction
+  - regex: due_time
+    examples: |
+      - \d{1,2}h\d{0,2}
+      - \d{1,2}:\d{2}
+      - \d{1,2}(am|pm)
+      - \d{1,2} giờ
+
+  - regex: due_date
+    examples: |
+      - today
+      - tomorrow
+      - hôm nay
+      - ngày mai
+      - ngày kia
+      - tuần sau
+      - tháng sau
+
+  - intent: nlu_fallback
+    examples: |
+      - asdf
+      - qwerty

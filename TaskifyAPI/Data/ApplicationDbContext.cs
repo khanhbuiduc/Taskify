@@ -20,6 +20,16 @@ namespace TaskifyAPI.Data
         /// </summary>
         public DbSet<TaskItem> TaskItems { get; set; }
 
+        /// <summary>
+        /// DbSet for FocusSession entities
+        /// </summary>
+        public DbSet<FocusSession> FocusSessions { get; set; }
+
+        /// <summary>
+        /// DbSet for DailyGoal entities
+        /// </summary>
+        public DbSet<DailyGoal> DailyGoals { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -44,6 +54,51 @@ namespace TaskifyAPI.Data
 
                 entity.Property(e => e.DueDate)
                     .IsRequired();
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                // Configure relationship with IdentityUser
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Configure FocusSession entity
+            modelBuilder.Entity<FocusSession>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.DurationMinutes)
+                    .IsRequired();
+
+                entity.Property(e => e.StartedAt)
+                    .IsRequired();
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                // Configure relationship with IdentityUser
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Configure DailyGoal entity
+            modelBuilder.Entity<DailyGoal>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("GETUTCDATE()");

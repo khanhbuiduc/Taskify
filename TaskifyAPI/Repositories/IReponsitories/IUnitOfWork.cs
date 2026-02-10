@@ -11,6 +11,16 @@ namespace TaskifyAPI.Repositories.IRepositories
         ITaskRepository Tasks { get; }
 
         /// <summary>
+        /// Focus session repository
+        /// </summary>
+        IFocusSessionRepository FocusSessions { get; }
+
+        /// <summary>
+        /// Daily goal repository
+        /// </summary>
+        IDailyGoalRepository DailyGoals { get; }
+
+        /// <summary>
         /// Save all changes to the database
         /// </summary>
         Task<int> SaveChangesAsync();

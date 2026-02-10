@@ -29,7 +29,8 @@ type View =
   | "calendar"
   | "table"
   | "ai-chat"
-  | "settings";
+  | "settings"
+  | "focus";
 
 const viewTitles: Record<View, { title: string; subtitle: string }> = {
   dashboard: { title: "Dashboard", subtitle: "Overview of your tasks" },
@@ -43,6 +44,10 @@ const viewTitles: Record<View, { title: string; subtitle: string }> = {
   settings: {
     title: "Account Settings",
     subtitle: "Manage your account and preferences",
+  },
+  focus: {
+    title: "Focus Session",
+    subtitle: "Stay focused and productive",
   },
 };
 

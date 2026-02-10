@@ -1,4 +1,4 @@
-# Taskify Rasa domain: intents, responses, and actions for task-management assistant
+# Taskify Rasa domain: intents, entities, slots, responses, and actions for task-management assistant
 version: "3.1"
 
 intents:
@@ -13,15 +13,54 @@ intents:
   - create_task
   - nlu_fallback
 
+entities:
+  - task_title
+  - due_date
+  - due_time
+  - priority
+
+slots:
+  task_title:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: task_title
+
+  due_date:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: due_date
+
+  due_time:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: due_time
+
+  priority:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: priority
+
 responses:
   utter_greet:
     - text: "Hello! I'm your AI assistant for Taskify. I can help you manage tasks, analyze your productivity, and answer questions about your projects."
+    - text: "Xin chào! Tôi là trợ lý AI của Taskify. Tôi có thể giúp bạn quản lý công việc."
   utter_ask_howcanhelp:
     - text: "How can I help you today? You can ask about overdue tasks, get a weekly summary, prioritize work, or create a new task."
+    - text: "Tôi có thể giúp gì cho bạn? Bạn có thể hỏi về task quá hạn, tóm tắt tuần, hoặc tạo task mới."
   utter_goodbye:
     - text: "Goodbye! Feel free to come back when you need help with your tasks."
+    - text: "Tạm biệt! Hẹn gặp lại khi bạn cần giúp đỡ."
   utter_default:
     - text: "I'm not sure how to help with that. Try asking about your tasks, a weekly summary, or creating a new task."
+    - text: "Tôi không hiểu. Hãy thử hỏi về task, tóm tắt tuần, hoặc tạo task mới."
   utter_overdue_info:
     - text: "I can help you see overdue tasks. In a future update I'll list them here. For now, check your task list or dashboard."
   utter_summarize_info:
@@ -30,6 +69,10 @@ responses:
     - text: "I'd recommend focusing on high-priority tasks first. Check your task list and sort by priority."
   utter_create_task_info:
     - text: "I can help you create a task. What's the task title and when is it due? (Creating tasks via chat will be available in a future update.)"
+  utter_ask_task_title:
+    - text: "Bạn muốn tạo task gì? Vui lòng cho tôi biết tiêu đề task.\nVí dụ: 'thêm nhiệm vụ học SQL trước 16h'"
+    - text: "What would you like to name this task?"
+    - text: "Task cần có tiêu đề. Tên task là gì vậy bạn?"
 
 # Custom actions (phase 2 - enabled)
 actions:
@@ -39,4 +82,4 @@ actions:
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  carry_over_slots_to_new_session: false
