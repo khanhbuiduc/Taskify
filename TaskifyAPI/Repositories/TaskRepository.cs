@@ -45,6 +45,7 @@ namespace TaskifyAPI.Repositories
         public async Task<IEnumerable<TaskItem>> GetAllOrderedByDueDateAsync()
         {
             return await _dbSet
+                .Include(t => t.Labels)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
         }
@@ -61,6 +62,7 @@ namespace TaskifyAPI.Repositories
             }
 
             return await query
+                .Include(t => t.Labels)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
         }
@@ -70,8 +72,19 @@ namespace TaskifyAPI.Repositories
         {
             return await _dbSet
                 .Where(t => t.UserId == userId)
+                .Include(t => t.Labels)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Get task by id with labels
+        /// </summary>
+        public async Task<TaskItem?> GetByIdWithLabelsAsync(int id)
+        {
+            return await _dbSet
+                .Include(t => t.Labels)
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
     }
 }

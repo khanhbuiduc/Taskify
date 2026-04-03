@@ -13,6 +13,7 @@ import { StatusBadge } from "./status-badge"
 import { cn, sanitizeHtml, formatDueDisplay } from "@/lib/utils"
 import type { Task } from "@/lib/types"
 import { Pencil, Trash2 } from "lucide-react"
+import { LabelBadge } from "./label-badge"
 
 interface TaskDetailDialogProps {
   open: boolean
@@ -80,6 +81,13 @@ export function TaskDetailDialog({ open, onOpenChange, task, onEdit, onDelete }:
           </div>
         </DialogHeader>
         <div className="space-y-4 py-4">
+          {task.labels?.length ? (
+            <div className="flex flex-wrap gap-2">
+              {task.labels.map((label) => (
+                <LabelBadge key={label.id} label={label} />
+              ))}
+            </div>
+          ) : null}
           {task.description && (
             <div
               className="text-sm text-muted-foreground [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-muted-foreground/30 [&_blockquote]:pl-4 [&_blockquote]:italic [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:py-0.5 [&_a]:text-primary [&_a]:underline"

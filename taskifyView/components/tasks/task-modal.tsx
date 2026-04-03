@@ -22,8 +22,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { getDueDatePart, getDueTimePart } from "@/lib/utils"
-import type { Task, TaskPriority, TaskStatus } from "@/lib/types"
+import { getDueDatePart, getDueTimePart, cn } from "@/lib/utils"
+import type { Task, TaskPriority, TaskStatus, Label } from "@/lib/types"
+import { useTaskStore } from "@/lib/task-store"
 
 /** Today in local YYYY-MM-DD (for default due date when creating outside calendar). */
 function getTodayDateString(): string {
@@ -45,12 +46,17 @@ interface TaskModalProps {
 }
 
 export function TaskModal({ open, onOpenChange, task, onSave, mode, initialDueDate }: TaskModalProps) {
+  const { labels, createLabel } = useTaskStore()
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState<TaskPriority>("medium")
   const [status, setStatus] = useState<TaskStatus>("todo")
   const [dueDate, setDueDate] = useState("")
   const [dueTime, setDueTime] = useState("")
+  const [selectedLabels, setSelectedLabels] = useState<number[]>([])
+  const [newLabelName, setNewLabelName] = useState("")
+  const [newLabelColor, setNewLabelColor] = useState("#38bdf8")
+  const palette = ["#38bdf8", "#22c55e", "#f97316", "#ef4444", "#a855f7", "#06b6d4", "#f59e0b", "#3b82f6"]
 
   useEffect(() => {
     if (task && mode === "edit") {
@@ -60,6 +66,7 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode, initialDueDa
       setStatus(task.status)
       setDueDate(getDueDatePart(task.dueDate))
       setDueTime(getDueTimePart(task.dueDate) ?? "")
+      setSelectedLabels(task.labels?.map((l) => l.id) ?? [])
     } else {
       setTitle("")
       setDescription("")
@@ -67,6 +74,7 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode, initialDueDa
       setStatus("todo")
       setDueDate(initialDueDate ? getDueDatePart(initialDueDate) : getTodayDateString())
       setDueTime(initialDueDate ? (getDueTimePart(initialDueDate) ?? "") : "")
+      setSelectedLabels([])
     }
   }, [task, mode, open, initialDueDate])
 
@@ -85,8 +93,26 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode, initialDueDa
       priority,
       status,
       dueDate: dueDateValue,
+      labels: labels.filter((l) => selectedLabels.includes(l.id)),
     })
     onOpenChange(false)
+  }
+
+  const toggleLabel = (id: number) => {
+    setSelectedLabels((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    )
+  }
+
+  const handleCreateLabel = async () => {
+    if (!newLabelName.trim()) return
+    try {
+      const created = await createLabel({ name: newLabelName.trim(), color: newLabelColor })
+      setSelectedLabels((prev) => [...prev, created.id])
+      setNewLabelName("")
+    } catch {
+      // toast handled in store
+    }
   }
 
   return (
@@ -169,6 +195,71 @@ export function TaskModal({ open, onOpenChange, task, onSave, mode, initialDueDa
                   onChange={(e) => setDueTime(e.target.value)}
                   title="Leave empty for end of day"
                 />
+              </div>
+            </div>
+            <div className="grid gap-2">
+              <Label>Labels</Label>
+              <div className="flex flex-wrap gap-2">
+                {labels.length === 0 && (
+                  <p className="text-xs text-muted-foreground">No labels yet. Create one below.</p>
+                )}
+                {labels.map((label) => (
+                  <button
+                    key={label.id}
+                    type="button"
+                    onClick={() => toggleLabel(label.id)}
+                    className={cn(
+                      "flex items-center gap-2 rounded-full border px-3 py-1 text-xs transition-colors",
+                      selectedLabels.includes(label.id)
+                        ? "border-transparent text-white"
+                        : "border-border bg-background text-foreground"
+                    )}
+                    style={{
+                      backgroundColor: selectedLabels.includes(label.id) ? label.color : undefined,
+                    }}
+                  >
+                    <span
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{ backgroundColor: label.color }}
+                    />
+                    {label.name}
+                  </button>
+                ))}
+              </div>
+              <div className="flex flex-col gap-2 rounded-lg border border-dashed border-border p-3">
+                <span className="text-xs text-muted-foreground">Quick add label</span>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Label name"
+                    value={newLabelName}
+                    onChange={(e) => setNewLabelName(e.target.value)}
+                  />
+                  <input
+                    type="color"
+                    value={newLabelColor}
+                    onChange={(e) => setNewLabelColor(e.target.value)}
+                    className="h-10 w-12 rounded border border-border bg-transparent"
+                    title="Pick a color"
+                  />
+                  <Button type="button" onClick={handleCreateLabel} variant="secondary">
+                    Add
+                  </Button>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {palette.map((color) => (
+                    <button
+                      key={color}
+                      type="button"
+                      onClick={() => setNewLabelColor(color)}
+                      className={cn(
+                        "h-6 w-6 rounded-full border border-border",
+                        newLabelColor === color && "ring-2 ring-offset-2 ring-offset-background"
+                      )}
+                      style={{ backgroundColor: color }}
+                      title={color}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>

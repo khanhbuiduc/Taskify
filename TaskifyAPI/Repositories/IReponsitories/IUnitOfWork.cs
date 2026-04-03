@@ -21,6 +21,11 @@ namespace TaskifyAPI.Repositories.IRepositories
         IDailyGoalRepository DailyGoals { get; }
 
         /// <summary>
+        /// Label repository
+        /// </summary>
+        ILabelRepository Labels { get; }
+
+        /// <summary>
         /// Save all changes to the database
         /// </summary>
         Task<int> SaveChangesAsync();

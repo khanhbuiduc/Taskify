@@ -51,7 +51,7 @@ namespace TaskifyAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskItemResponseDto>> GetById(int id)
         {
-            var task = await _unitOfWork.Tasks.GetByIdAsync(id);
+            var task = await _unitOfWork.Tasks.GetByIdWithLabelsAsync(id);
 
             if (task == null)
             {
@@ -101,6 +101,17 @@ namespace TaskifyAPI.Controllers
                 UserId = userId
             };
 
+            // Attach labels (validate ownership)
+            try
+            {
+                var labels = await LoadAndValidateLabelsAsync(userId, dto.LabelIds);
+                task.Labels = labels.ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
             await _unitOfWork.Tasks.AddAsync(task);
             await _unitOfWork.SaveChangesAsync();
 
@@ -126,7 +137,7 @@ namespace TaskifyAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var task = await _unitOfWork.Tasks.GetByIdAsync(id);
+            var task = await _unitOfWork.Tasks.GetByIdWithLabelsAsync(id);
 
             if (task == null)
             {
@@ -147,6 +158,20 @@ namespace TaskifyAPI.Controllers
             task.Priority = ParsePriority(dto.Priority);
             task.Status = ParseStatus(dto.Status);
             task.DueDate = ParseDueDateTime(dto.DueDate, dto.DueTime);
+
+            try
+            {
+                var labels = await LoadAndValidateLabelsAsync(userId, dto.LabelIds);
+                task.Labels.Clear();
+                foreach (var label in labels)
+                {
+                    task.Labels.Add(label);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
             _unitOfWork.Tasks.Update(task);
             await _unitOfWork.SaveChangesAsync();
@@ -169,7 +194,7 @@ namespace TaskifyAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var task = await _unitOfWork.Tasks.GetByIdAsync(id);
+            var task = await _unitOfWork.Tasks.GetByIdWithLabelsAsync(id);
 
             if (task == null)
             {
@@ -208,7 +233,7 @@ namespace TaskifyAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var task = await _unitOfWork.Tasks.GetByIdAsync(id);
+            var task = await _unitOfWork.Tasks.GetByIdWithLabelsAsync(id);
 
             if (task == null)
             {
@@ -278,7 +303,18 @@ namespace TaskifyAPI.Controllers
                 Priority = MapPriorityToString(task.Priority),
                 Status = MapStatusToString(task.Status),
                 DueDate = task.DueDate.ToString("yyyy-MM-ddTHH:mm:ss"),
-                CreatedAt = task.CreatedAt.ToString("yyyy-MM-dd")
+                CreatedAt = task.CreatedAt.ToString("yyyy-MM-dd"),
+                Labels = task.Labels?.Select(MapToLabelDto).ToList() ?? new List<LabelDto>()
+            };
+        }
+
+        private static LabelDto MapToLabelDto(Label label)
+        {
+            return new LabelDto
+            {
+                Id = label.Id,
+                Name = label.Name,
+                Color = label.Color
             };
         }
 
@@ -318,6 +354,27 @@ namespace TaskifyAPI.Controllers
                 "completed" => TaskItemStatus.Completed,
                 _ => TaskItemStatus.Todo
             };
+        }
+
+        /// <summary>
+        /// Validate label ids belong to current user and return label entities
+        /// </summary>
+        private async Task<IEnumerable<Label>> LoadAndValidateLabelsAsync(string userId, IEnumerable<int> labelIds)
+        {
+            var ids = labelIds?.Distinct().ToList() ?? new List<int>();
+            if (!ids.Any())
+            {
+                return Enumerable.Empty<Label>();
+            }
+
+            var labels = await _unitOfWork.Labels.GetByIdsForUserAsync(userId, ids);
+            var foundIds = labels.Select(l => l.Id).ToHashSet();
+            var missing = ids.Where(id => !foundIds.Contains(id)).ToList();
+            if (missing.Any())
+            {
+                throw new ArgumentException($"Invalid labels: {string.Join(",", missing)}");
+            }
+            return labels;
         }
 
         /// <summary>

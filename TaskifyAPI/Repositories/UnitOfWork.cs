@@ -14,6 +14,7 @@ namespace TaskifyAPI.Repositories
         private ITaskRepository? _taskRepository;
         private IFocusSessionRepository? _focusSessionRepository;
         private IDailyGoalRepository? _dailyGoalRepository;
+        private ILabelRepository? _labelRepository;
         private bool _disposed = false;
 
         public UnitOfWork(ApplicationDbContext context)
@@ -48,6 +49,16 @@ namespace TaskifyAPI.Repositories
             {
                 _dailyGoalRepository ??= new DailyGoalRepository(_context);
                 return _dailyGoalRepository;
+            }
+        }
+
+        /// <inheritdoc />
+        public ILabelRepository Labels
+        {
+            get
+            {
+                _labelRepository ??= new LabelRepository(_context);
+                return _labelRepository;
             }
         }
 

@@ -26,14 +26,15 @@ type View =
 export default function TaskManagementApp() {
   const [currentView, setCurrentView] = useState<View>("dashboard");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const { fetchTasks, isLoading, isInitialized } = useTaskStore();
+  const { fetchTasks, fetchLabels, isLoading, isInitialized } = useTaskStore();
 
   // Fetch tasks when component mounts
   useEffect(() => {
     if (!isInitialized) {
       fetchTasks();
+      fetchLabels();
     }
-  }, [fetchTasks, isInitialized]);
+  }, [fetchTasks, fetchLabels, isInitialized]);
 
   const renderView = () => {
     switch (currentView) {

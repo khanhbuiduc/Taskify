@@ -1,6 +1,6 @@
 import { getApiUrl } from './config'
 import { getAuthHeaders, tokenStorage } from './authApi'
-import type { Task, TaskStatus, TaskPriority } from '../types'
+import type { Task, TaskStatus, TaskPriority, Label } from '../types'
 
 /**
  * Input types for API calls
@@ -13,6 +13,7 @@ export interface CreateTaskInput {
   dueDate: string
   /** Optional "HH:mm". If omitted, deadline is end of that day. */
   dueTime?: string | null
+  labelIds?: number[]
 }
 
 export interface UpdateTaskInput {
@@ -22,6 +23,7 @@ export interface UpdateTaskInput {
   status: TaskStatus
   dueDate: string
   dueTime?: string | null
+  labelIds?: number[]
 }
 
 /**

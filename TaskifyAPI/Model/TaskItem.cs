@@ -41,5 +41,10 @@ namespace TaskifyAPI.Model
         /// </summary>
         [ForeignKey(nameof(UserId))]
         public ApplicationUser? User { get; set; }
+
+        /// <summary>
+        /// Labels assigned to this task
+        /// </summary>
+        public ICollection<Label> Labels { get; set; } = new List<Label>();
     }
 }

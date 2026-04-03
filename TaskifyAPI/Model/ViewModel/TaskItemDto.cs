@@ -25,6 +25,9 @@ namespace TaskifyAPI.Model.ViewModel
 
         /// <summary>Optional time "HH:mm". If null/empty, deadline is end of that day (23:59:59).</summary>
         public string? DueTime { get; set; }
+
+        /// <summary>Label ids to attach (must belong to current user)</summary>
+        public List<int> LabelIds { get; set; } = new();
     }
 
     /// <summary>
@@ -50,6 +53,9 @@ namespace TaskifyAPI.Model.ViewModel
 
         /// <summary>Optional time "HH:mm". If null/empty, deadline is end of that day (23:59:59).</summary>
         public string? DueTime { get; set; }
+
+        /// <summary>Label ids to attach (must belong to current user)</summary>
+        public List<int> LabelIds { get; set; } = new();
     }
 
     /// <summary>
@@ -85,5 +91,35 @@ namespace TaskifyAPI.Model.ViewModel
         public string Status { get; set; } = string.Empty;
         public string DueDate { get; set; } = string.Empty;
         public string CreatedAt { get; set; } = string.Empty;
+        public List<LabelDto> Labels { get; set; } = new();
+    }
+
+    public class LabelDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
+    }
+
+    public class CreateLabelDto
+    {
+        [Required]
+        [MaxLength(60)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(20)]
+        public string Color { get; set; } = "#38bdf8";
+    }
+
+    public class UpdateLabelDto
+    {
+        [Required]
+        [MaxLength(60)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(20)]
+        public string Color { get; set; } = "#38bdf8";
     }
 }

@@ -9,6 +9,7 @@ import { PriorityBadge } from "./priority-badge"
 import { TaskModal } from "./task-modal"
 import { TaskDetailDialog } from "./task-detail-dialog"
 import { DeleteDialog } from "./delete-dialog"
+import { LabelBadge } from "./label-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -31,10 +32,11 @@ type SortOption = "dueDate" | "priority" | "status"
 type FilterOption = "all" | TaskStatus
 
 export function ListView() {
-  const { tasks, addTask, updateTask, deleteTask, updateTaskStatus } = useTaskStore()
+  const { tasks, labels, addTask, updateTask, deleteTask, updateTaskStatus } = useTaskStore()
   const [search, setSearch] = useState("")
   const [sortBy, setSortBy] = useState<SortOption>("dueDate")
   const [filterStatus, setFilterStatus] = useState<FilterOption>("all")
+  const [filterLabel, setFilterLabel] = useState<number | "all">("all")
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<"create" | "edit">("create")
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
@@ -61,6 +63,10 @@ export function ListView() {
       result = result.filter((task) => task.status === filterStatus)
     }
 
+    if (filterLabel !== "all") {
+      result = result.filter((task) => task.labels?.some((l) => l.id === filterLabel))
+    }
+
     // Sorting
     result.sort((a, b) => {
       if (sortBy === "dueDate") {
@@ -78,7 +84,7 @@ export function ListView() {
     })
 
     return result
-  }, [tasks, search, sortBy, filterStatus])
+  }, [tasks, search, sortBy, filterStatus, filterLabel])
 
   const handleCreateTask = () => {
     setSelectedTask(null)
@@ -188,6 +194,22 @@ export function ListView() {
             </Select>
           </div>
           <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Label:</span>
+            <Select value={String(filterLabel)} onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}>
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="All labels" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Labels</SelectItem>
+                {labels.map((label) => (
+                  <SelectItem key={label.id} value={String(label.id)}>
+                    {label.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Sort by:</span>
             <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
               <SelectTrigger className="w-[130px]">
@@ -256,6 +278,20 @@ export function ListView() {
                   {task.description && (
                     <p className="text-sm text-muted-foreground truncate">{stripHtml(task.description)}</p>
                   )}
+                  {task.labels?.length ? (
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {task.labels.map((label) => (
+                        <LabelBadge
+                          key={label.id}
+                          label={label}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setFilterLabel(label.id)
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">

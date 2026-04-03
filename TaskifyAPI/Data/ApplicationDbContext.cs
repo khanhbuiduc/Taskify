@@ -21,6 +21,11 @@ namespace TaskifyAPI.Data
         public DbSet<TaskItem> TaskItems { get; set; }
 
         /// <summary>
+        /// DbSet for Label entities
+        /// </summary>
+        public DbSet<Label> Labels { get; set; }
+
+        /// <summary>
         /// DbSet for FocusSession entities
         /// </summary>
         public DbSet<FocusSession> FocusSessions { get; set; }
@@ -68,6 +73,56 @@ namespace TaskifyAPI.Data
                     .HasForeignKey(e => e.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+            // Configure Label entity
+            modelBuilder.Entity<Label>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.Color)
+                    .IsRequired()
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.HasIndex(e => new { e.UserId, e.Name }).IsUnique();
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Configure many-to-many TaskItem <-> Label
+            modelBuilder.Entity<TaskItem>()
+                .HasMany(t => t.Labels)
+                .WithMany(l => l.Tasks)
+                .UsingEntity<Dictionary<string, object>>(
+                    "TaskItemLabels",
+                    j => j
+                        .HasOne<Label>()
+                        .WithMany()
+                        .HasForeignKey("LabelId")
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                        .HasOne<TaskItem>()
+                        .WithMany()
+                        .HasForeignKey("TaskItemId")
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j =>
+                    {
+                        j.HasKey("TaskItemId", "LabelId");
+                        j.HasIndex("LabelId");
+                    });
 
             // Configure FocusSession entity
             modelBuilder.Entity<FocusSession>(entity =>

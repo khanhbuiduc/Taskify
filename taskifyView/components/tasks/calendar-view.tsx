@@ -252,6 +252,11 @@ export function CalendarView() {
     }
   }
 
+  const getLabelColor = (task: Task) => {
+    const label = task.labels?.[0]
+    return label ? label.color : null
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -364,8 +369,8 @@ export function CalendarView() {
                     >
                       <span className={cn(
                         "inline-block w-1.5 h-1.5 rounded-full mr-1.5",
-                        getPriorityColor(task.priority)
-                      )} />
+                        getLabelColor(task) ? "" : getPriorityColor(task.priority)
+                      )} style={getLabelColor(task) ? { backgroundColor: getLabelColor(task) ?? undefined } : undefined} />
                       {task.title}
                     </button>
                   ))}

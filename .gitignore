@@ -1,17 +1,30 @@
 # =========================
 # .NET / C#
 # =========================
-bin/
-obj/
+[Bb]in/
+[Oo]bj/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+*.userprefs
+*.dbmdl
+*.jsproj.user
+*.sqlproj.user
+*.vstreq
+*.vstspanelndx
+*.visualstore.user
+*.lsxproj.user
 
 # =========================
 # Visual Studio
 # =========================
 .vs/
+.vs
+vshost.exe
+vshost.exe.config
+vshost.exe.manifest
+*.suo
 
 # Visual Studio Code
 .vscode/
@@ -22,16 +35,16 @@ obj/
 node_modules/
 .next/
 out/
-
-# Dependency lock files (optional - uncomment if you want to track them)
-# pnpm-lock.yaml
-# yarn.lock
-# package-lock.json
+.pnpm-debug.log*
+.npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # =========================
 # Python / Rasa
 # =========================
-# Virtual environment
 venv/
 .venv/
 __pycache__/
@@ -71,9 +84,9 @@ logs/
 *.swp
 *.tmp
 *.bak
-
-# Test coverage
 coverage/
+*.bin
+*.metadata.v10.bin
 
 # Local settings
 appsettings.Development.json

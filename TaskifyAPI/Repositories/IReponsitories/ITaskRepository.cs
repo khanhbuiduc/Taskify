@@ -38,5 +38,10 @@ namespace TaskifyAPI.Repositories.IRepositories
         /// </summary>
         /// <param name="userId">User ID</param>
         Task<IEnumerable<TaskItem>> GetByUserIdAsync(string userId);
+
+        /// <summary>
+        /// Get single task with labels loaded
+        /// </summary>
+        Task<TaskItem?> GetByIdWithLabelsAsync(int id);
     }
 }

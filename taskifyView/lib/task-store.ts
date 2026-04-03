@@ -1,20 +1,23 @@
 "use client";
 
 import { create } from "zustand";
-import type { Task, TaskStatus, TaskPriority } from "./types";
+import type { Task, TaskStatus, TaskPriority, Label } from "./types";
 import { taskApi, ApiError } from "./api/taskApi";
+import { labelApi } from "./api/labelApi";
 import { getDueDatePart, getDueTimePart } from "./utils";
 import { toast } from "sonner";
 import { useNotificationStore } from "./notification-store";
 
 interface TaskStore {
   tasks: Task[];
+  labels: Label[];
   isLoading: boolean;
   error: string | null;
   isInitialized: boolean;
 
   // Data fetching
   fetchTasks: () => Promise<void>;
+  fetchLabels: () => Promise<void>;
 
   // CRUD operations
   addTask: (task: Omit<Task, "id" | "createdAt">) => Promise<void>;
@@ -28,6 +31,10 @@ interface TaskStore {
     dueTime?: string | null,
   ) => Promise<void>;
 
+  // Labels
+  createLabel: (payload: { name: string; color: string }) => Promise<Label>;
+  setTaskLabels: (taskId: string, labelIds: number[]) => Promise<void>;
+
   // Internal helpers
   setTasks: (tasks: Task[]) => void;
   setLoading: (loading: boolean) => void;
@@ -37,6 +44,7 @@ interface TaskStore {
 
 export const useTaskStore = create<TaskStore>((set, get) => ({
   tasks: [],
+  labels: [],
   isLoading: false,
   error: null,
   isInitialized: false,
@@ -58,6 +66,19 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   },
 
   /**
+   * Fetch labels for current user
+   */
+  fetchLabels: async () => {
+    try {
+      const labels = await labelApi.getAll();
+      set({ labels });
+    } catch (error) {
+      const message = error instanceof ApiError ? error.message : "Failed to fetch labels";
+      toast.error(message);
+    }
+  },
+
+  /**
    * Create a new task
    */
   addTask: async (task) => {
@@ -67,6 +88,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
       ...task,
       id: `temp-${Date.now()}`,
       createdAt: new Date().toISOString().split("T")[0],
+      labels: task.labels ?? [],
     };
     set({ tasks: [...previousTasks, tempTask] });
 
@@ -78,6 +100,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
         status: task.status,
         dueDate: getDueDatePart(task.dueDate),
         dueTime: getDueTimePart(task.dueDate),
+        labelIds: task.labels?.map((l) => l.id) ?? [],
       });
       // Replace temp task with real task from API
       set((state) => ({
@@ -133,6 +156,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
           status: updates.status as TaskStatus,
           dueDate: getDueDatePart(updates.dueDate),
           dueTime: getDueTimePart(updates.dueDate),
+          labelIds: updates.labels?.map((l) => l.id) ?? [],
         });
         set((state) => ({
           tasks: state.tasks.map((task) =>
@@ -281,6 +305,52 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
     }
   },
 
+  /**
+   * Create label
+   */
+  createLabel: async ({ name, color }) => {
+    const label = await labelApi.create({ name, color });
+    set((state) => ({ labels: [...state.labels, label] }));
+    toast.success("Label created");
+    return label;
+  },
+
+  /**
+   * Set labels for a task via full update
+   */
+  setTaskLabels: async (taskId, labelIds) => {
+    const previous = get().tasks;
+    const task = previous.find((t) => t.id === taskId);
+    if (!task) return;
+
+    const newLabels = get().labels.filter((l) => labelIds.includes(l.id));
+    const optimisticTask = { ...task, labels: newLabels };
+    set((state) => ({
+      tasks: state.tasks.map((t) => (t.id === taskId ? optimisticTask : t)),
+    }));
+
+    try {
+      const updated = await taskApi.update(taskId, {
+        title: task.title,
+        description: task.description,
+        priority: task.priority,
+        status: task.status,
+        dueDate: getDueDatePart(task.dueDate),
+        dueTime: getDueTimePart(task.dueDate),
+        labelIds,
+      });
+      set((state) => ({
+        tasks: state.tasks.map((t) => (t.id === taskId ? updated : t)),
+      }));
+    } catch (error) {
+      set({ tasks: previous });
+      const errorMessage =
+        error instanceof ApiError ? error.message : "Failed to update labels";
+      toast.error(errorMessage);
+      throw error;
+    }
+  },
+
   // Internal helpers
   setTasks: (tasks) => set({ tasks }),
   setLoading: (isLoading) => set({ isLoading }),
@@ -293,6 +363,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   reset: () => {
     set({
       tasks: [],
+      labels: [],
       isLoading: false,
       error: null,
       isInitialized: false,

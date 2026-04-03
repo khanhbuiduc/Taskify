@@ -9,6 +9,7 @@ import { PriorityBadge } from "./priority-badge";
 import { TaskModal } from "./task-modal";
 import { TaskDetailDialog } from "./task-detail-dialog";
 import { DeleteDialog } from "./delete-dialog";
+import { LabelBadge } from "./label-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -48,6 +49,7 @@ interface ColumnConfig {
 export function DashboardView() {
   const {
     tasks,
+    labels,
     addTask,
     updateTask,
     deleteTask,
@@ -69,6 +71,7 @@ export function DashboardView() {
   const [filterStatus, setFilterStatus] = useState<FilterOption>("all");
   const [sortBy, setSortBy] = useState<SortOption>("dueDate");
   const [groupBy, setGroupBy] = useState<GroupByOption>("status");
+  const [filterLabel, setFilterLabel] = useState<number | "all">("all");
 
   const now = new Date();
 
@@ -175,15 +178,23 @@ export function DashboardView() {
     const result: Record<string, Task[]> = {};
     bottomColumns.forEach((col) => {
       const filtered = tasks.filter(col.filter);
-      result[col.id] = getFilteredTasks(filtered);
+      const afterLabel =
+        filterLabel === "all"
+          ? filtered
+          : filtered.filter((t) => t.labels?.some((l) => l.id === filterLabel));
+      result[col.id] = getFilteredTasks(afterLabel);
     });
     return result;
-  }, [tasks, bottomColumns, filterStatus, sortBy]);
+  }, [tasks, bottomColumns, filterStatus, sortBy, filterLabel]);
 
   // Filtered and sorted overdue tasks for inline list
   const filteredOverdueTasks = useMemo(() => {
-    return getFilteredTasks(overdueTasks);
-  }, [overdueTasks, filterStatus, sortBy]);
+    const list =
+      filterLabel === "all"
+        ? overdueTasks
+        : overdueTasks.filter((t) => t.labels?.some((l) => l.id === filterLabel));
+    return getFilteredTasks(list);
+  }, [overdueTasks, filterStatus, sortBy, filterLabel]);
 
   const handleCreateTask = () => {
     setSelectedTask(null);
@@ -408,27 +419,34 @@ export function DashboardView() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            {filteredOverdueTasks.length === 0 ? (
-              <p className="py-4 text-center text-sm text-muted-foreground">
-                No overdue tasks
-              </p>
-            ) : (
-              filteredOverdueTasks.map((task) => (
+                {filteredOverdueTasks.length === 0 ? (
+                  <p className="py-4 text-center text-sm text-muted-foreground">
+                    No overdue tasks
+                  </p>
+                ) : (
+                  filteredOverdueTasks.map((task) => (
                 <div
                   key={task.id}
                   onClick={() => handleTaskClick(task)}
-                  className="group flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-3 transition-all hover:bg-muted/50 cursor-pointer"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground truncate">
-                      {task.title}
-                    </p>
-                    {task.description && (
-                      <p className="text-sm text-muted-foreground truncate">
-                        {stripHtml(task.description)}
-                      </p>
-                    )}
-                  </div>
+                      className="group flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-3 transition-all hover:bg-muted/50 cursor-pointer"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-foreground truncate">
+                          {task.title}
+                        </p>
+                        {task.description && (
+                          <p className="text-sm text-muted-foreground truncate">
+                            {stripHtml(task.description)}
+                          </p>
+                        )}
+                        {task.labels?.length ? (
+                          <div className="mt-1 flex flex-wrap gap-1">
+                            {task.labels.map((label) => (
+                              <LabelBadge key={label.id} label={label} />
+                            ))}
+                          </div>
+                        ) : null}
+                      </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <PriorityBadge priority={task.priority} />
                     <div className="flex items-center gap-1 text-xs text-destructive">
@@ -460,6 +478,25 @@ export function DashboardView() {
                 <SelectItem value="todo">Todo</SelectItem>
                 <SelectItem value="in-progress">In Progress</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground">Label:</span>
+            <Select
+              value={String(filterLabel)}
+              onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}
+            >
+              <SelectTrigger className="w-[140px]">
+                <SelectValue placeholder="All labels" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Labels</SelectItem>
+                {labels.map((label) => (
+                  <SelectItem key={label.id} value={String(label.id)}>
+                    {label.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -555,6 +592,13 @@ export function DashboardView() {
                       >
                         {task.title}
                       </p>
+                      {task.labels?.length ? (
+                        <div className="mt-1 flex flex-wrap gap-1">
+                          {task.labels.map((label) => (
+                            <LabelBadge key={label.id} label={label} />
+                          ))}
+                        </div>
+                      ) : null}
                       <div className="mt-2 flex items-center gap-2">
                         <PriorityBadge priority={task.priority} />
                         <span

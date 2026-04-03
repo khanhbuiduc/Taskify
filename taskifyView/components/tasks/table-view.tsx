@@ -8,6 +8,7 @@ import { StatusBadge } from "./status-badge"
 import { TaskModal } from "./task-modal"
 import { TaskDetailDialog } from "./task-detail-dialog"
 import { DeleteDialog } from "./delete-dialog"
+import { LabelBadge } from "./label-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
@@ -39,10 +40,11 @@ type SortField = "title" | "priority" | "status" | "dueDate" | "createdAt"
 type SortDirection = "asc" | "desc"
 
 export function TableView() {
-  const { tasks, addTask, updateTask, deleteTask } = useTaskStore()
+  const { tasks, labels, addTask, updateTask, deleteTask } = useTaskStore()
   const [search, setSearch] = useState("")
   const [sortField, setSortField] = useState<SortField>("dueDate")
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
+  const [filterLabel, setFilterLabel] = useState<number | "all">("all")
   const [modalOpen, setModalOpen] = useState(false)
   const [modalMode, setModalMode] = useState<"create" | "edit">("create")
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
@@ -62,6 +64,10 @@ export function TableView() {
           task.title.toLowerCase().includes(q) ||
           stripHtml(task.description).toLowerCase().includes(q)
       )
+    }
+
+    if (filterLabel !== "all") {
+      result = result.filter((task) => task.labels?.some((l) => l.id === filterLabel))
     }
 
     // Sorting
@@ -94,7 +100,7 @@ export function TableView() {
     })
 
     return result
-  }, [tasks, search, sortField, sortDirection])
+  }, [tasks, search, sortField, sortDirection, filterLabel])
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -212,6 +218,22 @@ export function TableView() {
             className="pl-9"
           />
         </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Label:</span>
+          <Select value={String(filterLabel)} onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}>
+            <SelectTrigger className="w-[140px]">
+              <SelectValue placeholder="All labels" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Labels</SelectItem>
+              {labels.map((label) => (
+                <SelectItem key={label.id} value={String(label.id)}>
+                  {label.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Button onClick={handleCreateTask} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
           <Plus className="h-4 w-4" />
           Add Task
@@ -301,6 +323,20 @@ export function TableView() {
                             {stripHtml(task.description)}
                           </p>
                         )}
+                        {task.labels?.length ? (
+                          <div className="mt-1 flex flex-wrap gap-1">
+                            {task.labels.map((label) => (
+                              <LabelBadge
+                                key={label.id}
+                                label={label}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setFilterLabel(label.id)
+                                }}
+                              />
+                            ))}
+                          </div>
+                        ) : null}
                       </div>
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
