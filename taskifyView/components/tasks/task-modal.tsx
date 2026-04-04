@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { getDueDatePart, getDueTimePart, cn } from "@/lib/utils"
-import type { Task, TaskPriority, TaskStatus, Label } from "@/lib/types"
+import type { Task, TaskPriority, TaskStatus } from "@/lib/types"
 import { useTaskStore } from "@/lib/task-store"
 
 /** Today in local YYYY-MM-DD (for default due date when creating outside calendar). */

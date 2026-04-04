@@ -3,11 +3,10 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/dashboard/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { TopBar } from "@/components/dashboard/top-bar";
-import { ListView } from "@/components/tasks/list-view";
-import { CalendarView } from "@/components/tasks/calendar-view";
-import { DashboardView } from "@/components/tasks/dashboard-view";
-import { TableView } from "@/components/tasks/table-view";
+import { TasksContainer } from "@/components/tasks/tasks-container";
+import { ComingSoonView } from "@/components/coming-soon/coming-soon-view";
 import { AIChatView } from "@/components/tasks/ai-chat-view";
 import { SettingsView } from "@/components/settings/settings-view";
 import { FocusView } from "@/components/focus/focus-view";
@@ -15,17 +14,16 @@ import { AuthGuard } from "@/components/auth-guard";
 import { useTaskStore } from "@/lib/task-store";
 
 type View =
-  | "dashboard"
-  | "list"
-  | "calendar"
-  | "table"
+  | "tasks"
+  | "notes"
+  | "events"
+  | "finance"
   | "ai-chat"
   | "settings"
   | "focus";
 
 export default function TaskManagementApp() {
-  const [currentView, setCurrentView] = useState<View>("dashboard");
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [currentView, setCurrentView] = useState<View>("tasks");
   const { fetchTasks, fetchLabels, isLoading, isInitialized } = useTaskStore();
 
   // Fetch tasks when component mounts
@@ -38,14 +36,14 @@ export default function TaskManagementApp() {
 
   const renderView = () => {
     switch (currentView) {
-      case "dashboard":
-        return <DashboardView />;
-      case "list":
-        return <ListView />;
-      case "calendar":
-        return <CalendarView />;
-      case "table":
-        return <TableView />;
+      case "tasks":
+        return <TasksContainer />;
+      case "notes":
+        return <ComingSoonView title="Notes" />;
+      case "events":
+        return <ComingSoonView title="Events" />;
+      case "finance":
+        return <ComingSoonView title="Finance" />;
       case "ai-chat":
         return <AIChatView />;
       case "settings":
@@ -53,32 +51,25 @@ export default function TaskManagementApp() {
       case "focus":
         return <FocusView />;
       default:
-        return <DashboardView />;
+        return <TasksContainer />;
     }
   };
 
   return (
     <AuthGuard>
-      <div className="min-h-screen bg-background">
+      <SidebarProvider>
         <Sidebar
           currentView={currentView}
           onViewChange={setCurrentView}
-          isCollapsed={isSidebarCollapsed}
-          onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         />
-        <main
-          className={cn(
-            "transition-all duration-300",
-            isSidebarCollapsed ? "ml-16" : "ml-64",
-          )}
-        >
+        <SidebarInset>
           <TopBar
             currentView={currentView}
             onOpenSettings={() => setCurrentView("settings")}
           />
-          <div className="p-6">{renderView()}</div>
-        </main>
-      </div>
+          <div className="p-6 min-h-0 flex-1">{renderView()}</div>
+        </SidebarInset>
+      </SidebarProvider>
     </AuthGuard>
   );
 }

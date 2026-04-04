@@ -24,19 +24,19 @@ import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 type View =
-  | "dashboard"
-  | "list"
-  | "calendar"
-  | "table"
+  | "tasks"
+  | "notes"
+  | "events"
+  | "finance"
   | "ai-chat"
   | "settings"
   | "focus";
 
 const viewTitles: Record<View, { title: string; subtitle: string }> = {
-  dashboard: { title: "Dashboard", subtitle: "Overview of your tasks" },
-  list: { title: "List View", subtitle: "Manage tasks in a list format" },
-  calendar: { title: "Calendar", subtitle: "View tasks by date" },
-  table: { title: "Table View", subtitle: "View tasks in a data table" },
+  tasks: { title: "Tasks", subtitle: "Manage your tasks and projects" },
+  notes: { title: "Notes", subtitle: "Capture your thoughts and ideas" },
+  events: { title: "Events", subtitle: "Manage your schedule and events" },
+  finance: { title: "Finance", subtitle: "Track your expenses and budget" },
   "ai-chat": {
     title: "AI Assistant",
     subtitle: "Chat with AI to manage tasks",
@@ -133,7 +133,7 @@ export function TopBar({
       {/* Page Title */}
       <div>
         <h1 className="text-xl font-semibold text-foreground">{title}</h1>
-        <p className="text-sm text-muted-foreground">{subtitle}</p>
+        <p className="text-sm text-muted-foreground hidden sm:block">{subtitle}</p>
       </div>
 
       {/* Actions */}
