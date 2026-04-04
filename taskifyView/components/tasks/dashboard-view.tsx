@@ -567,13 +567,13 @@ export function DashboardView() {
                   </span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-2 max-h-[500px] overflow-y-auto">
                 {colTasks.length === 0 ? (
                   <p className="py-8 text-center text-sm text-muted-foreground">
                     No tasks
                   </p>
                 ) : (
-                  colTasks.slice(0, 5).map((task) => (
+                  colTasks.map((task) => (
                     <div
                       key={task.id}
                       draggable
@@ -614,11 +614,6 @@ export function DashboardView() {
                       </div>
                     </div>
                   ))
-                )}
-                {colTasks.length > 5 && (
-                  <p className="text-center text-sm text-muted-foreground py-2">
-                    +{colTasks.length - 5} more tasks
-                  </p>
                 )}
               </CardContent>
             </Card>

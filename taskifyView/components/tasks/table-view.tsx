@@ -256,6 +256,9 @@ export function TableView() {
                   </button>
                 </TableHead>
                 <TableHead>
+                  Label
+                </TableHead>
+                <TableHead>
                   <button
                     onClick={() => handleSort("priority")}
                     className="flex items-center gap-2 hover:text-foreground"
@@ -296,7 +299,7 @@ export function TableView() {
             <TableBody>
               {filteredAndSortedTasks.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
+                  <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
                     {search ? "No tasks found matching your search." : "No tasks yet. Create one to get started."}
                   </TableCell>
                 </TableRow>
@@ -311,7 +314,7 @@ export function TableView() {
                     )}
                   >
                     <TableCell>
-                      <div className="max-w-[300px]">
+                      <div className="max-w-[250px]">
                         <p className={cn(
                           "font-medium truncate",
                           task.status === "completed" && "line-through"
@@ -323,21 +326,25 @@ export function TableView() {
                             {stripHtml(task.description)}
                           </p>
                         )}
-                        {task.labels?.length ? (
-                          <div className="mt-1 flex flex-wrap gap-1">
-                            {task.labels.map((label) => (
-                              <LabelBadge
-                                key={label.id}
-                                label={label}
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  setFilterLabel(label.id)
-                                }}
-                              />
-                            ))}
-                          </div>
-                        ) : null}
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      {task.labels?.length ? (
+                        <div className="flex flex-wrap gap-1 max-w-[200px]">
+                          {task.labels.map((label) => (
+                            <LabelBadge
+                              key={label.id}
+                              label={label}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setFilterLabel(label.id)
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">-</span>
+                      )}
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <Select
