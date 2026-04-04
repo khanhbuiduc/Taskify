@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
   Settings,
@@ -43,27 +44,25 @@ type View =
   | "settings"
   | "focus";
 
-const productivityItems: { icon: React.ElementType; label: string; view: View }[] = [
-  { icon: CheckSquare, label: "Task", view: "tasks" },
-  { icon: Book, label: "Notes", view: "notes" },
-  { icon: CalendarDays, label: "Events", view: "events" },
-  { icon: DollarSign, label: "Finance", view: "finance" },
+const productivityItems: { icon: React.ElementType; label: string; href: string }[] = [
+  { icon: CheckSquare, label: "Task", href: "/tasks" },
+  { icon: Book, label: "Notes", href: "/notes" },
+  { icon: CalendarDays, label: "Events", href: "/events" },
+  { icon: DollarSign, label: "Finance", href: "/finance" },
 ];
 
 interface SidebarProps {
-  currentView: View;
-  onViewChange: (view: View) => void;
+  currentView?: View;
+  onViewChange?: React.Dispatch<React.SetStateAction<View>>;
   // deprecated unused
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }
 
-export function Sidebar({
-  currentView,
-  onViewChange,
-}: SidebarProps) {
+export function Sidebar({}: SidebarProps = {}) {
   const router = useRouter();
   const { user, logout } = useAuthStore();
+  const pathname = usePathname();
   const { state } = useSidebar();
 
   const getInitials = (email: string, userName?: string) => {
@@ -88,10 +87,7 @@ export function Sidebar({
     <UISidebar collapsible="icon" className="border-border">
       <SidebarHeader className="h-16 flex flex-row items-center justify-between px-3 py-2">
         {state === "expanded" && (
-          <div 
-            className="flex flex-1 items-center gap-3 overflow-hidden cursor-pointer hover:opacity-80 px-1"
-            onClick={() => onViewChange("tasks")}
-          >
+          <Link href="/tasks" className="flex flex-1 items-center gap-3 overflow-hidden cursor-pointer hover:opacity-80 px-1">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground">
               <Command className="size-5" />
             </div>
@@ -99,7 +95,7 @@ export function Sidebar({
               <span className="truncate font-bold text-lg">TaskFlow</span>
               <span className="truncate text-xs text-muted-foreground">Workspace</span>
             </div>
-          </div>
+          </Link>
         )}
         <SidebarTrigger className={cn("shrink-0", state === "collapsed" && "mx-auto")} />
       </SidebarHeader>
@@ -111,13 +107,15 @@ export function Sidebar({
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
-                isActive={currentView === "ai-chat"}
-                onClick={() => onViewChange("ai-chat")}
+                asChild
+                isActive={pathname.startsWith("/ai")}
                 tooltip="AI Chat"
                 className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500"
               >
-                <MessageSquare className="size-4" />
-                <span>AI Chat</span>
+                <Link href="/ai">
+                  <MessageSquare className="size-4" />
+                  <span>AI Chat</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -128,15 +126,17 @@ export function Sidebar({
           <SidebarGroupLabel>Productivity</SidebarGroupLabel>
           <SidebarMenu>
             {productivityItems.map((item) => (
-              <SidebarMenuItem key={item.view}>
+              <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
-                  isActive={currentView === item.view}
-                  onClick={() => onViewChange(item.view)}
+                  asChild
+                  isActive={pathname.startsWith(item.href)}
                   tooltip={item.label}
                   className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500"
                 >
-                  <item.icon className="size-4" />
-                  <span>{item.label}</span>
+                  <Link href={item.href}>
+                    <item.icon className="size-4" />
+                    <span>{item.label}</span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -149,13 +149,15 @@ export function Sidebar({
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton
-                isActive={currentView === "focus"}
-                onClick={() => onViewChange("focus")}
+                asChild
+                isActive={pathname.startsWith("/focus")}
                 tooltip="Focus Session"
                 className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500"
               >
-                <Timer className="size-4" />
-                <span>Focus Session</span>
+                <Link href="/focus">
+                  <Timer className="size-4" />
+                  <span>Focus Session</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -166,13 +168,15 @@ export function Sidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              onClick={() => onViewChange("settings")}
-              isActive={currentView === "settings"}
+              asChild
+              isActive={pathname.startsWith("/settings")}
               tooltip="Settings"
               className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500"
             >
-              <Settings className="size-4" />
-              <span>Settings</span>
+              <Link href="/settings">
+                <Settings className="size-4" />
+                <span>Settings</span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
@@ -199,24 +203,26 @@ export function Sidebar({
           {user && (
             <SidebarMenuItem className="mt-4">
               <SidebarMenuButton
+                asChild
                 size="lg"
-                onClick={() => onViewChange("settings")}
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border border-transparent"
               >
-                <Avatar className="h-8 w-8 rounded-lg shrink-0">
-                  {getAvatarUrl() && (
-                    <AvatarImage src={getAvatarUrl()!} alt={getDisplayName()} />
-                  )}
-                  <AvatarFallback className="bg-accent/20 text-accent text-xs font-medium rounded-lg">
-                    {getInitials(user.email, user.userName)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{getDisplayName()}</span>
-                  <span className="truncate text-xs opacity-70">
-                    {user.roles.join(", ")}
-                  </span>
-                </div>
+                <Link href="/settings">
+                  <Avatar className="h-8 w-8 rounded-lg shrink-0">
+                    {getAvatarUrl() && (
+                      <AvatarImage src={getAvatarUrl()!} alt={getDisplayName()} />
+                    )}
+                    <AvatarFallback className="bg-accent/20 text-accent text-xs font-medium rounded-lg">
+                      {getInitials(user.email, user.userName)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-semibold">{getDisplayName()}</span>
+                    <span className="truncate text-xs opacity-70">
+                      {user.roles.join(", ")}
+                    </span>
+                  </div>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           )}

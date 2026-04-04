@@ -5,11 +5,11 @@ import React from "react";
 import { useState, useMemo } from "react";
 import { useTaskStore } from "@/lib/task-store";
 import type { Task, TaskStatus, TaskPriority } from "@/lib/types";
-import { PriorityBadge } from "./priority-badge";
-import { TaskModal } from "./task-modal";
-import { TaskDetailDialog } from "./task-detail-dialog";
-import { DeleteDialog } from "./delete-dialog";
-import { LabelBadge } from "./label-badge";
+import { PriorityBadge } from "@/components/task-ui/priority-badge";
+import { TaskModal } from "@/components/task-ui/task-modal";
+import { TaskDetailDialog } from "@/components/task-ui/task-detail-dialog";
+import { DeleteDialog } from "@/components/task-ui/delete-dialog";
+import { LabelBadge } from "@/components/task-ui/label-badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -46,7 +46,7 @@ interface ColumnConfig {
   filter: (task: Task) => boolean;
 }
 
-export function DashboardView() {
+export default function DashboardTasksPage() {
   const {
     tasks,
     labels,
@@ -214,12 +214,6 @@ export function DashboardView() {
       setModalMode("edit");
       setModalOpen(true);
     }
-  };
-
-  const handleEditTask = (task: Task) => {
-    setSelectedTask(task);
-    setModalMode("edit");
-    setModalOpen(true);
   };
 
   const handleDeleteFromDetail = () => {

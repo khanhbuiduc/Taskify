@@ -5,9 +5,9 @@ import React from "react"
 import { useState, useMemo } from "react"
 import { useTaskStore } from "@/lib/task-store"
 import type { Task, TaskStatus } from "@/lib/types"
-import { TaskModal } from "./task-modal"
-import { TaskDetailDialog } from "./task-detail-dialog"
-import { DeleteDialog } from "./delete-dialog"
+import { TaskModal } from "@/components/task-ui/task-modal"
+import { TaskDetailDialog } from "@/components/task-ui/task-detail-dialog"
+import { DeleteDialog } from "@/components/task-ui/delete-dialog"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { cn, getDueDatePart, getDueTimePart } from "@/lib/utils"
@@ -16,7 +16,7 @@ import {
   ChevronRight,
 } from "lucide-react"
 
-export function CalendarView() {
+export default function CalendarTasksPage() {
   const { tasks, addTask, updateTask, deleteTask, updateTaskDueDate } = useTaskStore()
   const [currentDate, setCurrentDate] = useState(new Date())
   const [viewMode, setViewMode] = useState<"month" | "week">("month")
@@ -170,12 +170,6 @@ export function CalendarView() {
       setModalMode("edit")
       setModalOpen(true)
     }
-  }
-
-  const handleEditTask = (task: Task) => {
-    setSelectedTask(task)
-    setModalMode("edit")
-    setModalOpen(true)
   }
 
   const handleDeleteFromDetail = () => {

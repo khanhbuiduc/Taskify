@@ -1,11 +1,13 @@
 "use client"
 
+import React from "react"
+
 import type { Label } from "@/lib/types"
 import { cn } from "@/lib/utils"
 
 const paletteFallback = "#94a3b8"
 
-export function LabelBadge({ label, onClick }: { label: Label; onClick?: () => void }) {
+export function LabelBadge({ label, onClick }: { label: Label; onClick?: (e: React.MouseEvent) => void }) {
   const style = { backgroundColor: label.color || paletteFallback }
   return (
     <button

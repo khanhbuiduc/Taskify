@@ -3,12 +3,13 @@
 import React from "react"
 
 import { useState, useRef, useEffect } from "react"
-import { Send, Bot, User, Sparkles } from "lucide-react"
+import { Send, Bot, User, Sparkles, Circle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { sendChatMessage } from "@/lib/api/chatApi"
+import { PriorityBadge } from "@/components/task-ui/priority-badge"
 
 interface Message {
   id: string
@@ -24,7 +25,37 @@ const suggestedPrompts = [
   "Create a new task for tomorrow",
 ]
 
-export function AIChatView() {
+const renderMessageContent = (content: string) => {
+  const taskRegex = /✅\s*Đã tạo task:\s*\*\*(.*?)\*\*(?:.*?Độ ưu tiên:\s*([^\n]+))?/i;
+  const match = content.match(taskRegex);
+
+  if (match) {
+    const title = match[1].trim();
+    const priorityRaw = match[2]?.trim() || '';
+    
+    let priority: "low" | "medium" | "high" = "medium";
+    if (priorityRaw.toLowerCase().includes("cao")) priority = "high";
+    if (priorityRaw.toLowerCase().includes("thấp")) priority = "low";
+    if (priorityRaw.toLowerCase().includes("trung bình")) priority = "medium";
+    
+    return (
+      <div className="flex flex-col gap-2 min-w-[240px] max-w-sm w-full mt-1 mb-1">
+        <p className="text-sm font-medium">✅ Đã tạo task</p>
+        <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3 shadow-sm text-foreground">
+          <Circle className="h-5 w-5 shrink-0 text-muted-foreground" />
+          <p className="flex-1 font-medium truncate text-sm">
+             {title}
+          </p>
+          <PriorityBadge priority={priority} />
+        </div>
+      </div>
+    );
+  }
+
+  return <p className="text-sm leading-relaxed">{content}</p>;
+}
+
+export default function AILayoutPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
@@ -151,7 +182,7 @@ export function AIChatView() {
                     : "bg-secondary text-secondary-foreground"
                 )}
               >
-                <p className="text-sm leading-relaxed">{message.content}</p>
+                {renderMessageContent(message.content)}
                 <p
                   className={cn(
                     "text-xs mt-1",

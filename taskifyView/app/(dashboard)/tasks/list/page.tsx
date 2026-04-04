@@ -5,11 +5,11 @@ import React from "react"
 import { useState, useMemo } from "react"
 import { useTaskStore } from "@/lib/task-store"
 import type { Task, TaskStatus } from "@/lib/types"
-import { PriorityBadge } from "./priority-badge"
-import { TaskModal } from "./task-modal"
-import { TaskDetailDialog } from "./task-detail-dialog"
-import { DeleteDialog } from "./delete-dialog"
-import { LabelBadge } from "./label-badge"
+import { PriorityBadge } from "@/components/task-ui/priority-badge"
+import { TaskModal } from "@/components/task-ui/task-modal"
+import { TaskDetailDialog } from "@/components/task-ui/task-detail-dialog"
+import { DeleteDialog } from "@/components/task-ui/delete-dialog"
+import { LabelBadge } from "@/components/task-ui/label-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -31,7 +31,7 @@ import {
 type SortOption = "dueDate" | "priority" | "status"
 type FilterOption = "all" | TaskStatus
 
-export function ListView() {
+export default function ListTasksPage() {
   const { tasks, labels, addTask, updateTask, deleteTask, updateTaskStatus } = useTaskStore()
   const [search, setSearch] = useState("")
   const [sortBy, setSortBy] = useState<SortOption>("dueDate")
@@ -106,12 +106,6 @@ export function ListView() {
     }
   }
 
-  const handleEditTask = (task: Task) => {
-    setSelectedTask(task)
-    setModalMode("edit")
-    setModalOpen(true)
-  }
-
   const handleDeleteFromDetail = () => {
     if (detailTask) {
       setTaskToDelete(detailTask)
@@ -152,11 +146,6 @@ export function ListView() {
   const handleStatusToggle = (task: Task) => {
     const newStatus: TaskStatus = task.status === "completed" ? "todo" : "completed"
     updateTaskStatus(task.id, newStatus)
-  }
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr)
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   }
 
   const isOverdue = (dueDate: string, status: TaskStatus) => {

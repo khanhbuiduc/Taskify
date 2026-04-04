@@ -3,12 +3,12 @@
 import { useState, useMemo } from "react"
 import { useTaskStore } from "@/lib/task-store"
 import type { Task, TaskStatus, TaskPriority } from "@/lib/types"
-import { PriorityBadge } from "./priority-badge"
-import { StatusBadge } from "./status-badge"
-import { TaskModal } from "./task-modal"
-import { TaskDetailDialog } from "./task-detail-dialog"
-import { DeleteDialog } from "./delete-dialog"
-import { LabelBadge } from "./label-badge"
+import { PriorityBadge } from "@/components/task-ui/priority-badge"
+import { StatusBadge } from "@/components/task-ui/status-badge"
+import { TaskModal } from "@/components/task-ui/task-modal"
+import { TaskDetailDialog } from "@/components/task-ui/task-detail-dialog"
+import { DeleteDialog } from "@/components/task-ui/delete-dialog"
+import { LabelBadge } from "@/components/task-ui/label-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
@@ -39,7 +39,7 @@ import {
 type SortField = "title" | "priority" | "status" | "dueDate" | "createdAt"
 type SortDirection = "asc" | "desc"
 
-export function TableView() {
+export default function TableTasksPage() {
   const { tasks, labels, addTask, updateTask, deleteTask } = useTaskStore()
   const [search, setSearch] = useState("")
   const [sortField, setSortField] = useState<SortField>("dueDate")
@@ -138,12 +138,6 @@ export function TableView() {
       setModalMode("edit")
       setModalOpen(true)
     }
-  }
-
-  const handleEditTask = (task: Task) => {
-    setSelectedTask(task)
-    setModalMode("edit")
-    setModalOpen(true)
   }
 
   const handleDeleteFromDetail = () => {

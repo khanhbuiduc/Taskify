@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Bell, Plus, Check, Trash2, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,24 +32,25 @@ type View =
   | "settings"
   | "focus";
 
-const viewTitles: Record<View, { title: string; subtitle: string }> = {
-  tasks: { title: "Tasks", subtitle: "Manage your tasks and projects" },
-  notes: { title: "Notes", subtitle: "Capture your thoughts and ideas" },
-  events: { title: "Events", subtitle: "Manage your schedule and events" },
-  finance: { title: "Finance", subtitle: "Track your expenses and budget" },
-  "ai-chat": {
+const viewTitles: Record<string, { title: string; subtitle: string }> = {
+  "/tasks": { title: "Tasks", subtitle: "Manage your tasks and projects" },
+  "/notes": { title: "Notes", subtitle: "Capture your thoughts and ideas" },
+  "/events": { title: "Events", subtitle: "Manage your schedule and events" },
+  "/finance": { title: "Finance", subtitle: "Track your expenses and budget" },
+  "/ai": {
     title: "AI Assistant",
     subtitle: "Chat with AI to manage tasks",
   },
-  settings: {
+  "/settings": {
     title: "Account Settings",
     subtitle: "Manage your account and preferences",
   },
-  focus: {
+  "/focus": {
     title: "Focus Session",
     subtitle: "Stay focused and productive",
   },
 };
+
 
 // Helper function to format time ago
 function formatTimeAgo(dateString: string): string {
@@ -65,18 +66,39 @@ function formatTimeAgo(dateString: string): string {
 }
 
 interface TopBarProps {
-  currentView: View;
-  onNewTask?: () => void;
+  currentView?: View;
   onOpenSettings?: () => void;
+  onNewTask?: () => void;
 }
 
 export function TopBar({
   currentView,
-  onNewTask,
   onOpenSettings,
-}: TopBarProps) {
+  onNewTask,
+}: TopBarProps = {}) {
   const router = useRouter();
-  const { title, subtitle } = viewTitles[currentView];
+  const pathname = usePathname();
+  
+  const viewPathMap: Record<View, string> = {
+    tasks: "/tasks",
+    notes: "/notes",
+    events: "/events",
+    finance: "/finance",
+    "ai-chat": "/ai",
+    settings: "/settings",
+    focus: "/focus",
+  };
+
+  const activePath = currentView ? viewPathMap[currentView] : pathname;
+
+  let titleData = { title: "TaskFlow", subtitle: "Workspace" };
+  for (const [path, data] of Object.entries(viewTitles)) {
+    if (activePath.startsWith(path)) {
+      titleData = data;
+      break;
+    }
+  }
+  const { title, subtitle } = titleData;
   const { user, logout } = useAuthStore();
   const {
     notifications,
@@ -139,7 +161,7 @@ export function TopBar({
       {/* Actions */}
       <div className="flex items-center gap-3">
         {/* Add Task Button */}
-        {onNewTask && currentView !== "settings" && (
+        {onNewTask && !pathname.startsWith("/settings") && (
           <Button
             onClick={onNewTask}
             size="sm"
@@ -281,10 +303,10 @@ export function TopBar({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={onOpenSettings}>
+            <DropdownMenuItem onClick={() => onOpenSettings?.() ?? router.push("/settings")}>
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onOpenSettings}>
+            <DropdownMenuItem onClick={() => onOpenSettings?.() ?? router.push("/settings")}>
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
