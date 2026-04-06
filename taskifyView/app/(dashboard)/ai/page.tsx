@@ -1,22 +1,30 @@
 "use client"
 
-import React from "react"
-
-import { useState, useRef, useEffect } from "react"
-import { Send, Bot, User, Sparkles, Circle } from "lucide-react"
+import React, { useState, useRef, useEffect } from "react"
+import { Send, Bot, User, Sparkles, Circle, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { sendChatMessage } from "@/lib/api/chatApi"
+import { useTaskStore } from "@/lib/task-store"
+import type { Task } from "@/lib/types"
+import {
+  parseIntent,
+  matchTasks,
+  isAffirmative,
+  isNegative,
+  buildDefaultTask,
+} from "@/lib/chat-task-orchestrator"
 import { PriorityBadge } from "@/components/task-ui/priority-badge"
 
-interface Message {
-  id: string
-  role: "user" | "assistant"
-  content: string
-  timestamp: Date
-}
+type ChatMessage =
+  | { id: string; role: "user" | "assistant"; type: "text"; content: string; timestamp: Date }
+  | { id: string; role: "assistant"; type: "task-list"; title: string; tasks: Task[]; action: "delete" | "list"; timestamp: Date }
+  | { id: string; role: "assistant"; type: "result"; status: "success" | "error"; action: string; content: string; timestamp: Date }
+
+type PendingDelete = { tasks: Task[] }
 
 const suggestedPrompts = [
   "What tasks are overdue?",
@@ -25,41 +33,26 @@ const suggestedPrompts = [
   "Create a new task for tomorrow",
 ]
 
-const renderMessageContent = (content: string) => {
-  const taskRegex = /✅\s*Đã tạo task:\s*\*\*(.*?)\*\*(?:.*?Độ ưu tiên:\s*([^\n]+))?/i;
-  const match = content.match(taskRegex);
-
-  if (match) {
-    const title = match[1].trim();
-    const priorityRaw = match[2]?.trim() || '';
-    
-    let priority: "low" | "medium" | "high" = "medium";
-    if (priorityRaw.toLowerCase().includes("cao")) priority = "high";
-    if (priorityRaw.toLowerCase().includes("thấp")) priority = "low";
-    if (priorityRaw.toLowerCase().includes("trung bình")) priority = "medium";
-    
-    return (
-      <div className="flex flex-col gap-2 min-w-[240px] max-w-sm w-full mt-1 mb-1">
-        <p className="text-sm font-medium">✅ Đã tạo task</p>
-        <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3 shadow-sm text-foreground">
-          <Circle className="h-5 w-5 shrink-0 text-muted-foreground" />
-          <p className="flex-1 font-medium truncate text-sm">
-             {title}
-          </p>
-          <PriorityBadge priority={priority} />
-        </div>
-      </div>
-    );
-  }
-
-  return <p className="text-sm leading-relaxed">{content}</p>;
-}
+const renderTextMessage = (content: string) => (
+  <p className="text-sm leading-relaxed whitespace-pre-line">{content}</p>
+)
 
 export default function AILayoutPage() {
-  const [messages, setMessages] = useState<Message[]>([
+  const {
+    tasks,
+    fetchTasks,
+    fetchLabels,
+    addTask,
+    updateTask,
+    deleteTask,
+    isInitialized,
+  } = useTaskStore()
+
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "1",
       role: "assistant",
+      type: "text",
       content:
         "Hello! I'm your AI assistant for Taskify. I can help you manage tasks, analyze your productivity, and answer questions about your projects. How can I help you today?",
       timestamp: new Date(),
@@ -67,6 +60,8 @@ export default function AILayoutPage() {
   ])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null)
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -77,12 +72,69 @@ export default function AILayoutPage() {
     scrollToBottom()
   }, [messages])
 
+  useEffect(() => {
+    if (!isInitialized) {
+      fetchTasks()
+      fetchLabels()
+    }
+  }, [fetchTasks, fetchLabels, isInitialized])
+
+  const appendMessage = (msg: ChatMessage | ChatMessage[]) => {
+    setMessages((prev) => [...prev, ...(Array.isArray(msg) ? msg : [msg])])
+  }
+
+  const handleDeleteConfirm = async () => {
+    if (!pendingDelete) return
+    const ids = selectedIds.length ? selectedIds : pendingDelete.tasks.map((t) => t.id)
+    if (!ids.length) return
+    try {
+      for (const id of ids) {
+        await deleteTask(id)
+      }
+      appendMessage({
+        id: `${Date.now()}`,
+        role: "assistant",
+        type: "result",
+        status: "success",
+        action: "delete",
+        content: `Deleted ${ids.length} task(s).`,
+        timestamp: new Date(),
+      })
+    } catch (error) {
+      appendMessage({
+        id: `${Date.now()}`,
+        role: "assistant",
+        type: "result",
+        status: "error",
+        action: "delete",
+        content: `Failed to delete tasks: ${error instanceof Error ? error.message : "Unknown error"}`,
+        timestamp: new Date(),
+      })
+    } finally {
+      setPendingDelete(null)
+      setSelectedIds([])
+    }
+  }
+
+  const handleDeleteCancel = () => {
+    setPendingDelete(null)
+    setSelectedIds([])
+    appendMessage({
+      id: `${Date.now()}`,
+      role: "assistant",
+      type: "text",
+      content: "Cancelled deletion.",
+      timestamp: new Date(),
+    })
+  }
+
   const handleSend = async () => {
     if (!input.trim()) return
 
-    const userMessage: Message = {
+    const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: "user",
+      type: "text",
       content: input,
       timestamp: new Date(),
     }
@@ -90,31 +142,136 @@ export default function AILayoutPage() {
     setMessages((prev) => [...prev, userMessage])
     const messageToSend = input
     setInput("")
+
+    // pending delete confirm/cancel
+    if (pendingDelete && isAffirmative(messageToSend)) {
+      await handleDeleteConfirm()
+      return
+    }
+    if (pendingDelete && isNegative(messageToSend)) {
+      handleDeleteCancel()
+      return
+    }
+
     setIsTyping(true)
 
     try {
-      const { messages: replyMessages } = await sendChatMessage(messageToSend)
-      const now = Date.now()
-      const assistantMessages: Message[] = (replyMessages?.length
-        ? replyMessages
-        : [{ text: "The assistant is temporarily unavailable. Please try again later." }]
-      ).map((m, i) => ({
-        id: `${now + i}`,
-        role: "assistant" as const,
-        content: typeof m === "string" ? m : (m?.text ?? ""),
-        timestamp: new Date(),
-      }))
-      setMessages((prev) => [...prev, ...assistantMessages])
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
+      const intent = parseIntent(messageToSend)
+      if (intent.kind === "create") {
+        const base = buildDefaultTask(intent.title)
+        const task = {
+          ...base,
+          priority: intent.priority ?? base.priority,
+          status: intent.status ?? base.status,
+          dueDate: intent.dueDate ?? base.dueDate,
+          description: intent.description ?? base.description,
+        }
+        await addTask(task)
+        appendMessage({
           id: `${Date.now()}`,
           role: "assistant",
-          content: "Something went wrong. Please try again later.",
+          type: "result",
+          status: "success",
+          action: "create",
+          content: `Đã tạo việc "${task.title}". Muốn đặt hạn/ưu tiên khác hoặc thêm mô tả, nhắn tiếp cho mình nhé.`,
           timestamp: new Date(),
-        },
-      ])
+        })
+      } else if (intent.kind === "list") {
+        const matched = matchTasks(tasks, intent.query)
+        appendMessage({
+          id: `${Date.now()}`,
+          role: "assistant",
+          type: "task-list",
+          title: matched.length ? "Here are your tasks" : "No tasks found",
+          tasks: matched,
+          action: "list",
+          timestamp: new Date(),
+        })
+      } else if (intent.kind === "delete") {
+        const matched = matchTasks(tasks, intent.query)
+        if (!matched.length) {
+          appendMessage({
+            id: `${Date.now()}`,
+            role: "assistant",
+            type: "text",
+            content: "No matching tasks to delete.",
+            timestamp: new Date(),
+          })
+        } else {
+          setPendingDelete({ tasks: matched })
+          setSelectedIds([])
+          appendMessage({
+            id: `${Date.now()}`,
+            role: "assistant",
+            type: "task-list",
+            title: "Select tasks to delete, then confirm.",
+            tasks: matched,
+            action: "delete",
+            timestamp: new Date(),
+          })
+        }
+      } else if (intent.kind === "update") {
+        const matched = matchTasks(tasks, intent.query)
+        if (!matched.length) {
+          appendMessage({
+            id: `${Date.now()}`,
+            role: "assistant",
+            type: "text",
+            content: "No matching tasks to update.",
+            timestamp: new Date(),
+          })
+        } else if (matched.length === 1) {
+          const target = matched[0]
+          await updateTask(target.id, {
+            status: intent.status ?? target.status,
+            priority: intent.priority ?? target.priority,
+            title: intent.title ?? target.title,
+            description: intent.description ?? target.description,
+            dueDate: intent.dueDate ?? target.dueDate,
+          })
+          appendMessage({
+            id: `${Date.now()}`,
+            role: "assistant",
+            type: "result",
+            status: "success",
+            action: "update",
+            content: `Updated "${intent.title ?? target.title}".`,
+            timestamp: new Date(),
+          })
+        } else {
+          appendMessage({
+            id: `${Date.now()}`,
+            role: "assistant",
+            type: "task-list",
+            title: "Multiple tasks matched, please specify more clearly.",
+            tasks: matched,
+            action: "list",
+            timestamp: new Date(),
+          })
+        }
+      } else {
+        const { messages: replyMessages } = await sendChatMessage(messageToSend)
+        const now = Date.now()
+        const assistantMessages: ChatMessage[] = (replyMessages?.length
+          ? replyMessages
+          : [{ text: "The assistant is temporarily unavailable. Please try again later." }]
+        ).map((m, i) => ({
+          id: `${now + i}`,
+          role: "assistant" as const,
+          type: "text",
+          content: typeof m === "string" ? m : (m?.text ?? ""),
+          timestamp: new Date(),
+        }))
+        appendMessage(assistantMessages)
+      }
+    } catch (error) {
+      appendMessage({
+        id: `${Date.now()}`,
+        role: "assistant",
+        type: "text",
+        content: `Something went wrong. ${error instanceof Error ? error.message : "Please try again later."}`,
+        timestamp: new Date(),
+      })
     } finally {
       setIsTyping(false)
     }
@@ -133,7 +290,6 @@ export default function AILayoutPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-7rem)]">
-      {/* Header */}
       <div className="mb-6">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20">
@@ -148,47 +304,91 @@ export default function AILayoutPage() {
         </div>
       </div>
 
-      {/* Chat Container */}
       <Card className="flex-1 flex flex-col overflow-hidden bg-card border-border">
-        {/* Messages */}
         <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((message) => (
-            <div
-              key={message.id}
-              className={cn(
-                "flex gap-3",
-                message.role === "user" ? "flex-row-reverse" : "flex-row"
-              )}
-            >
+            <div key={message.id} className={cn("flex gap-3", message.role === "user" ? "flex-row-reverse" : "flex-row")}>
               <div
                 className={cn(
                   "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
-                  message.role === "user"
-                    ? "bg-accent text-accent-foreground"
-                    : "bg-secondary text-secondary-foreground"
+                  message.role === "user" ? "bg-accent text-accent-foreground" : "bg-secondary text-secondary-foreground",
                 )}
               >
-                {message.role === "user" ? (
-                  <User className="h-4 w-4" />
-                ) : (
-                  <Bot className="h-4 w-4" />
-                )}
+                {message.role === "user" ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
               </div>
+
               <div
                 className={cn(
                   "max-w-[75%] rounded-lg px-4 py-2.5",
-                  message.role === "user"
-                    ? "bg-accent text-accent-foreground"
-                    : "bg-secondary text-secondary-foreground"
+                  message.role === "user" ? "bg-accent text-accent-foreground" : "bg-secondary text-secondary-foreground",
                 )}
               >
-                {renderMessageContent(message.content)}
+                {message.type === "text" && renderTextMessage(message.content)}
+
+                {message.type === "result" && (
+                  <div className="flex items-start gap-3">
+                    <Circle className={cn("h-5 w-5", message.status === "success" ? "text-green-500" : "text-red-500")} />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">{message.content}</p>
+                    </div>
+                  </div>
+                )}
+
+                {message.type === "task-list" && (
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium">{message.title}</p>
+                    {message.tasks.length === 0 && <p className="text-sm text-muted-foreground">No tasks found.</p>}
+                    {message.tasks.map((task) => (
+                      <label
+                        key={task.id}
+                        className={cn(
+                          "flex items-start gap-2 rounded-lg border border-border bg-card px-3 py-2",
+                          message.action === "delete" ? "cursor-pointer" : "cursor-default",
+                        )}
+                      >
+                        {message.action === "delete" ? (
+                          <Checkbox
+                            checked={selectedIds.includes(task.id)}
+                            onCheckedChange={(checked) => {
+                              setSelectedIds((prev) =>
+                                checked ? [...prev, task.id] : prev.filter((id) => id !== task.id),
+                              )
+                            }}
+                          />
+                        ) : (
+                          <Circle className="h-3 w-3 text-muted-foreground mt-1" />
+                        )}
+                        <div className="flex-1">
+                          <p className="text-sm font-medium">{task.title}</p>
+                          <p className="text-xs text-muted-foreground line-clamp-2">
+                            {task.description || "No description"}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                            <PriorityBadge priority={task.priority} />
+                            <span>{task.status}</span>
+                          </div>
+                        </div>
+                      </label>
+                    ))}
+
+                    {message.action === "delete" && message.tasks.length > 0 && (
+                      <div className="flex gap-2">
+                        <Button size="sm" onClick={handleDeleteConfirm} disabled={pendingDelete === null}>
+                          <Trash2 className="h-4 w-4 mr-1" />
+                          Confirm
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
+                          Cancel
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <p
                   className={cn(
                     "text-xs mt-1",
-                    message.role === "user"
-                      ? "text-accent-foreground/70"
-                      : "text-muted-foreground"
+                    message.role === "user" ? "text-accent-foreground/70" : "text-muted-foreground",
                   )}
                 >
                   {message.timestamp.toLocaleTimeString([], {
@@ -218,7 +418,6 @@ export default function AILayoutPage() {
           <div ref={messagesEndRef} />
         </CardContent>
 
-        {/* Suggested Prompts */}
         {messages.length === 1 && (
           <div className="px-4 pb-2">
             <p className="text-xs text-muted-foreground mb-2">Suggested prompts:</p>
@@ -236,7 +435,6 @@ export default function AILayoutPage() {
           </div>
         )}
 
-        {/* Input */}
         <div className="p-4 border-t border-border">
           <div className="flex gap-2">
             <Input
