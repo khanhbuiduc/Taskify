@@ -45,6 +45,11 @@ namespace TaskifyAPI.Data
         /// </summary>
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
+        /// <summary>
+        /// DbSet for user notes
+        /// </summary>
+        public DbSet<Note> Notes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -230,6 +235,42 @@ namespace TaskifyAPI.Data
                     .WithMany(s => s.Messages)
                     .HasForeignKey(e => e.SessionId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Configure Note entity
+            modelBuilder.Entity<Note>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Content)
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.IsPinned)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // Sort helpers
+                entity.HasIndex(e => new { e.UserId, e.IsPinned, e.UpdatedAt });
+                entity.HasIndex(e => new { e.UserId, e.Title });
             });
 
             // Seed roles with deterministic IDs to avoid duplicate inserts on migrations

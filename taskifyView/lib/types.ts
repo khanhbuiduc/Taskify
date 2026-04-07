@@ -18,6 +18,15 @@ export interface Task {
   labels: Label[]
 }
 
+export interface Note {
+  id: string
+  title: string
+  content: string
+  isPinned: boolean
+  createdAt: string
+  updatedAt: string
+}
+
 export type ChatMessageRole = "user" | "assistant"
 
 export interface ChatSession {

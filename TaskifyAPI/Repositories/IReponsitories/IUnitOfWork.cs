@@ -26,6 +26,11 @@ namespace TaskifyAPI.Repositories.IRepositories
         ILabelRepository Labels { get; }
 
         /// <summary>
+        /// Note repository
+        /// </summary>
+        INoteRepository Notes { get; }
+
+        /// <summary>
         /// Save all changes to the database
         /// </summary>
         Task<int> SaveChangesAsync();

@@ -1,30 +1,15 @@
 "use client"
 
 import React, { useState, useRef, useEffect, useMemo } from "react"
-import { Send, Bot, User, Sparkles, Circle, Trash2, Plus, Loader2 } from "lucide-react"
+import { Send, Bot, User, Sparkles, Plus, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { useChatSessionStore } from "@/lib/chat-session-store"
-import { useTaskStore } from "@/lib/task-store"
-import type { Task } from "@/lib/types"
-import {
-  parseIntent,
-  matchTasks,
-  isAffirmative,
-  isNegative,
-  buildDefaultTask,
-} from "@/lib/chat-task-orchestrator"
-import { PriorityBadge } from "@/components/task-ui/priority-badge"
+import type { ChatMessageRole } from "@/lib/types"
 
-type ChatMessage =
-  | { id: string; role: "user" | "assistant"; type: "text"; content: string; timestamp: Date }
-  | { id: string; role: "assistant"; type: "task-list"; title: string; tasks: Task[]; action: "delete" | "list"; timestamp: Date }
-  | { id: string; role: "assistant"; type: "result"; status: "success" | "error"; action: string; content: string; timestamp: Date }
-
-type PendingDelete = { tasks: Task[] }
+type ChatMessage = { id: string; role: ChatMessageRole; type: "text"; content: string; timestamp: Date }
 
 const suggestedPrompts = [
   "What tasks are overdue?",
@@ -38,15 +23,6 @@ const renderTextMessage = (content: string) => (
 )
 
 export default function AILayoutPage() {
-  const {
-    tasks,
-    fetchTasks,
-    fetchLabels,
-    addTask,
-    updateTask,
-    deleteTask,
-    isInitialized,
-  } = useTaskStore()
   const {
     sessions,
     activeSessionId,
@@ -76,8 +52,6 @@ export default function AILayoutPage() {
   })
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null)
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const persistedList = useMemo(() => {
@@ -110,13 +84,6 @@ export default function AILayoutPage() {
   }, [combinedMessages])
 
   useEffect(() => {
-    if (!isInitialized) {
-      fetchTasks()
-      fetchLabels()
-    }
-  }, [fetchTasks, fetchLabels, isInitialized])
-
-  useEffect(() => {
     init()
   }, [init])
 
@@ -138,192 +105,27 @@ export default function AILayoutPage() {
     }))
   }
 
-  const handleDeleteConfirm = async () => {
-    if (!pendingDelete) return
-    const ids = selectedIds.length ? selectedIds : pendingDelete.tasks.map((t) => t.id)
-    if (!ids.length) return
-    try {
-      for (const id of ids) {
-        await deleteTask(id)
-      }
-      appendMessage({
-        id: `${Date.now()}`,
-        role: "assistant",
-        type: "result",
-        status: "success",
-        action: "delete",
-        content: `Deleted ${ids.length} task(s).`,
-        timestamp: new Date(),
-      })
-    } catch (error) {
-      appendMessage({
-        id: `${Date.now()}`,
-        role: "assistant",
-        type: "result",
-        status: "error",
-        action: "delete",
-        content: `Failed to delete tasks: ${error instanceof Error ? error.message : "Unknown error"}`,
-        timestamp: new Date(),
-      })
-    } finally {
-      setPendingDelete(null)
-      setSelectedIds([])
-    }
-  }
-
-  const handleDeleteCancel = () => {
-    setPendingDelete(null)
-    setSelectedIds([])
-    appendMessage({
-      id: `${Date.now()}`,
-      role: "assistant",
-      type: "text",
-      content: "Cancelled deletion.",
-      timestamp: new Date(),
-    })
-  }
-
   const handleSend = async () => {
     if (!input.trim()) return
 
     const messageToSend = input
     setInput("")
 
-    // pending delete confirm/cancel
-    if (pendingDelete && isAffirmative(messageToSend)) {
-      appendMessage({
-        id: `${Date.now()}`,
-        role: "user",
-        type: "text",
-        content: messageToSend,
-        timestamp: new Date(),
-      })
-      await handleDeleteConfirm()
-      return
-    }
-    if (pendingDelete && isNegative(messageToSend)) {
-      appendMessage({
-        id: `${Date.now()}`,
-        role: "user",
-        type: "text",
-        content: messageToSend,
-        timestamp: new Date(),
-      })
-      handleDeleteCancel()
-      return
-    }
-
-    const intent = parseIntent(messageToSend)
-
-    // Local quick actions stay in-memory (for speed)
-    if (intent.kind === "create" || intent.kind === "list" || intent.kind === "delete") {
-      appendMessage({
-        id: Date.now().toString(),
-        role: "user",
-        type: "text",
-        content: messageToSend,
-        timestamp: new Date(),
-      })
-    }
+    // Optimistic user bubble
+    appendMessage({
+      id: Date.now().toString(),
+      role: "user",
+      type: "text",
+      content: messageToSend,
+      timestamp: new Date(),
+    })
 
     setIsTyping(true)
 
     try {
-      if (intent.kind === "create") {
-        const base = buildDefaultTask(intent.title)
-        const task = {
-          ...base,
-          priority: intent.priority ?? base.priority,
-          status: intent.status ?? base.status,
-          dueDate: intent.dueDate ?? base.dueDate,
-          description: intent.description ?? base.description,
-        }
-        await addTask(task)
-        appendMessage({
-          id: `${Date.now()}`,
-          role: "assistant",
-          type: "result",
-          status: "success",
-          action: "create",
-          content: `Đã tạo việc "${task.title}". Muốn đặt hạn/ưu tiên khác hoặc thêm mô tả, nhắn tiếp cho mình nhé.`,
-          timestamp: new Date(),
-        })
-      } else if (intent.kind === "list") {
-        const matched = matchTasks(tasks, intent.query)
-        appendMessage({
-          id: `${Date.now()}`,
-          role: "assistant",
-          type: "task-list",
-          title: matched.length ? "Here are your tasks" : "No tasks found",
-          tasks: matched,
-          action: "list",
-          timestamp: new Date(),
-        })
-      } else if (intent.kind === "delete") {
-        const matched = matchTasks(tasks, intent.query)
-        if (!matched.length) {
-          appendMessage({
-            id: `${Date.now()}`,
-            role: "assistant",
-            type: "text",
-            content: "No matching tasks to delete.",
-            timestamp: new Date(),
-          })
-        } else {
-          setPendingDelete({ tasks: matched })
-          setSelectedIds([])
-          appendMessage({
-            id: `${Date.now()}`,
-            role: "assistant",
-            type: "task-list",
-            title: "Select tasks to delete, then confirm.",
-            tasks: matched,
-            action: "delete",
-            timestamp: new Date(),
-          })
-        }
-      } else if (intent.kind === "update") {
-        const matched = matchTasks(tasks, intent.query)
-        if (!matched.length) {
-          appendMessage({
-            id: `${Date.now()}`,
-            role: "assistant",
-            type: "text",
-            content: "No matching tasks to update.",
-            timestamp: new Date(),
-          })
-        } else if (matched.length === 1) {
-          const target = matched[0]
-          await updateTask(target.id, {
-            status: intent.status ?? target.status,
-            priority: intent.priority ?? target.priority,
-            title: intent.title ?? target.title,
-            description: intent.description ?? target.description,
-            dueDate: intent.dueDate ?? target.dueDate,
-          })
-          appendMessage({
-            id: `${Date.now()}`,
-            role: "assistant",
-            type: "result",
-            status: "success",
-            action: "update",
-            content: `Updated "${intent.title ?? target.title}".`,
-            timestamp: new Date(),
-          })
-        } else {
-          appendMessage({
-            id: `${Date.now()}`,
-            role: "assistant",
-            type: "task-list",
-            title: "Multiple tasks matched, please specify more clearly.",
-            tasks: matched,
-            action: "list",
-            timestamp: new Date(),
-          })
-        }
-      } else {
-        await sendPersistedMessage(messageToSend)
-      }
+      await sendPersistedMessage(messageToSend)
+      // Clear optimistic bubbles; server history covers user+assistant turns
+      setLocalMessages((prev) => ({ ...prev, [sessionKey]: sessionKey === "new" ? [greeting] : [] }))
     } catch (error) {
       appendMessage({
         id: `${Date.now()}`,
@@ -415,68 +217,7 @@ export default function AILayoutPage() {
                   message.role === "user" ? "bg-accent text-accent-foreground" : "bg-secondary text-secondary-foreground",
                 )}
               >
-                {message.type === "text" && renderTextMessage(message.content)}
-
-                {message.type === "result" && (
-                  <div className="flex items-start gap-3">
-                    <Circle className={cn("h-5 w-5", message.status === "success" ? "text-green-500" : "text-red-500")} />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{message.content}</p>
-                    </div>
-                  </div>
-                )}
-
-                {message.type === "task-list" && (
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium">{message.title}</p>
-                    {message.tasks.length === 0 && <p className="text-sm text-muted-foreground">No tasks found.</p>}
-                    {message.tasks.map((task) => (
-                      <label
-                        key={task.id}
-                        className={cn(
-                          "flex items-start gap-2 rounded-lg border border-border bg-card px-3 py-2",
-                          message.action === "delete" ? "cursor-pointer" : "cursor-default",
-                        )}
-                      >
-                        {message.action === "delete" ? (
-                          <Checkbox
-                            checked={selectedIds.includes(task.id)}
-                            onCheckedChange={(checked) => {
-                              setSelectedIds((prev) =>
-                                checked ? [...prev, task.id] : prev.filter((id) => id !== task.id),
-                              )
-                            }}
-                          />
-                        ) : (
-                          <Circle className="h-3 w-3 text-muted-foreground mt-1" />
-                        )}
-                        <div className="flex-1">
-                          <p className="text-sm font-medium">{task.title}</p>
-                          <p className="text-xs text-muted-foreground line-clamp-2">
-                            {task.description || "No description"}
-                          </p>
-                          <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
-                            <PriorityBadge priority={task.priority} />
-                            <span>{task.status}</span>
-                          </div>
-                        </div>
-                      </label>
-                    ))}
-
-                    {message.action === "delete" && message.tasks.length > 0 && (
-                      <div className="flex gap-2">
-                        <Button size="sm" onClick={handleDeleteConfirm} disabled={pendingDelete === null}>
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          Confirm
-                        </Button>
-                        <Button size="sm" variant="outline" onClick={handleDeleteCancel}>
-                          Cancel
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                )}
-
+                {renderTextMessage(message.content)}
                 <p
                   className={cn(
                     "text-xs mt-1",

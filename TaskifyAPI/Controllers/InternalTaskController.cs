@@ -167,6 +167,30 @@ namespace TaskifyAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete a task for a specific user (for Rasa action_delete_task).
+        /// </summary>
+        [HttpDelete("{userId}/{taskId:int}")]
+        public async Task<IActionResult> DeleteTaskForUser(string userId, int taskId)
+        {
+            if (!ValidateApiKey())
+            {
+                _logger.LogWarning("Invalid or missing X-Rasa-Token for user {UserId}", userId);
+                return Unauthorized(new { message = "Invalid API key" });
+            }
+
+            var task = await _unitOfWork.Tasks.GetByIdAsync(taskId);
+            if (task == null || task.UserId != userId)
+            {
+                return NotFound();
+            }
+
+            _unitOfWork.Tasks.Remove(task);
+            await _unitOfWork.SaveChangesAsync();
+            _logger.LogInformation("Deleted task {TaskId} for user {UserId} via Rasa", taskId, userId);
+            return NoContent();
+        }
+
         #region Helper Methods
 
         private static string MapPriorityToString(TaskPriority priority)
