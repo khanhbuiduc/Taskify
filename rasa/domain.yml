@@ -11,6 +11,11 @@ intents:
   - summarize_week
   - help_prioritize
   - create_task
+  - create_note
+  - list_notes
+  - search_notes
+  - pin_note
+  - delete_task
   - nlu_fallback
 
 entities:
@@ -18,6 +23,10 @@ entities:
   - due_date
   - due_time
   - priority
+  - note_title
+  - note_text
+  - note_keyword
+  - pin_state
 
 slots:
   task_title:
@@ -47,6 +56,36 @@ slots:
     mappings:
       - type: from_entity
         entity: priority
+  note_title:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: note_title
+  note_text:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: note_text
+  note_keyword:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: note_keyword
+  pin_state:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: pin_state
+  delete_task_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: task_title
 
 responses:
   utter_greet:
@@ -85,12 +124,31 @@ responses:
     - text: "Bạn đang nói tới task nào? Bạn có thể nêu lại tiêu đề hoặc ưu tiên."
   utter_ack_update:
     - text: "Đã ghi nhận, mình sẽ cập nhật task sau khi bạn xác nhận đầy đủ thông tin."
+  utter_ask_delete_title:
+    - text: "Bạn muốn xoá task nào? Hãy nêu rõ tiêu đề."
+    - text: "Which task should I delete? Please give the title."
+  utter_confirm_delete:
+    - text: "Bạn chắc chắn muốn xoá \"{task_title}\"?"
+  utter_delete_no_match:
+    - text: "Mình không tìm thấy task nào khớp. Bạn mô tả rõ hơn nhé."
+  utter_note_created:
+    - text: "Đã tạo note: {note_title}"
+  utter_note_list_empty:
+    - text: "Bạn chưa có note nào."
+  utter_note_pin_updated:
+    - text: "Đã cập nhật trạng thái ghim cho note."
 
 # Custom actions (phase 2 - enabled)
 actions:
   - action_list_tasks
   - action_create_task
   - action_summarize_week
+  - action_delete_task
+  - action_create_note
+  - action_list_notes
+  - action_search_notes
+  - action_toggle_pin_note
+  - action_handle_confirmation
 
 forms:
   create_task_form:

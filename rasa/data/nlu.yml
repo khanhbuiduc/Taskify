@@ -141,6 +141,57 @@ nlu:
       - đặt nó ưu tiên cao nhé
       - cũng set deadline ngày mai cho cái đó
 
+  - intent: delete_task
+    examples: |
+      - delete task [write report](task_title)
+      - remove [buy groceries](task_title)
+      - xoá task [học React](task_title)
+      - delete my task [gọi điện cho khách](task_title)
+      - remove the first task
+      - xoá nhiệm vụ
+      - delete this task
+      - please delete it
+      - clean up that task
+
+  - intent: create_note
+    examples: |
+      - create a note [project ideas](note_title)
+      - add note [shopping list](note_title) content [milk, eggs, bread](note_text)
+      - new note about [team retro](note_title)
+      - ghi chú [học rasa](note_title)
+      - tạo note [ý tưởng mới](note_title) [ghi nhanh vài ý tưởng](note_text)
+      - note [meeting notes](note_title) content [decision: ship v1](note_text)
+      - please write a note to remind me to call mom
+      - create quick note [fix bug list](note_title)
+
+  - intent: list_notes
+    examples: |
+      - show my notes
+      - list notes
+      - what notes do I have
+      - xem danh sách note
+      - liệt kê ghi chú
+      - recent notes please
+      - show pinned notes
+      - notes gần đây
+
+  - intent: search_notes
+    examples: |
+      - find notes about [meeting](note_keyword)
+      - search notes for [idea](note_keyword)
+      - any note containing [retro](note_keyword)?
+      - tìm ghi chú về [kế hoạch](note_keyword)
+      - kiếm note có chữ [bug](note_keyword)
+
+  - intent: pin_note
+    examples: |
+      - pin this note
+      - unpin the last note
+      - ghim note vừa tạo
+      - bỏ ghim note đó
+      - hãy ghim ghi chú [shopping list](note_title)
+      - unpin note [retro notes](note_title)
+
   # Entity synonyms - Priority
   - synonym: high
     examples: |

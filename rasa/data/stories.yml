@@ -33,11 +33,6 @@ stories:
   - intent: help_prioritize
   - action: action_list_tasks
 
-- story: create task
-  steps:
-  - intent: create_task
-  - action: action_create_task
-
 - story: create task with clarifications
   steps:
   - intent: create_task
@@ -54,6 +49,33 @@ stories:
   - active_loop: null
   - action: utter_confirm_create
   - action: action_create_task
+
+- story: delete task confirm
+  steps:
+  - intent: delete_task
+  - action: action_delete_task
+  - intent: affirm
+  - action: action_delete_task
+
+- story: list notes
+  steps:
+  - intent: list_notes
+  - action: action_list_notes
+
+- story: search notes
+  steps:
+  - intent: search_notes
+  - action: action_search_notes
+
+- story: create note
+  steps:
+  - intent: create_note
+  - action: action_create_note
+
+- story: pin note
+  steps:
+  - intent: pin_note
+  - action: action_toggle_pin_note
 
 - story: fallback
   steps:

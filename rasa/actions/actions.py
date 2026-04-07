@@ -48,6 +48,14 @@ def split_sender(sender_id: str) -> Tuple[str, Optional[str]]:
     return sender_id, None
 
 
+def pick_task_by_title(tasks: List[Dict[str, Any]], query: str) -> List[Dict[str, Any]]:
+    """Return tasks whose title contains the query (case-insensitive)."""
+    q = (query or "").lower().strip()
+    if not q:
+        return []
+    return [t for t in tasks if q in t.get("title", "").lower()]
+
+
 def format_task_list(tasks: List[Dict], max_items: int = 5) -> str:
     """Format a list of tasks for display in chat."""
     if not tasks:
@@ -256,6 +264,124 @@ class ActionCreateTask(Action):
             SlotSet("due_time", None),
             SlotSet("priority", None)
         ]
+
+
+class ActionDeleteTask(Action):
+    """Delete a task via TaskifyAPI with confirmation."""
+
+    def name(self) -> Text:
+        return "action_delete_task"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, session_id = split_sender(tracker.sender_id)
+        latest_intent = tracker.latest_message.get("intent", {}).get("name")
+        target_id = tracker.get_slot("delete_task_id")
+        target_title = tracker.get_slot("task_title")
+
+        # If user already confirmed (affirm) and we have stored target id/title -> delete
+        if latest_intent == "affirm" and target_id:
+            return self._delete_and_reply(dispatcher, user_id, session_id, target_id, target_title)
+
+        # Fetch tasks to resolve title
+        tasks = self._fetch_tasks(user_id)
+        if tasks is None:
+            dispatcher.utter_message(text="I couldn't fetch tasks to delete right now.")
+            return []
+
+        if not target_title:
+            dispatcher.utter_message(response="utter_ask_delete_title")
+            return []
+
+        matches = pick_task_by_title(tasks, target_title)
+
+        if len(matches) == 0:
+            dispatcher.utter_message(response="utter_delete_no_match")
+            return []
+        if len(matches) > 1:
+            preview = "\n".join([f"- {t.get('title','Untitled')}" for t in matches[:5]])
+            dispatcher.utter_message(text=f"Mình thấy {len(matches)} task khớp:\n{preview}\nHãy chỉ rõ hơn tên task cần xoá.")
+            return []
+
+        match = matches[0]
+        dispatcher.utter_message(response="utter_confirm_delete", task_title=match.get("title", ""))
+        return [SlotSet("delete_task_id", str(match.get("id"))), SlotSet("task_title", match.get("title"))]
+
+    def _fetch_tasks(self, user_id: str) -> Optional[List[Dict[str, Any]]]:
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
+            response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code != 200:
+                logger.warning(f"DeleteTask: failed to fetch tasks for user {user_id} status {response.status_code}")
+                return None
+            data = response.json()
+            return data.get("tasks", [])
+        except Exception as e:
+            logger.exception(f"DeleteTask: error fetching tasks for user {user_id}: {e}")
+            return None
+
+    def _delete_and_reply(
+        self,
+        dispatcher: CollectingDispatcher,
+        user_id: str,
+        session_id: Optional[str],
+        task_id: str,
+        task_title: Optional[str],
+    ) -> List[Dict[Text, Any]]:
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}/{task_id}"
+            response = requests.delete(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code in (200, 204):
+                dispatcher.utter_message(text=f"✅ Đã xoá task \"{task_title or 'task'}\".")
+            elif response.status_code == 404:
+                dispatcher.utter_message(text="Mình không tìm thấy task đó để xoá.")
+            else:
+                dispatcher.utter_message(text="Không xoá được task lúc này, thử lại sau nhé.")
+                logger.warning(f"DeleteTask: delete failed for user {user_id} task {task_id} status {response.status_code}")
+        except requests.exceptions.Timeout:
+            dispatcher.utter_message(text="Yêu cầu xoá bị timeout, thử lại nhé.")
+        except requests.exceptions.ConnectionError:
+            dispatcher.utter_message(text="Không kết nối được server để xoá task.")
+        except Exception as e:
+            logger.exception(f"DeleteTask error for user {user_id}: {e}")
+            dispatcher.utter_message(text="Có lỗi khi xoá task.")
+
+        return [
+            SlotSet("delete_task_id", None),
+            SlotSet("task_title", None),
+            SlotSet("due_date", None),
+            SlotSet("due_time", None),
+            SlotSet("priority", None),
+        ]
+
+
+class ActionHandleConfirmation(Action):
+    """
+    Fallback handler for generic confirmations (affirm/deny) to avoid action server crashes
+    when legacy models reference 'action_handle_confirmation'.
+    """
+
+    def name(self) -> Text:
+        return "action_handle_confirmation"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        intent = tracker.latest_message.get("intent", {}).get("name")
+        if intent == "affirm":
+            dispatcher.utter_message(text="Đã ghi nhận nhé.")
+        elif intent == "deny":
+            dispatcher.utter_message(text="Đã hủy theo yêu cầu.")
+        else:
+            dispatcher.utter_message(text="Mình đã ghi nhận.")
+        return []
     
     def _is_trigger_only(self, message: str, extracted_title: Optional[str]) -> bool:
         """
@@ -535,4 +661,194 @@ class ActionSummarizeWeek(Action):
             logger.exception(f"Error in action_summarize_week for user {user_id}: {e}")
             dispatcher.utter_message(text="Something went wrong. Please try again later.")
         
+        return []
+
+
+class ActionCreateNote(Action):
+    """Create a standalone note via internal API."""
+
+    def name(self) -> Text:
+        return "action_create_note"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, _ = split_sender(tracker.sender_id)
+        note_title = tracker.get_slot("note_title")
+        note_text = tracker.get_slot("note_text")
+        user_message = tracker.latest_message.get("text", "").strip()
+
+        # Derive title if missing
+        if not note_title:
+            note_title = (note_text or user_message or "New note").strip()
+            if len(note_title) > 80:
+                note_title = note_title[:80]
+
+        payload = {
+            "title": note_title,
+            "content": note_text or user_message,
+        }
+
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}"
+            response = requests.post(url, json=payload, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code in [200, 201]:
+                dispatcher.utter_message(text=f"Đã tạo note: **{note_title}**")
+            elif response.status_code == 401:
+                dispatcher.utter_message(text="Không thể tạo note. Vui lòng đăng nhập lại.")
+            else:
+                dispatcher.utter_message(text="Không thể tạo note lúc này. Thử lại sau nhé.")
+        except Exception as e:
+            logger.exception("Error creating note for user %s: %s", user_id, e)
+            dispatcher.utter_message(text="Có lỗi khi tạo note.")
+
+        return []
+
+
+class ActionListNotes(Action):
+    """List recent notes for the user."""
+
+    def name(self) -> Text:
+        return "action_list_notes"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, _ = split_sender(tracker.sender_id)
+
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=5"
+            response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code != 200:
+                dispatcher.utter_message(text="Không lấy được danh sách note.")
+                return []
+
+            notes = response.json()
+            if not notes:
+                dispatcher.utter_message(text="Bạn chưa có note nào.")
+                return []
+
+            lines = []
+            for i, note in enumerate(notes, 1):
+                pin = "📌 " if note.get("isPinned") else ""
+                title = note.get("title", "Untitled")
+                snippet = (note.get("content") or "")[:60]
+                snippet = f" - {snippet}..." if snippet else ""
+                lines.append(f"{i}. {pin}{title}{snippet}")
+
+            dispatcher.utter_message(text="Các note gần đây:\n" + "\n".join(lines))
+        except Exception as e:
+            logger.exception("Error listing notes for user %s: %s", user_id, e)
+            dispatcher.utter_message(text="Có lỗi khi lấy note.")
+
+        return []
+
+
+class ActionSearchNotes(Action):
+    """Search notes by keyword."""
+
+    def name(self) -> Text:
+        return "action_search_notes"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, _ = split_sender(tracker.sender_id)
+        keyword = tracker.get_slot("note_keyword") or tracker.latest_message.get("text", "")
+        keyword = keyword.strip()
+
+        if not keyword:
+            dispatcher.utter_message(text="Bạn muốn tìm gì trong note?")
+            return []
+
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=5&search={keyword}"
+            response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code != 200:
+                dispatcher.utter_message(text="Không tìm được note.")
+                return []
+
+            notes = response.json()
+            if not notes:
+                dispatcher.utter_message(text=f"Không có note nào khớp với \"{keyword}\".")
+                return []
+
+            lines = []
+            for i, note in enumerate(notes, 1):
+                pin = "📌 " if note.get("isPinned") else ""
+                title = note.get("title", "Untitled")
+                snippet = (note.get("content") or "")[:60]
+                snippet = f" - {snippet}..." if snippet else ""
+                lines.append(f"{i}. {pin}{title}{snippet}")
+
+            dispatcher.utter_message(text="Kết quả tìm kiếm:\n" + "\n".join(lines))
+        except Exception as e:
+            logger.exception("Error searching notes for user %s: %s", user_id, e)
+            dispatcher.utter_message(text="Có lỗi khi tìm kiếm note.")
+
+        return []
+
+
+class ActionTogglePinNote(Action):
+    """Toggle or set pin state for a note."""
+
+    def name(self) -> Text:
+        return "action_toggle_pin_note"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, _ = split_sender(tracker.sender_id)
+        pin_state_text = (tracker.get_slot("pin_state") or "").lower()
+        desired_pin = None
+        if "bỏ" in pin_state_text or "unpin" in pin_state_text or "off" in pin_state_text:
+            desired_pin = False
+        elif "ghim" in pin_state_text or "pin" in pin_state_text or "on" in pin_state_text:
+            desired_pin = True
+
+        keyword = tracker.get_slot("note_title") or tracker.get_slot("note_keyword") or ""
+
+        try:
+            # find candidate notes
+            search_param = keyword.strip() if keyword else ""
+            url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=3"
+            if search_param:
+                url += f"&search={search_param}"
+            response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code != 200:
+                dispatcher.utter_message(text="Không tìm thấy note để ghim.")
+                return []
+
+            notes = response.json()
+            if not notes:
+                dispatcher.utter_message(text="Không có note nào khớp.")
+                return []
+
+            target = notes[0]
+            note_id = target.get("id")
+            note_title = target.get("title", "note")
+
+            patch_url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}/{note_id}/pin"
+            response = requests.patch(patch_url, json=desired_pin, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code in [200, 201]:
+                state_text = "đã ghim" if (desired_pin if desired_pin is not None else not target.get("isPinned", False)) else "đã bỏ ghim"
+                dispatcher.utter_message(text=f"{state_text} **{note_title}**")
+            else:
+                dispatcher.utter_message(text="Không cập nhật được trạng thái ghim.")
+        except Exception as e:
+            logger.exception("Error pinning note for user %s: %s", user_id, e)
+            dispatcher.utter_message(text="Có lỗi khi ghim note.")
+
         return []

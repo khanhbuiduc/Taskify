@@ -26,3 +26,8 @@ rules:
   - active_loop: null
   - action: utter_confirm_create
   - action: action_create_task
+
+- rule: Delete task directly
+  steps:
+  - intent: delete_task
+  - action: action_delete_task
