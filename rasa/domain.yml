@@ -73,12 +73,31 @@ responses:
     - text: "Bạn muốn tạo task gì? Vui lòng cho tôi biết tiêu đề task.\nVí dụ: 'thêm nhiệm vụ học SQL trước 16h'"
     - text: "What would you like to name this task?"
     - text: "Task cần có tiêu đề. Tên task là gì vậy bạn?"
+  utter_ask_due_date:
+    - text: "Khi nào task này đến hạn? Bạn có thể nói 'hôm nay', 'ngày mai' hoặc ngày cụ thể."
+    - text: "What's the due date for this task?"
+  utter_ask_priority:
+    - text: "Độ ưu tiên của task? Cao / trung bình / thấp."
+    - text: "What priority should I set? (high, medium, low)"
+  utter_confirm_create:
+    - text: "Tạo task \"{task_title}\" hạn {due_date} với ưu tiên {priority}. Đúng chứ?"
+  utter_clarify_reference:
+    - text: "Bạn đang nói tới task nào? Bạn có thể nêu lại tiêu đề hoặc ưu tiên."
+  utter_ack_update:
+    - text: "Đã ghi nhận, mình sẽ cập nhật task sau khi bạn xác nhận đầy đủ thông tin."
 
 # Custom actions (phase 2 - enabled)
 actions:
   - action_list_tasks
   - action_create_task
   - action_summarize_week
+
+forms:
+  create_task_form:
+    required_slots:
+      - task_title
+      - due_date
+      - priority
 
 session_config:
   session_expiration_time: 60

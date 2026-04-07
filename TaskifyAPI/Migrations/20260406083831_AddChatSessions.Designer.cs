@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskifyAPI.Data;
 
@@ -11,9 +12,11 @@ using TaskifyAPI.Data;
 namespace TaskifyAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260406083831_AddChatSessions")]
+    partial class AddChatSessions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace TaskifyAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bfb1eb83-6140-44a3-8e52-6bab400f7085",
+                            Id = "4c494ae4-37f1-41e2-b338-d6c92f51a592",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "cf187569-1e10-4881-a7fc-4aedae86c37a",
+                            Id = "a21f3ac7-b317-468f-b491-b0f0109a4666",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -262,17 +265,17 @@ namespace TaskifyAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "26555ba2-5071-4baf-8447-e6bbb2a12fbf",
+                            Id = "de36ac9d-4a95-475b-a39a-522a263944ea",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d110a0c9-495c-4b7c-b03d-32a65bfa2417",
+                            ConcurrencyStamp = "c46d4d69-0448-4b71-b9ca-34466410e370",
                             Email = "admin@taskify.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TASKIFY.COM",
                             NormalizedUserName = "ADMIN USER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAahbrgm09MbJaxI88eiPOhDTEFGKc2baTBdfvEPUA6rWnnMu3w0zxKFq8ONeNl0fA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMk9LrRwCWx3QmSvYWvLHMLq5PdHTsJhD8jgygM4NCpVZOCyEVQ0ZdIh17EZJKu6xg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a340e891-0382-490e-b8af-185feacf2cc9",
+                            SecurityStamp = "f6dd6560-f855-4afe-99e4-5c776c3833fe",
                             TwoFactorEnabled = false,
                             UserName = "Admin User"
                         });

@@ -17,3 +17,19 @@ export interface Task {
   createdAt: string
   labels: Label[]
 }
+
+export type ChatMessageRole = "user" | "assistant"
+
+export interface ChatSession {
+  id: string
+  title: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ChatMessage {
+  id: string
+  role: ChatMessageRole
+  text: string
+  sentAt: string
+}

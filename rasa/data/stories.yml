@@ -38,6 +38,23 @@ stories:
   - intent: create_task
   - action: action_create_task
 
+- story: create task with clarifications
+  steps:
+  - intent: create_task
+  - action: create_task_form
+  - active_loop: create_task_form
+  - slot_was_set:
+    - task_title: "viết báo cáo"
+  - intent: deny
+  - action: utter_clarify_reference
+  - intent: create_task
+    entities:
+    - priority: "high"
+  - action: create_task_form
+  - active_loop: null
+  - action: utter_confirm_create
+  - action: action_create_task
+
 - story: fallback
   steps:
   - intent: nlu_fallback

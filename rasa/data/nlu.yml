@@ -66,6 +66,7 @@ nlu:
       - task nào quá hạn
       - nhiệm vụ quá hạn
       - việc nào trễ
+      - có task nào đang trễ hạn không
 
   - intent: summarize_week
     examples: |
@@ -77,6 +78,7 @@ nlu:
       - tóm tắt tuần
       - tuần này thế nào
       - báo cáo tuần
+      - tổng kết tuần cho mình
 
   - intent: help_prioritize
     examples: |
@@ -88,6 +90,7 @@ nlu:
       - việc nào quan trọng
       - ưu tiên gì trước
       - làm gì trước
+      - task nào nên làm trước
 
   - intent: create_task
     examples: |
@@ -135,6 +138,8 @@ nlu:
       - Create a new task
       - Add a new task
       - I want to add a task
+      - đặt nó ưu tiên cao nhé
+      - cũng set deadline ngày mai cho cái đó
 
   # Entity synonyms - Priority
   - synonym: high

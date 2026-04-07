@@ -40,6 +40,14 @@ def get_api_headers() -> Dict[str, str]:
     }
 
 
+def split_sender(sender_id: str) -> Tuple[str, Optional[str]]:
+    """Split sender id into (user_id, session_id) when formatted as user:session."""
+    if ":" in sender_id:
+        user, session = sender_id.split(":", 1)
+        return user, session
+    return sender_id, None
+
+
 def format_task_list(tasks: List[Dict], max_items: int = 5) -> str:
     """Format a list of tasks for display in chat."""
     if not tasks:
@@ -81,10 +89,10 @@ class ActionListTasks(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        sender_id = tracker.sender_id
+        user_id, session_id = split_sender(tracker.sender_id)
         
         try:
-            url = f"{TASKIFY_API_URL}/api/internal/tasks/{sender_id}"
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
             response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
             
             if response.status_code == 200:
@@ -130,17 +138,17 @@ class ActionListTasks(Action):
             elif response.status_code == 401:
                 dispatcher.utter_message(text="I couldn't access your tasks. Please make sure you're logged in.")
             else:
-                logger.warning(f"API returned status {response.status_code} for user {sender_id}")
+                logger.warning(f"API returned status {response.status_code} for user {user_id} session {session_id}")
                 dispatcher.utter_message(text="I'm having trouble accessing your tasks right now. Please try again later.")
                 
         except requests.exceptions.Timeout:
-            logger.error(f"Timeout calling TaskifyAPI for user {sender_id}")
+            logger.error(f"Timeout calling TaskifyAPI for user {user_id}")
             dispatcher.utter_message(text="The request timed out. Please try again.")
         except requests.exceptions.ConnectionError:
-            logger.error(f"Connection error calling TaskifyAPI for user {sender_id}")
+            logger.error(f"Connection error calling TaskifyAPI for user {user_id}")
             dispatcher.utter_message(text="I couldn't connect to the task service. Please make sure the server is running.")
         except Exception as e:
-            logger.exception(f"Error in action_list_tasks for user {sender_id}: {e}")
+            logger.exception(f"Error in action_list_tasks for user {user_id}: {e}")
             dispatcher.utter_message(text="Something went wrong. Please try again later.")
         
         return []
@@ -158,7 +166,7 @@ class ActionCreateTask(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        sender_id = tracker.sender_id
+        user_id, session_id = split_sender(tracker.sender_id)
         user_message = tracker.latest_message.get("text", "").strip().lower()
         
         # Extract from slots (filled by entity extraction)
@@ -199,7 +207,7 @@ class ActionCreateTask(Action):
         priority = self._normalize_priority(priority)
         
         try:
-            url = f"{TASKIFY_API_URL}/api/internal/tasks/{sender_id}"
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
             payload = {
                 "title": task_title,
                 "description": "Created via AI assistant",
@@ -228,17 +236,17 @@ class ActionCreateTask(Action):
             elif response.status_code == 401:
                 dispatcher.utter_message(text="Không thể tạo task. Vui lòng đăng nhập lại.")
             else:
-                logger.warning(f"API returned status {response.status_code} when creating task for user {sender_id}")
+                logger.warning(f"API returned status {response.status_code} when creating task for user {user_id} session {session_id}")
                 dispatcher.utter_message(text="Không thể tạo task. Vui lòng thử lại sau.")
                 
         except requests.exceptions.Timeout:
-            logger.error(f"Timeout calling TaskifyAPI for user {sender_id}")
+            logger.error(f"Timeout calling TaskifyAPI for user {user_id}")
             dispatcher.utter_message(text="Yêu cầu hết thời gian. Vui lòng thử lại.")
         except requests.exceptions.ConnectionError:
-            logger.error(f"Connection error calling TaskifyAPI for user {sender_id}")
+            logger.error(f"Connection error calling TaskifyAPI for user {user_id}")
             dispatcher.utter_message(text="Không kết nối được server. Vui lòng kiểm tra kết nối.")
         except Exception as e:
-            logger.exception(f"Error in action_create_task for user {sender_id}: {e}")
+            logger.exception(f"Error in action_create_task for user {user_id}: {e}")
             dispatcher.utter_message(text="Có lỗi xảy ra. Vui lòng thử lại sau.")
         
         # Reset slots for next task
@@ -460,10 +468,10 @@ class ActionSummarizeWeek(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        sender_id = tracker.sender_id
+        user_id, session_id = split_sender(tracker.sender_id)
         
         try:
-            url = f"{TASKIFY_API_URL}/api/internal/tasks/{sender_id}"
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
             response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
             
             if response.status_code == 200:
@@ -514,17 +522,17 @@ class ActionSummarizeWeek(Action):
             elif response.status_code == 401:
                 dispatcher.utter_message(text="I couldn't access your tasks. Please make sure you're logged in.")
             else:
-                logger.warning(f"API returned status {response.status_code} for user {sender_id}")
+                logger.warning(f"API returned status {response.status_code} for user {user_id} session {session_id}")
                 dispatcher.utter_message(text="I'm having trouble getting your summary right now. Please try again later.")
                 
         except requests.exceptions.Timeout:
-            logger.error(f"Timeout calling TaskifyAPI for user {sender_id}")
+            logger.error(f"Timeout calling TaskifyAPI for user {user_id}")
             dispatcher.utter_message(text="The request timed out. Please try again.")
         except requests.exceptions.ConnectionError:
-            logger.error(f"Connection error calling TaskifyAPI for user {sender_id}")
+            logger.error(f"Connection error calling TaskifyAPI for user {user_id}")
             dispatcher.utter_message(text="I couldn't connect to the task service. Please make sure the server is running.")
         except Exception as e:
-            logger.exception(f"Error in action_summarize_week for user {sender_id}: {e}")
+            logger.exception(f"Error in action_summarize_week for user {user_id}: {e}")
             dispatcher.utter_message(text="Something went wrong. Please try again later.")
         
         return []

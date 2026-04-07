@@ -1,13 +1,13 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
-import { Send, Bot, User, Sparkles, Circle, Trash2 } from "lucide-react"
+import React, { useState, useRef, useEffect, useMemo } from "react"
+import { Send, Bot, User, Sparkles, Circle, Trash2, Plus, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
-import { sendChatMessage } from "@/lib/api/chatApi"
+import { useChatSessionStore } from "@/lib/chat-session-store"
 import { useTaskStore } from "@/lib/task-store"
 import type { Task } from "@/lib/types"
 import {
@@ -47,22 +47,59 @@ export default function AILayoutPage() {
     deleteTask,
     isInitialized,
   } = useTaskStore()
+  const {
+    sessions,
+    activeSessionId,
+    messages: persistedMessages,
+    hasMore,
+    init,
+    selectSession,
+    loadMessages,
+    createNewSession,
+    sendMessage: sendPersistedMessage,
+    isSending,
+  } = useChatSessionStore()
 
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: "1",
+  const greeting: ChatMessage = useMemo(
+    () => ({
+      id: "greeting",
       role: "assistant",
       type: "text",
       content:
         "Hello! I'm your AI assistant for Taskify. I can help you manage tasks, analyze your productivity, and answer questions about your projects. How can I help you today?",
       timestamp: new Date(),
-    },
-  ])
+    }),
+    [],
+  )
+  const [localMessages, setLocalMessages] = useState<Record<string, ChatMessage[]>>({
+    new: [greeting],
+  })
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [pendingDelete, setPendingDelete] = useState<PendingDelete | null>(null)
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const persistedList = useMemo(() => {
+    if (!activeSessionId) return []
+    const list = persistedMessages[activeSessionId] ?? []
+    return list.map<ChatMessage>((m) => ({
+      id: m.id,
+      role: m.role,
+      type: "text",
+      content: m.text,
+      timestamp: new Date(m.sentAt),
+    }))
+  }, [activeSessionId, persistedMessages])
+
+  const sessionKey = activeSessionId ?? "new"
+  const localForSession = localMessages[sessionKey] ?? (sessionKey === "new" ? [greeting] : [])
+
+  const combinedMessages = useMemo(() => {
+    return [...persistedList, ...localForSession].sort(
+      (a, b) => a.timestamp.getTime() - b.timestamp.getTime(),
+    )
+  }, [localForSession, persistedList])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -70,7 +107,7 @@ export default function AILayoutPage() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [combinedMessages])
 
   useEffect(() => {
     if (!isInitialized) {
@@ -79,8 +116,26 @@ export default function AILayoutPage() {
     }
   }, [fetchTasks, fetchLabels, isInitialized])
 
+  useEffect(() => {
+    init()
+  }, [init])
+
+  useEffect(() => {
+    setLocalMessages((prev) => {
+      if (prev[sessionKey]) return prev
+      return {
+        ...prev,
+        [sessionKey]: sessionKey === "new" ? [greeting] : [],
+      }
+    })
+  }, [sessionKey, greeting])
+
   const appendMessage = (msg: ChatMessage | ChatMessage[]) => {
-    setMessages((prev) => [...prev, ...(Array.isArray(msg) ? msg : [msg])])
+    const payload = Array.isArray(msg) ? msg : [msg]
+    setLocalMessages((prev) => ({
+      ...prev,
+      [sessionKey]: [...(prev[sessionKey] ?? []), ...payload],
+    }))
   }
 
   const handleDeleteConfirm = async () => {
@@ -131,32 +186,49 @@ export default function AILayoutPage() {
   const handleSend = async () => {
     if (!input.trim()) return
 
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      role: "user",
-      type: "text",
-      content: input,
-      timestamp: new Date(),
-    }
-
-    setMessages((prev) => [...prev, userMessage])
     const messageToSend = input
     setInput("")
 
     // pending delete confirm/cancel
     if (pendingDelete && isAffirmative(messageToSend)) {
+      appendMessage({
+        id: `${Date.now()}`,
+        role: "user",
+        type: "text",
+        content: messageToSend,
+        timestamp: new Date(),
+      })
       await handleDeleteConfirm()
       return
     }
     if (pendingDelete && isNegative(messageToSend)) {
+      appendMessage({
+        id: `${Date.now()}`,
+        role: "user",
+        type: "text",
+        content: messageToSend,
+        timestamp: new Date(),
+      })
       handleDeleteCancel()
       return
+    }
+
+    const intent = parseIntent(messageToSend)
+
+    // Local quick actions stay in-memory (for speed)
+    if (intent.kind === "create" || intent.kind === "list" || intent.kind === "delete") {
+      appendMessage({
+        id: Date.now().toString(),
+        role: "user",
+        type: "text",
+        content: messageToSend,
+        timestamp: new Date(),
+      })
     }
 
     setIsTyping(true)
 
     try {
-      const intent = parseIntent(messageToSend)
       if (intent.kind === "create") {
         const base = buildDefaultTask(intent.title)
         const task = {
@@ -250,19 +322,7 @@ export default function AILayoutPage() {
           })
         }
       } else {
-        const { messages: replyMessages } = await sendChatMessage(messageToSend)
-        const now = Date.now()
-        const assistantMessages: ChatMessage[] = (replyMessages?.length
-          ? replyMessages
-          : [{ text: "The assistant is temporarily unavailable. Please try again later." }]
-        ).map((m, i) => ({
-          id: `${now + i}`,
-          role: "assistant" as const,
-          type: "text",
-          content: typeof m === "string" ? m : (m?.text ?? ""),
-          timestamp: new Date(),
-        }))
-        appendMessage(assistantMessages)
+        await sendPersistedMessage(messageToSend)
       }
     } catch (error) {
       appendMessage({
@@ -305,8 +365,40 @@ export default function AILayoutPage() {
       </div>
 
       <Card className="flex-1 flex flex-col overflow-hidden bg-card border-border">
+        <div className="flex items-center justify-between px-4 pt-4 pb-1 gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">Session:</span>
+            <div className="flex flex-wrap gap-2">
+              {sessions.slice(0, 3).map((session) => (
+                <Button
+                  key={session.id}
+                  size="sm"
+                  variant={session.id === activeSessionId ? "default" : "outline"}
+                  onClick={() => selectSession(session.id)}
+                  className="text-xs"
+                >
+                  {session.title || "Untitled"}
+                </Button>
+              ))}
+              <Button size="sm" variant="outline" onClick={createNewSession} className="text-xs">
+                <Plus className="h-4 w-4 mr-1" />
+                New
+              </Button>
+            </div>
+          </div>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-xs"
+            disabled={!activeSessionId || !hasMore[activeSessionId]}
+            onClick={() => activeSessionId && loadMessages(activeSessionId, true)}
+          >
+            Load older
+          </Button>
+        </div>
+
         <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((message) => (
+          {combinedMessages.map((message) => (
             <div key={message.id} className={cn("flex gap-3", message.role === "user" ? "flex-row-reverse" : "flex-row")}>
               <div
                 className={cn(
@@ -400,7 +492,7 @@ export default function AILayoutPage() {
             </div>
           ))}
 
-          {isTyping && (
+          {(isTyping || isSending) && (
             <div className="flex gap-3">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
                 <Bot className="h-4 w-4" />
@@ -418,7 +510,7 @@ export default function AILayoutPage() {
           <div ref={messagesEndRef} />
         </CardContent>
 
-        {messages.length === 1 && (
+        {combinedMessages.length <= 1 && (
           <div className="px-4 pb-2">
             <p className="text-xs text-muted-foreground mb-2">Suggested prompts:</p>
             <div className="flex flex-wrap gap-2">
@@ -443,14 +535,14 @@ export default function AILayoutPage() {
               onKeyPress={handleKeyPress}
               placeholder="Ask anything about your tasks..."
               className="flex-1 bg-secondary border-border"
-              disabled={isTyping}
+              disabled={isTyping || isSending}
             />
             <Button
               onClick={handleSend}
-              disabled={!input.trim() || isTyping}
+              disabled={!input.trim() || isTyping || isSending}
               className="bg-accent hover:bg-accent/90 text-accent-foreground"
             >
-              <Send className="h-4 w-4" />
+              {isSending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             </Button>
           </div>
         </div>
