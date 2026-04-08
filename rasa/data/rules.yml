@@ -24,8 +24,15 @@ rules:
   steps:
   - action: create_task_form
   - active_loop: null
-  - action: utter_confirm_create
   - action: action_create_task
+
+- rule: Cancel create task form
+  condition:
+  - active_loop: create_task_form
+  steps:
+  - intent: deny
+  - action: action_cancel_create_task
+  - active_loop: null
 
 - rule: Delete task directly
   steps:

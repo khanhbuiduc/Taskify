@@ -45,6 +45,8 @@ nlu:
       - không
       - không phải
       - thôi
+      - hủy
+      - cancel
 
   - intent: ask_howcanhelp
     examples: |
@@ -138,8 +140,46 @@ nlu:
       - Create a new task
       - Add a new task
       - I want to add a task
-      - đặt nó ưu tiên cao nhé
-      - cũng set deadline ngày mai cho cái đó
+      - tạo task [ngày mai](due_date) [ưu tiên cao](priority)
+      - thêm task deadline [ngày mai](due_date) [khẩn cấp](priority)
+      - create task for [tomorrow](due_date) [high](priority)
+
+  - intent: inform_task_fields
+    examples: |
+      - [viết báo cáo](task_title)
+      - [học SQL](task_title)
+      - [review PR gấp](task_title)
+      - [gửi khách hàng](task_title)
+      - [viết báo cáo](task_title) [ngày mai](due_date)
+      - [viết báo cáo](task_title) [ngày mai](due_date) [10h](due_time)
+      - [viết báo cáo](task_title) [ưu tiên cao](priority)
+      - [viết báo cáo](task_title) [ngày mai](due_date) [ưu tiên cao](priority)
+      - [write report](task_title)
+      - [write report](task_title) [tomorrow](due_date)
+      - [write report](task_title) [tomorrow](due_date) [10am](due_time)
+      - [write report](task_title) [high](priority)
+      - [ngày mai](due_date)
+      - [hôm nay](due_date)
+      - [chiều nay](due_date)
+      - [tối nay](due_date)
+      - [10h sáng](due_time)
+      - [16h](due_time)
+      - [9h30](due_time)
+      - [3pm](due_time)
+      - [14:00](due_time)
+      - [cao](priority)
+      - [ưu tiên cao](priority)
+      - [thấp](priority)
+      - [bình thường](priority)
+      - deadline [ngày mai](due_date)
+      - hạn [ngày mai](due_date)
+      - lúc [10h](due_time)
+      - before [5pm](due_time)
+      - set [high](priority) priority
+      - đặt [ưu tiên cao](priority)
+      - title là [viết báo cáo](task_title)
+      - task là [viết báo cáo](task_title)
+      - công việc là [viết báo cáo](task_title)
 
   - intent: delete_task
     examples: |
@@ -158,7 +198,7 @@ nlu:
       - create a note [project ideas](note_title)
       - add note [shopping list](note_title) content [milk, eggs, bread](note_text)
       - new note about [team retro](note_title)
-      - ghi chú [học rasa](note_title)
+      - ghi chép [học rasa](note_title)
       - tạo note [ý tưởng mới](note_title) [ghi nhanh vài ý tưởng](note_text)
       - note [meeting notes](note_title) content [decision: ship v1](note_text)
       - please write a note to remind me to call mom
@@ -170,7 +210,7 @@ nlu:
       - list notes
       - what notes do I have
       - xem danh sách note
-      - liệt kê ghi chú
+      - liệt kê ghi chép
       - recent notes please
       - show pinned notes
       - notes gần đây
@@ -180,8 +220,8 @@ nlu:
       - find notes about [meeting](note_keyword)
       - search notes for [idea](note_keyword)
       - any note containing [retro](note_keyword)?
-      - tìm ghi chú về [kế hoạch](note_keyword)
-      - kiếm note có chữ [bug](note_keyword)
+      - tìm ghi chép về [kế hoạch](note_keyword)
+      - kiêm note có chữ [bug](note_keyword)
 
   - intent: pin_note
     examples: |
@@ -189,10 +229,9 @@ nlu:
       - unpin the last note
       - ghim note vừa tạo
       - bỏ ghim note đó
-      - hãy ghim ghi chú [shopping list](note_title)
+      - hủy ghim ghi chép [shopping list](note_title)
       - unpin note [retro notes](note_title)
 
-  # Entity synonyms - Priority
   - synonym: high
     examples: |
       - urgent
@@ -226,23 +265,29 @@ nlu:
       - bình thường
       - trung bình
 
-  # Regex patterns for entity extraction
   - regex: due_time
     examples: |
       - \d{1,2}h\d{0,2}
       - \d{1,2}:\d{2}
       - \d{1,2}(am|pm)
       - \d{1,2} giờ
+      - \d{1,2}h sáng
+      - \d{1,2}h chiều
 
   - regex: due_date
     examples: |
       - today
       - tomorrow
+      - next monday
+      - next week
       - hôm nay
       - ngày mai
       - ngày kia
       - tuần sau
       - tháng sau
+      - chiều nay
+      - tối nay
+      - sáng mai
 
   - intent: nlu_fallback
     examples: |

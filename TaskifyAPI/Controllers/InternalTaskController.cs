@@ -118,18 +118,18 @@ namespace TaskifyAPI.Controllers
 
             try
             {
-                // Parse due date, default to tomorrow if not specified
+                // Parse due date, default to end of today if not specified
                 DateTime dueDate;
                 if (!string.IsNullOrEmpty(dto.DueDate))
                 {
                     if (!DateTime.TryParse(dto.DueDate, out dueDate))
                     {
-                        dueDate = DateTime.UtcNow.AddDays(1).Date.AddHours(23).AddMinutes(59);
+                        dueDate = DateTime.UtcNow.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
                     }
                 }
                 else
                 {
-                    dueDate = DateTime.UtcNow.AddDays(1).Date.AddHours(23).AddMinutes(59);
+                    dueDate = DateTime.UtcNow.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
                 }
 
                 var task = new TaskItem

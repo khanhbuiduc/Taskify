@@ -11,6 +11,7 @@ intents:
   - summarize_week
   - help_prioritize
   - create_task
+  - inform_task_fields
   - create_note
   - list_notes
   - search_notes
@@ -35,6 +36,10 @@ slots:
     mappings:
       - type: from_entity
         entity: task_title
+      - type: from_text
+        conditions:
+          - active_loop: create_task_form
+            requested_slot: task_title
 
   due_date:
     type: text
@@ -56,30 +61,35 @@ slots:
     mappings:
       - type: from_entity
         entity: priority
+
   note_title:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
         entity: note_title
+
   note_text:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: note_text
+
   note_keyword:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: note_keyword
+
   pin_state:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: pin_state
+
   delete_task_id:
     type: text
     influence_conversation: false
@@ -91,57 +101,82 @@ responses:
   utter_greet:
     - text: "Hello! I'm your AI assistant for Taskify. I can help you manage tasks, analyze your productivity, and answer questions about your projects."
     - text: "Xin chào! Tôi là trợ lý AI của Taskify. Tôi có thể giúp bạn quản lý công việc."
+
   utter_ask_howcanhelp:
     - text: "How can I help you today? You can ask about overdue tasks, get a weekly summary, prioritize work, or create a new task."
     - text: "Tôi có thể giúp gì cho bạn? Bạn có thể hỏi về task quá hạn, tóm tắt tuần, hoặc tạo task mới."
+
   utter_goodbye:
     - text: "Goodbye! Feel free to come back when you need help with your tasks."
     - text: "Tạm biệt! Hẹn gặp lại khi bạn cần giúp đỡ."
+
   utter_default:
     - text: "I'm not sure how to help with that. Try asking about your tasks, a weekly summary, or creating a new task."
     - text: "Tôi không hiểu. Hãy thử hỏi về task, tóm tắt tuần, hoặc tạo task mới."
+
   utter_overdue_info:
     - text: "I can help you see overdue tasks. In a future update I'll list them here. For now, check your task list or dashboard."
+
   utter_summarize_info:
     - text: "I can summarize your week. In a future update I'll show stats here. For now, check your dashboard for progress."
+
   utter_prioritize_info:
     - text: "I'd recommend focusing on high-priority tasks first. Check your task list and sort by priority."
+
   utter_create_task_info:
-    - text: "I can help you create a task. What's the task title and when is it due? (Creating tasks via chat will be available in a future update.)"
+    - text: "I can help you create a task. What's the task title and when is it due?"
+
   utter_ask_task_title:
-    - text: "Bạn muốn tạo task gì? Vui lòng cho tôi biết tiêu đề task.\nVí dụ: 'thêm nhiệm vụ học SQL trước 16h'"
+    - text: "Bạn muốn tạo task gì? Vui lòng cho tôi biết tiêu đề task.
+            Ví dụ: 'thêm nhiệm vụ học SQL trước 16h'"
     - text: "What would you like to name this task?"
     - text: "Task cần có tiêu đề. Tên task là gì vậy bạn?"
+
   utter_ask_due_date:
     - text: "Khi nào task này đến hạn? Bạn có thể nói 'hôm nay', 'ngày mai' hoặc ngày cụ thể."
     - text: "What's the due date for this task?"
+
   utter_ask_priority:
     - text: "Độ ưu tiên của task? Cao / trung bình / thấp."
     - text: "What priority should I set? (high, medium, low)"
+
   utter_confirm_create:
-    - text: "Tạo task \"{task_title}\" hạn {due_date} với ưu tiên {priority}. Đúng chứ?"
+    - text: 'Tạo task "{task_title}" hạn {due_date} với ưu tiên {priority}. Đúng chứ?'
+
+  utter_create_task_cancelled:
+    - text: "Đã hủy tạo task."
+    - text: "Cancelled task creation."
+
   utter_clarify_reference:
     - text: "Bạn đang nói tới task nào? Bạn có thể nêu lại tiêu đề hoặc ưu tiên."
+
   utter_ack_update:
     - text: "Đã ghi nhận, mình sẽ cập nhật task sau khi bạn xác nhận đầy đủ thông tin."
+
   utter_ask_delete_title:
     - text: "Bạn muốn xoá task nào? Hãy nêu rõ tiêu đề."
     - text: "Which task should I delete? Please give the title."
+
   utter_confirm_delete:
-    - text: "Bạn chắc chắn muốn xoá \"{task_title}\"?"
+    - text: 'Bạn chắc chắn muốn xoá "{task_title}"?'
+
   utter_delete_no_match:
     - text: "Mình không tìm thấy task nào khớp. Bạn mô tả rõ hơn nhé."
+
   utter_note_created:
     - text: "Đã tạo note: {note_title}"
+
   utter_note_list_empty:
     - text: "Bạn chưa có note nào."
+
   utter_note_pin_updated:
     - text: "Đã cập nhật trạng thái ghim cho note."
 
-# Custom actions (phase 2 - enabled)
 actions:
   - action_list_tasks
   - action_create_task
+  - validate_create_task_form
+  - action_cancel_create_task
   - action_summarize_week
   - action_delete_task
   - action_create_note
@@ -154,8 +189,6 @@ forms:
   create_task_form:
     required_slots:
       - task_title
-      - due_date
-      - priority
 
 session_config:
   session_expiration_time: 60

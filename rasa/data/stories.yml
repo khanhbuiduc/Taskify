@@ -33,22 +33,29 @@ stories:
   - intent: help_prioritize
   - action: action_list_tasks
 
-- story: create task with clarifications
+- story: create task in multiple turns
+  steps:
+  - intent: create_task
+    entities:
+      - due_date: "ngày mai"
+      - priority: "high"
+  - action: create_task_form
+  - active_loop: create_task_form
+  - intent: inform_task_fields
+    entities:
+      - task_title: "viết báo cáo"
+  - action: create_task_form
+  - active_loop: null
+  - action: action_create_task
+
+- story: cancel create task while form is active
   steps:
   - intent: create_task
   - action: create_task_form
   - active_loop: create_task_form
-  - slot_was_set:
-    - task_title: "viết báo cáo"
   - intent: deny
-  - action: utter_clarify_reference
-  - intent: create_task
-    entities:
-    - priority: "high"
-  - action: create_task_form
+  - action: action_cancel_create_task
   - active_loop: null
-  - action: utter_confirm_create
-  - action: action_create_task
 
 - story: delete task confirm
   steps:

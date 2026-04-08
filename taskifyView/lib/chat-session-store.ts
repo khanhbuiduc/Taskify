@@ -72,7 +72,9 @@ export const useChatSessionStore = create<ChatSessionStore>((set, get) => ({
       const thread = await chatApi.getMessages(sessionId, page);
       const existing = get().messages[sessionId] ?? [];
       // API returns newest-first; reverse to chronological
-      const fetched = [...thread.messages].reverse();
+      const fetched = [...thread.messages]
+        .reverse()
+        .map((m) => ({ ...m, role: (m.role as string).toLowerCase() as ChatMessage["role"] }));
       const merged =
         page === 1
           ? fetched
@@ -130,9 +132,9 @@ export const useChatSessionStore = create<ChatSessionStore>((set, get) => ({
 
     try {
       const response = await chatApi.sendMessage(sessionId, text);
-      const normalized = [...response.messages].sort(
-        (a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime(),
-      );
+      const normalized = [...response.messages]
+        .map((m) => ({ ...m, role: (m.role as string).toLowerCase() as ChatMessage["role"] }))
+        .sort((a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime());
 
       set((state) => ({
         sessions:
@@ -144,7 +146,19 @@ export const useChatSessionStore = create<ChatSessionStore>((set, get) => ({
       set((state) => ({
         messages: {
           ...state.messages,
-          [sessionId]: normalized,
+          [sessionId]: (() => {
+            const previous = state.messages[sessionId] ?? [];
+            const withoutTemps = previous.filter((m) => !m.id.startsWith("temp-"));
+            const merged = [...withoutTemps, ...normalized];
+            const dedup: ChatMessage[] = [];
+            const seen = new Set<string>();
+            for (const m of merged) {
+              if (seen.has(m.id)) continue;
+              seen.add(m.id);
+              dedup.push(m);
+            }
+            return dedup.sort((a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime());
+          })(),
         },
         isSending: false,
         pages: { ...state.pages, [sessionId]: Math.max(state.pages[sessionId] ?? 1, 1) },

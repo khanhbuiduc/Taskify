@@ -1,15 +1,14 @@
 "use client"
 
-import React from "react"
-
-import { useState, useMemo } from "react"
+import React, { useState, useMemo } from "react"
 import { useTaskStore } from "@/lib/task-store"
 import type { Task, TaskStatus } from "@/lib/types"
-import { PriorityBadge } from "@/components/task-ui/priority-badge"
-import { TaskModal } from "@/components/task-ui/task-modal"
-import { TaskDetailDialog } from "@/components/task-ui/task-detail-dialog"
-import { DeleteDialog } from "@/components/task-ui/delete-dialog"
-import { LabelBadge } from "@/components/task-ui/label-badge"
+import { useTaskActions } from "@/hooks/use-task-actions"
+import { TaskModal } from "@/components/task/task-modal"
+import { TaskDetailDialog } from "@/components/task/task-detail-dialog"
+import { DeleteDialog } from "@/components/task/delete-dialog"
+import { PriorityBadge } from "@/components/task/priority-badge"
+import { LabelBadge } from "@/components/task/label-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -20,35 +19,37 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { cn, stripHtml, formatDueDisplay } from "@/lib/utils"
-import {
-  Search,
-  Plus,
-  CheckCircle2,
-  Circle,
-  Calendar,
-} from "lucide-react"
+import { Search, Plus, CheckCircle2, Circle, Calendar } from "lucide-react"
 
 type SortOption = "dueDate" | "priority" | "status"
 type FilterOption = "all" | TaskStatus
 
 export default function ListTasksPage() {
-  const { tasks, labels, addTask, updateTask, deleteTask, updateTaskStatus } = useTaskStore()
+  const { tasks, labels, updateTaskStatus } = useTaskStore()
+  const {
+    modalOpen, setModalOpen,
+    modalMode,
+    selectedTask,
+    detailDialogOpen, setDetailDialogOpen,
+    detailTask,
+    deleteDialogOpen, setDeleteDialogOpen,
+    taskToDelete,
+    openCreateModal,
+    openDetail,
+    handleEditFromDetail,
+    handleDeleteFromDetail,
+    handleConfirmDelete,
+    handleSaveTask,
+  } = useTaskActions()
+
   const [search, setSearch] = useState("")
   const [sortBy, setSortBy] = useState<SortOption>("dueDate")
   const [filterStatus, setFilterStatus] = useState<FilterOption>("all")
   const [filterLabel, setFilterLabel] = useState<number | "all">("all")
-  const [modalOpen, setModalOpen] = useState(false)
-  const [modalMode, setModalMode] = useState<"create" | "edit">("create")
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-  const [detailDialogOpen, setDetailDialogOpen] = useState(false)
-  const [detailTask, setDetailTask] = useState<Task | null>(null)
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null)
 
   const filteredAndSortedTasks = useMemo(() => {
     let result = [...tasks]
 
-    // Search filter (description: strip HTML for plain-text search)
     if (search) {
       const q = search.toLowerCase()
       result = result.filter(
@@ -57,105 +58,38 @@ export default function ListTasksPage() {
           stripHtml(task.description).toLowerCase().includes(q)
       )
     }
-
-    // Status filter
     if (filterStatus !== "all") {
       result = result.filter((task) => task.status === filterStatus)
     }
-
     if (filterLabel !== "all") {
       result = result.filter((task) => task.labels?.some((l) => l.id === filterLabel))
     }
-
-    // Sorting
     result.sort((a, b) => {
-      if (sortBy === "dueDate") {
-        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-      }
+      if (sortBy === "dueDate") return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
       if (sortBy === "priority") {
-        const priorityOrder = { high: 0, medium: 1, low: 2 }
-        return priorityOrder[a.priority] - priorityOrder[b.priority]
+        const order = { high: 0, medium: 1, low: 2 }
+        return order[a.priority] - order[b.priority]
       }
       if (sortBy === "status") {
-        const statusOrder = { todo: 0, "in-progress": 1, completed: 2 }
-        return statusOrder[a.status] - statusOrder[b.status]
+        const order = { todo: 0, "in-progress": 1, completed: 2 }
+        return order[a.status] - order[b.status]
       }
       return 0
     })
-
     return result
   }, [tasks, search, sortBy, filterStatus, filterLabel])
 
-  const handleCreateTask = () => {
-    setSelectedTask(null)
-    setModalMode("create")
-    setModalOpen(true)
-  }
-
-  const handleTaskClick = (task: Task) => {
-    setDetailTask(task)
-    setDetailDialogOpen(true)
-  }
-
-  const handleEditFromDetail = () => {
-    if (detailTask) {
-      setDetailDialogOpen(false)
-      setSelectedTask(detailTask)
-      setModalMode("edit")
-      setModalOpen(true)
-    }
-  }
-
-  const handleDeleteFromDetail = () => {
-    if (detailTask) {
-      setTaskToDelete(detailTask)
-      setDetailDialogOpen(false)
-      setDeleteDialogOpen(true)
-    }
-  }
-
-  const handleConfirmDelete = async () => {
-    if (taskToDelete) {
-      try {
-        await deleteTask(taskToDelete.id)
-        setDeleteDialogOpen(false)
-        setTaskToDelete(null)
-        setModalOpen(false)
-        setSelectedTask(null)
-      } catch (error) {
-        // Error already handled in store with toast
-      }
-    }
-  }
-
-  const handleSaveTask = async (taskData: Omit<Task, "id" | "createdAt">) => {
-    try {
-      if (modalMode === "create") {
-        await addTask(taskData)
-        setModalOpen(false)
-      } else if (selectedTask) {
-        await updateTask(selectedTask.id, taskData)
-        setModalOpen(false)
-      }
-    } catch (error) {
-      // Error already handled in store with toast
-    }
-  }
-
-  // Toggle giữa todo ↔ completed
   const handleStatusToggle = (task: Task) => {
     const newStatus: TaskStatus = task.status === "completed" ? "todo" : "completed"
     updateTaskStatus(task.id, newStatus)
   }
 
-  const isOverdue = (dueDate: string, status: TaskStatus) => {
-    if (status === "completed") return false
-    return new Date(dueDate) < new Date()
-  }
+  const isOverdue = (dueDate: string, status: TaskStatus) =>
+    status !== "completed" && new Date(dueDate) < new Date()
 
   return (
     <div className="space-y-6">
-      {/* Header with Search, Filter, Sort */}
+      {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -167,7 +101,7 @@ export default function ListTasksPage() {
             className="pl-9"
           />
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Filter:</span>
             <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as FilterOption)}>
@@ -184,7 +118,10 @@ export default function ListTasksPage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Label:</span>
-            <Select value={String(filterLabel)} onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}>
+            <Select
+              value={String(filterLabel)}
+              onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}
+            >
               <SelectTrigger className="w-[140px]">
                 <SelectValue placeholder="All labels" />
               </SelectTrigger>
@@ -211,14 +148,14 @@ export default function ListTasksPage() {
               </SelectContent>
             </Select>
           </div>
-          <Button onClick={handleCreateTask} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
+          <Button onClick={openCreateModal} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
             <Plus className="h-4 w-4" />
             Add Task
           </Button>
         </div>
       </div>
 
-      {/* Task List - All tasks in one list */}
+      {/* Task List */}
       <div className="rounded-lg border border-border p-4">
         <div className="mb-4 flex items-center gap-2">
           <h3 className="font-semibold text-foreground">All Tasks</h3>
@@ -228,26 +165,20 @@ export default function ListTasksPage() {
         </div>
 
         {filteredAndSortedTasks.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">
-            No tasks found
-          </p>
+          <p className="py-8 text-center text-sm text-muted-foreground">No tasks found</p>
         ) : (
           <div className="space-y-2">
             {filteredAndSortedTasks.map((task) => (
               <div
                 key={task.id}
-                onClick={() => handleTaskClick(task)}
+                onClick={() => openDetail(task)}
                 className={cn(
                   "group flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3 shadow-sm transition-all hover:bg-muted/50 cursor-pointer",
                   task.status === "completed" && "opacity-60"
                 )}
               >
-                {/* Toggle button: click để chuyển todo ↔ completed */}
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleStatusToggle(task)
-                  }}
+                  onClick={(e) => { e.stopPropagation(); handleStatusToggle(task) }}
                   className="shrink-0"
                 >
                   {task.status === "completed" ? (
@@ -273,10 +204,7 @@ export default function ListTasksPage() {
                         <LabelBadge
                           key={label.id}
                           label={label}
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            setFilterLabel(label.id)
-                          }}
+                          onClick={(e) => { e.stopPropagation(); setFilterLabel(label.id) }}
                         />
                       ))}
                     </div>

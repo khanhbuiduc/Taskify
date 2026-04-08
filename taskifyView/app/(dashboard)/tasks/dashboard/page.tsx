@@ -1,25 +1,24 @@
-"use client";
+"use client"
 
-import React from "react";
-
-import { useState, useMemo } from "react";
-import { useTaskStore } from "@/lib/task-store";
-import type { Task, TaskStatus, TaskPriority } from "@/lib/types";
-import { PriorityBadge } from "@/components/task-ui/priority-badge";
-import { TaskModal } from "@/components/task-ui/task-modal";
-import { TaskDetailDialog } from "@/components/task-ui/task-detail-dialog";
-import { DeleteDialog } from "@/components/task-ui/delete-dialog";
-import { LabelBadge } from "@/components/task-ui/label-badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useMemo } from "react"
+import { useTaskStore } from "@/lib/task-store"
+import type { Task, TaskStatus, TaskPriority } from "@/lib/types"
+import { useTaskActions } from "@/hooks/use-task-actions"
+import { TaskModal } from "@/components/task/task-modal"
+import { TaskDetailDialog } from "@/components/task/task-detail-dialog"
+import { DeleteDialog } from "@/components/task/delete-dialog"
+import { PriorityBadge } from "@/components/task/priority-badge"
+import { LabelBadge } from "@/components/task/label-badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn, stripHtml, formatDueDisplay, getDueDatePart } from "@/lib/utils";
+} from "@/components/ui/select"
+import { cn, stripHtml, formatDueDisplay, getDueDatePart } from "@/lib/utils"
 import {
   Plus,
   Calendar,
@@ -31,281 +30,139 @@ import {
   ChevronDown,
   ChevronUp,
   Circle,
-} from "lucide-react";
+} from "lucide-react"
 
-// Types for filter and sort
-type SortOption = "dueDate" | "priority" | "status";
-type FilterOption = "all" | TaskStatus;
-type GroupByOption = "status" | "priority";
+type SortOption = "dueDate" | "priority" | "status"
+type FilterOption = "all" | TaskStatus
+type GroupByOption = "status" | "priority"
 
 interface ColumnConfig {
-  id: string;
-  title: string;
-  icon: React.ElementType;
-  color: string;
-  filter: (task: Task) => boolean;
+  id: string
+  title: string
+  icon: React.ElementType
+  color: string
+  filter: (task: Task) => boolean
 }
 
 export default function DashboardTasksPage() {
   const {
     tasks,
     labels,
-    addTask,
     updateTask,
-    deleteTask,
     updateTaskStatus,
     isLoading,
     error,
-  } = useTaskStore();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMode, setModalMode] = useState<"create" | "edit">("create");
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [detailDialogOpen, setDetailDialogOpen] = useState(false);
-  const [detailTask, setDetailTask] = useState<Task | null>(null);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
-  const [draggedTask, setDraggedTask] = useState<Task | null>(null);
+  } = useTaskStore()
 
-  // New state for filters, sort, grouping, and overdue list
-  const [showOverdueList, setShowOverdueList] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<FilterOption>("all");
-  const [sortBy, setSortBy] = useState<SortOption>("dueDate");
-  const [groupBy, setGroupBy] = useState<GroupByOption>("status");
-  const [filterLabel, setFilterLabel] = useState<number | "all">("all");
+  const {
+    modalOpen, setModalOpen,
+    modalMode,
+    selectedTask,
+    detailDialogOpen, setDetailDialogOpen,
+    detailTask,
+    deleteDialogOpen, setDeleteDialogOpen,
+    taskToDelete,
+    openCreateModal,
+    openDetail,
+    handleEditFromDetail,
+    handleDeleteFromDetail,
+    handleConfirmDelete,
+    handleSaveTask,
+  } = useTaskActions()
 
-  const now = new Date();
+  const [draggedTask, setDraggedTask] = useState<Task | null>(null)
+  const [showOverdueList, setShowOverdueList] = useState(false)
+  const [filterStatus, setFilterStatus] = useState<FilterOption>("all")
+  const [sortBy, setSortBy] = useState<SortOption>("dueDate")
+  const [groupBy, setGroupBy] = useState<GroupByOption>("status")
+  const [filterLabel, setFilterLabel] = useState<number | "all">("all")
 
-  // Compute overdue tasks (full datetime: no time = end of that day)
-  const overdueTasks = useMemo(() => {
-    return tasks.filter(
-      (t) => t.status !== "completed" && new Date(t.dueDate) < now,
-    );
-  }, [tasks]);
+  const now = new Date()
 
-  // Stats computation (removed inProgress)
-  const stats = useMemo(() => {
-    const total = tasks.length;
-    const completed = tasks.filter((t) => t.status === "completed").length;
-    const overdue = overdueTasks.length;
+  const overdueTasks = useMemo(
+    () => tasks.filter((t) => t.status !== "completed" && new Date(t.dueDate) < now),
+    [tasks]
+  )
 
-    return { total, completed, overdue };
-  }, [tasks, overdueTasks]);
+  const stats = useMemo(() => ({
+    total: tasks.length,
+    completed: tasks.filter((t) => t.status === "completed").length,
+    overdue: overdueTasks.length,
+  }), [tasks, overdueTasks])
 
-  // Dynamic columns based on groupBy selection
   const bottomColumns: ColumnConfig[] = useMemo(() => {
     if (groupBy === "status") {
       return [
-        {
-          id: "todo",
-          title: "In Todo",
-          icon: ListTodo,
-          color: "text-slate-500",
-          filter: (task) => task.status === "todo",
-        },
-        {
-          id: "in-progress",
-          title: "In Progress",
-          icon: Clock,
-          color: "text-yellow-500",
-          filter: (task) => task.status === "in-progress",
-        },
-        {
-          id: "completed",
-          title: "Completed",
-          icon: CheckCircle2,
-          color: "text-green-500",
-          filter: (task) => task.status === "completed",
-        },
-      ];
-    } else {
-      // Group by priority
-      return [
-        {
-          id: "high",
-          title: "High Priority",
-          icon: AlertCircle,
-          color: "text-red-500",
-          filter: (task) => task.priority === "high",
-        },
-        {
-          id: "medium",
-          title: "Medium Priority",
-          icon: Clock,
-          color: "text-yellow-500",
-          filter: (task) => task.priority === "medium",
-        },
-        {
-          id: "low",
-          title: "Low Priority",
-          icon: Circle,
-          color: "text-green-500",
-          filter: (task) => task.priority === "low",
-        },
-      ];
+        { id: "todo", title: "In Todo", icon: ListTodo, color: "text-slate-500", filter: (t) => t.status === "todo" },
+        { id: "in-progress", title: "In Progress", icon: Clock, color: "text-yellow-500", filter: (t) => t.status === "in-progress" },
+        { id: "completed", title: "Completed", icon: CheckCircle2, color: "text-green-500", filter: (t) => t.status === "completed" },
+      ]
     }
-  }, [groupBy]);
+    return [
+      { id: "high", title: "High Priority", icon: AlertCircle, color: "text-red-500", filter: (t) => t.priority === "high" },
+      { id: "medium", title: "Medium Priority", icon: Clock, color: "text-yellow-500", filter: (t) => t.priority === "medium" },
+      { id: "low", title: "Low Priority", icon: Circle, color: "text-green-500", filter: (t) => t.priority === "low" },
+    ]
+  }, [groupBy])
 
-  // Filter and sort tasks for columns
   const getFilteredTasks = (baseTasks: Task[]) => {
-    let result = [...baseTasks];
-
-    // Status filter
-    if (filterStatus !== "all") {
-      result = result.filter((task) => task.status === filterStatus);
-    }
-
-    // Sorting
+    let result = [...baseTasks]
+    if (filterStatus !== "all") result = result.filter((t) => t.status === filterStatus)
     result.sort((a, b) => {
-      if (sortBy === "dueDate") {
-        return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
-      }
+      if (sortBy === "dueDate") return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
       if (sortBy === "priority") {
-        const priorityOrder = { high: 0, medium: 1, low: 2 };
-        return priorityOrder[a.priority] - priorityOrder[b.priority];
+        const order = { high: 0, medium: 1, low: 2 }
+        return order[a.priority] - order[b.priority]
       }
       if (sortBy === "status") {
-        const statusOrder = { todo: 0, "in-progress": 1, completed: 2 };
-        return statusOrder[a.status] - statusOrder[b.status];
+        const order = { todo: 0, "in-progress": 1, completed: 2 }
+        return order[a.status] - order[b.status]
       }
-      return 0;
-    });
+      return 0
+    })
+    return result
+  }
 
-    return result;
-  };
-
-  // Compute column tasks with filter and sort applied
   const columnTasks = useMemo(() => {
-    const result: Record<string, Task[]> = {};
+    const result: Record<string, Task[]> = {}
     bottomColumns.forEach((col) => {
-      const filtered = tasks.filter(col.filter);
-      const afterLabel =
-        filterLabel === "all"
-          ? filtered
-          : filtered.filter((t) => t.labels?.some((l) => l.id === filterLabel));
-      result[col.id] = getFilteredTasks(afterLabel);
-    });
-    return result;
-  }, [tasks, bottomColumns, filterStatus, sortBy, filterLabel]);
+      const filtered = tasks.filter(col.filter)
+      const afterLabel = filterLabel === "all" ? filtered : filtered.filter((t) => t.labels?.some((l) => l.id === filterLabel))
+      result[col.id] = getFilteredTasks(afterLabel)
+    })
+    return result
+  }, [tasks, bottomColumns, filterStatus, sortBy, filterLabel])
 
-  // Filtered and sorted overdue tasks for inline list
   const filteredOverdueTasks = useMemo(() => {
-    const list =
-      filterLabel === "all"
-        ? overdueTasks
-        : overdueTasks.filter((t) => t.labels?.some((l) => l.id === filterLabel));
-    return getFilteredTasks(list);
-  }, [overdueTasks, filterStatus, sortBy, filterLabel]);
-
-  const handleCreateTask = () => {
-    setSelectedTask(null);
-    setModalMode("create");
-    setModalOpen(true);
-  };
-
-  const handleTaskClick = (task: Task) => {
-    setDetailTask(task);
-    setDetailDialogOpen(true);
-  };
-
-  const handleEditFromDetail = () => {
-    if (detailTask) {
-      setDetailDialogOpen(false);
-      setSelectedTask(detailTask);
-      setModalMode("edit");
-      setModalOpen(true);
-    }
-  };
-
-  const handleDeleteFromDetail = () => {
-    if (detailTask) {
-      setTaskToDelete(detailTask);
-      setDetailDialogOpen(false);
-      setDeleteDialogOpen(true);
-    }
-  };
-
-  const handleConfirmDelete = async () => {
-    if (taskToDelete) {
-      try {
-        await deleteTask(taskToDelete.id);
-        setDeleteDialogOpen(false);
-        setTaskToDelete(null);
-        setModalOpen(false);
-        setSelectedTask(null);
-      } catch (error) {
-        // Error already handled in store with toast
-      }
-    }
-  };
-
-  const handleSaveTask = async (taskData: Omit<Task, "id" | "createdAt">) => {
-    try {
-      if (modalMode === "create") {
-        await addTask(taskData);
-        setModalOpen(false);
-      } else if (selectedTask) {
-        await updateTask(selectedTask.id, taskData);
-        setModalOpen(false);
-      }
-    } catch (error) {
-      // Error already handled in store with toast
-    }
-  };
+    const list = filterLabel === "all" ? overdueTasks : overdueTasks.filter((t) => t.labels?.some((l) => l.id === filterLabel))
+    return getFilteredTasks(list)
+  }, [overdueTasks, filterStatus, sortBy, filterLabel])
 
   const handleDragStart = (e: React.DragEvent, task: Task) => {
-    setDraggedTask(task);
-    e.dataTransfer.effectAllowed = "move";
-  };
-
+    setDraggedTask(task)
+    e.dataTransfer.effectAllowed = "move"
+  }
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-  };
-
-  // Updated handleDrop to support both status and priority grouping
+    e.preventDefault()
+    e.dataTransfer.dropEffect = "move"
+  }
   const handleDrop = async (e: React.DragEvent, columnId: string) => {
-    e.preventDefault();
-    if (!draggedTask) return;
-
+    e.preventDefault()
+    if (!draggedTask) return
     if (groupBy === "status") {
-      // Map column to status change
-      if (columnId === "todo" && draggedTask.status !== "todo") {
-        await updateTaskStatus(draggedTask.id, "todo");
-      } else if (
-        columnId === "in-progress" &&
-        draggedTask.status !== "in-progress"
-      ) {
-        await updateTaskStatus(draggedTask.id, "in-progress");
-      } else if (
-        columnId === "completed" &&
-        draggedTask.status !== "completed"
-      ) {
-        await updateTaskStatus(draggedTask.id, "completed");
-      }
+      const statusMap: Record<string, TaskStatus> = { todo: "todo", "in-progress": "in-progress", completed: "completed" }
+      const newStatus = statusMap[columnId]
+      if (newStatus && draggedTask.status !== newStatus) await updateTaskStatus(draggedTask.id, newStatus)
     } else {
-      // Map column to priority change
-      const priorityMap: Record<string, TaskPriority> = {
-        high: "high",
-        medium: "medium",
-        low: "low",
-      };
-      const newPriority = priorityMap[columnId];
-      if (newPriority && draggedTask.priority !== newPriority) {
-        await updateTask(draggedTask.id, { priority: newPriority });
-      }
+      const priorityMap: Record<string, TaskPriority> = { high: "high", medium: "medium", low: "low" }
+      const newPriority = priorityMap[columnId]
+      if (newPriority && draggedTask.priority !== newPriority) await updateTask(draggedTask.id, { priority: newPriority })
     }
-    setDraggedTask(null);
-  };
+    setDraggedTask(null)
+  }
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  };
-
-  const isOverdue = (dueDate: string, status: TaskStatus) => {
-    if (status === "completed") return false;
-    return new Date(dueDate) < now;
-  };
+  const isOverdue = (dueDate: string, status: TaskStatus) =>
+    status !== "completed" && new Date(dueDate) < now
 
   if (isLoading && tasks.length === 0) {
     return (
@@ -315,7 +172,7 @@ export default function DashboardTasksPage() {
           <p className="text-sm text-muted-foreground">Loading tasks...</p>
         </div>
       </div>
-    );
+    )
   }
 
   if (error && tasks.length === 0) {
@@ -326,27 +183,20 @@ export default function DashboardTasksPage() {
             <div className="flex flex-col items-center gap-4 text-center">
               <AlertCircle className="h-8 w-8 text-destructive" />
               <div>
-                <p className="font-semibold text-foreground">
-                  Failed to load tasks
-                </p>
+                <p className="font-semibold text-foreground">Failed to load tasks</p>
                 <p className="text-sm text-muted-foreground mt-1">{error}</p>
               </div>
-              <Button
-                onClick={() => window.location.reload()}
-                variant="outline"
-              >
-                Retry
-              </Button>
+              <Button onClick={() => window.location.reload()} variant="outline">Retry</Button>
             </div>
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 
   return (
     <div className="space-y-6">
-      {/* Stats Overview - 3 cards: Total, Overdue (clickable), Completed */}
+      {/* Stats */}
       <div className="grid gap-4 sm:grid-cols-3">
         <Card>
           <CardContent className="flex items-center gap-4 p-6">
@@ -354,18 +204,13 @@ export default function DashboardTasksPage() {
               <ListTodo className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">
-                {stats.total}
-              </p>
+              <p className="text-2xl font-bold text-foreground">{stats.total}</p>
               <p className="text-sm text-muted-foreground">Total Tasks</p>
             </div>
           </CardContent>
         </Card>
         <Card
-          className={cn(
-            "cursor-pointer transition-colors hover:bg-muted/30",
-            showOverdueList && "ring-2 ring-red-500/50",
-          )}
+          className={cn("cursor-pointer transition-colors hover:bg-muted/30", showOverdueList && "ring-2 ring-red-500/50")}
           onClick={() => setShowOverdueList(!showOverdueList)}
         >
           <CardContent className="flex items-center gap-4 p-6">
@@ -373,16 +218,10 @@ export default function DashboardTasksPage() {
               <AlertCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
             <div className="flex-1">
-              <p className="text-2xl font-bold text-foreground">
-                {stats.overdue}
-              </p>
+              <p className="text-2xl font-bold text-foreground">{stats.overdue}</p>
               <p className="text-sm text-muted-foreground">Overdue</p>
             </div>
-            {showOverdueList ? (
-              <ChevronUp className="h-5 w-5 text-muted-foreground" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-muted-foreground" />
-            )}
+            {showOverdueList ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
           </CardContent>
         </Card>
         <Card>
@@ -391,16 +230,14 @@ export default function DashboardTasksPage() {
               <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
             <div>
-              <p className="text-2xl font-bold text-foreground">
-                {stats.completed}
-              </p>
+              <p className="text-2xl font-bold text-foreground">{stats.completed}</p>
               <p className="text-sm text-muted-foreground">Completed</p>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Expandable Overdue List */}
+      {/* Overdue list */}
       {showOverdueList && (
         <Card className="border-red-200 dark:border-red-900/50">
           <CardHeader className="pb-3">
@@ -413,34 +250,26 @@ export default function DashboardTasksPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-                {filteredOverdueTasks.length === 0 ? (
-                  <p className="py-4 text-center text-sm text-muted-foreground">
-                    No overdue tasks
-                  </p>
-                ) : (
-                  filteredOverdueTasks.map((task) => (
+            {filteredOverdueTasks.length === 0 ? (
+              <p className="py-4 text-center text-sm text-muted-foreground">No overdue tasks</p>
+            ) : (
+              filteredOverdueTasks.map((task) => (
                 <div
                   key={task.id}
-                  onClick={() => handleTaskClick(task)}
-                      className="group flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-3 transition-all hover:bg-muted/50 cursor-pointer"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-foreground truncate">
-                          {task.title}
-                        </p>
-                        {task.description && (
-                          <p className="text-sm text-muted-foreground truncate">
-                            {stripHtml(task.description)}
-                          </p>
-                        )}
-                        {task.labels?.length ? (
-                          <div className="mt-1 flex flex-wrap gap-1">
-                            {task.labels.map((label) => (
-                              <LabelBadge key={label.id} label={label} />
-                            ))}
-                          </div>
-                        ) : null}
+                  onClick={() => openDetail(task)}
+                  className="group flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-3 transition-all hover:bg-muted/50 cursor-pointer"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-foreground truncate">{task.title}</p>
+                    {task.description && (
+                      <p className="text-sm text-muted-foreground truncate">{stripHtml(task.description)}</p>
+                    )}
+                    {task.labels?.length ? (
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        {task.labels.map((label) => <LabelBadge key={label.id} label={label} />)}
                       </div>
+                    ) : null}
+                  </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <PriorityBadge priority={task.priority} />
                     <div className="flex items-center gap-1 text-xs text-destructive">
@@ -455,18 +284,13 @@ export default function DashboardTasksPage() {
         </Card>
       )}
 
-      {/* Filter, Sort, Group by, and Add Task Button */}
+      {/* Filters + Add */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Filter:</span>
-            <Select
-              value={filterStatus}
-              onValueChange={(v) => setFilterStatus(v as FilterOption)}
-            >
-              <SelectTrigger className="w-[130px]">
-                <SelectValue placeholder="Filter" />
-              </SelectTrigger>
+            <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as FilterOption)}>
+              <SelectTrigger className="w-[130px]"><SelectValue placeholder="Filter" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="todo">Todo</SelectItem>
@@ -477,32 +301,18 @@ export default function DashboardTasksPage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Label:</span>
-            <Select
-              value={String(filterLabel)}
-              onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}
-            >
-              <SelectTrigger className="w-[140px]">
-                <SelectValue placeholder="All labels" />
-              </SelectTrigger>
+            <Select value={String(filterLabel)} onValueChange={(v) => setFilterLabel(v === "all" ? "all" : Number(v))}>
+              <SelectTrigger className="w-[140px]"><SelectValue placeholder="All labels" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Labels</SelectItem>
-                {labels.map((label) => (
-                  <SelectItem key={label.id} value={String(label.id)}>
-                    {label.name}
-                  </SelectItem>
-                ))}
+                {labels.map((label) => <SelectItem key={label.id} value={String(label.id)}>{label.name}</SelectItem>)}
               </SelectContent>
             </Select>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Sort by:</span>
-            <Select
-              value={sortBy}
-              onValueChange={(v) => setSortBy(v as SortOption)}
-            >
-              <SelectTrigger className="w-[130px]">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
+            <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+              <SelectTrigger className="w-[130px]"><SelectValue placeholder="Sort by" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="dueDate">Due Date</SelectItem>
                 <SelectItem value="priority">Priority</SelectItem>
@@ -512,13 +322,8 @@ export default function DashboardTasksPage() {
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Group by:</span>
-            <Select
-              value={groupBy}
-              onValueChange={(v) => setGroupBy(v as GroupByOption)}
-            >
-              <SelectTrigger className="w-[130px]">
-                <SelectValue placeholder="Group by" />
-              </SelectTrigger>
+            <Select value={groupBy} onValueChange={(v) => setGroupBy(v as GroupByOption)}>
+              <SelectTrigger className="w-[130px]"><SelectValue placeholder="Group by" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="status">Status</SelectItem>
                 <SelectItem value="priority">Priority</SelectItem>
@@ -526,31 +331,23 @@ export default function DashboardTasksPage() {
             </Select>
           </div>
         </div>
-        <Button
-          onClick={handleCreateTask}
-          className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90"
-        >
+        <Button onClick={openCreateModal} className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90">
           <Plus className="h-4 w-4" />
           Add Task
         </Button>
       </div>
 
-      {/* Task Columns - Dynamic based on groupBy */}
+      {/* Task Columns */}
       <div className="grid gap-6 md:grid-cols-3">
         {bottomColumns.map((column) => {
-          const Icon = column.icon;
-          const colTasks = columnTasks[column.id];
-          const canDrop = true;
-
+          const Icon = column.icon
+          const colTasks = columnTasks[column.id]
           return (
             <Card
               key={column.id}
-              onDragOver={canDrop ? handleDragOver : undefined}
-              onDrop={canDrop ? (e) => handleDrop(e, column.id) : undefined}
-              className={cn(
-                "transition-colors",
-                canDrop && draggedTask && "border-dashed border-accent/50",
-              )}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, column.id)}
+              className={cn("transition-colors", draggedTask && "border-dashed border-accent/50")}
             >
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base">
@@ -563,46 +360,36 @@ export default function DashboardTasksPage() {
               </CardHeader>
               <CardContent className="space-y-2 max-h-[500px] overflow-y-auto">
                 {colTasks.length === 0 ? (
-                  <p className="py-8 text-center text-sm text-muted-foreground">
-                    No tasks
-                  </p>
+                  <p className="py-8 text-center text-sm text-muted-foreground">No tasks</p>
                 ) : (
                   colTasks.map((task) => (
                     <div
                       key={task.id}
                       draggable
                       onDragStart={(e) => handleDragStart(e, task)}
-                      onClick={() => handleTaskClick(task)}
+                      onClick={() => openDetail(task)}
                       className={cn(
                         "group rounded-lg border border-border bg-card p-3 transition-all cursor-pointer hover:bg-muted/50",
-                        task.status === "completed" && "opacity-60",
+                        task.status === "completed" && "opacity-60"
                       )}
                     >
-                      <p
-                        className={cn(
-                          "text-sm font-medium text-foreground line-clamp-2",
-                          task.status === "completed" && "line-through",
-                        )}
-                      >
+                      <p className={cn(
+                        "text-sm font-medium text-foreground line-clamp-2",
+                        task.status === "completed" && "line-through"
+                      )}>
                         {task.title}
                       </p>
                       {task.labels?.length ? (
                         <div className="mt-1 flex flex-wrap gap-1">
-                          {task.labels.map((label) => (
-                            <LabelBadge key={label.id} label={label} />
-                          ))}
+                          {task.labels.map((label) => <LabelBadge key={label.id} label={label} />)}
                         </div>
                       ) : null}
                       <div className="mt-2 flex items-center gap-2">
                         <PriorityBadge priority={task.priority} />
-                        <span
-                          className={cn(
-                            "text-xs",
-                            isOverdue(task.dueDate, task.status)
-                              ? "text-destructive"
-                              : "text-muted-foreground",
-                          )}
-                        >
+                        <span className={cn(
+                          "text-xs",
+                          isOverdue(task.dueDate, task.status) ? "text-destructive" : "text-muted-foreground"
+                        )}>
                           {formatDueDisplay(task.dueDate)}
                         </span>
                       </div>
@@ -611,7 +398,7 @@ export default function DashboardTasksPage() {
                 )}
               </CardContent>
             </Card>
-          );
+          )
         })}
       </div>
 
@@ -637,5 +424,5 @@ export default function DashboardTasksPage() {
         taskTitle={taskToDelete?.title || ""}
       />
     </div>
-  );
+  )
 }

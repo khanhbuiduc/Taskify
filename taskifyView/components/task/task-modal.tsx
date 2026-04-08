@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DescriptionEditor } from "@/components/task-ui/description-editor"
+import { DescriptionEditor } from "@/components/task/description-editor"
 import {
   Dialog,
   DialogContent,
