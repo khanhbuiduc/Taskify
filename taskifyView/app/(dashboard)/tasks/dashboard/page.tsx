@@ -7,8 +7,6 @@ import { useTaskActions } from "@/hooks/use-task-actions"
 import { TaskModal } from "@/components/task/task-modal"
 import { TaskDetailDialog } from "@/components/task/task-detail-dialog"
 import { DeleteDialog } from "@/components/task/delete-dialog"
-import { PriorityBadge } from "@/components/task/priority-badge"
-import { LabelBadge } from "@/components/task/label-badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -18,10 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { cn, stripHtml, formatDueDisplay, getDueDatePart } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import {
   Plus,
-  Calendar,
   AlertCircle,
   Clock,
   CheckCircle2,
@@ -31,6 +28,7 @@ import {
   ChevronUp,
   Circle,
 } from "lucide-react"
+import { TaskCard } from "@/components/task/task-card"
 
 type SortOption = "dueDate" | "priority" | "status"
 type FilterOption = "all" | TaskStatus
@@ -161,9 +159,6 @@ export default function DashboardTasksPage() {
     setDraggedTask(null)
   }
 
-  const isOverdue = (dueDate: string, status: TaskStatus) =>
-    status !== "completed" && new Date(dueDate) < now
-
   if (isLoading && tasks.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -254,30 +249,12 @@ export default function DashboardTasksPage() {
               <p className="py-4 text-center text-sm text-muted-foreground">No overdue tasks</p>
             ) : (
               filteredOverdueTasks.map((task) => (
-                <div
+                <TaskCard
                   key={task.id}
-                  onClick={() => openDetail(task)}
-                  className="group flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-3 transition-all hover:bg-muted/50 cursor-pointer"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground truncate">{task.title}</p>
-                    {task.description && (
-                      <p className="text-sm text-muted-foreground truncate">{stripHtml(task.description)}</p>
-                    )}
-                    {task.labels?.length ? (
-                      <div className="mt-1 flex flex-wrap gap-1">
-                        {task.labels.map((label) => <LabelBadge key={label.id} label={label} />)}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    <PriorityBadge priority={task.priority} />
-                    <div className="flex items-center gap-1 text-xs text-destructive">
-                      <Calendar className="h-3 w-3" />
-                      {formatDueDisplay(task.dueDate)}
-                    </div>
-                  </div>
-                </div>
+                  task={task}
+                  variant="list"
+                  onClick={openDetail}
+                />
               ))
             )}
           </CardContent>
@@ -363,37 +340,13 @@ export default function DashboardTasksPage() {
                   <p className="py-8 text-center text-sm text-muted-foreground">No tasks</p>
                 ) : (
                   colTasks.map((task) => (
-                    <div
+                    <TaskCard
                       key={task.id}
-                      draggable
-                      onDragStart={(e) => handleDragStart(e, task)}
-                      onClick={() => openDetail(task)}
-                      className={cn(
-                        "group rounded-lg border border-border bg-card p-3 transition-all cursor-pointer hover:bg-muted/50",
-                        task.status === "completed" && "opacity-60"
-                      )}
-                    >
-                      <p className={cn(
-                        "text-sm font-medium text-foreground line-clamp-2",
-                        task.status === "completed" && "line-through"
-                      )}>
-                        {task.title}
-                      </p>
-                      {task.labels?.length ? (
-                        <div className="mt-1 flex flex-wrap gap-1">
-                          {task.labels.map((label) => <LabelBadge key={label.id} label={label} />)}
-                        </div>
-                      ) : null}
-                      <div className="mt-2 flex items-center gap-2">
-                        <PriorityBadge priority={task.priority} />
-                        <span className={cn(
-                          "text-xs",
-                          isOverdue(task.dueDate, task.status) ? "text-destructive" : "text-muted-foreground"
-                        )}>
-                          {formatDueDisplay(task.dueDate)}
-                        </span>
-                      </div>
-                    </div>
+                      task={task}
+                      variant="grid"
+                      onClick={openDetail}
+                      onDragStart={handleDragStart}
+                    />
                   ))
                 )}
               </CardContent>

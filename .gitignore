@@ -90,3 +90,5 @@ coverage/
 
 # Local settings
 appsettings.Development.json
+
+_tmp_build

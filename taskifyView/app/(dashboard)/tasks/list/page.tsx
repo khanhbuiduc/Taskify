@@ -7,8 +7,6 @@ import { useTaskActions } from "@/hooks/use-task-actions"
 import { TaskModal } from "@/components/task/task-modal"
 import { TaskDetailDialog } from "@/components/task/task-detail-dialog"
 import { DeleteDialog } from "@/components/task/delete-dialog"
-import { PriorityBadge } from "@/components/task/priority-badge"
-import { LabelBadge } from "@/components/task/label-badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -18,8 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { cn, stripHtml, formatDueDisplay } from "@/lib/utils"
-import { Search, Plus, CheckCircle2, Circle, Calendar } from "lucide-react"
+import { cn, stripHtml } from "@/lib/utils"
+import { Search, Plus } from "lucide-react"
+import { TaskCard } from "@/components/task/task-card"
 
 type SortOption = "dueDate" | "priority" | "status"
 type FilterOption = "all" | TaskStatus
@@ -83,9 +82,6 @@ export default function ListTasksPage() {
     const newStatus: TaskStatus = task.status === "completed" ? "todo" : "completed"
     updateTaskStatus(task.id, newStatus)
   }
-
-  const isOverdue = (dueDate: string, status: TaskStatus) =>
-    status !== "completed" && new Date(dueDate) < new Date()
 
   return (
     <div className="space-y-6">
@@ -169,59 +165,17 @@ export default function ListTasksPage() {
         ) : (
           <div className="space-y-2">
             {filteredAndSortedTasks.map((task) => (
-              <div
+              <TaskCard
                 key={task.id}
-                onClick={() => openDetail(task)}
-                className={cn(
-                  "group flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3 shadow-sm transition-all hover:bg-muted/50 cursor-pointer",
-                  task.status === "completed" && "opacity-60"
-                )}
-              >
-                <button
-                  onClick={(e) => { e.stopPropagation(); handleStatusToggle(task) }}
-                  className="shrink-0"
-                >
-                  {task.status === "completed" ? (
-                    <CheckCircle2 className="h-5 w-5 text-green-500 hover:text-green-400 transition-colors" />
-                  ) : (
-                    <Circle className="h-5 w-5 text-muted-foreground hover:text-accent transition-colors" />
-                  )}
-                </button>
-
-                <div className="flex-1 min-w-0">
-                  <p className={cn(
-                    "font-medium text-foreground truncate",
-                    task.status === "completed" && "line-through"
-                  )}>
-                    {task.title}
-                  </p>
-                  {task.description && (
-                    <p className="text-sm text-muted-foreground truncate">{stripHtml(task.description)}</p>
-                  )}
-                  {task.labels?.length ? (
-                    <div className="mt-1 flex flex-wrap gap-1">
-                      {task.labels.map((label) => (
-                        <LabelBadge
-                          key={label.id}
-                          label={label}
-                          onClick={(e) => { e.stopPropagation(); setFilterLabel(label.id) }}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  <PriorityBadge priority={task.priority} />
-                  <div className={cn(
-                    "flex items-center gap-1 text-xs",
-                    isOverdue(task.dueDate, task.status) ? "text-destructive" : "text-muted-foreground"
-                  )}>
-                    <Calendar className="h-3 w-3" />
-                    {formatDueDisplay(task.dueDate)}
-                  </div>
-                </div>
-              </div>
+                task={task}
+                variant="list"
+                onClick={openDetail}
+                onStatusToggle={handleStatusToggle}
+                onLabelClick={(labelId, e) => {
+                  e.stopPropagation()
+                  setFilterLabel(labelId)
+                }}
+              />
             ))}
           </div>
         )}
