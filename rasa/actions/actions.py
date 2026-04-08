@@ -21,6 +21,34 @@ REQUEST_TIMEOUT = 10  # seconds
 
 logger = logging.getLogger(__name__)
 
+VIETNAMESE_CHAR_PATTERN = re.compile(r"[ăâđêôơưáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]", re.IGNORECASE)
+VIETNAMESE_HINT_PATTERN = re.compile(
+    r"\b(xin|chao|toi|ban|minh|giup|nhiem|viec|ngay|hom|mai|tuan|tom tat|uu tien|xoa|ghim|ghi chu|khong|tao|them|muon|can)\b",
+    re.IGNORECASE,
+)
+
+
+def detect_locale(text: Optional[str]) -> str:
+    normalized = normalize_whitespace(text).lower()
+    if not normalized:
+        return "en"
+
+    if VIETNAMESE_CHAR_PATTERN.search(normalized) or VIETNAMESE_HINT_PATTERN.search(normalized):
+        return "vi"
+
+    return "en"
+
+
+def get_locale(tracker: Tracker) -> str:
+    latest_text = tracker.latest_message.get("text", "") if tracker.latest_message else ""
+    return detect_locale(latest_text)
+
+
+def t(locale: str, en: str, vi: str) -> str:
+    if locale and locale.lower().startswith("vi"):
+        return vi
+    return en
+
 
 def compile_term_pattern(terms: List[str], prefix_only: bool = False) -> re.Pattern[str]:
     escaped_terms = sorted((re.escape(term) for term in terms if term), key=len, reverse=True)
@@ -179,15 +207,15 @@ def pick_task_by_title(tasks: List[Dict[str, Any]], query: str) -> List[Dict[str
     return [t for t in tasks if q in t.get("title", "").lower()]
 
 
-def format_task_list(tasks: List[Dict[str, Any]], max_items: int = 5) -> str:
+def format_task_list(tasks: List[Dict[str, Any]], locale: str, max_items: int = 5) -> str:
     """Format a list of tasks for display in chat."""
     if not tasks:
-        return "You don't have any tasks yet."
+        return t(locale, "You don't have any tasks yet.", "B\u1ea1n ch\u01b0a c\u00f3 task n\u00e0o.")
 
-    lines = []
+    lines: List[str] = []
     for i, task in enumerate(tasks[:max_items], 1):
-        priority_emoji = {"high": "??", "medium": "??", "low": "??"}.get(task.get("priority", "medium"), "?")
-        status_emoji = {"completed": "?", "in-progress": "??", "todo": "??"}.get(task.get("status", "todo"), "??")
+        priority_mark = {"high": "!", "medium": "~", "low": "-"}.get(task.get("priority", "medium"), "-")
+        status_mark = {"completed": "[x]", "in-progress": "[~]", "todo": "[ ]"}.get(task.get("status", "todo"), "[ ]")
 
         due_date = task.get("dueDate", "")
         if due_date:
@@ -197,15 +225,57 @@ def format_task_list(tasks: List[Dict[str, Any]], max_items: int = 5) -> str:
             except ValueError:
                 due_str = due_date[:10] if len(due_date) >= 10 else due_date
         else:
-            due_str = "No date"
+            due_str = t(locale, "No date", "Ch\u01b0a c\u00f3 h\u1ea1n")
 
-        overdue_marker = " ?? OVERDUE" if task.get("isOverdue", False) else ""
-        lines.append(f"{i}. {status_emoji} {task.get('title', 'Untitled')} {priority_emoji} (Due: {due_str}){overdue_marker}")
+        overdue_marker = t(locale, " OVERDUE", " QU\u00c1 H\u1ea0N") if task.get("isOverdue", False) else ""
+        due_label = t(locale, "Due", "H\u1ea1n")
+        untitled = t(locale, "Untitled", "Ch\u01b0a \u0111\u1eb7t t\u00ean")
+        lines.append(f"{i}. {status_mark} {task.get('title', untitled)} {priority_mark} ({due_label}: {due_str}){overdue_marker}")
 
     if len(tasks) > max_items:
-        lines.append(f"... and {len(tasks) - max_items} more tasks")
+        lines.append(
+            t(
+                locale,
+                f"... and {len(tasks) - max_items} more tasks",
+                f"... v\u00e0 c\u00f2n {len(tasks) - max_items} task kh\u00e1c",
+            )
+        )
 
     return "\n".join(lines)
+
+
+def utter_ask_task_title(dispatcher: CollectingDispatcher, locale: str) -> None:
+    dispatcher.utter_message(
+        text=t(
+            locale,
+            "What would you like to name this task?",
+            "B\u1ea1n mu\u1ed1n \u0111\u1eb7t t\u00ean task n\u00e0y l\u00e0 g\u00ec?",
+        )
+    )
+
+
+def utter_create_task_cancelled(dispatcher: CollectingDispatcher, locale: str) -> None:
+    dispatcher.utter_message(text=t(locale, "Cancelled task creation.", "\u0110\u00e3 h\u1ee7y t\u1ea1o task."))
+
+
+def utter_ask_delete_title(dispatcher: CollectingDispatcher, locale: str) -> None:
+    dispatcher.utter_message(
+        text=t(
+            locale,
+            "Which task should I delete? Please give the title.",
+            "B\u1ea1n mu\u1ed1n x\u00f3a task n\u00e0o? H\u00e3y cho m\u00ecnh t\u00ean task.",
+        )
+    )
+
+
+def utter_confirm_delete(dispatcher: CollectingDispatcher, locale: str, task_title: str) -> None:
+    dispatcher.utter_message(
+        text=t(
+            locale,
+            f'Are you sure you want to delete "{task_title}"?',
+            f'B\u1ea1n c\u00f3 ch\u1eafc mu\u1ed1n x\u00f3a "{task_title}" kh\u00f4ng?',
+        )
+    )
 
 
 def normalize_whitespace(value: Optional[str]) -> str:
@@ -555,6 +625,7 @@ class ActionListTasks(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, session_id = split_sender(tracker.sender_id)
+        locale = get_locale(tracker)
 
         try:
             url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
@@ -570,38 +641,52 @@ class ActionListTasks(Action):
                 latest_intent = tracker.latest_message.get("intent", {}).get("name", "")
 
                 if latest_intent == "list_overdue_tasks":
-                    overdue_tasks = [t for t in tasks if t.get("isOverdue", False)]
+                    overdue_tasks = [t_item for t_item in tasks if t_item.get("isOverdue", False)]
                     if overdue_tasks:
-                        message = f"?? You have {len(overdue_tasks)} overdue task(s):\n\n{format_task_list(overdue_tasks)}"
+                        message = t(
+                            locale,
+                            f"You have {len(overdue_tasks)} overdue task(s):\n\n{format_task_list(overdue_tasks, locale)}",
+                            f"B\u1ea1n c\u00f3 {len(overdue_tasks)} task qu\u00e1 h\u1ea1n:\n\n{format_task_list(overdue_tasks, locale)}",
+                        )
                     else:
-                        message = "? Great news! You don't have any overdue tasks."
+                        message = t(locale, "Great news! You don't have any overdue tasks.", "Tin t\u1ed1t l\u00e0 b\u1ea1n kh\u00f4ng c\u00f3 task qu\u00e1 h\u1ea1n n\u00e0o.")
                 elif latest_intent == "help_prioritize":
                     priority_order = {"high": 0, "medium": 1, "low": 2}
-                    pending_tasks = [t for t in tasks if t.get("status") != "completed"]
+                    pending_tasks = [t_item for t_item in tasks if t_item.get("status") != "completed"]
                     sorted_tasks = sorted(
                         pending_tasks,
-                        key=lambda t: (priority_order.get(t.get("priority", "medium"), 1), t.get("dueDate", "")),
+                        key=lambda task_item: (
+                            priority_order.get(task_item.get("priority", "medium"), 1),
+                            task_item.get("dueDate", ""),
+                        ),
                     )
 
                     if sorted_tasks:
-                        message = f"?? Here are your tasks prioritized (high priority & earliest due first):\n\n{format_task_list(sorted_tasks)}"
+                        message = t(
+                            locale,
+                            f"Here are your tasks prioritized (high priority and earliest due first):\n\n{format_task_list(sorted_tasks, locale)}",
+                            f"\u0110\u00e2y l\u00e0 danh s\u00e1ch task theo m\u1ee9c \u01b0u ti\u00ean (\u01b0u ti\u00ean cao v\u00e0 g\u1ea7n h\u1ea1n nh\u1ea5t tr\u01b0\u1edbc):\n\n{format_task_list(sorted_tasks, locale)}",
+                        )
                         if high_priority_count > 0:
-                            message += f"\n\n?? Tip: Focus on your {high_priority_count} high-priority task(s) first!"
+                            message += t(
+                                locale,
+                                f"\n\nTip: Focus on your {high_priority_count} high-priority task(s) first.",
+                                f"\n\nG\u1ee3i \u00fd: H\u00e3y x\u1eed l\u00fd {high_priority_count} task \u01b0u ti\u00ean cao tr\u01b0\u1edbc.",
+                            )
                     else:
-                        message = "? You have no pending tasks. Great job!"
+                        message = t(locale, "You have no pending tasks. Great job!", "B\u1ea1n kh\u00f4ng c\u00f2n task ch\u1edd x\u1eed l\u00fd n\u00e0o. L\u00e0m t\u1ed1t l\u1eafm.")
                 else:
                     if total_count == 0:
-                        message = "?? You don't have any tasks yet. Would you like to create one?"
+                        message = t(locale, "You don't have any tasks yet. Would you like to create one?", "B\u1ea1n ch\u01b0a c\u00f3 task n\u00e0o. B\u1ea1n mu\u1ed1n m\u00ecnh t\u1ea1o m\u1ed9t task kh\u00f4ng?")
                     else:
-                        summary = f"?? You have {total_count} task(s)"
+                        summary = t(locale, f"You have {total_count} task(s)", f"B\u1ea1n c\u00f3 {total_count} task")
                         if overdue_count > 0:
-                            summary += f" ({overdue_count} overdue)"
-                        summary += ":\n\n"
-                        message = summary + format_task_list(tasks)
+                            summary += t(locale, f" ({overdue_count} overdue)", f" ({overdue_count} qu\u00e1 h\u1ea1n)")
+                        message = f"{summary}:\n\n{format_task_list(tasks, locale)}"
 
                 dispatcher.utter_message(text=message)
             elif response.status_code == 401:
-                dispatcher.utter_message(text="I couldn't access your tasks. Please make sure you're logged in.")
+                dispatcher.utter_message(text=t(locale, "I couldn't access your tasks. Please make sure you're logged in.", "M\u00ecnh kh\u00f4ng truy c\u1eadp \u0111\u01b0\u1ee3c task c\u1ee7a b\u1ea1n. H\u00e3y ki\u1ec3m tra l\u1ea1i \u0111\u0103ng nh\u1eadp."))
             else:
                 logger.warning(
                     "API returned status %s for user %s session %s",
@@ -609,17 +694,17 @@ class ActionListTasks(Action):
                     user_id,
                     session_id,
                 )
-                dispatcher.utter_message(text="I'm having trouble accessing your tasks right now. Please try again later.")
+                dispatcher.utter_message(text=t(locale, "I'm having trouble accessing your tasks right now. Please try again later.", "M\u00ecnh \u0111ang g\u1eb7p l\u1ed7i khi l\u1ea5y danh s\u00e1ch task. B\u1ea1n th\u1eed l\u1ea1i sau nh\u00e9."))
 
         except requests.exceptions.Timeout:
             logger.error("Timeout calling TaskifyAPI for user %s", user_id)
-            dispatcher.utter_message(text="The request timed out. Please try again.")
+            dispatcher.utter_message(text=t(locale, "The request timed out. Please try again.", "Y\u00eau c\u1ea7u b\u1ecb h\u1ebft th\u1eddi gian. B\u1ea1n th\u1eed l\u1ea1i nh\u00e9."))
         except requests.exceptions.ConnectionError:
             logger.error("Connection error calling TaskifyAPI for user %s", user_id)
-            dispatcher.utter_message(text="I couldn't connect to the task service. Please make sure the server is running.")
+            dispatcher.utter_message(text=t(locale, "I couldn't connect to the task service. Please make sure the server is running.", "M\u00ecnh kh\u00f4ng k\u1ebft n\u1ed1i \u0111\u01b0\u1ee3c t\u1edbi d\u1ecbch v\u1ee5 task. H\u00e3y ki\u1ec3m tra server \u0111ang ch\u1ea1y."))
         except Exception as exc:
             logger.exception("Error in action_list_tasks for user %s: %s", user_id, exc)
-            dispatcher.utter_message(text="Something went wrong. Please try again later.")
+            dispatcher.utter_message(text=t(locale, "Something went wrong. Please try again later.", "C\u00f3 l\u1ed7i x\u1ea3y ra. B\u1ea1n th\u1eed l\u1ea1i sau nh\u00e9."))
 
         return []
 
@@ -637,11 +722,12 @@ class ValidateCreateTaskForm(FormValidationAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
+        locale = get_locale(tracker)
         candidate = extract_task_title_from_message(tracker.latest_message, str(slot_value) if slot_value else None)
         if candidate:
             return {"task_title": candidate}
 
-        dispatcher.utter_message(response="utter_ask_task_title")
+        utter_ask_task_title(dispatcher, locale)
         return {"task_title": None}
 
 
@@ -657,7 +743,7 @@ class ActionCancelCreateTask(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(response="utter_create_task_cancelled")
+        utter_create_task_cancelled(dispatcher, get_locale(tracker))
         return reset_create_task_slots(deactivate_loop=True)
 
 
@@ -674,13 +760,14 @@ class ActionCreateTask(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, session_id = split_sender(tracker.sender_id)
+        locale = get_locale(tracker)
 
         task_title = clean_task_title(tracker.get_slot("task_title"))
         if not task_title:
             task_title = extract_task_title_from_message(tracker.latest_message)
 
         if not task_title:
-            dispatcher.utter_message(response="utter_ask_task_title")
+            utter_ask_task_title(dispatcher, locale)
             return reset_create_task_slots()
 
         due_date_str = tracker.get_slot("due_date")
@@ -688,6 +775,13 @@ class ActionCreateTask(Action):
         priority = normalize_priority(tracker.get_slot("priority"))
         due_datetime = build_due_datetime(due_date_str, due_time_str)
         display_title = task_title[0].upper() + task_title[1:] if task_title else "New Task"
+
+        priority_mark = {"high": "!", "medium": "~", "low": "-"}.get(priority, "~")
+        priority_label = t(
+            locale,
+            {"high": "High", "medium": "Medium", "low": "Low"}.get(priority, "Medium"),
+            {"high": "Cao", "medium": "Trung b\u00ecnh", "low": "Th\u1ea5p"}.get(priority, "Trung b\u00ecnh"),
+        )
 
         try:
             url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
@@ -703,17 +797,18 @@ class ActionCreateTask(Action):
             if response.status_code in (200, 201):
                 task = response.json()
                 task_title_response = task.get("title", display_title)
-                priority_emoji = {"high": "??", "medium": "??", "low": "??"}.get(priority, "??")
-                priority_vn = {"high": "Cao", "medium": "Trung bình", "low": "Thấp"}.get(priority, "Trung bình")
                 dispatcher.utter_message(
                     text=(
-                        f"✅ Đã tạo task: **{task_title_response}**\n"
-                        f"⏰ Hạn: {due_datetime.strftime('%H:%M %d/%m/%Y')}\n"
-                        f"{priority_emoji} Độ ưu tiên: {priority_vn}"
+                        t(locale, f"Created task: **{task_title_response}**", f"\u0110\u00e3 t\u1ea1o task: **{task_title_response}**")
+                        + "\n"
+                        + t(locale, f"Due: {due_datetime.strftime('%H:%M %d/%m/%Y')}", f"H\u1ea1n: {due_datetime.strftime('%H:%M %d/%m/%Y')}")
+                        + "\n"
+                        + f"{priority_mark} "
+                        + t(locale, f"Priority: {priority_label}", f"\u0110\u1ed9 \u01b0u ti\u00ean: {priority_label}")
                     )
                 )
             elif response.status_code == 401:
-                dispatcher.utter_message(text="Không thể tạo task. Vui lòng đăng nhập lại.")
+                dispatcher.utter_message(text=t(locale, "I couldn't create the task. Please log in again.", "Kh\u00f4ng th\u1ec3 t\u1ea1o task. Vui l\u00f2ng \u0111\u0103ng nh\u1eadp l\u1ea1i."))
             else:
                 logger.warning(
                     "API returned status %s when creating task for user %s session %s",
@@ -721,17 +816,17 @@ class ActionCreateTask(Action):
                     user_id,
                     session_id,
                 )
-                dispatcher.utter_message(text="Không thể tạo task. Vui lòng thử lại sau.")
+                dispatcher.utter_message(text=t(locale, "I couldn't create the task right now. Please try again later.", "Kh\u00f4ng th\u1ec3 t\u1ea1o task. Vui l\u00f2ng th\u1eed l\u1ea1i sau."))
 
         except requests.exceptions.Timeout:
             logger.error("Timeout calling TaskifyAPI for user %s", user_id)
-            dispatcher.utter_message(text="Yêu cầu hết thời gian. Vui lòng thử lại.")
+            dispatcher.utter_message(text=t(locale, "The request timed out. Please try again.", "Y\u00eau c\u1ea7u b\u1ecb h\u1ebft th\u1eddi gian. Vui l\u00f2ng th\u1eed l\u1ea1i."))
         except requests.exceptions.ConnectionError:
             logger.error("Connection error calling TaskifyAPI for user %s", user_id)
-            dispatcher.utter_message(text="Không kết nối được server. Vui lòng kiểm tra kết nối.")
+            dispatcher.utter_message(text=t(locale, "I couldn't connect to the server. Please check the connection.", "Kh\u00f4ng k\u1ebft n\u1ed1i \u0111\u01b0\u1ee3c server. Vui l\u00f2ng ki\u1ec3m tra k\u1ebft n\u1ed1i."))
         except Exception as exc:
             logger.exception("Error in action_create_task for user %s: %s", user_id, exc)
-            dispatcher.utter_message(text="Có lỗi xảy ra. Vui lòng thử lại sau.")
+            dispatcher.utter_message(text=t(locale, "Something went wrong. Please try again later.", "C\u00f3 l\u1ed7i x\u1ea3y ra. Vui l\u00f2ng th\u1eed l\u1ea1i sau."))
 
         return reset_create_task_slots()
 
@@ -749,36 +844,42 @@ class ActionDeleteTask(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, session_id = split_sender(tracker.sender_id)
+        locale = get_locale(tracker)
         latest_intent = tracker.latest_message.get("intent", {}).get("name")
         target_id = tracker.get_slot("delete_task_id")
         target_title = tracker.get_slot("task_title")
 
-        # If user already confirmed (affirm) and we have stored target id/title -> delete
         if latest_intent == "affirm" and target_id:
-            return self._delete_and_reply(dispatcher, user_id, session_id, target_id, target_title)
+            return self._delete_and_reply(dispatcher, user_id, session_id, target_id, target_title, locale)
 
-        # Fetch tasks to resolve title
         tasks = self._fetch_tasks(user_id)
         if tasks is None:
-            dispatcher.utter_message(text="I couldn't fetch tasks to delete right now.")
+            dispatcher.utter_message(text=t(locale, "I couldn't fetch tasks to delete right now.", "M\u00ecnh ch\u01b0a l\u1ea5y \u0111\u01b0\u1ee3c danh s\u00e1ch task \u0111\u1ec3 x\u00f3a l\u00fac n\u00e0y."))
             return []
 
         if not target_title:
-            dispatcher.utter_message(response="utter_ask_delete_title")
+            utter_ask_delete_title(dispatcher, locale)
             return []
 
         matches = pick_task_by_title(tasks, target_title)
 
         if len(matches) == 0:
-            dispatcher.utter_message(response="utter_delete_no_match")
+            dispatcher.utter_message(text=t(locale, "I couldn't find a matching task to delete.", "M\u00ecnh kh\u00f4ng t\u00ecm th\u1ea5y task n\u00e0o kh\u1edbp \u0111\u1ec3 x\u00f3a."))
             return []
+
         if len(matches) > 1:
-            preview = "\n".join([f"- {t.get('title','Untitled')}" for t in matches[:5]])
-            dispatcher.utter_message(text=f"Mình thấy {len(matches)} task khớp:\n{preview}\nHãy chỉ rõ hơn tên task cần xoá.")
+            preview = "\n".join([f"- {task_item.get('title', 'Untitled')}" for task_item in matches[:5]])
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    f"I found {len(matches)} matching tasks:\n{preview}\nPlease be more specific about which task should be deleted.",
+                    f"M\u00ecnh th\u1ea5y {len(matches)} task kh\u1edbp:\n{preview}\nH\u00e3y n\u00f3i r\u00f5 h\u01a1n task n\u00e0o c\u1ea7n x\u00f3a.",
+                )
+            )
             return []
 
         match = matches[0]
-        dispatcher.utter_message(response="utter_confirm_delete", task_title=match.get("title", ""))
+        utter_confirm_delete(dispatcher, locale, match.get("title", ""))
         return [SlotSet("delete_task_id", str(match.get("id"))), SlotSet("task_title", match.get("title"))]
 
     def _fetch_tasks(self, user_id: str) -> Optional[List[Dict[str, Any]]]:
@@ -790,8 +891,8 @@ class ActionDeleteTask(Action):
                 return None
             data = response.json()
             return data.get("tasks", [])
-        except Exception as e:
-            logger.exception(f"DeleteTask: error fetching tasks for user {user_id}: {e}")
+        except Exception as exc:
+            logger.exception(f"DeleteTask: error fetching tasks for user {user_id}: {exc}")
             return None
 
     def _delete_and_reply(
@@ -801,24 +902,25 @@ class ActionDeleteTask(Action):
         session_id: Optional[str],
         task_id: str,
         task_title: Optional[str],
+        locale: str,
     ) -> List[Dict[Text, Any]]:
         try:
             url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}/{task_id}"
             response = requests.delete(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
             if response.status_code in (200, 204):
-                dispatcher.utter_message(text=f"✅ Đã xoá task \"{task_title or 'task'}\".")
+                dispatcher.utter_message(text=t(locale, f'Deleted "{task_title or "task"}".', f'\u0110\u00e3 x\u00f3a task "{task_title or "task"}".'))
             elif response.status_code == 404:
-                dispatcher.utter_message(text="Mình không tìm thấy task đó để xoá.")
+                dispatcher.utter_message(text=t(locale, "I couldn't find that task to delete.", "M\u00ecnh kh\u00f4ng t\u00ecm th\u1ea5y task \u0111\u00f3 \u0111\u1ec3 x\u00f3a."))
             else:
-                dispatcher.utter_message(text="Không xoá được task lúc này, thử lại sau nhé.")
+                dispatcher.utter_message(text=t(locale, "I couldn't delete the task right now. Please try again later.", "Kh\u00f4ng x\u00f3a \u0111\u01b0\u1ee3c task l\u00fac n\u00e0y, th\u1eed l\u1ea1i sau nh\u00e9."))
                 logger.warning(f"DeleteTask: delete failed for user {user_id} task {task_id} status {response.status_code}")
         except requests.exceptions.Timeout:
-            dispatcher.utter_message(text="Yêu cầu xoá bị timeout, thử lại nhé.")
+            dispatcher.utter_message(text=t(locale, "The delete request timed out. Please try again.", "Y\u00eau c\u1ea7u x\u00f3a b\u1ecb timeout, th\u1eed l\u1ea1i nh\u00e9."))
         except requests.exceptions.ConnectionError:
-            dispatcher.utter_message(text="Không kết nối được server để xoá task.")
-        except Exception as e:
-            logger.exception(f"DeleteTask error for user {user_id}: {e}")
-            dispatcher.utter_message(text="Có lỗi khi xoá task.")
+            dispatcher.utter_message(text=t(locale, "I couldn't connect to the server to delete the task.", "Kh\u00f4ng k\u1ebft n\u1ed1i \u0111\u01b0\u1ee3c server \u0111\u1ec3 x\u00f3a task."))
+        except Exception as exc:
+            logger.exception(f"DeleteTask error for user {user_id}: {exc}")
+            dispatcher.utter_message(text=t(locale, "Something went wrong while deleting the task.", "C\u00f3 l\u1ed7i khi x\u00f3a task."))
 
         return [
             SlotSet("delete_task_id", None),
@@ -830,10 +932,7 @@ class ActionDeleteTask(Action):
 
 
 class ActionHandleConfirmation(Action):
-    """
-    Fallback handler for generic confirmations (affirm/deny) to avoid action server crashes
-    when legacy models reference 'action_handle_confirmation'.
-    """
+    """Fallback handler for generic confirmations (affirm/deny)."""
 
     def name(self) -> Text:
         return "action_handle_confirmation"
@@ -844,13 +943,14 @@ class ActionHandleConfirmation(Action):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
+        locale = get_locale(tracker)
         intent = tracker.latest_message.get("intent", {}).get("name")
         if intent == "affirm":
-            dispatcher.utter_message(text="Đã ghi nhận nhé.")
+            dispatcher.utter_message(text=t(locale, "Got it.", "\u0110\u00e3 ghi nh\u1eadn nh\u00e9."))
         elif intent == "deny":
-            dispatcher.utter_message(text="Đã hủy theo yêu cầu.")
+            dispatcher.utter_message(text=t(locale, "Cancelled as requested.", "\u0110\u00e3 h\u1ee7y theo y\u00eau c\u1ea7u."))
         else:
-            dispatcher.utter_message(text="Mình đã ghi nhận.")
+            dispatcher.utter_message(text=t(locale, "I've noted that.", "M\u00ecnh \u0111\u00e3 ghi nh\u1eadn."))
         return []
 
 
@@ -867,72 +967,64 @@ class ActionSummarizeWeek(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, session_id = split_sender(tracker.sender_id)
-        
+        locale = get_locale(tracker)
+
         try:
             url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
             response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
-            
+
             if response.status_code == 200:
                 data = response.json()
-                total_count = data.get("totalCount", 0)
                 overdue_count = data.get("overdueCount", 0)
                 completed_this_week = data.get("completedThisWeek", 0)
                 pending_count = data.get("pendingCount", 0)
                 high_priority_count = data.get("highPriorityCount", 0)
-                
-                # Build summary message
-                lines = ["📊 **Your Weekly Summary**\n"]
-                
-                # Completion stats
+
+                lines = [t(locale, "**Your Weekly Summary**", "**T\u00f3m t\u1eaft tu\u1ea7n c\u1ee7a b\u1ea1n**"), ""]
+
                 if completed_this_week > 0:
-                    lines.append(f"✅ Completed this week: {completed_this_week} task(s)")
+                    lines.append(t(locale, f"Completed this week: {completed_this_week} task(s)", f"\u0110\u00e3 ho\u00e0n th\u00e0nh tu\u1ea7n n\u00e0y: {completed_this_week} task"))
                 else:
-                    lines.append("📝 No tasks completed this week yet")
-                
-                # Pending stats
+                    lines.append(t(locale, "No tasks completed this week yet", "Tu\u1ea7n n\u00e0y b\u1ea1n ch\u01b0a ho\u00e0n th\u00e0nh task n\u00e0o"))
+
                 if pending_count > 0:
-                    lines.append(f"📋 Pending tasks: {pending_count}")
+                    lines.append(t(locale, f"Pending tasks: {pending_count}", f"Task \u0111ang ch\u1edd x\u1eed l\u00fd: {pending_count}"))
                 else:
-                    lines.append("🎉 No pending tasks!")
-                
-                # Overdue warning
+                    lines.append(t(locale, "No pending tasks", "Kh\u00f4ng c\u00f2n task ch\u1edd x\u1eed l\u00fd"))
+
                 if overdue_count > 0:
-                    lines.append(f"⚠️ Overdue: {overdue_count} task(s) - these need attention!")
-                
-                # High priority
+                    lines.append(t(locale, f"Overdue: {overdue_count} task(s) that need attention", f"Qu\u00e1 h\u1ea1n: {overdue_count} task c\u1ea7n x\u1eed l\u00fd s\u1edbm"))
+
                 if high_priority_count > 0:
-                    lines.append(f"🔴 High priority pending: {high_priority_count}")
-                
-                # Productivity tip
-                lines.append("\n💡 **Tip**: ")
+                    lines.append(t(locale, f"High priority pending: {high_priority_count}", f"Task \u01b0u ti\u00ean cao c\u00f2n l\u1ea1i: {high_priority_count}"))
+
                 if overdue_count > 0:
-                    lines.append("Focus on clearing your overdue tasks first!")
+                    tip = t(locale, "Tip: Clear your overdue tasks first.", "G\u1ee3i \u00fd: H\u00e3y x\u1eed l\u00fd c\u00e1c task qu\u00e1 h\u1ea1n tr\u01b0\u1edbc.")
                 elif high_priority_count > 0:
-                    lines.append("Tackle your high-priority tasks to stay on track!")
+                    tip = t(locale, "Tip: Focus on high-priority work first.", "G\u1ee3i \u00fd: H\u00e3y \u01b0u ti\u00ean c\u00e1c task m\u1ee9c cao tr\u01b0\u1edbc.")
                 elif pending_count > 0:
-                    lines.append("You're doing well! Keep working through your task list.")
+                    tip = t(locale, "Tip: Keep moving through your remaining task list.", "G\u1ee3i \u00fd: H\u00e3y ti\u1ebfp t\u1ee5c x\u1eed l\u00fd d\u1ea7n danh s\u00e1ch task c\u00f2n l\u1ea1i.")
                 else:
-                    lines.append("Amazing! You've cleared all your tasks. Time to plan ahead!")
-                
-                message = "\n".join(lines)
-                dispatcher.utter_message(text=message)
-                
+                    tip = t(locale, "Tip: Great job. You can plan your next tasks now.", "G\u1ee3i \u00fd: B\u1ea1n \u0111ang l\u00e0m r\u1ea5t t\u1ed1t. C\u00f3 th\u1ec3 l\u00ean k\u1ebf ho\u1ea1ch cho c\u00e1c task ti\u1ebfp theo.")
+
+                lines.extend(["", tip])
+                dispatcher.utter_message(text="\n".join(lines))
             elif response.status_code == 401:
-                dispatcher.utter_message(text="I couldn't access your tasks. Please make sure you're logged in.")
+                dispatcher.utter_message(text=t(locale, "I couldn't access your tasks. Please make sure you're logged in.", "M\u00ecnh kh\u00f4ng truy c\u1eadp \u0111\u01b0\u1ee3c task c\u1ee7a b\u1ea1n. H\u00e3y ki\u1ec3m tra l\u1ea1i \u0111\u0103ng nh\u1eadp."))
             else:
                 logger.warning(f"API returned status {response.status_code} for user {user_id} session {session_id}")
-                dispatcher.utter_message(text="I'm having trouble getting your summary right now. Please try again later.")
-                
+                dispatcher.utter_message(text=t(locale, "I'm having trouble getting your summary right now. Please try again later.", "M\u00ecnh \u0111ang g\u1eb7p l\u1ed7i khi l\u1ea5y ph\u1ea7n t\u00f3m t\u1eaft tu\u1ea7n. B\u1ea1n th\u1eed l\u1ea1i sau nh\u00e9."))
+
         except requests.exceptions.Timeout:
             logger.error(f"Timeout calling TaskifyAPI for user {user_id}")
-            dispatcher.utter_message(text="The request timed out. Please try again.")
+            dispatcher.utter_message(text=t(locale, "The request timed out. Please try again.", "Y\u00eau c\u1ea7u b\u1ecb h\u1ebft th\u1eddi gian. B\u1ea1n th\u1eed l\u1ea1i nh\u00e9."))
         except requests.exceptions.ConnectionError:
             logger.error(f"Connection error calling TaskifyAPI for user {user_id}")
-            dispatcher.utter_message(text="I couldn't connect to the task service. Please make sure the server is running.")
-        except Exception as e:
-            logger.exception(f"Error in action_summarize_week for user {user_id}: {e}")
-            dispatcher.utter_message(text="Something went wrong. Please try again later.")
-        
+            dispatcher.utter_message(text=t(locale, "I couldn't connect to the task service. Please make sure the server is running.", "M\u00ecnh kh\u00f4ng k\u1ebft n\u1ed1i \u0111\u01b0\u1ee3c t\u1edbi d\u1ecbch v\u1ee5 task. H\u00e3y ki\u1ec3m tra server \u0111ang ch\u1ea1y."))
+        except Exception as exc:
+            logger.exception(f"Error in action_summarize_week for user {user_id}: {exc}")
+            dispatcher.utter_message(text=t(locale, "Something went wrong. Please try again later.", "C\u00f3 l\u1ed7i x\u1ea3y ra. B\u1ea1n th\u1eed l\u1ea1i sau nh\u00e9."))
+
         return []
 
 

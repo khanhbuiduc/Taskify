@@ -71,3 +71,9 @@ export async function sanitizeHtml(html: string): Promise<string> {
     ALLOWED_ATTR: SANITIZE_ALLOWED_ATTR,
   })
 }
+
+/** Check if a task is overdue (not completed and due date is in the past). */
+export function isOverdue(dueDate: string, status: string): boolean {
+  if (!dueDate || status === 'completed') return false
+  return new Date(dueDate) < new Date()
+}
