@@ -51,6 +51,16 @@ namespace TaskifyAPI.Data
         public DbSet<Note> Notes { get; set; }
 
         /// <summary>
+        /// DbSet for finance entries
+        /// </summary>
+        public DbSet<FinanceEntry> FinanceEntries { get; set; }
+
+        /// <summary>
+        /// DbSet for user finance categories
+        /// </summary>
+        public DbSet<FinanceCategory> FinanceCategories { get; set; }
+
+        /// <summary>
         /// DbSet for delete undo tokens
         /// </summary>
         public DbSet<TaskDeleteUndoToken> TaskDeleteUndoTokens { get; set; }
@@ -284,6 +294,68 @@ namespace TaskifyAPI.Data
                 // Sort helpers
                 entity.HasIndex(e => new { e.UserId, e.IsPinned, e.UpdatedAt });
                 entity.HasIndex(e => new { e.UserId, e.Title });
+            });
+
+            // Configure FinanceEntry entity
+            modelBuilder.Entity<FinanceEntry>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Date)
+                    .IsRequired();
+
+                entity.Property(e => e.Category)
+                    .IsRequired()
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.Amount)
+                    .IsRequired()
+                    .HasColumnType("decimal(18,2)");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => new { e.UserId, e.Date });
+                entity.HasIndex(e => new { e.UserId, e.Category });
+            });
+
+            // Configure FinanceCategory entity
+            modelBuilder.Entity<FinanceCategory>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.CreatedAt)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => new { e.UserId, e.Name }).IsUnique();
             });
 
             modelBuilder.Entity<TaskDeleteUndoToken>(entity =>

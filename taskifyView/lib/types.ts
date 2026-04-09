@@ -27,6 +27,34 @@ export interface Note {
   updatedAt: string
 }
 
+export interface FinanceEntry {
+  id: string
+  date: string
+  category: string
+  description: string
+  amount: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface FinanceCategory {
+  id: string
+  name: string
+  createdAt: string
+}
+
+export interface FinanceSummaryDaily {
+  date: string
+  totalAmount: number
+}
+
+export interface FinanceSummary {
+  totalAmount: number
+  count: number
+  averageAmount: number
+  dailyTotals: FinanceSummaryDaily[]
+}
+
 export type ChatMessageRole = "user" | "assistant"
 
 export interface ChatSession {

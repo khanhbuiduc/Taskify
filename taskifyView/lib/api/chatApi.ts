@@ -84,4 +84,26 @@ export const chatApi = {
     });
     return handleResponse<ChatThreadResponse>(response);
   },
+
+  async deleteSession(sessionId: string): Promise<void> {
+    const url = getApiUrl(`/api/Chat/${sessionId}`);
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        ...getAuthHeaders(),
+      },
+    });
+    
+    if (response.status === 401) {
+      tokenStorage.clear();
+      if (typeof window !== "undefined") {
+        window.location.href = "/login";
+      }
+      throw new ApiError("Session expired. Please login again.", 401, response);
+    }
+
+    if (!response.ok) {
+      throw new ApiError(`API Error: ${response.status} ${response.statusText}`, response.status, response);
+    }
+  },
 };

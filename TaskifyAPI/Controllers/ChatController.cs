@@ -203,5 +203,31 @@ namespace TaskifyAPI.Controllers
 
             return Ok(response);
         }
+        [HttpDelete("{sessionId:guid}")]
+        public async Task<IActionResult> DeleteSession(Guid sessionId, CancellationToken cancellationToken)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var session = await _dbContext.ChatSessions
+                .FirstOrDefaultAsync(s => s.Id == sessionId && s.UserId == userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (session == null)
+                return NotFound();
+
+            var messages = await _dbContext.ChatMessages
+                .Where(m => m.SessionId == sessionId)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
+
+            _dbContext.ChatMessages.RemoveRange(messages);
+            _dbContext.ChatSessions.Remove(session);
+            
+            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            return NoContent();
+        }
     }
 }

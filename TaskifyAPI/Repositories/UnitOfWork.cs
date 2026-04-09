@@ -16,6 +16,8 @@ namespace TaskifyAPI.Repositories
         private IDailyGoalRepository? _dailyGoalRepository;
         private ILabelRepository? _labelRepository;
         private INoteRepository? _noteRepository;
+        private IFinanceEntryRepository? _financeEntryRepository;
+        private IFinanceCategoryRepository? _financeCategoryRepository;
         private bool _disposed = false;
 
         public UnitOfWork(ApplicationDbContext context)
@@ -70,6 +72,26 @@ namespace TaskifyAPI.Repositories
             {
                 _noteRepository ??= new NoteRepository(_context);
                 return _noteRepository;
+            }
+        }
+
+        /// <inheritdoc />
+        public IFinanceEntryRepository FinanceEntries
+        {
+            get
+            {
+                _financeEntryRepository ??= new FinanceEntryRepository(_context);
+                return _financeEntryRepository;
+            }
+        }
+
+        /// <inheritdoc />
+        public IFinanceCategoryRepository FinanceCategories
+        {
+            get
+            {
+                _financeCategoryRepository ??= new FinanceCategoryRepository(_context);
+                return _financeCategoryRepository;
             }
         }
 

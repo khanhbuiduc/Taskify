@@ -25,6 +25,7 @@ interface ChatSessionStore {
   loadMessages: (sessionId: string, nextPage?: boolean) => Promise<void>;
   selectSession: (sessionId: string) => Promise<void>;
   createNewSession: () => Promise<void>;
+  deleteSession: (sessionId: string) => Promise<void>;
   sendMessage: (text: string, metadata?: unknown) => Promise<ChatMessage[]>;
   appendMessages: (sessionId: string, msgs: ChatMessage[]) => void;
 }
@@ -112,6 +113,36 @@ export const useChatSessionStore = create<ChatSessionStore>((set, get) => ({
       pages: { ...state.pages, [newId]: 0 },
       hasMore: { ...state.hasMore, [newId]: false },
     }));
+  },
+
+  deleteSession: async (sessionId: string) => {
+    try {
+      await chatApi.deleteSession(sessionId);
+      
+      set((state) => {
+        const remainingSessions = state.sessions.filter(s => s.id !== sessionId);
+        const isActiveDeleted = state.activeSessionId === sessionId;
+        
+        let newActiveSessionId = state.activeSessionId;
+        if (isActiveDeleted) {
+          newActiveSessionId = remainingSessions.length > 0 ? remainingSessions[0].id : null;
+        }
+
+        const newMessages = { ...state.messages };
+        delete newMessages[sessionId];
+        
+        return {
+          sessions: remainingSessions,
+          activeSessionId: newActiveSessionId,
+          messages: newMessages
+        };
+      });
+      
+      toast.success("Xoá đoạn chat thành công");
+    } catch (error) {
+      const message = error instanceof ApiError ? error.message : "Failed to delete session";
+      toast.error(message);
+    }
   },
 
   sendMessage: async (text: string, metadata?: unknown) => {

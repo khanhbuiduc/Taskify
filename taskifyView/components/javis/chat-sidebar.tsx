@@ -4,7 +4,7 @@
  * chat-sidebar.tsx — Panel danh sách hội thoại bên trái chat.
  */
 
-import { MessagesSquare, Plus, MoreHorizontal } from "lucide-react";
+import { MessagesSquare, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,7 @@ interface ChatSidebarProps {
   collapsed: boolean;
   onSelectSession: (id: string) => void;
   onNewSession: () => void;
+  onDeleteSession?: (id: string) => void;
 }
 
 export function ChatSidebar({
@@ -26,6 +27,7 @@ export function ChatSidebar({
   collapsed,
   onSelectSession,
   onNewSession,
+  onDeleteSession,
 }: ChatSidebarProps) {
   return (
     <div
@@ -40,7 +42,7 @@ export function ChatSidebar({
           collapsed ? "opacity-0 pointer-events-none" : "opacity-100",
         )}
         aria-hidden={collapsed}
-      >
+       >
         {/* Header */}
         <div className="flex items-center justify-between px-3 py-3 border-b border-border/70">
           <div className="flex items-center gap-2 text-sm font-semibold">
@@ -53,51 +55,59 @@ export function ChatSidebar({
         <div className="p-3 border-b border-border/70">
           <Button
             size="sm"
-            className="w-full max-w-full justify-start gap-2 overflow-hidden"
+            className="w-full justify-start gap-2 overflow-hidden"
             onClick={onNewSession}
             disabled={isSending}
           >
-            <Plus className="h-4 w-4" />
-            <span className="truncate">New chat</span>
+            <Plus className="h-4 w-4 shrink-0" />
+            <div className="min-w-0 flex-1 truncate text-left">New chat New chat New chat New chat</div>
           </Button>
         </div>
 
         {/* Session list */}
-        <div className="flex-1 min-h-0">
-          <ScrollArea className="h-full">
-            <div className="p-2 space-y-1">
-              {sessions.length === 0 && (
-                <div className="text-xs text-muted-foreground px-2 py-3">
-                  No conversations yet. Start a new chat.
-                </div>
-              )}
-              {sessions.map((session) => (
+        <ScrollArea className="flex-1 min-h-0 [&>[data-slot=scroll-area-viewport]>div]:!block">
+          <div className="p-2 space-y-1">
+            {sessions.length === 0 && (
+              <div className="text-xs text-muted-foreground px-2 py-3">
+                No conversations yet. Start a new chat.
+              </div>
+            )}
+
+            {sessions.map((session) => (
+              <div
+                key={session.id}
+                className={cn(
+                  "flex items-center w-full min-w-0 justify-between gap-1 overflow-hidden group rounded-md transition-colors",
+                  session.id === activeSessionId
+                    ? "bg-accent text-accent-foreground hover:bg-accent/90"
+                    : "text-foreground hover:bg-accent/30"
+                )}
+              >
                 <button
-                  key={session.id}
-                  type="button"
                   onClick={() => onSelectSession(session.id)}
-                  className={cn(
-                    "w-full max-w-full text-left rounded-lg px-3 py-2 transition-colors border border-transparent overflow-hidden",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-background",
-                    "hover:bg-accent/30 hover:border-accent/40",
-                    session.id === activeSessionId
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-transparent text-foreground",
-                  )}
+                  className="flex-1 min-w-0 justify-start overflow-hidden hover:bg-transparent h-9 px-4 text-left outline-none"
                 >
-                  <div className="flex items-start gap-2 min-w-0">
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium max-w-full break-words whitespace-normal leading-snug overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
-                        {session.title || "Untitled"}
-                      </div>
-                    </div>
-                    <MoreHorizontal className="h-4 w-4 shrink-0" />
+                  <div className="flex-1 min-w-0 truncate text-sm font-medium">
+                    {session.title || "Untitled"}
                   </div>
                 </button>
-              ))}
-            </div>
-          </ScrollArea>
-        </div>
+                {onDeleteSession && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive/20 hover:text-destructive mr-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteSession(session.id);
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
       </div>
     </div>
   );

@@ -85,6 +85,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ILabelRepository, LabelRepository>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<IFinanceEntryRepository, FinanceEntryRepository>();
+builder.Services.AddScoped<IFinanceCategoryRepository, FinanceCategoryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Rasa chat proxy: HttpClient configured with Rasa base URL and timeout

@@ -48,6 +48,7 @@ export default function AILayoutPage() {
     init,
     selectSession,
     createNewSession,
+    deleteSession,
     sendMessage: sendPersistedMessage,
     isSending,
   } = useChatSessionStore();
@@ -276,6 +277,7 @@ export default function AILayoutPage() {
         collapsed={collapsed}
         onSelectSession={(id) => void selectSession(id)}
         onNewSession={() => void createNewSession()}
+        onDeleteSession={(id) => void deleteSession(id)}
       />
 
       {/* ── Chat pane ── */}

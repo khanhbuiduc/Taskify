@@ -31,6 +31,16 @@ namespace TaskifyAPI.Repositories.IRepositories
         INoteRepository Notes { get; }
 
         /// <summary>
+        /// Finance entries repository
+        /// </summary>
+        IFinanceEntryRepository FinanceEntries { get; }
+
+        /// <summary>
+        /// Finance categories repository
+        /// </summary>
+        IFinanceCategoryRepository FinanceCategories { get; }
+
+        /// <summary>
         /// Save all changes to the database
         /// </summary>
         Task<int> SaveChangesAsync();
