@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import type { FinanceSummary } from "@/lib/types";
 
 const vndFormatter = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" });
@@ -17,7 +18,12 @@ export function FinanceSummaryCards({ summary }: FinanceSummaryCardsProps) {
           <CardTitle className="text-sm font-medium text-muted-foreground">Total expense</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">{vndFormatter.format(summary.totalAmount)}</p>
+          <p className={cn(
+            "text-2xl font-bold",
+            summary.totalAmount < 0 ? "text-red-500" : summary.totalAmount > 0 ? "text-green-500" : ""
+          )}>
+            {vndFormatter.format(summary.totalAmount)}
+          </p>
         </CardContent>
       </Card>
       <Card>
@@ -33,7 +39,12 @@ export function FinanceSummaryCards({ summary }: FinanceSummaryCardsProps) {
           <CardTitle className="text-sm font-medium text-muted-foreground">Average expense</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-bold">{vndFormatter.format(summary.averageAmount)}</p>
+          <p className={cn(
+            "text-2xl font-bold",
+            summary.averageAmount < 0 ? "text-red-500" : summary.averageAmount > 0 ? "text-green-500" : ""
+          )}>
+            {vndFormatter.format(summary.averageAmount)}
+          </p>
         </CardContent>
       </Card>
     </div>

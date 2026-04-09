@@ -5,7 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { FinanceEntry } from "@/lib/types";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const vndFormatter = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" });
 
@@ -41,19 +42,34 @@ export function FinanceTable({ entries, onEdit, onDelete }: FinanceTableProps) {
         </TableHeader>
         <TableBody>
           {entries.map((entry) => (
-            <TableRow key={entry.id}>
+            <TableRow 
+              key={entry.id}
+              className="cursor-pointer hover:bg-muted/50 transition-colors"
+              onClick={() => onEdit(entry)}
+            >
               <TableCell>{new Date(entry.date).toLocaleDateString("vi-VN")}</TableCell>
               <TableCell>
                 <Badge variant="secondary">{entry.category}</Badge>
               </TableCell>
               <TableCell className="max-w-[420px] truncate">{entry.description || "-"}</TableCell>
-              <TableCell className="text-right font-medium">{vndFormatter.format(entry.amount)}</TableCell>
+              <TableCell 
+                className={cn(
+                  "text-right font-medium",
+                  entry.amount < 0 ? "text-red-500" : entry.amount > 0 ? "text-green-500" : ""
+                )}
+              >
+                {vndFormatter.format(entry.amount)}
+              </TableCell>
               <TableCell className="text-right">
                 <div className="inline-flex items-center gap-1">
-                  <Button variant="ghost" size="icon" onClick={() => onEdit(entry)}>
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" onClick={() => onDelete(entry)}>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(entry);
+                    }}
+                  >
                     <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
                 </div>

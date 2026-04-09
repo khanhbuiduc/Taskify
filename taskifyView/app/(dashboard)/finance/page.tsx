@@ -7,6 +7,9 @@ import { toast } from "sonner";
 import { FinanceToolbar } from "@/components/finance/finance-toolbar";
 import { FinanceSummaryCards } from "@/components/finance/finance-summary-cards";
 import { FinanceTable } from "@/components/finance/finance-table";
+import { FinanceDashboard } from "@/components/finance/finance-dashboard";
+import { FinanceCalendar } from "@/components/finance/finance-calendar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FinanceEntryDialog } from "@/components/finance/finance-entry-dialog";
 import { FinanceCategoryDialog } from "@/components/finance/finance-category-dialog";
 import { useFinanceStore } from "@/lib/finance-store";
@@ -105,18 +108,36 @@ export default function FinancePage() {
 
       <FinanceSummaryCards summary={summary} />
 
-      <FinanceTable
-        entries={entries}
-        onEdit={(entry) => {
-          setEditingEntry(entry);
-          setEntryDialogOpen(true);
-        }}
-        onDelete={(entry) =>
-          deleteEntry(entry.id).catch(() => {
-            toast.error("Failed to delete finance entry");
-          })
-        }
-      />
+      <Tabs defaultValue="table" className="space-y-4">
+        <TabsList>
+          <TabsTrigger value="table">Table</TabsTrigger>
+          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+          <TabsTrigger value="calendar">Calendar</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="table">
+          <FinanceTable
+            entries={entries}
+            onEdit={(entry) => {
+              setEditingEntry(entry);
+              setEntryDialogOpen(true);
+            }}
+            onDelete={(entry) =>
+              deleteEntry(entry.id).catch(() => {
+                toast.error("Failed to delete finance entry");
+              })
+            }
+          />
+        </TabsContent>
+
+        <TabsContent value="dashboard">
+          <FinanceDashboard entries={entries} />
+        </TabsContent>
+
+        <TabsContent value="calendar">
+          <FinanceCalendar entries={entries} />
+        </TabsContent>
+      </Tabs>
 
       <FinanceEntryDialog
         open={entryDialogOpen}
