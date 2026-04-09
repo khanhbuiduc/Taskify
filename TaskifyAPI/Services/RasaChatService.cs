@@ -21,14 +21,18 @@ namespace TaskifyAPI.Services
             _logger = logger;
         }
 
-        public async Task<IReadOnlyList<string>> SendMessageAsync(string userId, string messageText, CancellationToken cancellationToken = default)
+        public async Task<IReadOnlyList<RasaAssistantReply>> SendMessageAsync(
+            string userId,
+            string messageText,
+            string? metadataJson = null,
+            CancellationToken cancellationToken = default)
         {
             var locale = DetectLocale(messageText);
             var token = _configuration["Rasa:Token"];
             var query = string.IsNullOrWhiteSpace(token) ? "" : $"?token={Uri.EscapeDataString(token)}";
             var url = $"/webhooks/rest/webhook{query}";
 
-            var body = new { sender = userId, message = messageText };
+            var body = BuildRasaRequestBody(userId, messageText, metadataJson);
 
             try
             {
@@ -37,41 +41,82 @@ namespace TaskifyAPI.Services
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogWarning("Rasa webhook returned {StatusCode} for sender {SenderId}", response.StatusCode, userId);
-                    return new[] { FallbackMessage };
+                    return new[] { new RasaAssistantReply { Text = FallbackMessage } };
                 }
 
-                // Rasa returns array of { "recipient_id", "text" }
-                var list = await response.Content.ReadFromJsonAsync<List<RasaWebhookMessage>>(cancellationToken).ConfigureAwait(false);
-                if (list == null || list.Count == 0)
-                    return new[] { FallbackMessage };
+                var list = await response.Content.ReadFromJsonAsync<JsonElement>(cancellationToken).ConfigureAwait(false);
+                if (list.ValueKind != JsonValueKind.Array || list.GetArrayLength() == 0)
+                {
+                    return new[] { new RasaAssistantReply { Text = FallbackMessage } };
+                }
 
-                return list
-                    .Where(m => !string.IsNullOrWhiteSpace(m?.text))
-                    .Select(m => LocalizeStaticReply(m!.text!.Trim(), locale))
-                    .ToList();
+                var replies = new List<RasaAssistantReply>();
+                foreach (var item in list.EnumerateArray())
+                {
+                    var text = item.TryGetProperty("text", out var textNode) && textNode.ValueKind == JsonValueKind.String
+                        ? textNode.GetString()?.Trim()
+                        : null;
+
+                    var customPayloadJson = item.TryGetProperty("custom", out var customNode)
+                        && customNode.ValueKind != JsonValueKind.Null
+                        && customNode.ValueKind != JsonValueKind.Undefined
+                        ? customNode.GetRawText()
+                        : null;
+
+                    if (string.IsNullOrWhiteSpace(text) && string.IsNullOrWhiteSpace(customPayloadJson))
+                    {
+                        continue;
+                    }
+
+                    replies.Add(new RasaAssistantReply
+                    {
+                        Text = string.IsNullOrWhiteSpace(text) ? string.Empty : LocalizeStaticReply(text, locale),
+                        MetadataJson = customPayloadJson
+                    });
+                }
+
+                return replies.Count == 0
+                    ? new[] { new RasaAssistantReply { Text = FallbackMessage } }
+                    : replies;
             }
             catch (TaskCanceledException)
             {
                 _logger.LogWarning("Rasa request timed out for sender {SenderId}", userId);
-                return new[] { FallbackMessage };
+                return new[] { new RasaAssistantReply { Text = FallbackMessage } };
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogWarning(ex, "Rasa request failed for sender {SenderId}", userId);
-                return new[] { FallbackMessage };
+                return new[] { new RasaAssistantReply { Text = FallbackMessage } };
             }
             catch (JsonException ex)
             {
                 _logger.LogWarning(ex, "Rasa response was not valid JSON for sender {SenderId}", userId);
-                return new[] { FallbackMessage };
+                return new[] { new RasaAssistantReply { Text = FallbackMessage } };
             }
         }
 
-        private class RasaWebhookMessage
+        private static object BuildRasaRequestBody(string userId, string messageText, string? metadataJson)
         {
-            public string? recipient_id { get; set; }
-            public string? text { get; set; }
-            public string? message_id { get; set; }
+            if (!string.IsNullOrWhiteSpace(metadataJson))
+            {
+                try
+                {
+                    using var document = JsonDocument.Parse(metadataJson);
+                    return new
+                    {
+                        sender = userId,
+                        message = messageText,
+                        metadata = document.RootElement.Clone()
+                    };
+                }
+                catch (JsonException)
+                {
+                    // Ignore malformed metadata and send plain text request.
+                }
+            }
+
+            return new { sender = userId, message = messageText };
         }
 
         private static string DetectLocale(string messageText)

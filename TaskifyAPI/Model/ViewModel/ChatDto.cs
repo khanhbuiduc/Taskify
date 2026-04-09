@@ -11,6 +11,12 @@ namespace TaskifyAPI.Model.ViewModel
         [Required]
         [MaxLength(4000)]
         public string Message { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Optional typed metadata payload serialized as JSON string.
+        /// Used for structured chat actions (task picker confirm, undo, etc.).
+        /// </summary>
+        public string? MetadataJson { get; set; }
     }
 
     /// <summary>
@@ -21,6 +27,7 @@ namespace TaskifyAPI.Model.ViewModel
         public Guid Id { get; set; }
         public ChatMessageRole Role { get; set; }
         public string Text { get; set; } = string.Empty;
+        public string? MetadataJson { get; set; }
         public DateTime SentAt { get; set; }
     }
 

@@ -50,6 +50,11 @@ namespace TaskifyAPI.Data
         /// </summary>
         public DbSet<Note> Notes { get; set; }
 
+        /// <summary>
+        /// DbSet for delete undo tokens
+        /// </summary>
+        public DbSet<TaskDeleteUndoToken> TaskDeleteUndoTokens { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -78,9 +83,17 @@ namespace TaskifyAPI.Data
                 entity.Property(e => e.CreatedAt)
                     .HasDefaultValueSql("GETUTCDATE()");
 
+                entity.Property(e => e.IsDeleted)
+                    .IsRequired()
+                    .HasDefaultValue(false);
+
+                entity.Property(e => e.DeletedAt);
+
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
+
+                entity.HasIndex(e => new { e.UserId, e.IsDeleted, e.DueDate });
 
                 // Configure relationship with IdentityUser
                 entity.HasOne(e => e.User)
@@ -271,6 +284,27 @@ namespace TaskifyAPI.Data
                 // Sort helpers
                 entity.HasIndex(e => new { e.UserId, e.IsPinned, e.UpdatedAt });
                 entity.HasIndex(e => new { e.UserId, e.Title });
+            });
+
+            modelBuilder.Entity<TaskDeleteUndoToken>(entity =>
+            {
+                entity.HasKey(e => e.Token);
+
+                entity.Property(e => e.Token)
+                    .HasMaxLength(120);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.SessionId)
+                    .HasMaxLength(120);
+
+                entity.Property(e => e.TaskIdsCsv)
+                    .IsRequired()
+                    .HasMaxLength(2000);
+
+                entity.HasIndex(e => new { e.UserId, e.ExpiresAtUtc });
             });
 
             // Seed roles with deterministic IDs to avoid duplicate inserts on migrations

@@ -25,7 +25,7 @@ interface ChatSessionStore {
   loadMessages: (sessionId: string, nextPage?: boolean) => Promise<void>;
   selectSession: (sessionId: string) => Promise<void>;
   createNewSession: () => Promise<void>;
-  sendMessage: (text: string) => Promise<ChatMessage[]>;
+  sendMessage: (text: string, metadata?: unknown) => Promise<ChatMessage[]>;
   appendMessages: (sessionId: string, msgs: ChatMessage[]) => void;
 }
 
@@ -114,7 +114,7 @@ export const useChatSessionStore = create<ChatSessionStore>((set, get) => ({
     }));
   },
 
-  sendMessage: async (text: string) => {
+  sendMessage: async (text: string, metadata?: unknown) => {
     const sessionId = get().activeSessionId ?? newGuid();
     if (!get().activeSessionId) {
       set({ activeSessionId: sessionId, messages: { ...get().messages, [sessionId]: [] } });
@@ -125,13 +125,18 @@ export const useChatSessionStore = create<ChatSessionStore>((set, get) => ({
       id: `temp-${Date.now()}`,
       role: "user",
       text,
+      metadataJson: metadata ? JSON.stringify(metadata) : null,
       sentAt: new Date().toISOString(),
     };
     const prevMessages = get().messages[sessionId] ?? [];
     get().appendMessages(sessionId, [optimisticUser]);
 
     try {
-      const response = await chatApi.sendMessage(sessionId, text);
+      const response = await chatApi.sendMessage(
+        sessionId,
+        text,
+        metadata ? JSON.stringify(metadata) : undefined,
+      );
       const normalized = [...response.messages]
         .map((m) => ({ ...m, role: (m.role as string).toLowerCase() as ChatMessage["role"] }))
         .sort((a, b) => new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime());

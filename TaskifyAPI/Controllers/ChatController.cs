@@ -77,6 +77,7 @@ namespace TaskifyAPI.Controllers
                     Id = m.Id,
                     Role = m.Role,
                     Text = m.Text,
+                    MetadataJson = m.MetadataJson,
                     SentAt = m.SentAt
                 })
                 .ToListAsync(cancellationToken)
@@ -137,23 +138,27 @@ namespace TaskifyAPI.Controllers
                 SessionId = session.Id,
                 Role = ChatMessageRole.User,
                 Text = dto.Message,
+                MetadataJson = dto.MetadataJson,
                 SentAt = now
             };
             await _dbContext.ChatMessages.AddAsync(userMessage, cancellationToken).ConfigureAwait(false);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             var senderId = $"{userId}:{session.Id}";
-            var texts = await _rasaChatService.SendMessageAsync(senderId, dto.Message, cancellationToken).ConfigureAwait(false);
+            var replies = await _rasaChatService
+                .SendMessageAsync(senderId, dto.Message, dto.MetadataJson, cancellationToken)
+                .ConfigureAwait(false);
 
             var assistantMessages = new List<ChatMessage>();
-            foreach (var text in texts)
+            foreach (var reply in replies)
             {
                 assistantMessages.Add(new ChatMessage
                 {
                     Id = Guid.NewGuid(),
                     SessionId = session.Id,
                     Role = ChatMessageRole.Assistant,
-                    Text = text,
+                    Text = reply.Text,
+                    MetadataJson = reply.MetadataJson,
                     SentAt = DateTime.UtcNow
                 });
             }
@@ -181,6 +186,7 @@ namespace TaskifyAPI.Controllers
                         Id = userMessage.Id,
                         Role = userMessage.Role,
                         Text = userMessage.Text,
+                        MetadataJson = userMessage.MetadataJson,
                         SentAt = userMessage.SentAt
                     }
                 }
@@ -189,6 +195,7 @@ namespace TaskifyAPI.Controllers
                     Id = m.Id,
                     Role = m.Role,
                     Text = m.Text,
+                    MetadataJson = m.MetadataJson,
                     SentAt = m.SentAt
                 }))
                 .ToList()

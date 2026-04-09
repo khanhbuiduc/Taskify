@@ -200,12 +200,42 @@ nlu:
       - delete task [write report](task_title)
       - remove [buy groceries](task_title)
       - xoá task [học React](task_title)
+      - xóa task [học React](task_title)
       - delete my task [gọi điện cho khách](task_title)
       - remove the first task
       - xoá nhiệm vụ
+      - xóa nhiệm vụ
       - delete this task
       - please delete it
       - clean up that task
+      - xóa task [học bài](task_title)
+      - xoá task [học bài](task_title)
+      - xóa [học bài](task_title)
+      - xoá [học bài](task_title)
+      - xóa task tên [học bài](task_title)
+      - xoá task tên [học bài](task_title)
+      - xóa công việc [học bài](task_title)
+      - xóa task [học bài SQL](task_title)
+      - xóa task [học toán](task_title)
+      - xóa giúp mình task [học bài](task_title)
+      - xóa task có tên [học bài](task_title)
+      - delete task [hoc bai](task_title)
+      - xoa task [hoc bai](task_title)
+      - remove task [hoc bai](task_title)
+
+  - intent: confirm_delete_selection
+    examples: |
+      - xác nhận xóa các task đã chọn
+      - confirm delete selected tasks
+      - delete selected tasks
+      - ok xóa các task đã chọn
+
+  - intent: undo_delete_task
+    examples: |
+      - undo xóa task
+      - hoàn tác xóa task
+      - khôi phục task vừa xóa
+      - undo delete task
 
   - intent: create_note
     examples: |

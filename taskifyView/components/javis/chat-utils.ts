@@ -35,6 +35,39 @@ export type ParsedTaskListBlock = {
   footerText: string;
 };
 
+export type TaskPickerPayload = {
+  type: "task_picker";
+  prompt: string;
+  tasks: Array<{
+    id: string;
+    title: string;
+    priority: TaskPriority;
+    status: TaskStatus;
+    dueDate?: string | null;
+    isOverdue?: boolean;
+  }>;
+};
+
+export type DeleteResultPayload = {
+  type: "delete_result";
+  deletedCount: number;
+  deletedTaskIds: string[];
+  deletedTaskTitles: string[];
+  undoToken: string;
+  expiresAtUtc: string;
+};
+
+export type UndoResultPayload = {
+  type: "undo_result";
+  restoredCount: number;
+  restoredTaskIds: string[];
+};
+
+export type AssistantPayload =
+  | TaskPickerPayload
+  | DeleteResultPayload
+  | UndoResultPayload;
+
 // ---------------------------------------------------------------------------
 // Task list parser (Rasa format_task_list output)
 // ---------------------------------------------------------------------------
@@ -250,4 +283,29 @@ export function buildPreviewTask(
     createdAt: timestamp.toISOString(),
     labels: [],
   };
+}
+
+export function parseAssistantPayload(
+  metadataJson?: string | null,
+): AssistantPayload | null {
+  if (!metadataJson) return null;
+
+  try {
+    const parsed = JSON.parse(metadataJson) as { type?: unknown };
+    if (!parsed || typeof parsed.type !== "string") return null;
+
+    if (parsed.type === "task_picker") {
+      return parsed as TaskPickerPayload;
+    }
+    if (parsed.type === "delete_result") {
+      return parsed as DeleteResultPayload;
+    }
+    if (parsed.type === "undo_result") {
+      return parsed as UndoResultPayload;
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
 }

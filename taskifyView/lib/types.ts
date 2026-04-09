@@ -40,5 +40,6 @@ export interface ChatMessage {
   id: string
   role: ChatMessageRole
   text: string
+  metadataJson?: string | null
   sentAt: string
 }

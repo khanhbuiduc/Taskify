@@ -35,13 +35,15 @@ from actions.common.date_utils import (
     filter_tasks_due_in_window,
     normalize_priority,
 )
+from actions.common.delete_match_utils import (
+    extract_delete_query,
+    pick_task_by_title_fuzzy,
+)
 from actions.common.format_utils import (
     format_task_list,
-    pick_task_by_title,
     utter_ask_task_title,
     utter_create_task_cancelled,
     utter_ask_delete_title,
-    utter_confirm_delete,
 )
 
 logger = logging.getLogger(__name__)
@@ -375,7 +377,7 @@ class ActionCreateTask(Action):
 
 
 class ActionDeleteTask(Action):
-    """Delete a task via TaskifyAPI with confirmation."""
+    """Delete task(s) via TaskifyAPI with typed payloads for picker + undo."""
 
     def name(self) -> Text:
         return "action_delete_task"
@@ -388,53 +390,152 @@ class ActionDeleteTask(Action):
     ) -> List[Dict[Text, Any]]:
         user_id, session_id = split_sender(tracker.sender_id)
         locale = get_locale(tracker)
-        latest_intent = tracker.latest_message.get("intent", {}).get("name")
-        target_id = tracker.get_slot("delete_task_id")
-        target_title = tracker.get_slot("task_title")
+        latest_message = tracker.latest_message or {}
+        metadata = latest_message.get("metadata") or {}
+        action_name = str(metadata.get("action") or "").strip().lower()
 
-        if latest_intent == "affirm" and target_id:
-            return self._delete_and_reply(dispatcher, user_id, session_id, target_id, target_title, locale)
+        if action_name == "confirm_delete_selection":
+            selected_ids = self._coerce_task_ids(metadata.get("taskIds") or [])
+            if not selected_ids:
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "No task was selected for deletion.",
+                        "Bạn chưa chọn task nào để xóa.",
+                    )
+                )
+                return []
+            return self._delete_ids_and_reply(
+                dispatcher, user_id, session_id, selected_ids, locale
+            )
+
+        if action_name == "undo_delete":
+            undo_token = str(metadata.get("undoToken") or "").strip()
+            if not undo_token:
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "I couldn't find an undo token for this request.",
+                        "Mình không tìm thấy undo token cho yêu cầu này.",
+                    )
+                )
+                return []
+            return self._undo_delete_and_reply(
+                dispatcher, user_id, session_id, undo_token, locale
+            )
 
         tasks = self._fetch_tasks(user_id)
         if tasks is None:
             dispatcher.utter_message(
-                text=t(locale, "I couldn't fetch tasks to delete right now.", "Mình chưa lấy được danh sách task để xóa lúc này.")
+                text=t(
+                    locale,
+                    "I couldn't fetch tasks to delete right now.",
+                    "Mình chưa lấy được danh sách task để xóa lúc này.",
+                )
             )
             return []
+
+        target_title = extract_delete_query(
+            latest_message,
+            clean_task_title(tracker.get_slot("task_title"))
+            or clean_task_title(extract_task_title_from_message(latest_message)),
+        )
 
         if not target_title:
             utter_ask_delete_title(dispatcher, locale)
             return []
 
-        matches = pick_task_by_title(tasks, target_title)
+        scored_matches = pick_task_by_title_fuzzy(tasks, target_title)
+        matches = [task for task, _score in scored_matches]
+        if scored_matches:
+            top_scored = "; ".join(
+                [
+                    f"{item.get('title', '')} ({score:.2f})"
+                    for item, score in scored_matches[:5]
+                ]
+            )
+            logger.info("DeleteTask query '%s' scored matches: %s", target_title, top_scored)
 
         if len(matches) == 0:
             dispatcher.utter_message(
-                text=t(locale, "I couldn't find a matching task to delete.", "Mình không tìm thấy task nào khớp để xóa.")
-            )
-            return []
-
-        if len(matches) > 1:
-            preview = "\n".join([f"- {item.get('title', 'Untitled')}" for item in matches[:5]])
-            dispatcher.utter_message(
                 text=t(
                     locale,
-                    f"I found {len(matches)} matching tasks:\n{preview}\nPlease be more specific about which task should be deleted.",
-                    f"Mình thấy {len(matches)} task khớp:\n{preview}\nHãy nói rõ hơn task nào cần xóa.",
+                    "I couldn't find a clear matching task to delete. Please provide a more specific title.",
+                    "Mình không tìm thấy task nào khớp để xóa.",
                 )
             )
             return []
 
-        match = matches[0]
-        utter_confirm_delete(dispatcher, locale, match.get("title", ""))
-        return [SlotSet("delete_task_id", str(match.get("id"))), SlotSet("task_title", match.get("title"))]
+        if len(matches) == 1:
+            task_id = matches[0].get("id")
+            if task_id is None:
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "I couldn't identify that task for deletion.",
+                        "Mình chưa xác định được task đó để xóa.",
+                    )
+                )
+                return []
+            return self._delete_ids_and_reply(
+                dispatcher,
+                user_id,
+                session_id,
+                [int(task_id)],
+                locale,
+            )
+
+        top_matches = matches[:12]
+        payload = {
+            "type": "task_picker",
+            "prompt": t(
+                locale,
+                f'I found {len(matches)} tasks matching "{target_title}". Select one or more tasks to delete:',
+                f'Mình tìm thấy {len(matches)} task khớp "{target_title}". Bạn chọn một hoặc nhiều task để xóa:',
+            ),
+            "tasks": [
+                {
+                    "id": str(item.get("id")),
+                    "title": item.get("title", ""),
+                    "priority": item.get("priority", "medium"),
+                    "status": item.get("status", "todo"),
+                    "dueDate": item.get("dueDate"),
+                    "isOverdue": bool(item.get("isOverdue", False)),
+                }
+                for item in top_matches
+                if item.get("id") is not None
+            ],
+        }
+
+        preview = "\n".join([f"- {item.get('title', 'Untitled')}" for item in top_matches[:5]])
+        dispatcher.utter_message(
+            json_message=payload,
+        )
+        return []
+
+    def _coerce_task_ids(self, raw_ids: Any) -> List[int]:
+        if not isinstance(raw_ids, list):
+            return []
+
+        ids: List[int] = []
+        for value in raw_ids:
+            try:
+                ids.append(int(str(value)))
+            except (TypeError, ValueError):
+                continue
+
+        return sorted(set(ids))
 
     def _fetch_tasks(self, user_id: str) -> Optional[List[Dict[str, Any]]]:
         try:
             url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
             response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
             if response.status_code != 200:
-                logger.warning("DeleteTask: failed to fetch tasks for user %s status %s", user_id, response.status_code)
+                logger.warning(
+                    "DeleteTask: failed to fetch tasks for user %s status %s",
+                    user_id,
+                    response.status_code,
+                )
                 return None
             data = response.json()
             return data.get("tasks", [])
@@ -442,38 +543,88 @@ class ActionDeleteTask(Action):
             logger.exception("DeleteTask: error fetching tasks for user %s: %s", user_id, exc)
             return None
 
-    def _delete_and_reply(
+    def _delete_ids_and_reply(
         self,
         dispatcher: CollectingDispatcher,
         user_id: str,
         session_id: Optional[str],
-        task_id: str,
-        task_title: Optional[str],
+        task_ids: List[int],
         locale: str,
     ) -> List[Dict[Text, Any]]:
         try:
-            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}/{task_id}"
-            response = requests.delete(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
-            if response.status_code in (200, 204):
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}/delete"
+            payload = {"taskIds": task_ids, "sessionId": session_id}
+            response = requests.post(url, json=payload, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+
+            if response.status_code == 200:
+                body = response.json() or {}
+                deleted_count = int(body.get("deletedCount", 0))
+                deleted_ids = [str(item) for item in body.get("deletedTaskIds", [])]
+                deleted_titles = [
+                    item.get("title", "")
+                    for item in body.get("deletedTasks", [])
+                    if isinstance(item, dict)
+                ]
+                undo_token = str(body.get("undoToken", ""))
+                expires_at = str(body.get("expiresAtUtc", ""))
+
                 dispatcher.utter_message(
-                    text=t(locale, f'Deleted "{task_title or "task"}".', f'Đã xóa task "{task_title or "task"}".')
+                    json_message={
+                        "type": "delete_result",
+                        "deletedCount": deleted_count,
+                        "deletedTaskIds": deleted_ids,
+                        "deletedTaskTitles": deleted_titles,
+                        "undoToken": undo_token,
+                        "expiresAtUtc": expires_at,
+                    },
                 )
             elif response.status_code == 404:
                 dispatcher.utter_message(
-                    text=t(locale, "I couldn't find that task to delete.", "Mình không tìm thấy task đó để xóa.")
+                    text=t(
+                        locale,
+                        "I couldn't find matching tasks to delete.",
+                        "Mình không tìm thấy task phù hợp để xóa.",
+                    )
                 )
             else:
                 dispatcher.utter_message(
-                    text=t(locale, "I couldn't delete the task right now. Please try again later.", "Không xóa được task lúc này, thử lại sau nhé.")
+                    text=t(
+                        locale,
+                        "I couldn't delete tasks right now. Please try again later.",
+                        "Không xóa được task lúc này, bạn thử lại sau nhé.",
+                    )
                 )
-                logger.warning("DeleteTask: delete failed for user %s task %s status %s", user_id, task_id, response.status_code)
+                logger.warning(
+                    "DeleteTask: batch delete failed for user %s tasks %s status %s",
+                    user_id,
+                    task_ids,
+                    response.status_code,
+                )
         except requests.exceptions.Timeout:
-            dispatcher.utter_message(text=t(locale, "The delete request timed out. Please try again.", "Yêu cầu xóa bị timeout, thử lại nhé."))
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "The delete request timed out. Please try again.",
+                    "Yêu cầu xóa bị timeout, thử lại nhé.",
+                )
+            )
         except requests.exceptions.ConnectionError:
-            dispatcher.utter_message(text=t(locale, "I couldn't connect to the server to delete the task.", "Không kết nối được server để xóa task."))
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "I couldn't connect to the server to delete tasks.",
+                    "Không kết nối được server để xóa task.",
+                )
+            )
         except Exception as exc:
             logger.exception("DeleteTask error for user %s: %s", user_id, exc)
-            dispatcher.utter_message(text=t(locale, "Something went wrong while deleting the task.", "Có lỗi khi xóa task."))
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "Something went wrong while deleting tasks.",
+                    "Có lỗi khi xóa task.",
+                )
+            )
 
         return [
             SlotSet("delete_task_id", None),
@@ -483,6 +634,79 @@ class ActionDeleteTask(Action):
             SlotSet("priority", None),
         ]
 
+    def _undo_delete_and_reply(
+        self,
+        dispatcher: CollectingDispatcher,
+        user_id: str,
+        session_id: Optional[str],
+        undo_token: str,
+        locale: str,
+    ) -> List[Dict[Text, Any]]:
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}/undo-delete"
+            payload = {"undoToken": undo_token, "sessionId": session_id}
+            response = requests.post(url, json=payload, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+
+            if response.status_code == 200:
+                body = response.json() or {}
+                restored_count = int(body.get("restoredCount", 0))
+                restored_ids = [str(item) for item in body.get("restoredTaskIds", [])]
+                dispatcher.utter_message(
+                    json_message={
+                        "type": "undo_result",
+                        "restoredCount": restored_count,
+                        "restoredTaskIds": restored_ids,
+                    },
+                )
+            elif response.status_code in (400, 404):
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "Undo is no longer available for that delete action.",
+                        "Không thể undo thao tác xóa này (có thể đã hết hạn).",
+                    )
+                )
+            else:
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "I couldn't undo the delete right now. Please try again later.",
+                        "Không undo được lúc này, bạn thử lại sau nhé.",
+                    )
+                )
+                logger.warning(
+                    "UndoDelete: failed for user %s token %s status %s",
+                    user_id,
+                    undo_token,
+                    response.status_code,
+                )
+        except requests.exceptions.Timeout:
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "The undo request timed out. Please try again.",
+                    "Yêu cầu undo bị timeout, thử lại nhé.",
+                )
+            )
+        except requests.exceptions.ConnectionError:
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "I couldn't connect to the server to undo deletion.",
+                    "Không kết nối được server để undo xóa task.",
+                )
+            )
+        except Exception as exc:
+            logger.exception("UndoDelete error for user %s token %s: %s", user_id, undo_token, exc)
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "Something went wrong while undoing deletion.",
+                    "Có lỗi khi undo xóa task.",
+                )
+            )
+
+        return []
 
 # ---------------------------------------------------------------------------
 # ActionHandleConfirmation

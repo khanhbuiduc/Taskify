@@ -18,7 +18,7 @@ namespace TaskifyAPI.Repositories
         public async Task<IEnumerable<TaskItem>> GetByStatusAsync(TaskItemStatus status)
         {
             return await _dbSet
-                .Where(t => t.Status == status)
+                .Where(t => t.Status == status && !t.IsDeleted)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
         }
@@ -27,7 +27,7 @@ namespace TaskifyAPI.Repositories
         public async Task<IEnumerable<TaskItem>> GetByPriorityAsync(TaskPriority priority)
         {
             return await _dbSet
-                .Where(t => t.Priority == priority)
+                .Where(t => t.Priority == priority && !t.IsDeleted)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
         }
@@ -36,7 +36,7 @@ namespace TaskifyAPI.Repositories
         public async Task<IEnumerable<TaskItem>> GetOverdueTasksAsync(DateTime date)
         {
             return await _dbSet
-                .Where(t => t.DueDate < date && t.Status != TaskItemStatus.Completed)
+                .Where(t => t.DueDate < date && t.Status != TaskItemStatus.Completed && !t.IsDeleted)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
         }
@@ -45,6 +45,7 @@ namespace TaskifyAPI.Repositories
         public async Task<IEnumerable<TaskItem>> GetAllOrderedByDueDateAsync()
         {
             return await _dbSet
+                .Where(t => !t.IsDeleted)
                 .Include(t => t.Labels)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
@@ -58,7 +59,11 @@ namespace TaskifyAPI.Repositories
             // If userId is provided, filter by it
             if (!string.IsNullOrEmpty(userId))
             {
-                query = query.Where(t => t.UserId == userId);
+                query = query.Where(t => t.UserId == userId && !t.IsDeleted);
+            }
+            else
+            {
+                query = query.Where(t => !t.IsDeleted);
             }
 
             return await query
@@ -71,7 +76,7 @@ namespace TaskifyAPI.Repositories
         public async Task<IEnumerable<TaskItem>> GetByUserIdAsync(string userId)
         {
             return await _dbSet
-                .Where(t => t.UserId == userId)
+                .Where(t => t.UserId == userId && !t.IsDeleted)
                 .Include(t => t.Labels)
                 .OrderBy(t => t.DueDate)
                 .ToListAsync();
@@ -84,7 +89,7 @@ namespace TaskifyAPI.Repositories
         {
             return await _dbSet
                 .Include(t => t.Labels)
-                .FirstOrDefaultAsync(t => t.Id == id);
+                .FirstOrDefaultAsync(t => t.Id == id && !t.IsDeleted);
         }
     }
 }

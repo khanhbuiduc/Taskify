@@ -1,33 +1,29 @@
-"use client";
+﻿"use client";
 
-/**
- * chat-message-item.tsx — Render một tin nhắn đơn (user hoặc bot).
- *
- * Hỗ trợ 3 dạng nội dung:
- *  1. taskListBlock  – bot trả về danh sách task (task hôm nay, v.v.) → TaskCard list
- *  2. createTaskBlock – bot xác nhận tạo task → TaskCard đơn
- *  3. text           – tin nhắn thông thường
- */
-
-import type { MutableRefObject } from "react";
+import { useEffect, useState, type MutableRefObject } from "react";
 import { Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TaskCard } from "@/components/task/task-card";
-import type { Task, TaskStatus, ChatMessageRole } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import type { Task, ChatMessageRole } from "@/lib/types";
 import {
   parseCreateTaskBlock,
   parseTaskListBlock,
+  parseAssistantPayload,
   findTaskMatches,
   buildPreviewTask,
   foldText,
   type ParsedCreateTaskBlock,
   type ParsedTaskListItem,
+  type TaskPickerPayload,
 } from "./chat-utils";
 
 export interface DisplayMessage {
   id: string;
   role: ChatMessageRole;
   content: string;
+  metadataJson?: string | null;
   timestamp: Date;
 }
 
@@ -35,7 +31,6 @@ interface ChatMessageItemProps {
   message: DisplayMessage;
   tasks: Task[];
   resolvedTaskIdMap: MutableRefObject<Map<string, string>>;
-  // Create-task card handlers
   onTaskCardClick: (
     messageId: string,
     payload: ParsedCreateTaskBlock["payload"],
@@ -44,28 +39,83 @@ interface ChatMessageItemProps {
     messageId: string,
     payload: ParsedCreateTaskBlock["payload"],
   ) => void;
-  // Task-list item handlers
   onTaskListItemClick: (task: Task) => void;
   onTaskListItemStatusToggle: (task: Task) => Promise<void>;
+  onConfirmDeleteSelection: (taskIds: string[]) => void;
+  isSending: boolean;
 }
 
-// ---------------------------------------------------------------------------
-// Sub-components
-// ---------------------------------------------------------------------------
-
 function TextBubble({ content }: { content: string }) {
+  return <p className="text-sm leading-relaxed whitespace-pre-line">{content}</p>;
+}
+
+function TaskPickerPayloadView({
+  payload,
+  onConfirmDeleteSelection,
+  isSending,
+}: {
+  payload: TaskPickerPayload;
+  onConfirmDeleteSelection: (taskIds: string[]) => void;
+  isSending: boolean;
+}) {
+  const [selectedTaskIds, setSelectedTaskIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    setSelectedTaskIds(new Set(payload.tasks.map((task) => task.id)));
+  }, [payload.tasks, payload.prompt]);
+
+  const selectedCount = selectedTaskIds.size;
+
   return (
-    <p className="text-sm leading-relaxed whitespace-pre-line">{content}</p>
+    <div className="space-y-2">
+      <TextBubble content={payload.prompt} />
+      <div className="space-y-2">
+        {payload.tasks.map((task) => {
+          const checked = selectedTaskIds.has(task.id);
+          return (
+            <label
+              key={task.id}
+              className="flex items-start gap-2 rounded-md border border-border/70 bg-card/80 p-2 cursor-pointer"
+            >
+              <Checkbox
+                checked={checked}
+                onCheckedChange={(value) => {
+                  setSelectedTaskIds((prev) => {
+                    const next = new Set(prev);
+                    if (value) next.add(task.id);
+                    else next.delete(task.id);
+                    return next;
+                  });
+                }}
+                className="mt-0.5"
+              />
+              <div className="text-sm">
+                <p className="font-medium text-foreground">{task.title}</p>
+                <p className="text-xs text-muted-foreground">
+                  {task.priority} • {task.status}
+                </p>
+              </div>
+            </label>
+          );
+        })}
+      </div>
+      <Button
+        type="button"
+        size="sm"
+        disabled={selectedCount === 0 || isSending}
+        onClick={() => onConfirmDeleteSelection(Array.from(selectedTaskIds))}
+      >
+        Xoa {selectedCount > 0 ? `${selectedCount} task` : ""}
+      </Button>
+    </div>
   );
 }
 
-/** Resolve a ParsedTaskListItem → real Task from store (live data), or build a ghost task */
 function resolveListItem(item: ParsedTaskListItem, tasks: Task[]): Task {
   const normalized = foldText(item.title);
-  const found = tasks.find((t) => foldText(t.title) === normalized);
+  const found = tasks.find((task) => foldText(task.title) === normalized);
   if (found) return found;
 
-  // Ghost task (not found in store) — use parsed snapshot data
   return {
     id: `ghost-${normalized}`,
     title: item.title,
@@ -128,10 +178,6 @@ function TaskListBlockView({
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main component
-// ---------------------------------------------------------------------------
-
 export function ChatMessageItem({
   message,
   tasks,
@@ -140,23 +186,29 @@ export function ChatMessageItem({
   onTaskCardStatusToggle,
   onTaskListItemClick,
   onTaskListItemStatusToggle,
+  onConfirmDeleteSelection,
+  isSending,
 }: ChatMessageItemProps) {
-  // ── 1. Task-list block (highest priority — check first) ──────────────────
-  const taskListBlock =
-    message.role === "assistant" ? parseTaskListBlock(message.content) : null;
+  const assistantPayload =
+    message.role === "assistant"
+      ? parseAssistantPayload(message.metadataJson ?? null)
+      : null;
 
-  // ── 2. Create-task block ─────────────────────────────────────────────────
+  const taskListBlock =
+    !assistantPayload && message.role === "assistant"
+      ? parseTaskListBlock(message.content)
+      : null;
+
   const parsedCreateTask =
-    !taskListBlock && message.role === "assistant"
+    !assistantPayload && !taskListBlock && message.role === "assistant"
       ? parseCreateTaskBlock(message.content)
       : null;
 
-  // Cache-based resolve for create-task card
   const cachedId = parsedCreateTask
     ? resolvedTaskIdMap.current.get(message.id)
     : undefined;
   const cachedTask = cachedId
-    ? (tasks.find((t) => t.id === cachedId) ?? null)
+    ? (tasks.find((task) => task.id === cachedId) ?? null)
     : null;
 
   const matches =
@@ -174,7 +226,6 @@ export function ChatMessageItem({
     : null;
   const displayTask = matchedTask ?? previewTask;
 
-  // ── Render ───────────────────────────────────────────────────────────────
   return (
     <div
       className={cn(
@@ -182,7 +233,6 @@ export function ChatMessageItem({
         message.role === "user" ? "flex-row-reverse" : "flex-row",
       )}
     >
-      {/* Avatar */}
       <div
         className={cn(
           "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
@@ -198,7 +248,6 @@ export function ChatMessageItem({
         )}
       </div>
 
-      {/* Bubble */}
       <div
         className={cn(
           "rounded-lg px-4 py-2.5",
@@ -208,8 +257,16 @@ export function ChatMessageItem({
             : "bg-secondary text-secondary-foreground",
         )}
       >
-        {/* Case 1: Task list */}
-        {taskListBlock ? (
+        {assistantPayload?.type === "task_picker" ? (
+          <TaskPickerPayloadView
+            payload={assistantPayload}
+            onConfirmDeleteSelection={onConfirmDeleteSelection}
+            isSending={isSending}
+          />
+        ) : assistantPayload?.type === "delete_result" ||
+          assistantPayload?.type === "undo_result" ? (
+          <></>
+        ) : taskListBlock ? (
           <TaskListBlockView
             headerText={taskListBlock.headerText}
             footerText={taskListBlock.footerText}
@@ -218,7 +275,7 @@ export function ChatMessageItem({
             onItemClick={onTaskListItemClick}
             onItemStatusToggle={onTaskListItemStatusToggle}
           />
-        ) : /* Case 2: Create-task card */ parsedCreateTask && displayTask ? (
+        ) : parsedCreateTask && displayTask ? (
           <div className="space-y-2">
             {parsedCreateTask.prefixText && (
               <TextBubble content={parsedCreateTask.prefixText} />
@@ -239,11 +296,9 @@ export function ChatMessageItem({
             )}
           </div>
         ) : (
-          /* Case 3: Plain text */
           <TextBubble content={message.content} />
         )}
 
-        {/* Timestamp */}
         <p
           className={cn(
             "text-xs mt-1",

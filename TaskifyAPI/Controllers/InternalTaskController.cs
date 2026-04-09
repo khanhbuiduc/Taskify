@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 using TaskifyAPI.Model;
 using TaskifyAPI.Model.ViewModel;
+using TaskifyAPI.Data;
 using TaskifyAPI.Repositories.IRepositories;
 
 namespace TaskifyAPI.Controllers
@@ -14,15 +17,18 @@ namespace TaskifyAPI.Controllers
     public class InternalTaskController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly ILogger<InternalTaskController> _logger;
 
         public InternalTaskController(
             IUnitOfWork unitOfWork,
+            ApplicationDbContext dbContext,
             IConfiguration configuration,
             ILogger<InternalTaskController> logger)
         {
             _unitOfWork = unitOfWork;
+            _dbContext = dbContext;
             _configuration = configuration;
             _logger = logger;
         }
@@ -167,11 +173,10 @@ namespace TaskifyAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Delete a task for a specific user (for Rasa action_delete_task).
-        /// </summary>
-        [HttpDelete("{userId}/{taskId:int}")]
-        public async Task<IActionResult> DeleteTaskForUser(string userId, int taskId)
+        [HttpPost("{userId}/delete")]
+        public async Task<ActionResult<InternalDeleteTasksResponse>> DeleteTasksForUser(
+            string userId,
+            [FromBody] InternalDeleteTasksRequest? request)
         {
             if (!ValidateApiKey())
             {
@@ -179,15 +184,151 @@ namespace TaskifyAPI.Controllers
                 return Unauthorized(new { message = "Invalid API key" });
             }
 
-            var task = await _unitOfWork.Tasks.GetByIdAsync(taskId);
-            if (task == null || task.UserId != userId)
+            var taskIds = request?.TaskIds?.Distinct().ToList() ?? new List<int>();
+            if (taskIds.Count == 0)
             {
-                return NotFound();
+                return BadRequest(new { message = "TaskIds is required." });
             }
 
-            _unitOfWork.Tasks.Remove(task);
+            var tasks = await _dbContext.TaskItems
+                .Where(t => t.UserId == userId && taskIds.Contains(t.Id) && !t.IsDeleted)
+                .ToListAsync();
+
+            if (tasks.Count == 0)
+            {
+                return NotFound(new { message = "No matching tasks found to delete." });
+            }
+
+            var nowUtc = DateTime.UtcNow;
+            foreach (var task in tasks)
+            {
+                task.IsDeleted = true;
+                task.DeletedAt = nowUtc;
+            }
+
+            var undoToken = GenerateUndoToken();
+            var expiresAtUtc = nowUtc.AddSeconds(10);
+            _dbContext.TaskDeleteUndoTokens.Add(new TaskDeleteUndoToken
+            {
+                Token = undoToken,
+                UserId = userId,
+                SessionId = request?.SessionId,
+                ExpiresAtUtc = expiresAtUtc,
+                CreatedAtUtc = nowUtc,
+                IsUsed = false,
+                TaskIdsCsv = string.Join(",", tasks.Select(t => t.Id))
+            });
+
             await _unitOfWork.SaveChangesAsync();
-            _logger.LogInformation("Deleted task {TaskId} for user {UserId} via Rasa", taskId, userId);
+
+            _logger.LogInformation(
+                "Soft-deleted {Count} task(s) for user {UserId} via Rasa",
+                tasks.Count,
+                userId);
+
+            return Ok(new InternalDeleteTasksResponse
+            {
+                DeletedCount = tasks.Count,
+                DeletedTaskIds = tasks.Select(t => t.Id).ToList(),
+                DeletedTasks = tasks.Select(t => new InternalDeleteTaskItem
+                {
+                    Id = t.Id,
+                    Title = t.Title
+                }).ToList(),
+                UndoToken = undoToken,
+                ExpiresAtUtc = expiresAtUtc
+            });
+        }
+
+        [HttpPost("{userId}/undo-delete")]
+        public async Task<ActionResult<InternalUndoDeleteResponse>> UndoDeleteForUser(
+            string userId,
+            [FromBody] InternalUndoDeleteRequest? request)
+        {
+            if (!ValidateApiKey())
+            {
+                _logger.LogWarning("Invalid or missing X-Rasa-Token for user {UserId}", userId);
+                return Unauthorized(new { message = "Invalid API key" });
+            }
+
+            if (string.IsNullOrWhiteSpace(request?.UndoToken))
+            {
+                return BadRequest(new { message = "UndoToken is required." });
+            }
+
+            var nowUtc = DateTime.UtcNow;
+            var tokenEntry = await _dbContext.TaskDeleteUndoTokens
+                .FirstOrDefaultAsync(x => x.Token == request.UndoToken && x.UserId == userId);
+
+            if (tokenEntry == null)
+            {
+                return NotFound(new { message = "Undo token not found." });
+            }
+
+            if (tokenEntry.IsUsed)
+            {
+                return BadRequest(new { message = "Undo token has already been used." });
+            }
+
+            if (tokenEntry.ExpiresAtUtc < nowUtc)
+            {
+                return BadRequest(new { message = "Undo token expired." });
+            }
+
+            if (!string.IsNullOrWhiteSpace(tokenEntry.SessionId)
+                && !string.IsNullOrWhiteSpace(request!.SessionId)
+                && !string.Equals(tokenEntry.SessionId, request.SessionId, StringComparison.Ordinal))
+            {
+                return Forbid();
+            }
+
+            var taskIds = ParseTaskIds(tokenEntry.TaskIdsCsv);
+            if (taskIds.Count == 0)
+            {
+                return BadRequest(new { message = "Undo token has no tasks." });
+            }
+
+            var tasks = await _dbContext.TaskItems
+                .Where(t => t.UserId == userId && taskIds.Contains(t.Id) && t.IsDeleted)
+                .ToListAsync();
+
+            foreach (var task in tasks)
+            {
+                task.IsDeleted = false;
+                task.DeletedAt = null;
+            }
+
+            tokenEntry.IsUsed = true;
+            await _unitOfWork.SaveChangesAsync();
+
+            _logger.LogInformation(
+                "Undo restored {Count} task(s) for user {UserId} via Rasa",
+                tasks.Count,
+                userId);
+
+            return Ok(new InternalUndoDeleteResponse
+            {
+                RestoredCount = tasks.Count,
+                RestoredTaskIds = tasks.Select(t => t.Id).ToList(),
+            });
+        }
+
+        /// <summary>
+        /// Backward-compatible route for single delete, now soft-delete.
+        /// </summary>
+        [HttpDelete("{userId}/{taskId:int}")]
+        public async Task<IActionResult> DeleteTaskForUser(string userId, int taskId)
+        {
+            var response = await DeleteTasksForUser(userId, new InternalDeleteTasksRequest
+            {
+                TaskIds = new List<int> { taskId }
+            });
+
+            if (response.Result is ObjectResult objectResult && objectResult.StatusCode != 200)
+            {
+                return objectResult;
+            }
+
             return NoContent();
         }
 
@@ -221,6 +362,29 @@ namespace TaskifyAPI.Controllers
                 "high" => TaskPriority.High,
                 _ => TaskPriority.Medium
             };
+        }
+
+        private static string GenerateUndoToken()
+        {
+            Span<byte> bytes = stackalloc byte[24];
+            RandomNumberGenerator.Fill(bytes);
+            return Convert.ToBase64String(bytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
+        }
+
+        private static List<int> ParseTaskIds(string taskIdsCsv)
+        {
+            if (string.IsNullOrWhiteSpace(taskIdsCsv))
+            {
+                return new List<int>();
+            }
+
+            return taskIdsCsv
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(id => int.TryParse(id, out var parsed) ? parsed : (int?)null)
+                .Where(id => id.HasValue)
+                .Select(id => id!.Value)
+                .Distinct()
+                .ToList();
         }
 
         #endregion
@@ -265,6 +429,39 @@ namespace TaskifyAPI.Controllers
         public string? Description { get; set; }
         public string? Priority { get; set; }
         public string? DueDate { get; set; }
+    }
+
+    public class InternalDeleteTasksRequest
+    {
+        public List<int> TaskIds { get; set; } = new();
+        public string? SessionId { get; set; }
+    }
+
+    public class InternalDeleteTaskItem
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+    }
+
+    public class InternalDeleteTasksResponse
+    {
+        public int DeletedCount { get; set; }
+        public List<int> DeletedTaskIds { get; set; } = new();
+        public List<InternalDeleteTaskItem> DeletedTasks { get; set; } = new();
+        public string UndoToken { get; set; } = string.Empty;
+        public DateTime ExpiresAtUtc { get; set; }
+    }
+
+    public class InternalUndoDeleteRequest
+    {
+        public string UndoToken { get; set; } = string.Empty;
+        public string? SessionId { get; set; }
+    }
+
+    public class InternalUndoDeleteResponse
+    {
+        public int RestoredCount { get; set; }
+        public List<int> RestoredTaskIds { get; set; } = new();
     }
 
     #endregion

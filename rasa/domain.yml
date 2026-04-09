@@ -18,6 +18,8 @@ intents:
   - search_notes
   - pin_note
   - delete_task
+  - confirm_delete_selection
+  - undo_delete_task
   - nlu_fallback
 
 entities:

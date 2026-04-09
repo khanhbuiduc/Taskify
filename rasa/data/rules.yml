@@ -39,6 +39,16 @@ rules:
   - intent: delete_task
   - action: action_delete_task
 
+- rule: Confirm delete selection
+  steps:
+  - intent: confirm_delete_selection
+  - action: action_delete_task
+
+- rule: Undo delete task
+  steps:
+  - intent: undo_delete_task
+  - action: action_delete_task
+
 - rule: List tasks by date directly
   steps:
   - intent: list_tasks_by_date

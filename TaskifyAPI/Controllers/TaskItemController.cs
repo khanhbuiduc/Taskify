@@ -268,7 +268,7 @@ namespace TaskifyAPI.Controllers
         {
             var task = await _unitOfWork.Tasks.GetByIdAsync(id);
 
-            if (task == null)
+            if (task == null || task.IsDeleted)
             {
                 return NotFound(new { message = $"Task with ID {id} not found" });
             }
@@ -282,7 +282,9 @@ namespace TaskifyAPI.Controllers
                 return Forbid("You do not have permission to delete this task");
             }
 
-            _unitOfWork.Tasks.Remove(task);
+            task.IsDeleted = true;
+            task.DeletedAt = DateTime.UtcNow;
+            _unitOfWork.Tasks.Update(task);
             await _unitOfWork.SaveChangesAsync();
 
             return NoContent();

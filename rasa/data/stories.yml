@@ -62,11 +62,19 @@ stories:
   - action: action_cancel_create_task
   - active_loop: null
 
-- story: delete task confirm
+- story: delete task
   steps:
   - intent: delete_task
   - action: action_delete_task
-  - intent: affirm
+
+- story: confirm delete selection
+  steps:
+  - intent: confirm_delete_selection
+  - action: action_delete_task
+
+- story: undo delete task
+  steps:
+  - intent: undo_delete_task
   - action: action_delete_task
 
 - story: list notes

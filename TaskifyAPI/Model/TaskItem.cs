@@ -31,6 +31,16 @@ namespace TaskifyAPI.Model
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         /// <summary>
+        /// Soft delete flag. Deleted tasks are hidden from normal list/get APIs.
+        /// </summary>
+        public bool IsDeleted { get; set; } = false;
+
+        /// <summary>
+        /// UTC timestamp when task was soft-deleted.
+        /// </summary>
+        public DateTime? DeletedAt { get; set; }
+
+        /// <summary>
         /// User ID who owns this task
         /// </summary>
         [Required]

@@ -14,6 +14,7 @@ export interface ChatMessage {
   id: string;
   role: ChatMessageRole;
   text: string;
+  metadataJson?: string | null;
   sentAt: string;
 }
 
@@ -68,14 +69,18 @@ export const chatApi = {
     return handleResponse<ChatThreadResponse>(response);
   },
 
-  async sendMessage(sessionId: string, message: string): Promise<ChatThreadResponse> {
+  async sendMessage(
+    sessionId: string,
+    message: string,
+    metadataJson?: string,
+  ): Promise<ChatThreadResponse> {
     const url = getApiUrl(`/api/Chat/${sessionId}/messages`);
     const response = await fetch(url, {
       method: "POST",
       headers: {
         ...getAuthHeaders(),
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, metadataJson }),
     });
     return handleResponse<ChatThreadResponse>(response);
   },
