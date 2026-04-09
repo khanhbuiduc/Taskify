@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import {
   Settings,
@@ -14,7 +15,6 @@ import {
   CalendarDays,
   DollarSign,
   CheckSquare,
-  Command,
 } from "lucide-react";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -88,8 +88,23 @@ export function Sidebar({}: SidebarProps = {}) {
       <SidebarHeader className="h-16 flex flex-row items-center justify-between px-3 py-2">
         {state === "expanded" && (
           <Link href="/tasks" className="flex flex-1 items-center gap-3 overflow-hidden cursor-pointer hover:opacity-80 px-1">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent text-accent-foreground">
-              <Command className="size-5" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 overflow-hidden">
+              <Image
+                src="/jarvis-light.png"
+                alt="Jarvis light"
+                width={40}
+                height={40}
+                className="size-10 object-contain dark:hidden"
+                priority
+              />
+              <Image
+                src="/jarvis-dark.png"
+                alt="Jarvis dark"
+                width={40}
+                height={40}
+                className="hidden size-10 object-contain dark:block"
+                priority
+              />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-bold text-lg">TaskFlow</span>

@@ -20,11 +20,17 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useChatSessionStore } from "@/lib/chat-session-store";
-import type { ChatMessageRole } from "@/lib/types";
+import type { ChatMessageRole, Task, TaskPriority } from "@/lib/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
+import { TaskCard } from "@/components/task/task-card";
+import { useTaskActions } from "@/hooks/use-task-actions";
+import { useTaskStore } from "@/lib/task-store";
+import { TaskDetailDialog } from "@/components/task/task-detail-dialog";
+import { TaskModal } from "@/components/task/task-modal";
+import { DeleteDialog } from "@/components/task/delete-dialog";
 
 const suggestedPrompts = [
   "What tasks are overdue?",
@@ -38,6 +44,177 @@ const renderTextMessage = (content: string) => (
 );
 
 const READ_REPLIES_STORAGE_KEY = "taskify.ai.read-replies-aloud";
+
+type ParsedCreateTaskBlock = {
+  prefixText: string;
+  suffixText: string;
+  payload: {
+    title: string;
+    dueDate: string;
+    priority: TaskPriority;
+  };
+};
+
+function foldText(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseDueDateDisplay(value: string): string | null {
+  const match = value.trim().match(/^(\d{1,2}):(\d{2})\s+(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!match) return null;
+
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  const day = Number(match[3]);
+  const month = Number(match[4]);
+  const year = Number(match[5]);
+
+  if (
+    Number.isNaN(hour) ||
+    Number.isNaN(minute) ||
+    Number.isNaN(day) ||
+    Number.isNaN(month) ||
+    Number.isNaN(year)
+  ) {
+    return null;
+  }
+
+  if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+    return null;
+  }
+
+  const date = new Date(year, month - 1, day, hour, minute, 0);
+  if (Number.isNaN(date.getTime())) {
+    return null;
+  }
+
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  const hh = String(date.getHours()).padStart(2, "0");
+  const mi = String(date.getMinutes()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}:00`;
+}
+
+function normalizeTitleValue(raw: string): string {
+  return raw
+    .trim()
+    .replace(/^\*\*(.+)\*\*$/, "$1")
+    .replace(/^["“”](.+)["“”]$/, "$1")
+    .trim();
+}
+
+function parsePriority(marker: string | undefined, rawValue: string): TaskPriority {
+  const rawMarker = (marker ?? "").trim();
+  if (rawMarker === "!") return "high";
+  if (rawMarker === "-") return "low";
+  if (rawMarker === "~") return "medium";
+
+  const normalized = foldText(rawValue);
+  if (normalized.includes("high") || normalized.includes("cao")) return "high";
+  if (normalized.includes("low") || normalized.includes("thap")) return "low";
+  return "medium";
+}
+
+function parseCreateTaskBlock(content: string): ParsedCreateTaskBlock | null {
+  const normalizedContent = content.replace(/\r\n/g, "\n");
+  const lines = normalizedContent.split("\n");
+
+  for (let i = 0; i <= lines.length - 3; i += 1) {
+    const createdLine = lines[i].trim();
+    const dueLine = lines[i + 1].trim();
+    const priorityLine = lines[i + 2].trim();
+
+    const createdMatch = createdLine.match(/^(?:Đã tạo task|Created task):\s*(.+)$/i);
+    const dueMatch = dueLine.match(/^(?:Hạn|Due):\s*(.+)$/i);
+    const priorityMatch = priorityLine.match(
+      /^(?:([!~\-])\s*)?(?:Độ ưu tiên|Priority):\s*(.+)$/i,
+    );
+
+    if (!createdMatch || !dueMatch || !priorityMatch) {
+      continue;
+    }
+
+    const title = normalizeTitleValue(createdMatch[1] ?? "");
+    if (!title) {
+      continue;
+    }
+
+    const dueDate = parseDueDateDisplay(dueMatch[1] ?? "");
+    if (!dueDate) {
+      continue;
+    }
+
+    const priority = parsePriority(priorityMatch[1], priorityMatch[2] ?? "");
+    const prefixText = lines
+      .slice(0, i)
+      .join("\n")
+      .trim();
+    const suffixText = lines
+      .slice(i + 3)
+      .join("\n")
+      .trim();
+
+    return {
+      prefixText,
+      suffixText,
+      payload: {
+        title,
+        dueDate,
+        priority,
+      },
+    };
+  }
+
+  return null;
+}
+
+function isDueMatch(taskDueDate: string, payloadDueDate: string): boolean {
+  const taskTimestamp = new Date(taskDueDate).getTime();
+  const payloadTimestamp = new Date(payloadDueDate).getTime();
+  if (Number.isNaN(taskTimestamp) || Number.isNaN(payloadTimestamp)) {
+    return false;
+  }
+
+  return Math.abs(taskTimestamp - payloadTimestamp) <= 60_000;
+}
+
+function findTaskMatches(tasks: Task[], payload: ParsedCreateTaskBlock["payload"]): Task[] {
+  const normalizedTitle = foldText(payload.title);
+  return tasks.filter((task) => {
+    if (foldText(task.title) !== normalizedTitle) {
+      return false;
+    }
+
+    if (task.priority !== payload.priority) {
+      return false;
+    }
+
+    return isDueMatch(task.dueDate, payload.dueDate);
+  });
+}
+
+function buildPreviewTask(
+  messageId: string,
+  timestamp: Date,
+  payload: ParsedCreateTaskBlock["payload"],
+): Task {
+  return {
+    id: `ai-preview-${messageId}`,
+    title: payload.title,
+    description: "",
+    priority: payload.priority,
+    status: "todo",
+    dueDate: payload.dueDate,
+    createdAt: timestamp.toISOString(),
+    labels: [],
+  };
+}
 
 export default function AILayoutPage() {
   const {
@@ -76,6 +253,24 @@ export default function AILayoutPage() {
     speakTexts,
     cancel: cancelSpeech,
   } = speechSynthesis;
+  const { tasks, fetchTasks, updateTaskStatus } = useTaskStore();
+  const {
+    modalOpen,
+    setModalOpen,
+    modalMode,
+    selectedTask,
+    detailDialogOpen,
+    setDetailDialogOpen,
+    detailTask,
+    deleteDialogOpen,
+    setDeleteDialogOpen,
+    taskToDelete,
+    openDetail,
+    handleEditFromDetail,
+    handleDeleteFromDetail,
+    handleConfirmDelete,
+    handleSaveTask,
+  } = useTaskActions();
 
   const combinedMessages = useMemo(() => {
     if (!activeSessionId) return [];
@@ -184,6 +379,40 @@ export default function AILayoutPage() {
     startListening(input);
   };
 
+  const resolveTaskFromPayload = async (
+    payload: ParsedCreateTaskBlock["payload"],
+  ): Promise<Task | null> => {
+    const directMatches = findTaskMatches(tasks, payload);
+    if (directMatches.length === 1) {
+      return directMatches[0];
+    }
+
+    await fetchTasks();
+    const refreshedTasks = useTaskStore.getState().tasks;
+    const refreshedMatches = findTaskMatches(refreshedTasks, payload);
+    if (refreshedMatches.length === 1) {
+      return refreshedMatches[0];
+    }
+
+    return null;
+  };
+
+  const handleTaskCardClick = async (payload: ParsedCreateTaskBlock["payload"]) => {
+    const matchedTask = await resolveTaskFromPayload(payload);
+    if (!matchedTask) return;
+    openDetail(matchedTask);
+  };
+
+  const handleTaskCardStatusToggle = async (
+    payload: ParsedCreateTaskBlock["payload"],
+  ) => {
+    const matchedTask = await resolveTaskFromPayload(payload);
+    if (!matchedTask) return;
+
+    const nextStatus = matchedTask.status === "completed" ? "todo" : "completed";
+    await updateTaskStatus(matchedTask.id, nextStatus);
+  };
+
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -283,54 +512,89 @@ export default function AILayoutPage() {
               </div>
             )}
 
-            {combinedMessages.map((message) => (
-              <div
-                key={message.id}
-                className={cn(
-                  "flex gap-3",
-                  message.role === "user" ? "flex-row-reverse" : "flex-row",
-                )}
-              >
-                <div
-                  className={cn(
-                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
-                    message.role === "user"
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-secondary text-secondary-foreground",
-                  )}
-                >
-                  {message.role === "user" ? (
-                    <User className="h-4 w-4" />
-                  ) : (
-                    <Bot className="h-4 w-4" />
-                  )}
-                </div>
+            {combinedMessages.map((message) => {
+              const parsedCreateTask =
+                message.role === "assistant"
+                  ? parseCreateTaskBlock(message.content)
+                  : null;
+              const matches = parsedCreateTask
+                ? findTaskMatches(tasks, parsedCreateTask.payload)
+                : [];
+              const matchedTask = matches.length === 1 ? matches[0] : null;
+              const previewTask = parsedCreateTask
+                ? buildPreviewTask(message.id, message.timestamp, parsedCreateTask.payload)
+                : null;
+              const displayTask = matchedTask ?? previewTask;
 
+              return (
                 <div
+                  key={message.id}
                   className={cn(
-                    "max-w-[75%] rounded-lg px-4 py-2.5",
-                    message.role === "user"
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-secondary text-secondary-foreground",
+                    "flex gap-3",
+                    message.role === "user" ? "flex-row-reverse" : "flex-row",
                   )}
                 >
-                  {renderTextMessage(message.content)}
-                  <p
+                  <div
                     className={cn(
-                      "text-xs mt-1",
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
                       message.role === "user"
-                        ? "text-accent-foreground/70"
-                        : "text-muted-foreground",
+                        ? "bg-accent text-accent-foreground"
+                        : "bg-secondary text-secondary-foreground",
                     )}
                   >
-                    {message.timestamp.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
+                    {message.role === "user" ? (
+                      <User className="h-4 w-4" />
+                    ) : (
+                      <Bot className="h-4 w-4" />
+                    )}
+                  </div>
+
+                  <div
+                    className={cn(
+                      "max-w-[75%] rounded-lg px-4 py-2.5",
+                      message.role === "user"
+                        ? "bg-accent text-accent-foreground"
+                        : "bg-secondary text-secondary-foreground",
+                    )}
+                  >
+                    {parsedCreateTask && displayTask ? (
+                      <div className="space-y-2">
+                        {parsedCreateTask.prefixText &&
+                          renderTextMessage(parsedCreateTask.prefixText)}
+                        <TaskCard
+                          task={displayTask}
+                          variant="list"
+                          onClick={() => {
+                            void handleTaskCardClick(parsedCreateTask.payload);
+                          }}
+                          onStatusToggle={() => {
+                            void handleTaskCardStatusToggle(parsedCreateTask.payload);
+                          }}
+                          className="border-border/70 bg-card/90 text-foreground"
+                        />
+                        {parsedCreateTask.suffixText &&
+                          renderTextMessage(parsedCreateTask.suffixText)}
+                      </div>
+                    ) : (
+                      renderTextMessage(message.content)
+                    )}
+                    <p
+                      className={cn(
+                        "text-xs mt-1",
+                        message.role === "user"
+                          ? "text-accent-foreground/70"
+                          : "text-muted-foreground",
+                      )}
+                    >
+                      {message.timestamp.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {isSending && (
               <div className="flex gap-3">
@@ -460,6 +724,26 @@ export default function AILayoutPage() {
             </div>
           </div>
         </Card>
+        <TaskDetailDialog
+          open={detailDialogOpen}
+          onOpenChange={setDetailDialogOpen}
+          task={detailTask}
+          onEdit={handleEditFromDetail}
+          onDelete={handleDeleteFromDetail}
+        />
+        <TaskModal
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          task={selectedTask}
+          onSave={handleSaveTask}
+          mode={modalMode}
+        />
+        <DeleteDialog
+          open={deleteDialogOpen}
+          onOpenChange={setDeleteDialogOpen}
+          onConfirm={handleConfirmDelete}
+          taskTitle={taskToDelete?.title || ""}
+        />
       </div>
     </div>
   );
