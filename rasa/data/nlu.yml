@@ -1,4 +1,4 @@
-# NLU training data for Taskify assistant (Bilingual: English + Vietnamese)
+﻿# NLU training data for Taskify assistant (Bilingual: English + Vietnamese)
 version: "3.1"
 
 nlu:
@@ -69,7 +69,21 @@ nlu:
       - nhiệm vụ quá hạn
       - việc nào trễ
       - có task nào đang trễ hạn không
-
+  - intent: list_tasks_by_date
+    examples: |
+      - xem task hôm nay
+      - cho mình xem task hôm nay
+      - liệt kê task ngày mai
+      - xem việc ngày mai
+      - task ngày kia
+      - xem task hôm qua
+      - cho mình task hôm kia
+      - xem task ngày 30/4
+      - task 30/4
+      - task 30-4
+      - xem task ngày 30 tháng 4
+      - việc nào đến hạn vào 30/4
+      - task đến hạn ngày mai
   - intent: summarize_week
     examples: |
       - Summarize my week
@@ -293,3 +307,4 @@ nlu:
     examples: |
       - asdf
       - qwerty
+

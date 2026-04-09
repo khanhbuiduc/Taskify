@@ -23,6 +23,11 @@ stories:
   - intent: list_overdue_tasks
   - action: action_list_tasks
 
+- story: list tasks by date
+  steps:
+  - intent: list_tasks_by_date
+  - action: action_list_tasks
+
 - story: summarize week
   steps:
   - intent: summarize_week

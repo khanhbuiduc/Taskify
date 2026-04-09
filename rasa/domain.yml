@@ -8,6 +8,7 @@ intents:
   - deny
   - ask_howcanhelp
   - list_overdue_tasks
+  - list_tasks_by_date
   - summarize_week
   - help_prioritize
   - create_task
@@ -22,6 +23,7 @@ intents:
 entities:
   - task_title
   - due_date
+  - time
   - due_time
   - priority
   - note_title
