@@ -92,3 +92,10 @@ coverage/
 appsettings.Development.json
 
 _tmp_build
+
+# =========================
+# PhoBERT / ML Data
+# =========================
+# Ignore PhoBERT models
+rasa/data/phobert/model/
+rasa/data/phobert/phobert_models/

@@ -3,7 +3,7 @@
  * No React imports, no side-effects: safe to use anywhere.
  */
 
-import type { Task, TaskPriority, TaskStatus } from "@/lib/types";
+import type { Task, TaskPriority, TaskStatus, Note } from "@/lib/types";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -48,6 +48,11 @@ export type TaskPickerPayload = {
   }>;
 };
 
+export type NotePickerPayload = {
+  type: "note_picker";
+  notes: Note[];
+};
+
 export type DeleteResultPayload = {
   type: "delete_result";
   deletedCount: number;
@@ -65,6 +70,7 @@ export type UndoResultPayload = {
 
 export type AssistantPayload =
   | TaskPickerPayload
+  | NotePickerPayload
   | DeleteResultPayload
   | UndoResultPayload;
 
@@ -296,6 +302,9 @@ export function parseAssistantPayload(
 
     if (parsed.type === "task_picker") {
       return parsed as TaskPickerPayload;
+    }
+    if (parsed.type === "note_picker") {
+      return parsed as NotePickerPayload;
     }
     if (parsed.type === "delete_result") {
       return parsed as DeleteResultPayload;

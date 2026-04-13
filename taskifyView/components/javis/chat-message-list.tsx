@@ -28,6 +28,9 @@ interface ChatMessageListProps {
   onTaskListItemClick: (task: Task) => void;
   onTaskListItemStatusToggle: (task: Task) => Promise<void>;
   onConfirmDeleteSelection: (taskIds: string[]) => void;
+  onNoteCardEdit?: (note: any) => void;
+  onNoteCardDelete?: (note: any) => void;
+  onNoteCardTogglePin?: (note: any) => void;
 }
 
 export function ChatMessageList({
@@ -40,6 +43,9 @@ export function ChatMessageList({
   onTaskListItemClick,
   onTaskListItemStatusToggle,
   onConfirmDeleteSelection,
+  onNoteCardEdit,
+  onNoteCardDelete,
+  onNoteCardTogglePin,
 }: ChatMessageListProps) {
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -67,6 +73,9 @@ export function ChatMessageList({
           onTaskListItemClick={onTaskListItemClick}
           onTaskListItemStatusToggle={onTaskListItemStatusToggle}
           onConfirmDeleteSelection={onConfirmDeleteSelection}
+          onNoteCardEdit={onNoteCardEdit}
+          onNoteCardDelete={onNoteCardDelete}
+          onNoteCardTogglePin={onNoteCardTogglePin}
           isSending={isSending}
         />
       ))}

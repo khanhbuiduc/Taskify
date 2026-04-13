@@ -1,12 +1,13 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, type MutableRefObject } from "react";
 import { Bot, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TaskCard } from "@/components/task/task-card";
+import { NoteCard } from "@/components/notes/note-card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { Task, ChatMessageRole } from "@/lib/types";
+import type { Task, ChatMessageRole, Note } from "@/lib/types";
 import {
   parseCreateTaskBlock,
   parseTaskListBlock,
@@ -17,6 +18,7 @@ import {
   type ParsedCreateTaskBlock,
   type ParsedTaskListItem,
   type TaskPickerPayload,
+  type NotePickerPayload,
 } from "./chat-utils";
 
 export interface DisplayMessage {
@@ -42,6 +44,9 @@ interface ChatMessageItemProps {
   onTaskListItemClick: (task: Task) => void;
   onTaskListItemStatusToggle: (task: Task) => Promise<void>;
   onConfirmDeleteSelection: (taskIds: string[]) => void;
+  onNoteCardEdit?: (note: Note) => void;
+  onNoteCardDelete?: (note: Note) => void;
+  onNoteCardTogglePin?: (note: Note) => void;
   isSending: boolean;
 }
 
@@ -107,6 +112,39 @@ function TaskPickerPayloadView({
       >
         Xoa {selectedCount > 0 ? `${selectedCount} task` : ""}
       </Button>
+    </div>
+  );
+}
+
+function NotePickerPayloadView({
+  payload,
+  messageContent,
+  onEdit,
+  onDelete,
+  onTogglePin
+}: {
+  payload: NotePickerPayload;
+  messageContent: string;
+  onEdit?: (n: Note) => void;
+  onDelete?: (n: Note) => void;
+  onTogglePin?: (n: Note) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <TextBubble content={messageContent} />
+      {payload.notes && payload.notes.length > 0 && (
+        <div className="grid gap-2 grid-cols-1 md:grid-cols-2 mt-2">
+          {payload.notes.map((note) => (
+            <NoteCard 
+              key={note.id} 
+              note={note} 
+              onEdit={onEdit || (() => {})} 
+              onDelete={onDelete || (() => {})} 
+              onTogglePin={onTogglePin || (() => {})} 
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -187,6 +225,9 @@ export function ChatMessageItem({
   onTaskListItemClick,
   onTaskListItemStatusToggle,
   onConfirmDeleteSelection,
+  onNoteCardEdit,
+  onNoteCardDelete,
+  onNoteCardTogglePin,
   isSending,
 }: ChatMessageItemProps) {
   const assistantPayload =
@@ -262,6 +303,14 @@ export function ChatMessageItem({
             payload={assistantPayload}
             onConfirmDeleteSelection={onConfirmDeleteSelection}
             isSending={isSending}
+          />
+        ) : assistantPayload?.type === "note_picker" ? (
+          <NotePickerPayloadView
+            payload={assistantPayload}
+            messageContent={message.content}
+            onEdit={onNoteCardEdit}
+            onDelete={onNoteCardDelete}
+            onTogglePin={onNoteCardTogglePin}
           />
         ) : assistantPayload?.type === "delete_result" ||
           assistantPayload?.type === "undo_result" ? (

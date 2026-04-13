@@ -1,280 +1,686 @@
-﻿# NLU training data for Taskify assistant (Bilingual: English + Vietnamese)
+# NLU training data for Taskify assistant (Vietnamese-first)
 version: "3.1"
 
 nlu:
   - intent: greet
     examples: |
-      - hey
-      - hello
-      - hi
-      - good morning
-      - good evening
-      - hey there
       - xin chào
       - chào bạn
-      - chào
+      - hello
+      - hi
+      - alo
+      - chào buổi sáng
+      - chào buổi tối
+      - mình cần hỗ trợ
+      - chào trợ lý
+      - xin chào giúp mình
+      - chào bạn nha
+      - hello ngay
+      - hi với
+      - alo đi
+      - chào buổi sáng cho tôi
+      - chào buổi tối nhé
+      - mình cần hỗ trợ liền
+      - chào trợ lý giúp mình
+      - xin chào nha
+      - chào bạn ngay
+      - hello với
+      - hi đi
+      - alo cho tôi
+      - chào buổi sáng nhé
+      - chào buổi tối liền
 
   - intent: goodbye
     examples: |
+      - tạm biệt
+      - chào tạm biệt
       - bye
       - goodbye
-      - see you
-      - see you later
-      - have a good one
-      - tạm biệt
-      - bye bye
       - hẹn gặp lại
+      - mình thoát nhé
+      - kết thúc ở đây
+      - cảm ơn nhé tạm biệt
+      - mình đi đây
+      - see you
+      - tạm biệt giúp mình
+      - chào tạm biệt nha
+      - bye ngay
+      - goodbye với
+      - hẹn gặp lại đi
+      - mình thoát nhé cho tôi
+      - kết thúc ở đây nhé
+      - cảm ơn nhé tạm biệt liền
+      - mình đi đây giúp mình
+      - see you nha
+      - tạm biệt ngay
+      - chào tạm biệt với
+      - bye đi
+      - goodbye cho tôi
+      - hẹn gặp lại nhé
 
   - intent: affirm
     examples: |
-      - yes
-      - yeah
-      - yep
-      - sure
-      - correct
-      - có
-      - đúng
+      - đúng rồi
+      - đồng ý
       - ok
+      - oke
+      - yes
+      - chính xác
+      - xác nhận
       - được
+      - chuẩn
+      - ừ đúng
+      - đúng rồi giúp mình
+      - đồng ý nha
+      - ok ngay
+      - oke với
+      - yes đi
+      - chính xác cho tôi
+      - xác nhận nhé
+      - được liền
+      - chuẩn giúp mình
+      - ừ đúng nha
+      - đúng rồi ngay
+      - đồng ý với
+      - ok đi
+      - oke cho tôi
+      - yes nhé
 
   - intent: deny
     examples: |
-      - no
-      - nope
-      - not really
       - không
-      - không phải
-      - thôi
+      - không đồng ý
       - hủy
-      - cancel
+      - thôi
+      - no
+      - không phải
+      - bỏ qua
+      - đừng làm vậy
+      - không cần
+      - stop
+      - không giúp mình
+      - không đồng ý nha
+      - hủy ngay
+      - thôi với
+      - no đi
+      - không phải cho tôi
+      - bỏ qua nhé
+      - đừng làm vậy liền
+      - không cần giúp mình
+      - stop nha
+      - không ngay
+      - không đồng ý với
+      - hủy đi
+      - thôi cho tôi
+      - no nhé
 
   - intent: ask_howcanhelp
     examples: |
+      - bạn giúp được gì
+      - bạn làm được gì
+      - mình cần hướng dẫn
+      - hỗ trợ mình với
+      - tôi có thể nhờ gì
+      - show me what you can do
       - how can you help
-      - what can you do
       - help me
-      - I need help
-      - bạn có thể giúp gì
-      - giúp tôi
-      - cần trợ giúp
+      - liệt kê chức năng của bạn
+      - bạn hỗ trợ tác vụ nào
+      - bạn giúp được gì giúp mình
+      - bạn làm được gì nha
+      - mình cần hướng dẫn ngay
+      - hỗ trợ mình với với
+      - tôi có thể nhờ gì đi
+      - show me what you can do cho tôi
+      - how can you help nhé
+      - help me liền
+      - liệt kê chức năng của bạn giúp mình
+      - bạn hỗ trợ tác vụ nào nha
+      - bạn giúp được gì ngay
+      - bạn làm được gì với
+      - mình cần hướng dẫn đi
+      - hỗ trợ mình với cho tôi
+      - tôi có thể nhờ gì nhé
+      - show me what you can do liền
+      - how can you help giúp mình
+      - help me nha
+      - liệt kê chức năng của bạn ngay
+      - bạn hỗ trợ tác vụ nào với
 
   - intent: list_overdue_tasks
     examples: |
-      - What tasks are overdue?
-      - Show overdue tasks
-      - Do I have any overdue tasks?
-      - List overdue tasks
-      - Which tasks are late?
       - task nào quá hạn
-      - nhiệm vụ quá hạn
-      - việc nào trễ
-      - có task nào đang trễ hạn không
+      - liệt kê task quá hạn
+      - xem công việc quá hạn
+      - có task nào trễ hạn không
+      - cho tôi danh sách quá hạn
+      - show overdue tasks
+      - overdue tasks list
+      - nhiệm vụ nào đã trễ
+      - xem việc đã quá deadline
+      - task trễ hạn hôm nay
+      - task nào quá hạn giúp mình
+      - liệt kê task quá hạn nha
+      - xem công việc quá hạn ngay
+      - có task nào trễ hạn không với
+      - cho tôi danh sách quá hạn đi
+      - show overdue tasks cho tôi
+      - overdue tasks list nhé
+      - nhiệm vụ nào đã trễ liền
+      - xem việc đã quá deadline giúp mình
+      - task trễ hạn hôm nay nha
+      - task nào quá hạn ngay
+      - liệt kê task quá hạn với
+      - xem công việc quá hạn đi
+      - có task nào trễ hạn không cho tôi
+      - cho tôi danh sách quá hạn nhé
+
   - intent: list_tasks_by_date
     examples: |
       - xem task hôm nay
-      - cho mình xem task hôm nay
-      - liệt kê task ngày mai
-      - xem việc ngày mai
-      - task ngày kia
-      - xem task hôm qua
-      - cho mình task hôm kia
-      - xem task ngày 30/4
-      - task 30/4
-      - task 30-4
-      - xem task ngày 30 tháng 4
-      - việc nào đến hạn vào 30/4
-      - task đến hạn ngày mai
+      - xem task ngày mai
+      - liệt kê task thứ hai
+      - xem việc ngày kia
+      - task ngày 30/4
+      - công việc đến hạn ngày mai
+      - show tasks for tomorrow
+      - tasks due today
+      - xem task tuần sau
+      - liệt kê task theo ngày
+      - xem task hôm nay giúp mình
+      - xem task ngày mai nha
+      - liệt kê task thứ hai ngay
+      - xem việc ngày kia với
+      - task ngày 30/4 đi
+      - công việc đến hạn ngày mai cho tôi
+      - show tasks for tomorrow nhé
+      - tasks due today liền
+      - xem task tuần sau giúp mình
+      - liệt kê task theo ngày nha
+      - xem task hôm nay ngay
+      - xem task ngày mai với
+      - liệt kê task thứ hai đi
+      - xem việc ngày kia cho tôi
+      - task ngày 30/4 nhé
+
   - intent: summarize_week
     examples: |
-      - Summarize my week
-      - How did my week go?
-      - Weekly summary
-      - Give me a summary of my week
-      - What did I accomplish this week?
-      - tóm tắt tuần
-      - tuần này thế nào
+      - tóm tắt tuần này
       - báo cáo tuần
-      - tổng kết tuần cho mình
+      - cho mình tổng kết tuần
+      - tuần này mình làm được gì
+      - đánh giá hiệu suất tuần
+      - weekly summary
+      - summarize my week
+      - show week progress
+      - kết quả làm việc tuần này
+      - xem thống kê tuần
+      - tóm tắt tuần này giúp mình
+      - báo cáo tuần nha
+      - cho mình tổng kết tuần ngay
+      - tuần này mình làm được gì với
+      - đánh giá hiệu suất tuần đi
+      - weekly summary cho tôi
+      - summarize my week nhé
+      - show week progress liền
+      - kết quả làm việc tuần này giúp mình
+      - xem thống kê tuần nha
+      - tóm tắt tuần này ngay
+      - báo cáo tuần với
+      - cho mình tổng kết tuần đi
+      - tuần này mình làm được gì cho tôi
+      - đánh giá hiệu suất tuần nhé
 
   - intent: help_prioritize
     examples: |
-      - Help me prioritize tasks
-      - What should I do first?
-      - Prioritize my tasks
-      - Which tasks are most important?
-      - What's urgent?
-      - việc nào quan trọng
-      - ưu tiên gì trước
-      - làm gì trước
-      - task nào nên làm trước
+      - ưu tiên việc nào trước
+      - task nào quan trọng nhất
+      - mình nên làm gì trước
+      - gợi ý thứ tự công việc
+      - việc nào cấp bách
+      - prioritize my tasks
+      - what is most important
+      - sắp xếp ưu tiên giúp mình
+      - chọn task cần làm ngay
+      - đâu là việc nên xử lý trước
+      - ưu tiên việc nào trước giúp mình
+      - task nào quan trọng nhất nha
+      - mình nên làm gì trước ngay
+      - gợi ý thứ tự công việc với
+      - việc nào cấp bách đi
+      - prioritize my tasks cho tôi
+      - what is most important nhé
+      - sắp xếp ưu tiên giúp mình liền
+      - chọn task cần làm ngay giúp mình
+      - đâu là việc nên xử lý trước nha
+      - ưu tiên việc nào trước ngay
+      - task nào quan trọng nhất với
+      - mình nên làm gì trước đi
+      - gợi ý thứ tự công việc cho tôi
+      - việc nào cấp bách nhé
 
   - intent: create_task
     examples: |
-      - Create a task [finish report](task_title) for [tomorrow](due_date)
-      - Add [buy groceries](task_title) with [high](priority) priority
-      - New task [call mom](task_title)
-      - Create [meeting prep](task_title) due [next Monday](due_date)
-      - I want to add a task [submit proposal](task_title) [urgent](priority)
-      - Add a [low](priority) priority task [clean room](task_title)
-      - Create task [review code](task_title) for [today](due_date)
-      - New [high](priority) priority task [fix bug](task_title)
-      - [Write documentation](task_title) task with [medium](priority) priority
-      - Schedule [team standup](task_title) for [next week](due_date)
-      - Create task [send email](task_title) by [3pm](due_time)
-      - Add [meeting](task_title) at [14:00](due_time)
-      - Create [presentation](task_title) due [tomorrow](due_date) at [10am](due_time)
-      - Add task [call client](task_title) [high](priority) by [5pm](due_time)
-      - New task [write tests](task_title) for [today](due_date) [urgent](priority)
-      - thêm nhiệm vụ [học thuộc sql interview](task_title) trước [16h](due_time)
-      - tạo task [hoàn thành báo cáo](task_title) hạn [ngày mai](due_date)
-      - thêm task [gọi điện cho khách](task_title) lúc [10h sáng](due_time)
-      - tạo nhiệm vụ [review code](task_title) [khẩn cấp](priority)
-      - thêm [dọn phòng](task_title) với độ ưu tiên [thấp](priority)
-      - nhiệm vụ mới [nộp đề xuất](task_title) trước [18h30](due_time) [hôm nay](due_date)
-      - tạo task [họp team](task_title) vào [thứ hai tuần sau](due_date) lúc [9h](due_time)
-      - thêm việc [mua đồ](task_title) [quan trọng](priority) hạn [chiều nay](due_date)
-      - tạo task [viết tài liệu](task_title) [bình thường](priority)
-      - thêm nhiệm vụ [fix bug](task_title) trước [15h](due_time) [cao](priority)
-      - task mới [chuẩn bị slide](task_title) cho [ngày kia](due_date)
-      - tạo [gửi email](task_title) hạn [tối nay](due_date)
-      - thêm task [kiểm tra code](task_title) [gấp](priority) lúc [14h](due_time)
-      - nhiệm vụ [họp khách hàng](task_title) [quan trọng](priority) [ngày mai](due_date) [9h30](due_time)
-      - tạo task [làm bài tập](task_title) trước [20h](due_time)
-      - tạo task
-      - thêm nhiệm vụ
-      - tạo nhiệm vụ mới
-      - thêm task mới
-      - create task
-      - new task
-      - add task
-      - I want to create a task
-      - tôi muốn tạo task
-      - tạo việc mới
-      - thêm công việc
-      - Create a new task
-      - Add a new task
-      - I want to add a task
-      - tạo task [ngày mai](due_date) [ưu tiên cao](priority)
-      - thêm task deadline [ngày mai](due_date) [khẩn cấp](priority)
-      - create task for [tomorrow](due_date) [high](priority)
-
-  - intent: inform_task_fields
-    examples: |
-      - [viết báo cáo](task_title)
-      - [học SQL](task_title)
-      - [review PR gấp](task_title)
-      - [gửi khách hàng](task_title)
-      - [viết báo cáo](task_title) [ngày mai](due_date)
-      - [viết báo cáo](task_title) [ngày mai](due_date) [10h](due_time)
-      - [viết báo cáo](task_title) [ưu tiên cao](priority)
-      - [viết báo cáo](task_title) [ngày mai](due_date) [ưu tiên cao](priority)
-      - [write report](task_title)
-      - [write report](task_title) [tomorrow](due_date)
-      - [write report](task_title) [tomorrow](due_date) [10am](due_time)
-      - [write report](task_title) [high](priority)
-      - [ngày mai](due_date)
-      - [hôm nay](due_date)
-      - [chiều nay](due_date)
-      - [tối nay](due_date)
-      - [10h sáng](due_time)
-      - [16h](due_time)
-      - [9h30](due_time)
-      - [3pm](due_time)
-      - [14:00](due_time)
-      - [cao](priority)
-      - [ưu tiên cao](priority)
-      - [thấp](priority)
-      - [bình thường](priority)
-      - deadline [ngày mai](due_date)
-      - hạn [ngày mai](due_date)
-      - lúc [10h](due_time)
-      - before [5pm](due_time)
-      - set [high](priority) priority
-      - đặt [ưu tiên cao](priority)
-      - title là [viết báo cáo](task_title)
-      - task là [viết báo cáo](task_title)
-      - công việc là [viết báo cáo](task_title)
+      - tạo task [viết báo cáo](task_title)
+      - tạo task [viết báo cáo](task_title) [ngày mai](due_date)
+      - tạo task [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [viết báo cáo](task_title) ưu tiên [cao](priority)
+      - tạo task [viết báo cáo](task_title) hạn [16h](due_time)
+      - tạo task [học sql](task_title)
+      - tạo task [học sql](task_title) [ngày mai](due_date)
+      - tạo task [học sql](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [học sql](task_title) ưu tiên [cao](priority)
+      - tạo task [học sql](task_title) hạn [16h](due_time)
+      - tạo task [review code](task_title)
+      - tạo task [review code](task_title) [ngày mai](due_date)
+      - tạo task [review code](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [review code](task_title) ưu tiên [cao](priority)
+      - tạo task [review code](task_title) hạn [16h](due_time)
+      - tạo task [gọi khách hàng](task_title)
+      - tạo task [gọi khách hàng](task_title) [ngày mai](due_date)
+      - tạo task [gọi khách hàng](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [gọi khách hàng](task_title) ưu tiên [cao](priority)
+      - tạo task [gọi khách hàng](task_title) hạn [16h](due_time)
+      - tạo task [chuẩn bị slide](task_title)
+      - tạo task [chuẩn bị slide](task_title) [ngày mai](due_date)
+      - tạo task [chuẩn bị slide](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [chuẩn bị slide](task_title) ưu tiên [cao](priority)
+      - tạo task [chuẩn bị slide](task_title) hạn [16h](due_time)
+      - tạo task [làm bài tập](task_title)
+      - tạo task [làm bài tập](task_title) [ngày mai](due_date)
+      - tạo task [làm bài tập](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [làm bài tập](task_title) ưu tiên [cao](priority)
+      - tạo task [làm bài tập](task_title) hạn [16h](due_time)
+      - tạo task [đọc tài liệu](task_title)
+      - tạo task [đọc tài liệu](task_title) [ngày mai](due_date)
+      - tạo task [đọc tài liệu](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [đọc tài liệu](task_title) ưu tiên [cao](priority)
+      - tạo task [đọc tài liệu](task_title) hạn [16h](due_time)
+      - tạo task [chốt proposal](task_title)
+      - tạo task [chốt proposal](task_title) [ngày mai](due_date)
+      - tạo task [chốt proposal](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [chốt proposal](task_title) ưu tiên [cao](priority)
+      - tạo task [chốt proposal](task_title) hạn [16h](due_time)
+      - tạo task [họp team](task_title)
+      - tạo task [họp team](task_title) [ngày mai](due_date)
+      - tạo task [họp team](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [họp team](task_title) ưu tiên [cao](priority)
+      - tạo task [họp team](task_title) hạn [16h](due_time)
+      - tạo task [gửi email](task_title)
+      - tạo task [gửi email](task_title) [ngày mai](due_date)
+      - tạo task [gửi email](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [gửi email](task_title) ưu tiên [cao](priority)
+      - tạo task [gửi email](task_title) hạn [16h](due_time)
+      - thêm task [viết báo cáo](task_title)
+      - thêm task [viết báo cáo](task_title) [ngày mai](due_date)
+      - thêm task [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm task [viết báo cáo](task_title) ưu tiên [cao](priority)
+      - thêm task [viết báo cáo](task_title) hạn [16h](due_time)
+      - thêm task [học sql](task_title)
+      - thêm task [học sql](task_title) [ngày mai](due_date)
+      - thêm task [học sql](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm task [học sql](task_title) ưu tiên [cao](priority)
+      - thêm task [học sql](task_title) hạn [16h](due_time)
+      - thêm task [review code](task_title)
+      - thêm task [review code](task_title) [ngày mai](due_date)
+      - thêm task [review code](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm task [review code](task_title) ưu tiên [cao](priority)
+      - thêm task [review code](task_title) hạn [16h](due_time)
 
   - intent: delete_task
     examples: |
-      - delete task [write report](task_title)
-      - remove [buy groceries](task_title)
-      - xoá task [học React](task_title)
-      - xóa task [học React](task_title)
-      - delete my task [gọi điện cho khách](task_title)
-      - remove the first task
-      - xoá nhiệm vụ
-      - xóa nhiệm vụ
-      - delete this task
-      - please delete it
-      - clean up that task
-      - xóa task [học bài](task_title)
-      - xoá task [học bài](task_title)
-      - xóa [học bài](task_title)
-      - xoá [học bài](task_title)
-      - xóa task tên [học bài](task_title)
-      - xoá task tên [học bài](task_title)
-      - xóa công việc [học bài](task_title)
-      - xóa task [học bài SQL](task_title)
-      - xóa task [học toán](task_title)
-      - xóa giúp mình task [học bài](task_title)
-      - xóa task có tên [học bài](task_title)
-      - delete task [hoc bai](task_title)
-      - xoa task [hoc bai](task_title)
-      - remove task [hoc bai](task_title)
+      - xóa task [viết báo cáo](task_title)
+      - xóa task có tên [viết báo cáo](task_title)
+      - xóa task [học sql](task_title)
+      - xóa task có tên [học sql](task_title)
+      - xóa task [review code](task_title)
+      - xóa task có tên [review code](task_title)
+      - xóa task [gọi khách hàng](task_title)
+      - xóa task có tên [gọi khách hàng](task_title)
+      - xóa task [chuẩn bị slide](task_title)
+      - xóa task có tên [chuẩn bị slide](task_title)
+      - xóa task [làm bài tập](task_title)
+      - xóa task có tên [làm bài tập](task_title)
+      - xóa task [họp team](task_title)
+      - xóa task có tên [họp team](task_title)
+      - xóa task [gửi email](task_title)
+      - xóa task có tên [gửi email](task_title)
+      - xóa task [fix bug](task_title)
+      - xóa task có tên [fix bug](task_title)
+      - xóa task [mua đồ](task_title)
+      - xóa task có tên [mua đồ](task_title)
+      - xoá task [viết báo cáo](task_title)
+      - xoá task có tên [viết báo cáo](task_title)
+      - xoá task [học sql](task_title)
+      - xoá task có tên [học sql](task_title)
+      - xoá task [review code](task_title)
+      - xoá task có tên [review code](task_title)
+      - xoá task [gọi khách hàng](task_title)
+      - xoá task có tên [gọi khách hàng](task_title)
+      - xoá task [chuẩn bị slide](task_title)
+      - xoá task có tên [chuẩn bị slide](task_title)
+      - xoá task [làm bài tập](task_title)
+      - xoá task có tên [làm bài tập](task_title)
+      - xoá task [họp team](task_title)
+      - xoá task có tên [họp team](task_title)
+      - xoá task [gửi email](task_title)
+      - xoá task có tên [gửi email](task_title)
+      - xoá task [fix bug](task_title)
+      - xoá task có tên [fix bug](task_title)
+      - xoá task [mua đồ](task_title)
+      - xoá task có tên [mua đồ](task_title)
+      - xóa nhiệm vụ [viết báo cáo](task_title)
+      - xóa nhiệm vụ có tên [viết báo cáo](task_title)
+      - xóa nhiệm vụ [học sql](task_title)
+      - xóa nhiệm vụ có tên [học sql](task_title)
+      - xóa nhiệm vụ [review code](task_title)
+      - xóa nhiệm vụ có tên [review code](task_title)
+      - xóa nhiệm vụ [gọi khách hàng](task_title)
+      - xóa nhiệm vụ có tên [gọi khách hàng](task_title)
+      - xóa nhiệm vụ [chuẩn bị slide](task_title)
+      - xóa nhiệm vụ có tên [chuẩn bị slide](task_title)
+      - xóa nhiệm vụ [làm bài tập](task_title)
+      - xóa nhiệm vụ có tên [làm bài tập](task_title)
+      - xóa nhiệm vụ [họp team](task_title)
+      - xóa nhiệm vụ có tên [họp team](task_title)
+      - xóa nhiệm vụ [gửi email](task_title)
+      - xóa nhiệm vụ có tên [gửi email](task_title)
+      - xóa nhiệm vụ [fix bug](task_title)
+      - xóa nhiệm vụ có tên [fix bug](task_title)
+      - xóa nhiệm vụ [mua đồ](task_title)
+      - xóa nhiệm vụ có tên [mua đồ](task_title)
+      - xoá nhiệm vụ [viết báo cáo](task_title)
+      - xoá nhiệm vụ có tên [viết báo cáo](task_title)
+      - xoá nhiệm vụ [học sql](task_title)
+      - xoá nhiệm vụ có tên [học sql](task_title)
+      - xoá nhiệm vụ [review code](task_title)
 
   - intent: confirm_delete_selection
     examples: |
       - xác nhận xóa các task đã chọn
-      - confirm delete selected tasks
-      - delete selected tasks
       - ok xóa các task đã chọn
+      - đồng ý xóa danh sách vừa chọn
+      - confirm delete selected tasks
+      - xóa hết những task đã chọn
+      - tiếp tục xóa các mục đã chọn
+      - chắc chắn xóa các task này
+      - xóa các task đã đánh dấu
+      - yes delete selected tasks
+      - tiến hành xóa lựa chọn
+      - xác nhận xóa các task đã chọn giúp mình
+      - ok xóa các task đã chọn nha
+      - đồng ý xóa danh sách vừa chọn ngay
+      - confirm delete selected tasks với
+      - xóa hết những task đã chọn đi
+      - tiếp tục xóa các mục đã chọn cho tôi
+      - chắc chắn xóa các task này nhé
+      - xóa các task đã đánh dấu liền
+      - yes delete selected tasks giúp mình
+      - tiến hành xóa lựa chọn nha
+      - xác nhận xóa các task đã chọn ngay
+      - ok xóa các task đã chọn với
+      - đồng ý xóa danh sách vừa chọn đi
+      - confirm delete selected tasks cho tôi
+      - xóa hết những task đã chọn nhé
+      - tiếp tục xóa các mục đã chọn liền
+      - chắc chắn xóa các task này giúp mình
+      - xóa các task đã đánh dấu nha
+      - yes delete selected tasks ngay
+      - tiến hành xóa lựa chọn với
 
   - intent: undo_delete_task
     examples: |
-      - undo xóa task
       - hoàn tác xóa task
+      - undo xóa task
       - khôi phục task vừa xóa
+      - lấy lại task vừa xóa
       - undo delete task
+      - phục hồi task mới xóa
+      - trả lại task đã xóa
+      - rollback thao tác xóa task
+      - hủy xóa task
+      - restore deleted task
+      - hoàn tác xóa task giúp mình
+      - undo xóa task nha
+      - khôi phục task vừa xóa ngay
+      - lấy lại task vừa xóa với
+      - undo delete task đi
+      - phục hồi task mới xóa cho tôi
+      - trả lại task đã xóa nhé
+      - rollback thao tác xóa task liền
+      - hủy xóa task giúp mình
+      - restore deleted task nha
+      - hoàn tác xóa task ngay
+      - undo xóa task với
+      - khôi phục task vừa xóa đi
+      - lấy lại task vừa xóa cho tôi
+      - undo delete task nhé
+      - phục hồi task mới xóa liền
+      - trả lại task đã xóa giúp mình
+      - rollback thao tác xóa task nha
+      - hủy xóa task ngay
+      - restore deleted task với
 
   - intent: create_note
     examples: |
-      - create a note [project ideas](note_title)
-      - add note [shopping list](note_title) content [milk, eggs, bread](note_text)
-      - new note about [team retro](note_title)
-      - ghi chép [học rasa](note_title)
-      - tạo note [ý tưởng mới](note_title) [ghi nhanh vài ý tưởng](note_text)
-      - note [meeting notes](note_title) content [decision: ship v1](note_text)
-      - please write a note to remind me to call mom
-      - create quick note [fix bug list](note_title)
+      - tạo note [ý tưởng sprint](note_title)
+      - thêm ghi chú [shopping list](note_title)
+      - tạo note [họp tuần](note_title) nội dung [chốt deadline](note_text)
+      - ghi chú [học rasa](note_title)
+      - tạo ghi chú nhanh [fix bug list](note_title)
+      - create note [project ideas](note_title)
+      - add note [meeting notes](note_title)
+      - new note [retro](note_title)
+      - tạo note [kế hoạch tuần](note_title)
+      - thêm note [đọc sách](note_title)
+      - tạo note [ý tưởng sprint](note_title) giúp mình
+      - thêm ghi chú [shopping list](note_title) nha
+      - tạo note [họp tuần](note_title) nội dung [chốt deadline](note_text) ngay
+      - ghi chú [học rasa](note_title) với
+      - tạo ghi chú nhanh [fix bug list](note_title) đi
+      - create note [project ideas](note_title) cho tôi
+      - add note [meeting notes](note_title) nhé
+      - new note [retro](note_title) liền
+      - tạo note [kế hoạch tuần](note_title) giúp mình
+      - thêm note [đọc sách](note_title) nha
+      - tạo note [ý tưởng sprint](note_title) ngay
+      - thêm ghi chú [shopping list](note_title) với
+      - tạo note [họp tuần](note_title) nội dung [chốt deadline](note_text) đi
+      - ghi chú [học rasa](note_title) cho tôi
+      - tạo ghi chú nhanh [fix bug list](note_title) nhé
+      - create note [project ideas](note_title) liền
+      - add note [meeting notes](note_title) giúp mình
+      - new note [retro](note_title) nha
+      - tạo note [kế hoạch tuần](note_title) ngay
+      - thêm note [đọc sách](note_title) với
 
   - intent: list_notes
     examples: |
-      - show my notes
-      - list notes
-      - what notes do I have
       - xem danh sách note
-      - liệt kê ghi chép
-      - recent notes please
+      - liệt kê ghi chú
+      - cho tôi xem note
+      - xem note gần đây
+      - xem note đã ghim
+      - list notes
+      - show my notes
       - show pinned notes
-      - notes gần đây
+      - mở danh sách ghi chú
+      - hiển thị toàn bộ note
+      - xem danh sách note giúp mình
+      - liệt kê ghi chú nha
+      - cho tôi xem note ngay
+      - xem note gần đây với
+      - xem note đã ghim đi
+      - list notes cho tôi
+      - show my notes nhé
+      - show pinned notes liền
+      - mở danh sách ghi chú giúp mình
+      - hiển thị toàn bộ note nha
+      - xem danh sách note ngay
+      - liệt kê ghi chú với
+      - cho tôi xem note đi
+      - xem note gần đây cho tôi
+      - xem note đã ghim nhé
+      - list notes liền
+      - show my notes giúp mình
+      - show pinned notes nha
+      - mở danh sách ghi chú ngay
+      - hiển thị toàn bộ note với
 
   - intent: search_notes
     examples: |
-      - find notes about [meeting](note_keyword)
+      - tìm note về [kế hoạch](note_keyword)
+      - tìm ghi chú chứa [bug](note_keyword)
       - search notes for [idea](note_keyword)
-      - any note containing [retro](note_keyword)?
-      - tìm ghi chép về [kế hoạch](note_keyword)
-      - kiêm note có chữ [bug](note_keyword)
+      - find notes about [meeting](note_keyword)
+      - có note nào chứa [retro](note_keyword)
+      - lọc note theo [shopping](note_keyword)
+      - tìm note [rasa](note_keyword)
+      - tìm giúp mình ghi chú [deadline](note_keyword)
+      - search note keyword [project](note_keyword)
+      - kiểm tra note có [sql](note_keyword)
+      - tìm note về [kế hoạch](note_keyword) giúp mình
+      - tìm ghi chú chứa [bug](note_keyword) nha
+      - search notes for [idea](note_keyword) ngay
+      - find notes about [meeting](note_keyword) với
+      - có note nào chứa [retro](note_keyword) đi
+      - lọc note theo [shopping](note_keyword) cho tôi
+      - tìm note [rasa](note_keyword) nhé
+      - tìm giúp mình ghi chú [deadline](note_keyword) liền
+      - search note keyword [project](note_keyword) giúp mình
+      - kiểm tra note có [sql](note_keyword) nha
+      - tìm note về [kế hoạch](note_keyword) ngay
+      - tìm ghi chú chứa [bug](note_keyword) với
+      - search notes for [idea](note_keyword) đi
+      - find notes about [meeting](note_keyword) cho tôi
+      - có note nào chứa [retro](note_keyword) nhé
+      - lọc note theo [shopping](note_keyword) liền
+      - tìm note [rasa](note_keyword) giúp mình
+      - tìm giúp mình ghi chú [deadline](note_keyword) nha
+      - search note keyword [project](note_keyword) ngay
+      - kiểm tra note có [sql](note_keyword) với
 
   - intent: pin_note
     examples: |
-      - pin this note
-      - unpin the last note
+      - ghim note này
+      - bỏ ghim note này
       - ghim note vừa tạo
-      - bỏ ghim note đó
-      - hủy ghim ghi chép [shopping list](note_title)
-      - unpin note [retro notes](note_title)
+      - hủy ghim note đó
+      - pin this note
+      - unpin this note
+      - pin note [shopping list](note_title)
+      - unpin note [retro](note_title)
+      - ghim ghi chú [họp tuần](note_title)
+      - bỏ ghim ghi chú [ý tưởng sprint](note_title)
+      - ghim note này giúp mình
+      - bỏ ghim note này nha
+      - ghim note vừa tạo ngay
+      - hủy ghim note đó với
+      - pin this note đi
+      - unpin this note cho tôi
+      - pin note [shopping list](note_title) nhé
+      - unpin note [retro](note_title) liền
+      - ghim ghi chú [họp tuần](note_title) giúp mình
+      - bỏ ghim ghi chú [ý tưởng sprint](note_title) nha
+      - ghim note này ngay
+      - bỏ ghim note này với
+      - ghim note vừa tạo đi
+      - hủy ghim note đó cho tôi
+      - pin this note nhé
+      - unpin this note liền
+      - pin note [shopping list](note_title) giúp mình
+      - unpin note [retro](note_title) nha
+      - ghim ghi chú [họp tuần](note_title) ngay
+      - bỏ ghim ghi chú [ý tưởng sprint](note_title) với
+
+  - intent: update_note
+    examples: |
+      - sửa note [họp tuần](note_keyword)
+      - cập nhật note [meeting](note_keyword) thành [meeting v2](note_title)
+      - thay đổi note [idea](note_keyword) nội dung [triển khai giai đoạn 2](note_text)
+      - update note [retro](note_keyword)
+      - edit note [project ideas](note_keyword)
+      - sửa ghi chú [shopping list](note_keyword)
+      - cập nhật ghi chú [kế hoạch](note_keyword)
+      - update note title [họp team](note_title)
+      - thay nội dung note [bug list](note_keyword) thành [fix payment bug](note_text)
+      - sửa note [rasa](note_keyword)
+      - sửa note [họp tuần](note_keyword) giúp mình
+      - cập nhật note [meeting](note_keyword) thành [meeting v2](note_title) nha
+      - thay đổi note [idea](note_keyword) nội dung [triển khai giai đoạn 2](note_text) ngay
+      - update note [retro](note_keyword) với
+      - edit note [project ideas](note_keyword) đi
+      - sửa ghi chú [shopping list](note_keyword) cho tôi
+      - cập nhật ghi chú [kế hoạch](note_keyword) nhé
+      - update note title [họp team](note_title) liền
+      - thay nội dung note [bug list](note_keyword) thành [fix payment bug](note_text) giúp mình
+      - sửa note [rasa](note_keyword) nha
+      - sửa note [họp tuần](note_keyword) ngay
+      - cập nhật note [meeting](note_keyword) thành [meeting v2](note_title) với
+      - thay đổi note [idea](note_keyword) nội dung [triển khai giai đoạn 2](note_text) đi
+      - update note [retro](note_keyword) cho tôi
+      - edit note [project ideas](note_keyword) nhé
+      - sửa ghi chú [shopping list](note_keyword) liền
+      - cập nhật ghi chú [kế hoạch](note_keyword) giúp mình
+      - update note title [họp team](note_title) nha
+      - thay nội dung note [bug list](note_keyword) thành [fix payment bug](note_text) ngay
+      - sửa note [rasa](note_keyword) với
+
+  - intent: delete_note
+    examples: |
+      - xóa note [shopping](note_keyword)
+      - xoá note [họp tuần](note_keyword)
+      - xóa ghi chú [nháp](note_keyword)
+      - delete note [meeting notes](note_keyword)
+      - remove note [idea](note_keyword)
+      - xóa note tên [bug list](note_keyword)
+      - xóa giúp mình note [kế hoạch](note_keyword)
+      - delete this note [retro](note_keyword)
+      - remove note [project ideas](note_keyword)
+      - xoá ghi chú [rasa](note_keyword)
+      - xóa note [shopping](note_keyword) giúp mình
+      - xoá note [họp tuần](note_keyword) nha
+      - xóa ghi chú [nháp](note_keyword) ngay
+      - delete note [meeting notes](note_keyword) với
+      - remove note [idea](note_keyword) đi
+      - xóa note tên [bug list](note_keyword) cho tôi
+      - xóa giúp mình note [kế hoạch](note_keyword) nhé
+      - delete this note [retro](note_keyword) liền
+      - remove note [project ideas](note_keyword) giúp mình
+      - xoá ghi chú [rasa](note_keyword) nha
+      - xóa note [shopping](note_keyword) ngay
+      - xoá note [họp tuần](note_keyword) với
+      - xóa ghi chú [nháp](note_keyword) đi
+      - delete note [meeting notes](note_keyword) cho tôi
+      - remove note [idea](note_keyword) nhé
+      - xóa note tên [bug list](note_keyword) liền
+      - xóa giúp mình note [kế hoạch](note_keyword) giúp mình
+      - delete this note [retro](note_keyword) nha
+      - remove note [project ideas](note_keyword) ngay
+      - xoá ghi chú [rasa](note_keyword) với
+
+  - intent: nlu_fallback
+    examples: |
+      - asdf
+      - qwerty
+      - zxczxc
+      - aaaabbbb
+      - 123123
+      - ???
+      - ....
+      - ơ ơ ơ
+      - blabla
+      - xóa
+      - undo
+      - ngày mai
+      - task
+      - điều gì đó
+      - hmmmmm
+      - kkkk
+      - random text
+      - không liên quan
+      - gibberish input
+      - lorem ipsum
 
   - synonym: high
     examples: |
@@ -332,9 +738,3 @@ nlu:
       - chiều nay
       - tối nay
       - sáng mai
-
-  - intent: nlu_fallback
-    examples: |
-      - asdf
-      - qwerty
-

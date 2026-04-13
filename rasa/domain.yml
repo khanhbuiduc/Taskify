@@ -12,11 +12,12 @@ intents:
   - summarize_week
   - help_prioritize
   - create_task
-  - inform_task_fields
   - create_note
   - list_notes
   - search_notes
   - pin_note
+  - update_note
+  - delete_note
   - delete_task
   - confirm_delete_selection
   - undo_delete_task
@@ -187,6 +188,8 @@ actions:
   - action_list_notes
   - action_search_notes
   - action_toggle_pin_note
+  - action_update_note
+  - action_delete_note
   - action_handle_confirmation
 
 forms:

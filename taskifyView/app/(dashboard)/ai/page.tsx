@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 
 import { useChatSessionStore } from "@/lib/chat-session-store";
 import { useTaskStore } from "@/lib/task-store";
+import { useNoteStore } from "@/lib/note-store";
 import { useTaskActions } from "@/hooks/use-task-actions";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
@@ -29,13 +30,14 @@ import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
 import { TaskDetailDialog } from "@/components/task/task-detail-dialog";
 import { TaskModal } from "@/components/task/task-modal";
 import { DeleteDialog } from "@/components/task/delete-dialog";
+import { NoteEditorDialog } from "@/components/notes/note-editor-dialog";
 
 import { ChatSidebar } from "@/components/javis/chat-sidebar";
 import { ChatMessageList } from "@/components/javis/chat-message-list";
 import { ChatInputBar } from "@/components/javis/chat-input-bar";
 import { useResolvedTasks } from "@/components/javis/use-resolved-tasks";
 import { parseAssistantPayload } from "@/components/javis/chat-utils";
-import type { ChatMessageRole } from "@/lib/types";
+import type { ChatMessageRole, Note } from "@/lib/types";
 
 const READ_REPLIES_STORAGE_KEY = "taskify.ai.read-replies-aloud";
 
@@ -62,6 +64,24 @@ export default function AILayoutPage() {
   const [collapsed, setCollapsed] = useState(false);
   const lastSessionIdRef = useRef<string | null>(null);
   const toastedMessageIdsRef = useRef<Set<string>>(new Set());
+
+  // ── Note store & actions ────────────────────────────────────────────────
+  const { notes, createNote, updateNote, deleteNote, togglePin } = useNoteStore();
+  const [noteDialogOpen, setNoteDialogOpen] = useState(false);
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+  
+  const handleNoteSave = async (payload: { title: string; content?: string; isPinned?: boolean }) => {
+    try {
+      if (editingNote) {
+        await updateNote(editingNote.id, payload);
+      } else {
+        await createNote(payload);
+      }
+      setNoteDialogOpen(false);
+    } catch {
+      toast.error("Failed to save note");
+    }
+  };
 
   // ── Speech ───────────────────────────────────────────────────────────────
   const {
@@ -316,6 +336,23 @@ export default function AILayoutPage() {
               await updateTaskStatus(task.id, next);
             }}
             onConfirmDeleteSelection={handleDeleteSelectionConfirm}
+            onNoteCardEdit={(note) => {
+              setEditingNote(note);
+              setNoteDialogOpen(true);
+            }}
+            onNoteCardDelete={(note) => {
+              void handleSend("xác nhận xóa các note đã chọn", {
+                action: "confirm_delete_note",
+                noteIds: [note.id]
+              });
+            }}
+            onNoteCardTogglePin={async (note) => {
+              try {
+                await togglePin(note.id);
+              } catch {
+                toast.error("Failed to pin note");
+              }
+            }}
           />
 
           {/* Input area */}
@@ -360,6 +397,12 @@ export default function AILayoutPage() {
           onOpenChange={setDeleteDialogOpen}
           onConfirm={handleConfirmDelete}
           taskTitle={taskToDelete?.title || ""}
+        />
+        <NoteEditorDialog
+          open={noteDialogOpen}
+          onOpenChange={setNoteDialogOpen}
+          onSave={handleNoteSave}
+          note={editingNote ?? undefined}
         />
       </div>
     </div>

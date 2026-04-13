@@ -109,7 +109,10 @@ class ActionListNotes(Action):
                 snippet = f" - {snippet}..." if snippet else ""
                 lines.append(f"{i}. {pin}{title}{snippet}")
 
-            dispatcher.utter_message(text="Các note gần đây:\n" + "\n".join(lines))
+            dispatcher.utter_message(
+                text="Các note gần đây:\n" + "\n".join(lines),
+                json_message={"type": "note_picker", "notes": notes}
+            )
         except Exception as exc:
             logger.exception("Error listing notes for user %s: %s", user_id, exc)
             dispatcher.utter_message(text="Có lỗi khi lấy note.")
@@ -162,7 +165,10 @@ class ActionSearchNotes(Action):
                 snippet = f" - {snippet}..." if snippet else ""
                 lines.append(f"{i}. {pin}{title}{snippet}")
 
-            dispatcher.utter_message(text="Kết quả tìm kiếm:\n" + "\n".join(lines))
+            dispatcher.utter_message(
+                text="Kết quả tìm kiếm:\n" + "\n".join(lines),
+                json_message={"type": "note_picker", "notes": notes}
+            )
         except Exception as exc:
             logger.exception("Error searching notes for user %s: %s", user_id, exc)
             dispatcher.utter_message(text="Có lỗi khi tìm kiếm note.")
@@ -227,5 +233,118 @@ class ActionTogglePinNote(Action):
         except Exception as exc:
             logger.exception("Error pinning note for user %s: %s", user_id, exc)
             dispatcher.utter_message(text="Có lỗi khi ghim note.")
+
+        return []
+
+# ---------------------------------------------------------------------------
+# ActionUpdateNote
+# ---------------------------------------------------------------------------
+
+
+class ActionUpdateNote(Action):
+    """Update a note by ID or keyword."""
+
+    def name(self) -> Text:
+        return "action_update_note"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, _ = split_sender(tracker.sender_id)
+        keyword = tracker.get_slot("note_keyword") or tracker.get_slot("note_title") or ""
+        new_title = tracker.get_slot("note_title")
+        new_text = tracker.get_slot("note_text")
+
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=3&search={keyword.strip()}"
+            response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code != 200 or not response.json():
+                dispatcher.utter_message(text="Không tìm thấy note để cập nhật.")
+                return []
+
+            target = response.json()[0]
+            note_id = target.get("id")
+
+            payload = {}
+            if new_title: payload["title"] = new_title
+            if new_text: payload["content"] = new_text
+
+            if not payload:
+                dispatcher.utter_message(text="Bạn muốn cập nhật nội dung gì cho note này?")
+                return []
+
+            patch_url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}/{note_id}"
+            response = requests.put(patch_url, json=payload, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code in [200, 201]:
+                dispatcher.utter_message(text=f"Đã cập nhật note thành công.")
+            else:
+                dispatcher.utter_message(text="Không thể cập nhật note lúc này.")
+        except Exception as exc:
+            logger.exception("Error updating note for user %s: %s", user_id, exc)
+            dispatcher.utter_message(text="Có lỗi khi cập nhật note.")
+
+        return []
+
+# ---------------------------------------------------------------------------
+# ActionDeleteNote
+# ---------------------------------------------------------------------------
+
+
+class ActionDeleteNote(Action):
+    """Delete a note."""
+
+    def name(self) -> Text:
+        return "action_delete_note"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, _ = split_sender(tracker.sender_id)
+        
+        # Check metadata from frontend delete intent first
+        metadata = tracker.latest_message.get("metadata") or {}
+        action_name = str(metadata.get("action") or "").strip().lower()
+
+        if action_name == "confirm_delete_note":
+            note_ids = metadata.get("noteIds") or []
+            if note_ids:
+                try:
+                    for nid in note_ids:
+                        delete_url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}/{nid}"
+                        requests.delete(delete_url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+                    dispatcher.utter_message(text=f"Đã xoá {len(note_ids)} note thành công.")
+                    return []
+                except Exception as exc:
+                    logger.exception("Error deleting note via UI for user %s: %s", user_id, exc)
+                    dispatcher.utter_message(text="Có lỗi khi xóa note.")
+                    return []
+
+        keyword = tracker.get_slot("note_keyword") or tracker.get_slot("note_title") or tracker.latest_message.get("text", "")
+
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=3&search={keyword.strip()}"
+            response = requests.get(url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code != 200 or not response.json():
+                dispatcher.utter_message(text="Không tìm thấy note để xoá.")
+                return []
+
+            target = response.json()[0]
+            note_id = target.get("id")
+
+            delete_url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}/{note_id}"
+            response = requests.delete(delete_url, headers=get_api_headers(), timeout=REQUEST_TIMEOUT)
+            if response.status_code in [200, 204]:
+                dispatcher.utter_message(text=f"Đã xoá note thành công.")
+            else:
+                dispatcher.utter_message(text="Không thể xoá note lúc này.")
+        except Exception as exc:
+            logger.exception("Error deleting note for user %s: %s", user_id, exc)
+            dispatcher.utter_message(text="Có lỗi khi xoá note.")
 
         return []

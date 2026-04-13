@@ -123,6 +123,43 @@ namespace TaskifyAPI.Controllers
 
             return Ok(MapToDto(note));
         }
+        [HttpPut("{userId}/{noteId:int}")]
+        public async Task<ActionResult<InternalNoteDto>> Update(string userId, int noteId, [FromBody] InternalCreateNoteDto dto)
+        {
+            if (!ValidateApiKey())
+                return Unauthorized(new { message = "Invalid API key" });
+
+            var note = await _unitOfWork.Notes.GetByIdAsync(noteId);
+            if (note == null || note.UserId != userId)
+                return NotFound();
+
+            if (dto.Title != null) note.Title = dto.Title;
+            if (dto.Content != null) note.Content = dto.Content;
+            if (dto.IsPinned.HasValue) note.IsPinned = dto.IsPinned.Value;
+            
+            note.UpdatedAt = DateTime.UtcNow;
+
+            _unitOfWork.Notes.Update(note);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok(MapToDto(note));
+        }
+
+        [HttpDelete("{userId}/{noteId:int}")]
+        public async Task<IActionResult> Delete(string userId, int noteId)
+        {
+            if (!ValidateApiKey())
+                return Unauthorized(new { message = "Invalid API key" });
+
+            var note = await _unitOfWork.Notes.GetByIdAsync(noteId);
+            if (note == null || note.UserId != userId)
+                return NotFound();
+
+            _unitOfWork.Notes.Remove(note);
+            await _unitOfWork.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 
     #region DTOs

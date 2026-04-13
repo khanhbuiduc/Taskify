@@ -1,4 +1,4 @@
-# Stories for Taskify assistant
+﻿# Stories for Taskify assistant
 version: "3.1"
 
 stories:
@@ -42,13 +42,13 @@ stories:
   steps:
   - intent: create_task
     entities:
-      - due_date: "ngày mai"
+      - due_date: "ngÃ y mai"
       - priority: "high"
   - action: create_task_form
   - active_loop: create_task_form
-  - intent: inform_task_fields
+  - intent: create_task
     entities:
-      - task_title: "viết báo cáo"
+      - task_title: "viáº¿t bÃ¡o cÃ¡o"
   - action: create_task_form
   - active_loop: null
   - action: action_create_task
