@@ -31,14 +31,67 @@ namespace TaskifyAPI.Controllers
         /// </summary>
         /// <returns>List of tasks</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskItemResponseDto>>> GetAll()
+        public async Task<ActionResult> GetAll([FromQuery] TaskQueryParamsDto query)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var isAdmin = User.IsInRole("Admin");
 
-            // Admin sees all tasks, User sees only their own
-            var tasks = await _unitOfWork.Tasks.GetAllOrderedByDueDateAsync(isAdmin ? null : userId);
-            var response = tasks.Select(MapToResponseDto);
+            if (query.DueFrom.HasValue && query.DueTo.HasValue && query.DueFrom.Value > query.DueTo.Value)
+            {
+                return BadRequest(new { message = "dueFrom must be less than or equal to dueTo." });
+            }
+
+            if (!TryParseStatusFilter(query.Status, out var statusFilter))
+            {
+                return BadRequest(new { message = "Invalid status filter. Allowed values: todo, in-progress, completed." });
+            }
+
+            if (!TryParsePriorityFilter(query.Priority, out var priorityFilter))
+            {
+                return BadRequest(new { message = "Invalid priority filter. Allowed values: low, medium, high." });
+            }
+
+            var ownerUserId = isAdmin ? null : userId;
+            var search = string.IsNullOrWhiteSpace(query.Search) ? null : query.Search.Trim();
+
+            if (!query.Paged)
+            {
+                var tasks = await _unitOfWork.Tasks.GetFilteredOrderedByDueDateAsync(
+                    ownerUserId,
+                    search,
+                    statusFilter,
+                    priorityFilter,
+                    query.LabelId,
+                    query.DueFrom,
+                    query.DueTo);
+
+                return Ok(tasks.Select(MapToResponseDto));
+            }
+
+            var page = Math.Max(1, query.Page);
+            var pageSize = query.PageSize <= 0 || query.PageSize > 100 ? 20 : query.PageSize;
+
+            var (items, totalCount) = await _unitOfWork.Tasks.GetFilteredPagedOrderedByDueDateAsync(
+                ownerUserId,
+                search,
+                statusFilter,
+                priorityFilter,
+                query.LabelId,
+                query.DueFrom,
+                query.DueTo,
+                page,
+                pageSize);
+
+            var totalPages = totalCount == 0 ? 0 : (int)Math.Ceiling((double)totalCount / pageSize);
+            var response = new PagedResultDto<TaskItemResponseDto>
+            {
+                Items = items.Select(MapToResponseDto).ToList(),
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                TotalPages = totalPages
+            };
+
             return Ok(response);
         }
 
@@ -403,6 +456,46 @@ namespace TaskifyAPI.Controllers
                 TaskItemStatus.Completed => "completed",
                 _ => "todo"
             };
+        }
+
+        private static bool TryParseStatusFilter(string? status, out TaskItemStatus? value)
+        {
+            value = null;
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                return true;
+            }
+
+            var normalized = status.Trim().ToLowerInvariant();
+            value = normalized switch
+            {
+                "todo" => TaskItemStatus.Todo,
+                "in-progress" => TaskItemStatus.InProgress,
+                "completed" => TaskItemStatus.Completed,
+                _ => null
+            };
+
+            return value.HasValue;
+        }
+
+        private static bool TryParsePriorityFilter(string? priority, out TaskPriority? value)
+        {
+            value = null;
+            if (string.IsNullOrWhiteSpace(priority))
+            {
+                return true;
+            }
+
+            var normalized = priority.Trim().ToLowerInvariant();
+            value = normalized switch
+            {
+                "low" => TaskPriority.Low,
+                "medium" => TaskPriority.Medium,
+                "high" => TaskPriority.High,
+                _ => null
+            };
+
+            return value.HasValue;
         }
 
         #endregion

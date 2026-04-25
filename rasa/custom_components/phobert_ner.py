@@ -4,11 +4,12 @@ from typing import Any, Dict, List, Optional, Text
 import torch
 from transformers import AutoModelForTokenClassification, AutoTokenizer
 
+from rasa.engine.graph import GraphComponent
 from rasa.engine.graph import ExecutionContext
 from rasa.engine.recipes.default_recipe import DefaultV1Recipe
 from rasa.engine.storage.resource import Resource
 from rasa.engine.storage.storage import ModelStorage
-from rasa.nlu.extractors.extractor import EntityExtractor
+from rasa.nlu.extractors.extractor import EntityExtractorMixin
 from rasa.shared.nlu.training_data.message import Message
 from rasa.shared.nlu.training_data.training_data import TrainingData
 
@@ -23,7 +24,7 @@ _MODEL_DIR = os.path.abspath(_MODEL_DIR)
 @DefaultV1Recipe.register(
     [DefaultV1Recipe.ComponentType.ENTITY_EXTRACTOR], is_trainable=False
 )
-class PhobertEntityExtractor(EntityExtractor):
+class PhobertEntityExtractor(EntityExtractorMixin, GraphComponent):
     """Custom Entity Extractor dùng PhoBERT đã fine-tune cho NER."""
 
     def __init__(self, config: Dict[Text, Any]) -> None:

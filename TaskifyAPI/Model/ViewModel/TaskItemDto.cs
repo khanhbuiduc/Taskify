@@ -79,6 +79,19 @@ namespace TaskifyAPI.Model.ViewModel
         public string? DueTime { get; set; }
     }
 
+    public class TaskQueryParamsDto
+    {
+        public bool Paged { get; set; } = false;
+        public string? Search { get; set; }
+        public string? Status { get; set; }
+        public string? Priority { get; set; }
+        public int? LabelId { get; set; }
+        public DateTime? DueFrom { get; set; }
+        public DateTime? DueTo { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 20;
+    }
+
     /// <summary>
     /// Response DTO matching frontend Task interface
     /// </summary>

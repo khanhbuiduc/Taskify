@@ -1,0 +1,228 @@
+# NLU training data for Taskify assistant (Vietnamese-first)
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - xin chào
+      - chào bạn
+      - hello
+      - hi
+      - alo
+      - chào buổi sáng
+      - chào buổi tối
+      - mình cần hỗ trợ
+      - chào trợ lý
+      - xin chào giúp mình
+      - chào bạn nha
+      - hello ngay
+      - hi với
+      - alo đi
+      - chào buổi sáng cho tôi
+      - chào buổi tối nhé
+      - mình cần hỗ trợ liền
+      - chào trợ lý giúp mình
+      - xin chào nha
+      - chào bạn ngay
+      - hello với
+      - hi đi
+      - alo cho tôi
+      - chào buổi sáng nhé
+      - chào buổi tối liền
+
+  - intent: goodbye
+    examples: |
+      - tạm biệt
+      - chào tạm biệt
+      - bye
+      - goodbye
+      - hẹn gặp lại
+      - mình thoát nhé
+      - kết thúc ở đây
+      - cảm ơn nhé tạm biệt
+      - mình đi đây
+      - see you
+      - tạm biệt giúp mình
+      - chào tạm biệt nha
+      - bye ngay
+      - goodbye với
+      - hẹn gặp lại đi
+      - mình thoát nhé cho tôi
+      - kết thúc ở đây nhé
+      - cảm ơn nhé tạm biệt liền
+      - mình đi đây giúp mình
+      - see you nha
+      - tạm biệt ngay
+      - chào tạm biệt với
+      - bye đi
+      - goodbye cho tôi
+      - hẹn gặp lại nhé
+
+  - intent: affirm
+    examples: |
+      - đúng rồi
+      - đồng ý
+      - ok
+      - oke
+      - yes
+      - chính xác
+      - xác nhận
+      - được
+      - chuẩn
+      - ừ đúng
+      - đúng rồi giúp mình
+      - đồng ý nha
+      - ok ngay
+      - oke với
+      - yes đi
+      - chính xác cho tôi
+      - xác nhận nhé
+      - được liền
+      - chuẩn giúp mình
+      - ừ đúng nha
+      - đúng rồi ngay
+      - đồng ý với
+      - ok đi
+      - oke cho tôi
+      - yes nhé
+
+  - intent: deny
+    examples: |
+      - không
+      - không đồng ý
+      - hủy
+      - thôi
+      - no
+      - không phải
+      - bỏ qua
+      - đừng làm vậy
+      - không cần
+      - stop
+      - không giúp mình
+      - không đồng ý nha
+      - hủy ngay
+      - thôi với
+      - no đi
+      - không phải cho tôi
+      - bỏ qua nhé
+      - đừng làm vậy liền
+      - không cần giúp mình
+      - stop nha
+      - không ngay
+      - không đồng ý với
+      - hủy đi
+      - thôi cho tôi
+      - no nhé
+
+  - intent: ask_howcanhelp
+    examples: |
+      - bạn giúp được gì
+      - bạn làm được gì
+      - mình cần hướng dẫn
+      - hỗ trợ mình với
+      - tôi có thể nhờ gì
+      - show me what you can do
+      - how can you help
+      - help me
+      - liệt kê chức năng của bạn
+      - bạn hỗ trợ tác vụ nào
+      - bạn giúp được gì giúp mình
+      - bạn làm được gì nha
+      - mình cần hướng dẫn ngay
+      - hỗ trợ mình với với
+      - tôi có thể nhờ gì đi
+      - show me what you can do cho tôi
+      - how can you help nhé
+      - help me liền
+      - liệt kê chức năng của bạn giúp mình
+      - bạn hỗ trợ tác vụ nào nha
+      - bạn giúp được gì ngay
+      - bạn làm được gì với
+      - mình cần hướng dẫn đi
+      - hỗ trợ mình với cho tôi
+      - tôi có thể nhờ gì nhé
+      - show me what you can do liền
+      - how can you help giúp mình
+      - help me nha
+      - liệt kê chức năng của bạn ngay
+      - bạn hỗ trợ tác vụ nào với
+
+  - intent: nlu_fallback
+    examples: |
+      - asdf
+      - qwerty
+      - zxczxc
+      - aaaabbbb
+      - 123123
+      - ???
+      - ....
+      - ơ ơ ơ
+      - blabla
+      - xóa
+      - undo
+      - ngày mai
+      - task
+      - điều gì đó
+      - hmmmmm
+      - kkkk
+      - random text
+      - không liên quan
+      - gibberish input
+      - lorem ipsum
+
+  - synonym: high
+    examples: |
+      - urgent
+      - critical
+      - important
+      - asap
+      - high priority
+      - khẩn cấp
+      - quan trọng
+      - gấp
+      - ưu tiên cao
+      - cao
+
+  - synonym: low
+    examples: |
+      - minor
+      - not urgent
+      - whenever
+      - low priority
+      - không gấp
+      - ưu tiên thấp
+      - khi nào cũng được
+      - thấp
+
+  - synonym: medium
+    examples: |
+      - normal
+      - regular
+      - standard
+      - medium priority
+      - bình thường
+      - trung bình
+
+  - regex: due_time
+    examples: |
+      - \d{1,2}h\d{0,2}
+      - \d{1,2}:\d{2}
+      - \d{1,2}(am|pm)
+      - \d{1,2} giờ
+      - \d{1,2}h sáng
+      - \d{1,2}h chiều
+
+  - regex: due_date
+    examples: |
+      - today
+      - tomorrow
+      - next monday
+      - next week
+      - hôm nay
+      - ngày mai
+      - ngày kia
+      - tuần sau
+      - tháng sau
+      - chiều nay
+      - tối nay
+      - sáng mai

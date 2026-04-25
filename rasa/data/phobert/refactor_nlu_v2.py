@@ -589,15 +589,18 @@ def quality_report(rows):
 
 
 def main():
-    intents = build_dataset()
-    nlu_text = render_nlu(intents)
-    NLU_PATH.write_text(nlu_text, encoding="utf-8")
+    from generate_nlu import main as generate_split_nlu
 
+    print(
+        "refactor_nlu_v2.py is deprecated. Generating split domain files via generate_nlu.py ..."
+    )
+    generate_split_nlu()
+
+    intents = build_dataset()
     rows = build_intent_train(intents)
     INTENT_TRAIN_PATH.write_text(
         json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-
     quality_report(rows)
 
 

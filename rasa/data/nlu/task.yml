@@ -1,0 +1,317 @@
+# NLU training data for Taskify assistant (Vietnamese-first)
+version: "3.1"
+
+nlu:
+  - intent: list_overdue_tasks
+    examples: |
+      - task nào quá hạn
+      - liệt kê task quá hạn
+      - xem công việc quá hạn
+      - có task nào trễ hạn không
+      - cho tôi danh sách quá hạn
+      - show overdue tasks
+      - overdue tasks list
+      - nhiệm vụ nào đã trễ
+      - xem việc đã quá deadline
+      - task trễ hạn hôm nay
+      - task nào quá hạn giúp mình
+      - liệt kê task quá hạn nha
+      - xem công việc quá hạn ngay
+      - có task nào trễ hạn không với
+      - cho tôi danh sách quá hạn đi
+      - show overdue tasks cho tôi
+      - overdue tasks list nhé
+      - nhiệm vụ nào đã trễ liền
+      - xem việc đã quá deadline giúp mình
+      - task trễ hạn hôm nay nha
+      - task nào quá hạn ngay
+      - liệt kê task quá hạn với
+      - xem công việc quá hạn đi
+      - có task nào trễ hạn không cho tôi
+      - cho tôi danh sách quá hạn nhé
+
+  - intent: list_tasks_by_date
+    examples: |
+      - xem task hôm nay
+      - xem task ngày mai
+      - liệt kê task thứ hai
+      - xem việc ngày kia
+      - task ngày 30/4
+      - công việc đến hạn ngày mai
+      - show tasks for tomorrow
+      - tasks due today
+      - xem task tuần sau
+      - liệt kê task theo ngày
+      - xem task hôm nay giúp mình
+      - xem task ngày mai nha
+      - liệt kê task thứ hai ngay
+      - xem việc ngày kia với
+      - task ngày 30/4 đi
+      - công việc đến hạn ngày mai cho tôi
+      - show tasks for tomorrow nhé
+      - tasks due today liền
+      - xem task tuần sau giúp mình
+      - liệt kê task theo ngày nha
+      - xem task hôm nay ngay
+      - xem task ngày mai với
+      - liệt kê task thứ hai đi
+      - xem việc ngày kia cho tôi
+      - task ngày 30/4 nhé
+
+  - intent: summarize_week
+    examples: |
+      - tóm tắt tuần này
+      - báo cáo tuần
+      - cho mình tổng kết tuần
+      - tuần này mình làm được gì
+      - đánh giá hiệu suất tuần
+      - weekly summary
+      - summarize my week
+      - show week progress
+      - kết quả làm việc tuần này
+      - xem thống kê tuần
+      - tóm tắt tuần này giúp mình
+      - báo cáo tuần nha
+      - cho mình tổng kết tuần ngay
+      - tuần này mình làm được gì với
+      - đánh giá hiệu suất tuần đi
+      - weekly summary cho tôi
+      - summarize my week nhé
+      - show week progress liền
+      - kết quả làm việc tuần này giúp mình
+      - xem thống kê tuần nha
+      - tóm tắt tuần này ngay
+      - báo cáo tuần với
+      - cho mình tổng kết tuần đi
+      - tuần này mình làm được gì cho tôi
+      - đánh giá hiệu suất tuần nhé
+
+  - intent: help_prioritize
+    examples: |
+      - ưu tiên việc nào trước
+      - task nào quan trọng nhất
+      - mình nên làm gì trước
+      - gợi ý thứ tự công việc
+      - việc nào cấp bách
+      - prioritize my tasks
+      - what is most important
+      - sắp xếp ưu tiên giúp mình
+      - chọn task cần làm ngay
+      - đâu là việc nên xử lý trước
+      - ưu tiên việc nào trước giúp mình
+      - task nào quan trọng nhất nha
+      - mình nên làm gì trước ngay
+      - gợi ý thứ tự công việc với
+      - việc nào cấp bách đi
+      - prioritize my tasks cho tôi
+      - what is most important nhé
+      - sắp xếp ưu tiên giúp mình liền
+      - chọn task cần làm ngay giúp mình
+      - đâu là việc nên xử lý trước nha
+      - ưu tiên việc nào trước ngay
+      - task nào quan trọng nhất với
+      - mình nên làm gì trước đi
+      - gợi ý thứ tự công việc cho tôi
+      - việc nào cấp bách nhé
+
+  - intent: create_task
+    examples: |
+      - tạo task [viết báo cáo](task_title)
+      - tạo task [viết báo cáo](task_title) [ngày mai](due_date)
+      - tạo task [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [viết báo cáo](task_title) ưu tiên [cao](priority)
+      - tạo task [viết báo cáo](task_title) hạn [16h](due_time)
+      - tạo task [học sql](task_title)
+      - tạo task [học sql](task_title) [ngày mai](due_date)
+      - tạo task [học sql](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [học sql](task_title) ưu tiên [cao](priority)
+      - tạo task [học sql](task_title) hạn [16h](due_time)
+      - tạo task [review code](task_title)
+      - tạo task [review code](task_title) [ngày mai](due_date)
+      - tạo task [review code](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [review code](task_title) ưu tiên [cao](priority)
+      - tạo task [review code](task_title) hạn [16h](due_time)
+      - tạo task [gọi khách hàng](task_title)
+      - tạo task [gọi khách hàng](task_title) [ngày mai](due_date)
+      - tạo task [gọi khách hàng](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [gọi khách hàng](task_title) ưu tiên [cao](priority)
+      - tạo task [gọi khách hàng](task_title) hạn [16h](due_time)
+      - tạo task [chuẩn bị slide](task_title)
+      - tạo task [chuẩn bị slide](task_title) [ngày mai](due_date)
+      - tạo task [chuẩn bị slide](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [chuẩn bị slide](task_title) ưu tiên [cao](priority)
+      - tạo task [chuẩn bị slide](task_title) hạn [16h](due_time)
+      - tạo task [làm bài tập](task_title)
+      - tạo task [làm bài tập](task_title) [ngày mai](due_date)
+      - tạo task [làm bài tập](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [làm bài tập](task_title) ưu tiên [cao](priority)
+      - tạo task [làm bài tập](task_title) hạn [16h](due_time)
+      - tạo task [đọc tài liệu](task_title)
+      - tạo task [đọc tài liệu](task_title) [ngày mai](due_date)
+      - tạo task [đọc tài liệu](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [đọc tài liệu](task_title) ưu tiên [cao](priority)
+      - tạo task [đọc tài liệu](task_title) hạn [16h](due_time)
+      - tạo task [chốt proposal](task_title)
+      - tạo task [chốt proposal](task_title) [ngày mai](due_date)
+      - tạo task [chốt proposal](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [chốt proposal](task_title) ưu tiên [cao](priority)
+      - tạo task [chốt proposal](task_title) hạn [16h](due_time)
+      - tạo task [họp team](task_title)
+      - tạo task [họp team](task_title) [ngày mai](due_date)
+      - tạo task [họp team](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [họp team](task_title) ưu tiên [cao](priority)
+      - tạo task [họp team](task_title) hạn [16h](due_time)
+      - tạo task [gửi email](task_title)
+      - tạo task [gửi email](task_title) [ngày mai](due_date)
+      - tạo task [gửi email](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo task [gửi email](task_title) ưu tiên [cao](priority)
+      - tạo task [gửi email](task_title) hạn [16h](due_time)
+      - thêm task [viết báo cáo](task_title)
+      - thêm task [viết báo cáo](task_title) [ngày mai](due_date)
+      - thêm task [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm task [viết báo cáo](task_title) ưu tiên [cao](priority)
+      - thêm task [viết báo cáo](task_title) hạn [16h](due_time)
+      - thêm task [học sql](task_title)
+      - thêm task [học sql](task_title) [ngày mai](due_date)
+      - thêm task [học sql](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm task [học sql](task_title) ưu tiên [cao](priority)
+      - thêm task [học sql](task_title) hạn [16h](due_time)
+      - thêm task [review code](task_title)
+      - thêm task [review code](task_title) [ngày mai](due_date)
+      - thêm task [review code](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm task [review code](task_title) ưu tiên [cao](priority)
+      - thêm task [review code](task_title) hạn [16h](due_time)
+
+  - intent: delete_task
+    examples: |
+      - xóa task [viết báo cáo](task_title)
+      - xóa task có tên [viết báo cáo](task_title)
+      - xóa task [học sql](task_title)
+      - xóa task có tên [học sql](task_title)
+      - xóa task [review code](task_title)
+      - xóa task có tên [review code](task_title)
+      - xóa task [gọi khách hàng](task_title)
+      - xóa task có tên [gọi khách hàng](task_title)
+      - xóa task [chuẩn bị slide](task_title)
+      - xóa task có tên [chuẩn bị slide](task_title)
+      - xóa task [làm bài tập](task_title)
+      - xóa task có tên [làm bài tập](task_title)
+      - xóa task [họp team](task_title)
+      - xóa task có tên [họp team](task_title)
+      - xóa task [gửi email](task_title)
+      - xóa task có tên [gửi email](task_title)
+      - xóa task [fix bug](task_title)
+      - xóa task có tên [fix bug](task_title)
+      - xóa task [mua đồ](task_title)
+      - xóa task có tên [mua đồ](task_title)
+      - xoá task [viết báo cáo](task_title)
+      - xoá task có tên [viết báo cáo](task_title)
+      - xoá task [học sql](task_title)
+      - xoá task có tên [học sql](task_title)
+      - xoá task [review code](task_title)
+      - xoá task có tên [review code](task_title)
+      - xoá task [gọi khách hàng](task_title)
+      - xoá task có tên [gọi khách hàng](task_title)
+      - xoá task [chuẩn bị slide](task_title)
+      - xoá task có tên [chuẩn bị slide](task_title)
+      - xoá task [làm bài tập](task_title)
+      - xoá task có tên [làm bài tập](task_title)
+      - xoá task [họp team](task_title)
+      - xoá task có tên [họp team](task_title)
+      - xoá task [gửi email](task_title)
+      - xoá task có tên [gửi email](task_title)
+      - xoá task [fix bug](task_title)
+      - xoá task có tên [fix bug](task_title)
+      - xoá task [mua đồ](task_title)
+      - xoá task có tên [mua đồ](task_title)
+      - xóa nhiệm vụ [viết báo cáo](task_title)
+      - xóa nhiệm vụ có tên [viết báo cáo](task_title)
+      - xóa nhiệm vụ [học sql](task_title)
+      - xóa nhiệm vụ có tên [học sql](task_title)
+      - xóa nhiệm vụ [review code](task_title)
+      - xóa nhiệm vụ có tên [review code](task_title)
+      - xóa nhiệm vụ [gọi khách hàng](task_title)
+      - xóa nhiệm vụ có tên [gọi khách hàng](task_title)
+      - xóa nhiệm vụ [chuẩn bị slide](task_title)
+      - xóa nhiệm vụ có tên [chuẩn bị slide](task_title)
+      - xóa nhiệm vụ [làm bài tập](task_title)
+      - xóa nhiệm vụ có tên [làm bài tập](task_title)
+      - xóa nhiệm vụ [họp team](task_title)
+      - xóa nhiệm vụ có tên [họp team](task_title)
+      - xóa nhiệm vụ [gửi email](task_title)
+      - xóa nhiệm vụ có tên [gửi email](task_title)
+      - xóa nhiệm vụ [fix bug](task_title)
+      - xóa nhiệm vụ có tên [fix bug](task_title)
+      - xóa nhiệm vụ [mua đồ](task_title)
+      - xóa nhiệm vụ có tên [mua đồ](task_title)
+      - xoá nhiệm vụ [viết báo cáo](task_title)
+      - xoá nhiệm vụ có tên [viết báo cáo](task_title)
+      - xoá nhiệm vụ [học sql](task_title)
+      - xoá nhiệm vụ có tên [học sql](task_title)
+      - xoá nhiệm vụ [review code](task_title)
+
+  - intent: confirm_delete_selection
+    examples: |
+      - xác nhận xóa các task đã chọn
+      - ok xóa các task đã chọn
+      - đồng ý xóa danh sách vừa chọn
+      - confirm delete selected tasks
+      - xóa hết những task đã chọn
+      - tiếp tục xóa các mục đã chọn
+      - chắc chắn xóa các task này
+      - xóa các task đã đánh dấu
+      - yes delete selected tasks
+      - tiến hành xóa lựa chọn
+      - xác nhận xóa các task đã chọn giúp mình
+      - ok xóa các task đã chọn nha
+      - đồng ý xóa danh sách vừa chọn ngay
+      - confirm delete selected tasks với
+      - xóa hết những task đã chọn đi
+      - tiếp tục xóa các mục đã chọn cho tôi
+      - chắc chắn xóa các task này nhé
+      - xóa các task đã đánh dấu liền
+      - yes delete selected tasks giúp mình
+      - tiến hành xóa lựa chọn nha
+      - xác nhận xóa các task đã chọn ngay
+      - ok xóa các task đã chọn với
+      - đồng ý xóa danh sách vừa chọn đi
+      - confirm delete selected tasks cho tôi
+      - xóa hết những task đã chọn nhé
+      - tiếp tục xóa các mục đã chọn liền
+      - chắc chắn xóa các task này giúp mình
+      - xóa các task đã đánh dấu nha
+      - yes delete selected tasks ngay
+      - tiến hành xóa lựa chọn với
+
+  - intent: undo_delete_task
+    examples: |
+      - hoàn tác xóa task
+      - undo xóa task
+      - khôi phục task vừa xóa
+      - lấy lại task vừa xóa
+      - undo delete task
+      - phục hồi task mới xóa
+      - trả lại task đã xóa
+      - rollback thao tác xóa task
+      - hủy xóa task
+      - restore deleted task
+      - hoàn tác xóa task giúp mình
+      - undo xóa task nha
+      - khôi phục task vừa xóa ngay
+      - lấy lại task vừa xóa với
+      - undo delete task đi
+      - phục hồi task mới xóa cho tôi
+      - trả lại task đã xóa nhé
+      - rollback thao tác xóa task liền
+      - hủy xóa task giúp mình
+      - restore deleted task nha
+      - hoàn tác xóa task ngay
+      - undo xóa task với
+      - khôi phục task vừa xóa đi
+      - lấy lại task vừa xóa cho tôi
+      - undo delete task nhé
+      - phục hồi task mới xóa liền
+      - trả lại task đã xóa giúp mình
+      - rollback thao tác xóa task nha
+      - hủy xóa task ngay
+      - restore deleted task với

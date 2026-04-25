@@ -43,5 +43,33 @@ namespace TaskifyAPI.Repositories.IRepositories
         /// Get single task with labels loaded
         /// </summary>
         Task<TaskItem?> GetByIdWithLabelsAsync(int id);
+
+        /// <summary>
+        /// Get tasks with optional filters, ordered by due date.
+        /// Admin can pass null <paramref name="userId"/> to query all users.
+        /// </summary>
+        Task<IEnumerable<TaskItem>> GetFilteredOrderedByDueDateAsync(
+            string? userId,
+            string? search,
+            TaskItemStatus? status,
+            TaskPriority? priority,
+            int? labelId,
+            DateTime? dueFrom,
+            DateTime? dueTo);
+
+        /// <summary>
+        /// Get paged tasks with optional filters, ordered by due date.
+        /// Admin can pass null <paramref name="userId"/> to query all users.
+        /// </summary>
+        Task<(IEnumerable<TaskItem> Items, int TotalCount)> GetFilteredPagedOrderedByDueDateAsync(
+            string? userId,
+            string? search,
+            TaskItemStatus? status,
+            TaskPriority? priority,
+            int? labelId,
+            DateTime? dueFrom,
+            DateTime? dueTo,
+            int page,
+            int pageSize);
     }
 }

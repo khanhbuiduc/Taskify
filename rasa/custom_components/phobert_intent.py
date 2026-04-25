@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Text
 import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+from rasa.engine.graph import GraphComponent
 from rasa.engine.graph import ExecutionContext
 from rasa.engine.recipes.default_recipe import DefaultV1Recipe
 from rasa.engine.storage.resource import Resource
@@ -28,7 +29,7 @@ _MODEL_DIR = os.path.abspath(_MODEL_DIR)
 @DefaultV1Recipe.register(
     [DefaultV1Recipe.ComponentType.INTENT_CLASSIFIER], is_trainable=False
 )
-class PhobertIntentClassifier(IntentClassifier):
+class PhobertIntentClassifier(IntentClassifier, GraphComponent):
     """Custom Intent Classifier using fine-tuned PhoBERT."""
 
     def __init__(self, config: Dict[Text, Any]) -> None:
