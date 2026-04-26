@@ -28,10 +28,11 @@ class PhobertEntityExtractor(EntityExtractorMixin, GraphComponent):
     """Custom Entity Extractor dùng PhoBERT đã fine-tune cho NER."""
 
     def __init__(self, config: Dict[Text, Any]) -> None:
-        super().__init__(config)
+        # EntityExtractorMixin in this Rasa version has no __init__(config).
+        self._config = config
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-        print(f"[PhobertEntityExtractor] Đang load model từ: {_MODEL_DIR}")
+        print(f"[PhobertEntityExtractor] Loading model from: {_MODEL_DIR}")
         self.tokenizer = AutoTokenizer.from_pretrained(_MODEL_DIR)
         self.model = AutoModelForTokenClassification.from_pretrained(_MODEL_DIR)
         self.model.to(self.device)
@@ -41,7 +42,10 @@ class PhobertEntityExtractor(EntityExtractorMixin, GraphComponent):
         self.id2label: Dict[int, str] = {
             int(k): v for k, v in self.model.config.id2label.items()
         }
-        print(f"[PhobertEntityExtractor] Đã load xong. {len(self.id2label)} labels: {list(self.id2label.values())}")
+        print(
+            "[PhobertEntityExtractor] Loaded "
+            f"{len(self.id2label)} labels: {list(self.id2label.values())}"
+        )
 
     @classmethod
     def create(

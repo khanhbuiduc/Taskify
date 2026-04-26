@@ -33,7 +33,8 @@ class PhobertIntentClassifier(IntentClassifier, GraphComponent):
     """Custom Intent Classifier using fine-tuned PhoBERT."""
 
     def __init__(self, config: Dict[Text, Any]) -> None:
-        super().__init__(config)
+        # IntentClassifier in this Rasa version has no __init__(config).
+        self._config = config
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         print(f"[PhobertIntentClassifier] Loading model from: {_MODEL_DIR}")
