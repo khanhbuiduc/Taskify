@@ -12,7 +12,10 @@ Actions:
 """
 
 import logging
+import json
+import re
 from typing import Any, Dict, List, Optional, Text
+from datetime import datetime
 
 import requests
 from rasa_sdk import Action, Tracker
@@ -47,6 +50,103 @@ from actions.common.format_utils import (
 )
 
 logger = logging.getLogger(__name__)
+
+FILTER_PAGE_SIZE_DEFAULT = 5
+
+
+def _safe_json_loads(raw: Optional[str]) -> Dict[Text, Any]:
+    if not raw:
+        return {}
+    try:
+        parsed = json.loads(raw)
+        return parsed if isinstance(parsed, dict) else {}
+    except Exception:
+        return {}
+
+
+def _first_entity(latest_message: Dict[Text, Any], entity_name: Text) -> Optional[str]:
+    entities = latest_message.get("entities") or []
+    for entity in entities:
+        if entity.get("entity") == entity_name:
+            value = entity.get("value")
+            if value is not None:
+                return str(value).strip()
+    return None
+
+
+def _normalize_status_from_text(text: str) -> Optional[str]:
+    lowered = text.lower()
+    if any(phrase in lowered for phrase in ["todo", "to do", "chưa làm", "chua lam"]):
+        return "todo"
+    if any(phrase in lowered for phrase in ["in-progress", "in progress", "đang làm", "dang lam"]):
+        return "in-progress"
+    if any(phrase in lowered for phrase in ["completed", "done", "hoàn thành", "hoan thanh"]):
+        return "completed"
+    return None
+
+
+def _normalize_status_value(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    lowered = value.strip().lower()
+    if lowered in {"todo", "to do", "chưa làm", "chua lam"}:
+        return "todo"
+    if lowered in {"in-progress", "in progress", "đang làm", "dang lam"}:
+        return "in-progress"
+    if lowered in {"completed", "done", "hoàn thành", "hoan thanh"}:
+        return "completed"
+    return _normalize_status_from_text(lowered)
+
+
+def _normalize_priority_from_text(text: str) -> Optional[str]:
+    lowered = text.lower()
+    if any(phrase in lowered for phrase in ["high", "cao", "ưu tiên cao", "uu tien cao"]):
+        return "high"
+    if any(phrase in lowered for phrase in ["low", "thấp", "thap", "ưu tiên thấp", "uu tien thap"]):
+        return "low"
+    if any(phrase in lowered for phrase in ["medium", "trung bình", "trung binh"]):
+        return "medium"
+    return None
+
+
+def _normalize_priority_value(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    lowered = value.strip().lower()
+    if lowered in {"high", "cao", "ưu tiên cao", "uu tien cao"}:
+        return "high"
+    if lowered in {"medium", "trung bình", "trung binh"}:
+        return "medium"
+    if lowered in {"low", "thấp", "thap", "ưu tiên thấp", "uu tien thap"}:
+        return "low"
+    return _normalize_priority_from_text(lowered)
+
+
+def _extract_label_from_text(text: str) -> Optional[str]:
+    match = re.search(r"(?:label|nhãn|nhan)\s+([^\s,.;!?]+)", text, flags=re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    return None
+
+
+def _extract_search_from_text(text: str) -> Optional[str]:
+    match = re.search(
+        r"(?:chứa|chua|contains|search|tìm|tim)\s+['\"]?([^'\"\n]+?)['\"]?(?:$|,|;|\.)",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if match:
+        return match.group(1).strip()
+    return None
+
+
+def _parse_iso_datetime(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).isoformat()
+    except ValueError:
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -220,6 +320,242 @@ class ActionListTasks(Action):
             )
 
         return []
+
+
+# ---------------------------------------------------------------------------
+# ActionFilterTasks
+# ---------------------------------------------------------------------------
+
+
+class ActionFilterTasks(Action):
+    """Filter tasks with pagination via internal API and return typed payload."""
+
+    def name(self) -> Text:
+        return "action_filter_tasks"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict[Text, Any]]:
+        user_id, session_id = split_sender(tracker.sender_id)
+        locale = get_locale(tracker)
+        latest_message = tracker.latest_message or {}
+        metadata = latest_message.get("metadata") or {}
+        latest_text = str(latest_message.get("text") or "").strip()
+
+        state = _safe_json_loads(tracker.get_slot("filter_query_state"))
+        state.setdefault("page", 1)
+        state.setdefault("pageSize", int(tracker.get_slot("filter_page_size") or FILTER_PAGE_SIZE_DEFAULT))
+
+        action_name = str(metadata.get("action") or "").strip().lower()
+        is_paging_action = action_name == "task_filter_page"
+
+        if is_paging_action:
+            direction = str(metadata.get("direction") or "").strip().lower()
+            current_page = int(state.get("page") or 1)
+            if direction == "next":
+                state["page"] = current_page + 1
+            elif direction == "prev":
+                state["page"] = max(1, current_page - 1)
+        else:
+            # New filter request from text/intent.
+            state = self._build_filter_state_from_message(tracker, latest_message, latest_text, state)
+            state["page"] = 1
+            state["pageSize"] = int(state.get("pageSize") or FILTER_PAGE_SIZE_DEFAULT)
+
+        params = {
+            "paged": "true",
+            "page": int(state.get("page") or 1),
+            "pageSize": int(state.get("pageSize") or FILTER_PAGE_SIZE_DEFAULT),
+        }
+
+        for key in ("search", "status", "priority", "label", "dueFrom", "dueTo"):
+            value = state.get(key)
+            if value:
+                params[key] = value
+
+        try:
+            url = f"{TASKIFY_API_URL}/api/internal/tasks/{user_id}"
+            response = requests.get(
+                url,
+                params=params,
+                headers=get_api_headers(),
+                timeout=REQUEST_TIMEOUT,
+            )
+
+            if response.status_code == 200:
+                data = response.json() or {}
+                page = int(data.get("page") or params["page"])
+                page_size = int(data.get("pageSize") or params["pageSize"])
+                total_count = int(data.get("totalCount") or 0)
+                total_pages = int(data.get("totalPages") or 0)
+                has_next = bool(data.get("hasNext", False))
+                has_prev = bool(data.get("hasPrev", False))
+                tasks = data.get("tasks") or []
+
+                # Clamp page if stale paging request crossed boundary.
+                if total_pages > 0 and page > total_pages:
+                    page = total_pages
+                    state["page"] = total_pages
+                else:
+                    state["page"] = page
+
+                state["pageSize"] = page_size
+                payload = {
+                    "type": "task_list_page",
+                    "tasks": [self._map_task_payload(item) for item in tasks],
+                    "page": page,
+                    "pageSize": page_size,
+                    "totalCount": total_count,
+                    "totalPages": total_pages,
+                    "hasNext": has_next,
+                    "hasPrev": has_prev,
+                    "appliedFilters": {
+                        "search": state.get("search"),
+                        "status": state.get("status"),
+                        "priority": state.get("priority"),
+                        "label": state.get("label"),
+                        "dueFrom": state.get("dueFrom"),
+                        "dueTo": state.get("dueTo"),
+                    },
+                }
+
+                if total_count == 0:
+                    text = t(
+                        locale,
+                        "No tasks found for the selected filters.",
+                        "Không tìm thấy task nào với bộ lọc hiện tại.",
+                    )
+                else:
+                    text = t(
+                        locale,
+                        f"Filtered tasks: {total_count} total (page {page}/{max(total_pages, 1)}).",
+                        f"Kết quả lọc: {total_count} task (trang {page}/{max(total_pages, 1)}).",
+                    )
+
+                dispatcher.utter_message(text=text, json_message=payload)
+                return [
+                    SlotSet("filter_page", page),
+                    SlotSet("filter_page_size", page_size),
+                    SlotSet("filter_query_state", json.dumps(state, ensure_ascii=False)),
+                ]
+
+            if response.status_code == 401:
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "I couldn't access your tasks. Please make sure you're logged in.",
+                        "Mình không truy cập được task của bạn. Hãy kiểm tra lại đăng nhập.",
+                    )
+                )
+            elif response.status_code == 400:
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "The filter is invalid. Try status (todo/in-progress/completed), priority (low/medium/high), or a simpler query.",
+                        "Bộ lọc chưa hợp lệ. Bạn thử status (todo/in-progress/completed), priority (low/medium/high), hoặc câu đơn giản hơn nhé.",
+                    )
+                )
+            else:
+                logger.warning(
+                    "FilterTasks API returned status %s for user %s session %s",
+                    response.status_code,
+                    user_id,
+                    session_id,
+                )
+                dispatcher.utter_message(
+                    text=t(
+                        locale,
+                        "I couldn't filter tasks right now. Please try again later.",
+                        "Mình chưa lọc được task lúc này. Bạn thử lại sau nhé.",
+                    )
+                )
+
+        except requests.exceptions.Timeout:
+            logger.error("Timeout calling TaskifyAPI for filtered tasks user %s", user_id)
+            dispatcher.utter_message(
+                text=t(locale, "The request timed out. Please try again.", "Yêu cầu bị hết thời gian. Bạn thử lại nhé.")
+            )
+        except requests.exceptions.ConnectionError:
+            logger.error("Connection error calling TaskifyAPI for filtered tasks user %s", user_id)
+            dispatcher.utter_message(
+                text=t(
+                    locale,
+                    "I couldn't connect to the task service. Please make sure the server is running.",
+                    "Mình không kết nối được tới dịch vụ task. Hãy kiểm tra server đang chạy.",
+                )
+            )
+        except Exception as exc:
+            logger.exception("Error in action_filter_tasks for user %s: %s", user_id, exc)
+            dispatcher.utter_message(
+                text=t(locale, "Something went wrong. Please try again later.", "Có lỗi xảy ra. Bạn thử lại sau nhé.")
+            )
+
+        return []
+
+    def _map_task_payload(self, task: Dict[Text, Any]) -> Dict[Text, Any]:
+        return {
+            "id": str(task.get("id", "")),
+            "title": task.get("title", ""),
+            "description": task.get("description", ""),
+            "priority": task.get("priority", "medium"),
+            "status": task.get("status", "todo"),
+            "dueDate": task.get("dueDate"),
+            "createdAt": task.get("createdAt"),
+            "isOverdue": bool(task.get("isOverdue", False)),
+            "labels": [],
+        }
+
+    def _build_filter_state_from_message(
+        self,
+        tracker: Tracker,
+        latest_message: Dict[Text, Any],
+        latest_text: str,
+        previous_state: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        merged = {
+            "search": None,
+            "status": None,
+            "priority": None,
+            "label": None,
+            "dueFrom": None,
+            "dueTo": None,
+            "page": 1,
+            "pageSize": int(previous_state.get("pageSize") or FILTER_PAGE_SIZE_DEFAULT),
+        }
+
+        status_entity = _first_entity(latest_message, "task_status")
+        priority_entity = _first_entity(latest_message, "priority")
+        label_entity = _first_entity(latest_message, "task_label")
+        search_entity = _first_entity(latest_message, "search_query")
+        due_from_entity = _parse_iso_datetime(_first_entity(latest_message, "due_from"))
+        due_to_entity = _parse_iso_datetime(_first_entity(latest_message, "due_to"))
+
+        merged["status"] = _normalize_status_value(status_entity) or _normalize_status_from_text(latest_text)
+        merged["priority"] = _normalize_priority_value(priority_entity) or _normalize_priority_from_text(latest_text)
+        merged["label"] = label_entity or _extract_label_from_text(latest_text)
+        merged["search"] = search_entity or _extract_search_from_text(latest_text)
+        merged["dueFrom"] = due_from_entity
+        merged["dueTo"] = due_to_entity
+
+        if not merged["dueFrom"] and not merged["dueTo"]:
+            time_window = extract_duckling_time_window(latest_message)
+            if time_window:
+                window_start, window_end = time_window
+                merged["dueFrom"] = window_start.isoformat()
+                merged["dueTo"] = window_end.isoformat()
+
+        # If no new filter was extracted, keep previous state for better UX.
+        has_any_filter = any(
+            merged.get(key) for key in ("search", "status", "priority", "label", "dueFrom", "dueTo")
+        )
+        if not has_any_filter and previous_state:
+            for key in ("search", "status", "priority", "label", "dueFrom", "dueTo"):
+                merged[key] = previous_state.get(key)
+
+        return merged
 
 
 # ---------------------------------------------------------------------------

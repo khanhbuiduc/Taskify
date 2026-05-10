@@ -9,6 +9,7 @@ TASK_INTENT_ORDER: List[str] = [
     "list_tasks_by_date",
     "summarize_week",
     "help_prioritize",
+    "filter_tasks",
     "create_task",
     "delete_task",
     "confirm_delete_selection",
@@ -19,4 +20,3 @@ TASK_INTENT_ORDER: List[str] = [
 def get_task_intents() -> Dict[str, List[str]]:
     all_intents = build_dataset()
     return {intent: all_intents[intent] for intent in TASK_INTENT_ORDER}
-

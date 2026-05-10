@@ -56,12 +56,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--intent-output",
-        default="intent_train.json",
+        default="train/intent_train.json",
         help="Output path for intent JSON (relative to this script by default).",
     )
     parser.add_argument(
         "--ner-output",
-        default="ner_train.txt",
+        default="train/ner_train.txt",
         help="Output path for NER BIO text file (relative to this script by default).",
     )
     parser.add_argument(

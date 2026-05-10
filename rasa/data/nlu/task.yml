@@ -315,3 +315,26 @@ nlu:
       - rollback thao tác xóa task nha
       - hủy xóa task ngay
       - restore deleted task với
+
+  - intent: filter_tasks
+    examples: |
+      - lọc task [todo](task_status)
+      - lọc task [completed](task_status)
+      - filter tasks status [in-progress](task_status)
+      - cho mình task ưu tiên [high](priority)
+      - lọc task ưu tiên [low](priority)
+      - lọc task status [todo](task_status) ưu tiên [high](priority)
+      - filter tasks priority [medium](priority) and status [completed](task_status)
+      - lọc task nhãn [work](task_label)
+      - lọc task label [personal](task_label)
+      - lọc task chứa [báo cáo](search_query)
+      - filter tasks contains [meeting](search_query)
+      - tìm task [sql](search_query)
+      - lọc task từ [2026-04-26T00:00:00](due_from) đến [2026-04-30T23:59:59](due_to)
+      - filter tasks from [2026-05-01T00:00:00](due_from) to [2026-05-07T23:59:59](due_to)
+      - lọc task [todo](task_status) nhãn [work](task_label) chứa [report](search_query)
+      - cho mình danh sách task theo bộ lọc
+      - hiển thị task đã lọc
+      - filter my tasks
+      - lọc task ưu tiên [cao](priority)
+      - lọc task đang làm

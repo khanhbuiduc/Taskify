@@ -7,6 +7,7 @@ File này re-export tất cả action class để Rasa có thể discover.
 
 from actions.task.task_actions import (  # noqa: F401
     ActionListTasks,
+    ActionFilterTasks,
     ValidateCreateTaskForm,
     ActionCancelCreateTask,
     ActionCreateTask,

@@ -19,6 +19,7 @@ import {
   type ParsedTaskListItem,
   type TaskPickerPayload,
   type NotePickerPayload,
+  type TaskListPagePayload,
 } from "./chat-utils";
 
 export interface DisplayMessage {
@@ -44,6 +45,7 @@ interface ChatMessageItemProps {
   onTaskListItemClick: (task: Task) => void;
   onTaskListItemStatusToggle: (task: Task) => Promise<void>;
   onConfirmDeleteSelection: (taskIds: string[]) => void;
+  onTaskFilterPage: (direction: "next" | "prev") => void;
   onNoteCardEdit?: (note: Note) => void;
   onNoteCardDelete?: (note: Note) => void;
   onNoteCardTogglePin?: (note: Note) => void;
@@ -112,6 +114,62 @@ function TaskPickerPayloadView({
       >
         Xoa {selectedCount > 0 ? `${selectedCount} task` : ""}
       </Button>
+    </div>
+  );
+}
+
+function TaskListPagePayloadView({
+  payload,
+  onTaskClick,
+  onTaskStatusToggle,
+  onTaskFilterPage,
+  isSending,
+}: {
+  payload: TaskListPagePayload;
+  onTaskClick: (task: Task) => void;
+  onTaskStatusToggle: (task: Task) => Promise<void>;
+  onTaskFilterPage: (direction: "next" | "prev") => void;
+  isSending: boolean;
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="text-sm">
+        Trang {payload.page}/{Math.max(payload.totalPages || 1, 1)} • {payload.totalCount} task
+      </p>
+
+      <div className="space-y-1.5">
+        {payload.tasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            task={task}
+            variant="list"
+            className="border-border/70 bg-card/90 text-foreground"
+            onClick={() => onTaskClick(task)}
+            onStatusToggle={() => void onTaskStatusToggle(task)}
+          />
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between gap-2 pt-1">
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled={!payload.hasPrev || isSending}
+          onClick={() => onTaskFilterPage("prev")}
+        >
+          Prev
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant="outline"
+          disabled={!payload.hasNext || isSending}
+          onClick={() => onTaskFilterPage("next")}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }
@@ -225,6 +283,7 @@ export function ChatMessageItem({
   onTaskListItemClick,
   onTaskListItemStatusToggle,
   onConfirmDeleteSelection,
+  onTaskFilterPage,
   onNoteCardEdit,
   onNoteCardDelete,
   onNoteCardTogglePin,
@@ -315,6 +374,14 @@ export function ChatMessageItem({
         ) : assistantPayload?.type === "delete_result" ||
           assistantPayload?.type === "undo_result" ? (
           <></>
+        ) : assistantPayload?.type === "task_list_page" ? (
+          <TaskListPagePayloadView
+            payload={assistantPayload}
+            onTaskClick={onTaskListItemClick}
+            onTaskStatusToggle={onTaskListItemStatusToggle}
+            onTaskFilterPage={onTaskFilterPage}
+            isSending={isSending}
+          />
         ) : taskListBlock ? (
           <TaskListBlockView
             headerText={taskListBlock.headerText}

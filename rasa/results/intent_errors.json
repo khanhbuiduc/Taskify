@@ -1,0 +1,906 @@
+[
+  {
+    "text": "cập nhật ghi chú kế hoạch",
+    "intent": "update_note",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.5992544889450073
+    }
+  },
+  {
+    "text": "cập nhật ghi chú kế hoạch nhé",
+    "intent": "update_note",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.609088659286499
+    }
+  },
+  {
+    "text": "cập nhật ghi chú kế hoạch giúp mình",
+    "intent": "update_note",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.6724883913993835
+    }
+  },
+  {
+    "text": "xóa note shopping",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.9243199229240417
+    }
+  },
+  {
+    "text": "xóa ghi chú nháp",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "list_notes",
+      "confidence": 0.1881047785282135
+    }
+  },
+  {
+    "text": "xóa note tên bug list",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.8927422761917114
+    }
+  },
+  {
+    "text": "xóa giúp mình note kế hoạch",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.8770349025726318
+    }
+  },
+  {
+    "text": "xoá ghi chú rasa",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "delete_task",
+      "confidence": 0.9451115727424622
+    }
+  },
+  {
+    "text": "xóa note shopping giúp mình",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.9588649272918701
+    }
+  },
+  {
+    "text": "xóa ghi chú nháp ngay",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.4845561385154724
+    }
+  },
+  {
+    "text": "xóa note tên bug list cho tôi",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.9085559248924255
+    }
+  },
+  {
+    "text": "xóa giúp mình note kế hoạch nhé",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.9039668440818787
+    }
+  },
+  {
+    "text": "xoá ghi chú rasa nha",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "delete_task",
+      "confidence": 0.5045416951179504
+    }
+  },
+  {
+    "text": "xóa note shopping ngay",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.95467609167099
+    }
+  },
+  {
+    "text": "xóa ghi chú nháp đi",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "list_notes",
+      "confidence": 0.26900723576545715
+    }
+  },
+  {
+    "text": "xóa note tên bug list liền",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.9004276394844055
+    }
+  },
+  {
+    "text": "xóa giúp mình note kế hoạch giúp mình",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "create_note",
+      "confidence": 0.9229632616043091
+    }
+  },
+  {
+    "text": "xoá ghi chú rasa với",
+    "intent": "delete_note",
+    "intent_prediction": {
+      "name": "delete_task",
+      "confidence": 0.8608723878860474
+    }
+  },
+  {
+    "text": "chào tạm biệt",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.9132059216499329
+    }
+  },
+  {
+    "text": "cảm ơn nhé tạm biệt",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.46765488386154175
+    }
+  },
+  {
+    "text": "cảm ơn nhé tạm biệt liền",
+    "intent": "goodbye",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.4197160303592682
+    }
+  },
+  {
+    "text": "hủy",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.534274160861969
+    }
+  },
+  {
+    "text": "hủy ngay",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.7376390695571899
+    }
+  },
+  {
+    "text": "hủy đi",
+    "intent": "deny",
+    "intent_prediction": {
+      "name": "greet",
+      "confidence": 0.45386072993278503
+    }
+  },
+  {
+    "text": "asdf",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.006000209599733353
+    }
+  },
+  {
+    "text": "qwerty",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.004776868503540754
+    }
+  },
+  {
+    "text": "zxczxc",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.004421994090080261
+    }
+  },
+  {
+    "text": "aaaabbbb",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "summarize_week",
+      "confidence": 0.004159573931246996
+    }
+  },
+  {
+    "text": "123123",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.004798037465661764
+    }
+  },
+  {
+    "text": "???",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.4705348610877991
+    }
+  },
+  {
+    "text": "....",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.0068054101429879665
+    }
+  },
+  {
+    "text": "ơ ơ ơ",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.0042213499546051025
+    }
+  },
+  {
+    "text": "blabla",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.004733290523290634
+    }
+  },
+  {
+    "text": "xóa",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.010747188702225685
+    }
+  },
+  {
+    "text": "undo",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "summarize_week",
+      "confidence": 0.004917528014630079
+    }
+  },
+  {
+    "text": "ngày mai",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.06545881927013397
+    }
+  },
+  {
+    "text": "task",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.005685640498995781
+    }
+  },
+  {
+    "text": "điều gì đó",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.006187422201037407
+    }
+  },
+  {
+    "text": "hmmmmm",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "summarize_week",
+      "confidence": 0.0046667903661727905
+    }
+  },
+  {
+    "text": "kkkk",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "affirm",
+      "confidence": 0.004752177745103836
+    }
+  },
+  {
+    "text": "random text",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.0047752694226801395
+    }
+  },
+  {
+    "text": "không liên quan",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "deny",
+      "confidence": 0.902830958366394
+    }
+  },
+  {
+    "text": "gibberish input",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "summarize_week",
+      "confidence": 0.004009337164461613
+    }
+  },
+  {
+    "text": "lorem ipsum",
+    "intent": "nlu_fallback",
+    "intent_prediction": {
+      "name": "summarize_week",
+      "confidence": 0.004564962349832058
+    }
+  },
+  {
+    "text": "liệt kê task thứ hai",
+    "intent": "list_tasks_by_date",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.6597176194190979
+    }
+  },
+  {
+    "text": "liệt kê task theo ngày",
+    "intent": "list_tasks_by_date",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.7366569638252258
+    }
+  },
+  {
+    "text": "liệt kê task thứ hai ngay",
+    "intent": "list_tasks_by_date",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.556766927242279
+    }
+  },
+  {
+    "text": "liệt kê task theo ngày nha",
+    "intent": "list_tasks_by_date",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.4995424151420593
+    }
+  },
+  {
+    "text": "liệt kê task thứ hai đi",
+    "intent": "list_tasks_by_date",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.6671812534332275
+    }
+  },
+  {
+    "text": "xóa task viết báo cáo",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.13447146117687225
+    }
+  },
+  {
+    "text": "xóa task có tên viết báo cáo",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.4260907471179962
+    }
+  },
+  {
+    "text": "xóa task học sql",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.1755550354719162
+    }
+  },
+  {
+    "text": "xóa task có tên học sql",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.17867742478847504
+    }
+  },
+  {
+    "text": "xóa task review code",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.22693465650081635
+    }
+  },
+  {
+    "text": "xóa task có tên review code",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.257976770401001
+    }
+  },
+  {
+    "text": "xóa task gọi khách hàng",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.09392169862985611
+    }
+  },
+  {
+    "text": "xóa task có tên gọi khách hàng",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.08214692026376724
+    }
+  },
+  {
+    "text": "xóa task chuẩn bị slide",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.5590003728866577
+    }
+  },
+  {
+    "text": "xóa task có tên chuẩn bị slide",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.636201798915863
+    }
+  },
+  {
+    "text": "xóa task làm bài tập",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.14324010908603668
+    }
+  },
+  {
+    "text": "xóa task có tên làm bài tập",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.1401371955871582
+    }
+  },
+  {
+    "text": "xóa task họp team",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.13552840054035187
+    }
+  },
+  {
+    "text": "xóa task có tên họp team",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.12238984555006027
+    }
+  },
+  {
+    "text": "xóa task gửi email",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.057621218264102936
+    }
+  },
+  {
+    "text": "xóa task có tên gửi email",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.12972930073738098
+    }
+  },
+  {
+    "text": "xóa task fix bug",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.289070188999176
+    }
+  },
+  {
+    "text": "xóa task có tên fix bug",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.32848575711250305
+    }
+  },
+  {
+    "text": "xóa task mua đồ",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.15060701966285706
+    }
+  },
+  {
+    "text": "xóa task có tên mua đồ",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.13953076303005219
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ viết báo cáo",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "create_task",
+      "confidence": 0.0934022068977356
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên viết báo cáo",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.3515796363353729
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ học sql",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.02115730382502079
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên học sql",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.044814612716436386
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ review code",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.040015969425439835
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên review code",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.44575101137161255
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ gọi khách hàng",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "create_task",
+      "confidence": 0.034402601420879364
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên gọi khách hàng",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.036656491458415985
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ chuẩn bị slide",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.4752546548843384
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên chuẩn bị slide",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.35118210315704346
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ làm bài tập",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.031465787440538406
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ họp team",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.03526155650615692
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên họp team",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.07129359245300293
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ gửi email",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.03368591517210007
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên gửi email",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.07080153375864029
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ fix bug",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.03792383521795273
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên fix bug",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.06746955960988998
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ mua đồ",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.04602079838514328
+    }
+  },
+  {
+    "text": "xóa nhiệm vụ có tên mua đồ",
+    "intent": "delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.047333575785160065
+    }
+  },
+  {
+    "text": "xác nhận xóa các task đã chọn",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.4809994399547577
+    }
+  },
+  {
+    "text": "ok xóa các task đã chọn",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.4639699459075928
+    }
+  },
+  {
+    "text": "đồng ý xóa danh sách vừa chọn",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.9567604660987854
+    }
+  },
+  {
+    "text": "tiến hành xóa lựa chọn",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.8276957869529724
+    }
+  },
+  {
+    "text": "xác nhận xóa các task đã chọn giúp mình",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.8094815611839294
+    }
+  },
+  {
+    "text": "ok xóa các task đã chọn nha",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.5347240567207336
+    }
+  },
+  {
+    "text": "đồng ý xóa danh sách vừa chọn ngay",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.9517953991889954
+    }
+  },
+  {
+    "text": "tiếp tục xóa các mục đã chọn cho tôi",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.4046984314918518
+    }
+  },
+  {
+    "text": "chắc chắn xóa các task này nhé",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.4665290117263794
+    }
+  },
+  {
+    "text": "tiến hành xóa lựa chọn nha",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.943709135055542
+    }
+  },
+  {
+    "text": "xác nhận xóa các task đã chọn ngay",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.8384571075439453
+    }
+  },
+  {
+    "text": "ok xóa các task đã chọn với",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.7476848363876343
+    }
+  },
+  {
+    "text": "đồng ý xóa danh sách vừa chọn đi",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.9529455304145813
+    }
+  },
+  {
+    "text": "chắc chắn xóa các task này giúp mình",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.410262793302536
+    }
+  },
+  {
+    "text": "tiến hành xóa lựa chọn với",
+    "intent": "confirm_delete_selection",
+    "intent_prediction": {
+      "name": "help_prioritize",
+      "confidence": 0.9646780490875244
+    }
+  },
+  {
+    "text": "undo xóa task",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.01141368132084608
+    }
+  },
+  {
+    "text": "khôi phục task vừa xóa",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.08306845277547836
+    }
+  },
+  {
+    "text": "rollback thao tác xóa task",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "nlu_fallback",
+      "confidence": 0.3855817914009094
+    }
+  },
+  {
+    "text": "hủy xóa task",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.01660732924938202
+    }
+  },
+  {
+    "text": "undo xóa task nha",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.014022222720086575
+    }
+  },
+  {
+    "text": "khôi phục task vừa xóa ngay",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.07920445501804352
+    }
+  },
+  {
+    "text": "hủy xóa task giúp mình",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.054818399250507355
+    }
+  },
+  {
+    "text": "undo xóa task với",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.021173721179366112
+    }
+  },
+  {
+    "text": "khôi phục task vừa xóa đi",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "filter_tasks",
+      "confidence": 0.08600936084985733
+    }
+  },
+  {
+    "text": "hủy xóa task ngay",
+    "intent": "undo_delete_task",
+    "intent_prediction": {
+      "name": "list_tasks_by_date",
+      "confidence": 0.04857509583234787
+    }
+  }
+]

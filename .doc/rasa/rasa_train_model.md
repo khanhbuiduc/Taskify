@@ -1,87 +1,80 @@
-# Quy trình Huấn luyện Mô hình Rasa PhoBERT
+# Quy trình Huấn luyện Mô hình Rasa + PhoBERT (Luồng hiện tại)
 
-Dưới đây là sơ đồ quy trình từ việc sinh dữ liệu NLU đến khi huấn luyện mô hình trên Google Colab.
+Tài liệu này mô tả luồng đang dùng trong repo `Taskify/rasa`.
 
 ## 1. Sơ đồ quy trình (Pipeline)
 
 ```mermaid
 graph TD
-    %% Khối Local Development
     subgraph Local["Máy cục bộ (Local Machine)"]
-        A[Templates & Logic] --> B{refactor_nlu_v2.py}
-        B -- "Sinh dữ liệu thô" --> C1[nlu.yml]
-        
-        C1 --> D{prepare_data.py}
-        D -- "Tách từ (VnCoreNLP) & Gán nhãn BIO" --> E1[intent_train.json]
-        D -- "Tách từ & Gán nhãn BIO" --> E2[ner_train.txt]
+        A[Chỉnh dữ liệu nguồn trong data/phobert/nlu_gen/*] --> B[python data/phobert/generate_nlu.py]
+        B --> C[data/nlu/shared.yml<br/>data/nlu/task.yml<br/>data/nlu/note.yml]
+        C --> D[python data/phobert/prepare_data.py]
+        D -- "VnCoreNLP word segmentation + BIO" --> E1[data/phobert/intent_train.json]
+        D -- "VnCoreNLP word segmentation + BIO" --> E2[data/phobert/ner_train.txt]
     end
 
-    %% Khối Truyển tải dữ liệu
     E1 --> F((Upload / Drive))
     E2 --> F
 
-    %% Khối Google Colab
-    subgraph Colab["Google Colab / Cloud"]
-        F --> G[Google Drive Storage]
-        G --> H[Colab Notebook]
-        
-        subgraph Training["Quá trình Train"]
-            H --> I[Load PhoBERT Pre-trained]
-            I --> J[Fine-tuning Joint Model<br/>Intent + NER]
-            J --> K[Validation / Evaluation]
-        end
-        
-        K --> L[model.bin / Model Weights]
+    subgraph Colab["Google Colab / Cloud (PhoBERT fine-tuning)"]
+        F --> G[Train PhoBERT Intent + NER]
+        G --> H[intent_model/* + ner_model/*]
     end
 
-    %% Kết quả cuối cùng
-    L --> M[Deploy to Rasa Action Server / Custom API]
+    H --> I[Copy model artifacts về repo:<br/>data/phobert/model/intent_model<br/>data/phobert/model/ner_model]
 
-    %% Styling
-    style Local fill:#f9f,stroke:#333,stroke-width:2px
-    style Colab fill:#bbf,stroke:#333,stroke-width:2px
-    style Training fill:#dfd,stroke:#333,stroke-dasharray: 5 5
+    I --> J[Local: rasa train]
+    J --> K[models/*.tar.gz]
+    K --> L[rasa run --enable-api]
+
+    style Local fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Colab fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
 ```
 
-## 2. Chi tiết vai trò các File
+## 2. Chi tiết phần Máy cục bộ (Local Machine)
 
-### Giai đoạn Local (Tiền xử lý)
-1.  **`refactor_nlu_v2.py` (Máy sinh dữ liệu):**
-    *   Chứa các template và logic để tạo ra hàng loạt ví dụ huấn luyện.
-    *   Sản phẩm đầu ra: `nlu.yml` (Định dạng Rasa chuẩn).
-2.  **`prepare_data.py` (Tiền xử lý cho PhoBERT):**
-    *   Đọc file `nlu.yml`.
-    *   Sử dụng **VnCoreNLP** để tách từ (Word Segmentation) cho tiếng Việt (VD: `học tập` -> `học_tập`).
-    *   Gán nhãn **BIO** cho các thực thể (NER).
-    *   Sản phẩm đầu ra: `intent_train.json` và `ner_train.txt`.
+1. `generate_nlu.py` (thay cho luồng cũ `refactor_nlu_v2.py`)
+- Lệnh: `python data/phobert/generate_nlu.py`
+- Sinh bộ dữ liệu NLU theo domain vào `data/nlu/*.yml`.
+- Mặc định tạo các file: `shared.yml`, `task.yml`, `note.yml`.
 
-### Giai đoạn Cloud (Huấn luyện)
-1.  **Google Drive:** Lưu trữ các file dữ liệu đã tách từ để Colab có thể truy cập.
-2.  **Google Colab:**
-    *   Sử dụng GPU để huấn luyện mô hình PhoBERT-base.
-    *   Huấn luyện song song (Joint Learning) cả Intent Classification và Named Entity Recognition (NER).
-    *   Sản phẩm đầu ra: `model.bin` (Trọng số mô hình đã qua tinh chỉnh).
+2. `prepare_data.py` (tiền xử lý cho PhoBERT)
+- Lệnh: `python data/phobert/prepare_data.py`
+- Đọc dữ liệu từ `data/nlu/*.yml` (mặc định bỏ qua `*_draft.yml`, `*_disabled.yml`).
+- Dùng VnCoreNLP để tách từ tiếng Việt.
+- Sinh 2 file dùng cho fine-tuning PhoBERT:
+  - `data/phobert/intent_train.json`
+  - `data/phobert/ner_train.txt`
 
-## 3. Lưu ý quan trọng
-*   Luôn chạy `refactor_nlu_v2.py` trước nếu có thay đổi về script sinh dữ liệu.
-*   Cần đảm bảo môi trường Java đã được cài đặt đúng trên máy Local để `prepare_data.py` gọi được VnCoreNLP.
-*   File `intent_train.json` và `ner_train.txt` phải được đồng bộ lên Drive mỗi khi cập nhật dữ liệu mới.
+3. Huấn luyện Rasa sau khi có model PhoBERT đã fine-tune
+- Copy artifact PhoBERT về đúng thư mục:
+  - `data/phobert/model/intent_model`
+  - `data/phobert/model/ner_model`
+- Chạy: `rasa train`
+- Kết quả: model Rasa đóng gói ở `models/*.tar.gz`.
 
-## 4. Ví dụ minh họa luồng dữ liệu
+## 3. Ghi chú quan trọng
 
-Để hiểu cách dữ liệu biến đổi, hãy nhìn vào hành trình của câu lệnh sau:
+- `refactor_nlu_v2.py` hiện là luồng cũ/deprecated; không dùng như entrypoint chính.
+- Cần Java + VnCoreNLP jar để chạy `prepare_data.py`.
+- Mặc định jar path trong script: `C:\Users\HPPC~1\VnCoreNLP\VnCoreNLP-1.2.jar`.
+- Khi đổi dữ liệu NLU, cần chạy lại theo thứ tự:
+  1. `python data/phobert/generate_nlu.py`
+  2. `python data/phobert/prepare_data.py`
+  3. Fine-tune PhoBERT (Colab/cloud) và cập nhật lại `data/phobert/model/*`
+  4. `rasa train`
 
-**Câu gốc:** `"tạo task học tiếng anh vào ngày mai"`
+## 4. Ví dụ nhanh luồng dữ liệu
 
-### Bước 1: Qua VnCoreNLP (Tách từ - Word Segmentation)
-VnCoreNLP nhận diện các từ ghép và nối chúng lại bằng dấu gạch dưới `_`.
-*   **Kết quả:** `"tạo task học tiếng_anh vào ngày_mai"`
+Câu gốc:
+`"tạo task học tiếng anh vào ngày mai"`
 
-### Bước 2: Qua prepare_data.py (Gán nhãn BIO)
-Dữ liệu được chia vào 2 file huấn luyện chuẩn cho PhoBERT:
+Sau bước segmentation (VnCoreNLP):
+`"tạo task học tiếng_anh vào ngày_mai"`
 
-**File `intent_train.json` (Dạng JSON):**
-Dùng để huấn luyện mô hình nhận diện ý định "Tạo task".
+Trong `intent_train.json`:
+
 ```json
 {
   "text": "tạo task học tiếng_anh vào ngày_mai",
@@ -89,17 +82,13 @@ Dùng để huấn luyện mô hình nhận diện ý định "Tạo task".
 }
 ```
 
-**File `ner_train.txt` (Dạng BIO Tagging):**
-Dùng để huấn luyện mô hình nhận diện thực thể (Tên task và Thời hạn).
-```text
-tạo         O
-task        O
-học         B-task_title
-tiếng_anh   I-task_title
-vào         O
-ngày_mai    B-due_date
-```
+Trong `ner_train.txt` (BIO):
 
-*   **B- (Begin):** Bắt đầu thực thể (Từ "học").
-*   **I- (Inside):** Tiếp tục thực thể (Từ "tiếng_anh").
-*   **O (Outside):** Không phải thực thể.
+```text
+tạo O
+task O
+học B-task_title
+tiếng_anh I-task_title
+vào O
+ngày_mai B-due_date
+```

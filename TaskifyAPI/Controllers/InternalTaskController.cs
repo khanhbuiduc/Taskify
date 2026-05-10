@@ -55,7 +55,9 @@ namespace TaskifyAPI.Controllers
         /// <param name="userId">User ID from Rasa sender</param>
         /// <returns>List of tasks</returns>
         [HttpGet("{userId}")]
-        public async Task<ActionResult<InternalTaskListResponse>> GetTasksByUser(string userId)
+        public async Task<ActionResult<InternalTaskListResponse>> GetTasksByUser(
+            string userId,
+            [FromQuery] InternalTaskQueryParams query)
         {
             if (!ValidateApiKey())
             {
@@ -65,35 +67,103 @@ namespace TaskifyAPI.Controllers
 
             try
             {
-                var tasks = await _unitOfWork.Tasks.GetAllOrderedByDueDateAsync(userId);
-                var taskList = tasks.Select(t => new InternalTaskDto
+                if (query.DueFrom.HasValue && query.DueTo.HasValue && query.DueFrom.Value > query.DueTo.Value)
                 {
-                    Id = t.Id,
-                    Title = t.Title,
-                    Description = t.Description,
-                    Priority = MapPriorityToString(t.Priority),
-                    Status = MapStatusToString(t.Status),
-                    DueDate = t.DueDate,
-                    CreatedAt = t.CreatedAt,
-                    IsOverdue = t.DueDate < DateTime.UtcNow && t.Status != TaskItemStatus.Completed
-                }).ToList();
+                    return BadRequest(new { message = "dueFrom must be less than or equal to dueTo." });
+                }
+
+                if (!TryParseStatusFilter(query.Status, out var statusFilter))
+                {
+                    return BadRequest(new { message = "Invalid status filter. Allowed values: todo, in-progress, completed." });
+                }
+
+                if (!TryParsePriorityFilter(query.Priority, out var priorityFilter))
+                {
+                    return BadRequest(new { message = "Invalid priority filter. Allowed values: low, medium, high." });
+                }
+
+                var dbQuery = _dbContext.TaskItems
+                    .Where(t => t.UserId == userId && !t.IsDeleted)
+                    .Include(t => t.Labels)
+                    .AsQueryable();
+
+                if (!string.IsNullOrWhiteSpace(query.Search))
+                {
+                    var search = query.Search.Trim();
+                    dbQuery = dbQuery.Where(t =>
+                        t.Title.Contains(search) ||
+                        t.Description.Contains(search));
+                }
+
+                if (statusFilter.HasValue)
+                {
+                    dbQuery = dbQuery.Where(t => t.Status == statusFilter.Value);
+                }
+
+                if (priorityFilter.HasValue)
+                {
+                    dbQuery = dbQuery.Where(t => t.Priority == priorityFilter.Value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(query.Label))
+                {
+                    var label = query.Label.Trim().ToLowerInvariant();
+                    dbQuery = dbQuery.Where(t => t.Labels.Any(l => l.Name.ToLower().Contains(label)));
+                }
+
+                if (query.DueFrom.HasValue)
+                {
+                    dbQuery = dbQuery.Where(t => t.DueDate >= query.DueFrom.Value);
+                }
+
+                if (query.DueTo.HasValue)
+                {
+                    dbQuery = dbQuery.Where(t => t.DueDate <= query.DueTo.Value);
+                }
+
+                var orderedQuery = dbQuery.OrderBy(t => t.DueDate);
+                var totalCount = await orderedQuery.CountAsync();
+
+                var page = query.Paged ? Math.Max(1, query.Page) : 1;
+                var pageSize = query.Paged
+                    ? (query.PageSize <= 0 || query.PageSize > 100 ? 5 : query.PageSize)
+                    : Math.Max(totalCount, 1);
+
+                var tasks = query.Paged
+                    ? await orderedQuery.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync()
+                    : await orderedQuery.ToListAsync();
+
+                var taskList = tasks.Select(MapToInternalTaskDto).ToList();
 
                 // Calculate summary stats
                 var now = DateTime.UtcNow;
                 var weekStart = now.AddDays(-(int)now.DayOfWeek);
                 var weekEnd = weekStart.AddDays(7);
+                var completedThisWeek = await dbQuery.CountAsync(t =>
+                    t.Status == TaskItemStatus.Completed &&
+                    t.CreatedAt >= weekStart &&
+                    t.CreatedAt < weekEnd);
+                var overdueCount = await dbQuery.CountAsync(t =>
+                    t.Status != TaskItemStatus.Completed && t.DueDate < now);
+                var pendingCount = await dbQuery.CountAsync(t =>
+                    t.Status == TaskItemStatus.Todo || t.Status == TaskItemStatus.InProgress);
+                var highPriorityCount = await dbQuery.CountAsync(t =>
+                    t.Priority == TaskPriority.High && t.Status != TaskItemStatus.Completed);
+                var totalPages = totalCount == 0 ? 0 : (int)Math.Ceiling((double)totalCount / pageSize);
 
                 var response = new InternalTaskListResponse
                 {
                     Tasks = taskList,
-                    TotalCount = taskList.Count,
-                    OverdueCount = taskList.Count(t => t.IsOverdue),
-                    CompletedThisWeek = tasks.Count(t => 
-                        t.Status == TaskItemStatus.Completed && 
-                        t.CreatedAt >= weekStart && 
-                        t.CreatedAt < weekEnd),
-                    PendingCount = taskList.Count(t => t.Status == "todo" || t.Status == "in-progress"),
-                    HighPriorityCount = taskList.Count(t => t.Priority == "high" && t.Status != "completed")
+                    TotalCount = totalCount,
+                    OverdueCount = overdueCount,
+                    CompletedThisWeek = completedThisWeek,
+                    PendingCount = pendingCount,
+                    HighPriorityCount = highPriorityCount,
+                    Page = page,
+                    PageSize = pageSize,
+                    TotalPages = totalPages,
+                    HasNext = query.Paged && page < totalPages,
+                    HasPrev = query.Paged && page > 1
                 };
 
                 return Ok(response);
@@ -387,6 +457,60 @@ namespace TaskifyAPI.Controllers
                 .ToList();
         }
 
+        private static InternalTaskDto MapToInternalTaskDto(TaskItem task)
+        {
+            return new InternalTaskDto
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                Priority = MapPriorityToString(task.Priority),
+                Status = MapStatusToString(task.Status),
+                DueDate = task.DueDate,
+                CreatedAt = task.CreatedAt,
+                IsOverdue = task.DueDate < DateTime.UtcNow && task.Status != TaskItemStatus.Completed,
+                Labels = task.Labels.Select(l => l.Name).ToList()
+            };
+        }
+
+        private static bool TryParseStatusFilter(string? status, out TaskItemStatus? value)
+        {
+            value = null;
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                return true;
+            }
+
+            value = status.Trim().ToLowerInvariant() switch
+            {
+                "todo" => TaskItemStatus.Todo,
+                "in-progress" => TaskItemStatus.InProgress,
+                "completed" => TaskItemStatus.Completed,
+                _ => null
+            };
+
+            return value.HasValue;
+        }
+
+        private static bool TryParsePriorityFilter(string? priority, out TaskPriority? value)
+        {
+            value = null;
+            if (string.IsNullOrWhiteSpace(priority))
+            {
+                return true;
+            }
+
+            value = priority.Trim().ToLowerInvariant() switch
+            {
+                "low" => TaskPriority.Low,
+                "medium" => TaskPriority.Medium,
+                "high" => TaskPriority.High,
+                _ => null
+            };
+
+            return value.HasValue;
+        }
+
         #endregion
     }
 
@@ -405,6 +529,7 @@ namespace TaskifyAPI.Controllers
         public DateTime DueDate { get; set; }
         public DateTime CreatedAt { get; set; }
         public bool IsOverdue { get; set; }
+        public List<string> Labels { get; set; } = new();
     }
 
     /// <summary>
@@ -418,6 +543,24 @@ namespace TaskifyAPI.Controllers
         public int CompletedThisWeek { get; set; }
         public int PendingCount { get; set; }
         public int HighPriorityCount { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+        public int TotalPages { get; set; }
+        public bool HasNext { get; set; }
+        public bool HasPrev { get; set; }
+    }
+
+    public class InternalTaskQueryParams
+    {
+        public bool Paged { get; set; } = false;
+        public string? Search { get; set; }
+        public string? Status { get; set; }
+        public string? Priority { get; set; }
+        public string? Label { get; set; }
+        public DateTime? DueFrom { get; set; }
+        public DateTime? DueTo { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 5;
     }
 
     /// <summary>

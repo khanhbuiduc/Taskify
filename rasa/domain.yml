@@ -9,6 +9,7 @@ intents:
   - ask_howcanhelp
   - list_overdue_tasks
   - list_tasks_by_date
+  - filter_tasks
   - summarize_week
   - help_prioritize
   - create_task
@@ -29,6 +30,11 @@ entities:
   - time
   - due_time
   - priority
+  - task_status
+  - task_label
+  - due_from
+  - due_to
+  - search_query
   - note_title
   - note_text
   - note_keyword
@@ -66,6 +72,59 @@ slots:
     mappings:
       - type: from_entity
         entity: priority
+
+  task_status:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: task_status
+
+  task_label:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: task_label
+
+  due_from:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: due_from
+
+  due_to:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: due_to
+
+  search_query:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: search_query
+
+  filter_page:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  filter_page_size:
+    type: float
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  filter_query_state:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
 
   note_title:
     type: text
@@ -179,6 +238,7 @@ responses:
 
 actions:
   - action_list_tasks
+  - action_filter_tasks
   - action_create_task
   - validate_create_task_form
   - action_cancel_create_task

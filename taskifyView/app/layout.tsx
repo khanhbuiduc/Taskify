@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeFavicon } from "@/components/theme-favicon";
 import { NotificationProvider } from "@/components/notification-provider";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -24,10 +25,6 @@ export const metadata: Metadata = {
         url: "/jarvis-dark.png",
         media: "(prefers-color-scheme: dark)",
       },
-      {
-        url: "/javis-dark.png",
-        type: "image/svg+xml",
-      },
     ],
     apple: "/apple-icon.png",
   },
@@ -47,6 +44,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
+          <ThemeFavicon />
           <NotificationProvider>{children}</NotificationProvider>
           <Toaster position="top-right" />
         </ThemeProvider>

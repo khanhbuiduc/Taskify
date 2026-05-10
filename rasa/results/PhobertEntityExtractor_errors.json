@@ -1,0 +1,6799 @@
+[
+  {
+    "text": "thêm ghi chú shopping list",
+    "entities": [
+      {
+        "start": 13,
+        "end": 26,
+        "value": "shopping list",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "chú",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.2587679922580719,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_title",
+        "value": "shopping list",
+        "start": 13,
+        "end": 26,
+        "confidence": 0.742786169052124,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo note họp tuần nội dung chốt deadline",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp tuần",
+        "entity": "note_title"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "value": "chốt deadline",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "họp",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.5277075171470642,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_text",
+        "value": "chốt deadline",
+        "start": 27,
+        "end": 40,
+        "confidence": 0.3039044439792633,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "ghi chú học rasa",
+    "entities": [
+      {
+        "start": 8,
+        "end": 16,
+        "value": "học rasa",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tạo ghi chú nhanh fix bug list",
+    "entities": [
+      {
+        "start": 18,
+        "end": 30,
+        "value": "fix bug list",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "create note project ideas",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "project ideas",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note project",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.669063150882721,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "add note meeting notes",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "meeting notes",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note meeting",
+        "start": 4,
+        "end": 16,
+        "confidence": 0.6651636064052582,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo note họp tuần nội dung chốt deadline ngay",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp tuần",
+        "entity": "note_title"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "value": "chốt deadline",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "họp",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.49549320340156555,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_text",
+        "value": "chốt deadline",
+        "start": 27,
+        "end": 40,
+        "confidence": 0.40697768330574036,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "ghi chú học rasa với",
+    "entities": [
+      {
+        "start": 8,
+        "end": 16,
+        "value": "học rasa",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "học rasa",
+        "start": 8,
+        "end": 16,
+        "confidence": 0.44747333228588104,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo ghi chú nhanh fix bug list đi",
+    "entities": [
+      {
+        "start": 18,
+        "end": 30,
+        "value": "fix bug list",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "create note project ideas cho tôi",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "project ideas",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note project",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.6521188318729401,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "add note meeting notes nhé",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "meeting notes",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note meeting",
+        "start": 4,
+        "end": 16,
+        "confidence": 0.6981324553489685,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "thêm ghi chú shopping list với",
+    "entities": [
+      {
+        "start": 13,
+        "end": 26,
+        "value": "shopping list",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.2517765462398529,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_title",
+        "value": "shopping list",
+        "start": 13,
+        "end": 26,
+        "confidence": 0.6977734863758087,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo note họp tuần nội dung chốt deadline đi",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp tuần",
+        "entity": "note_title"
+      },
+      {
+        "start": 27,
+        "end": 40,
+        "value": "chốt deadline",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "họp",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.48585206270217896,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_text",
+        "value": "chốt deadline",
+        "start": 27,
+        "end": 40,
+        "confidence": 0.4225696176290512,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "ghi chú học rasa cho tôi",
+    "entities": [
+      {
+        "start": 8,
+        "end": 16,
+        "value": "học rasa",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "học rasa",
+        "start": 8,
+        "end": 16,
+        "confidence": 0.667008101940155,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo ghi chú nhanh fix bug list nhé",
+    "entities": [
+      {
+        "start": 18,
+        "end": 30,
+        "value": "fix bug list",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "fix bug",
+        "start": 18,
+        "end": 25,
+        "confidence": 0.43592676520347595,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "create note project ideas liền",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "project ideas",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note project",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.673648864030838,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "add note meeting notes giúp mình",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "meeting notes",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note meeting",
+        "start": 4,
+        "end": 16,
+        "confidence": 0.6669856011867523,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xem danh sách note",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "sách note",
+        "start": 9,
+        "end": 18,
+        "confidence": 0.5413286685943604,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "mở danh sách ghi chú",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "sách ghi",
+        "start": 8,
+        "end": 16,
+        "confidence": 0.6366240829229355,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "hiển thị toàn bộ note",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "bộ",
+        "start": 14,
+        "end": 16,
+        "confidence": 0.4768427908420563,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.6444268226623535,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xem danh sách note giúp mình",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "sách",
+        "start": 9,
+        "end": 13,
+        "confidence": 0.47017696499824524,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "mở danh sách ghi chú giúp mình",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "sách",
+        "start": 8,
+        "end": 12,
+        "confidence": 0.37789037823677063,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xem danh sách note ngay",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "sách note",
+        "start": 9,
+        "end": 18,
+        "confidence": 0.5287587344646454,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "mở danh sách ghi chú ngay",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "sách",
+        "start": 8,
+        "end": 12,
+        "confidence": 0.32416704297065735,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "ghi",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.22163556516170502,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tìm note về kế hoạch",
+    "entities": [
+      {
+        "start": 12,
+        "end": 20,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "kế",
+        "start": 12,
+        "end": 14,
+        "confidence": 0.7053245902061462,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tìm ghi chú chứa bug",
+    "entities": [
+      {
+        "start": 17,
+        "end": 20,
+        "value": "bug",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chứa",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.45392513275146484,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "search notes for idea",
+    "entities": [
+      {
+        "start": 17,
+        "end": 21,
+        "value": "idea",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "for",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.7501378059387207,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "idea",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.33910202980041504,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "find notes about meeting",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "value": "meeting",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tìm giúp mình ghi chú deadline",
+    "entities": [
+      {
+        "start": 22,
+        "end": 30,
+        "value": "deadline",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.4837261140346527,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "deadline",
+        "start": 22,
+        "end": 30,
+        "confidence": 0.28181371092796326,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "search note keyword project",
+    "entities": [
+      {
+        "start": 20,
+        "end": 27,
+        "value": "project",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tìm note về kế hoạch giúp mình",
+    "entities": [
+      {
+        "start": 12,
+        "end": 20,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "kế",
+        "start": 12,
+        "end": 14,
+        "confidence": 0.7923025488853455,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "search notes for idea ngay",
+    "entities": [
+      {
+        "start": 17,
+        "end": 21,
+        "value": "idea",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "for",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.6049342155456543,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "find notes about meeting với",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "value": "meeting",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tìm giúp mình ghi chú deadline liền",
+    "entities": [
+      {
+        "start": 22,
+        "end": 30,
+        "value": "deadline",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.6267014145851135,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "deadline",
+        "start": 22,
+        "end": 30,
+        "confidence": 0.5407148599624634,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "search note keyword project giúp mình",
+    "entities": [
+      {
+        "start": 20,
+        "end": 27,
+        "value": "project",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tìm note về kế hoạch ngay",
+    "entities": [
+      {
+        "start": 12,
+        "end": 20,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "kế",
+        "start": 12,
+        "end": 14,
+        "confidence": 0.8133137226104736,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "search notes for idea đi",
+    "entities": [
+      {
+        "start": 17,
+        "end": 21,
+        "value": "idea",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "find notes about meeting cho tôi",
+    "entities": [
+      {
+        "start": 17,
+        "end": 24,
+        "value": "meeting",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tìm giúp mình ghi chú deadline nha",
+    "entities": [
+      {
+        "start": 22,
+        "end": 30,
+        "value": "deadline",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.6522057056427002,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "deadline",
+        "start": 22,
+        "end": 30,
+        "confidence": 0.5235583782196045,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "search note keyword project ngay",
+    "entities": [
+      {
+        "start": 20,
+        "end": 27,
+        "value": "project",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "unpin note retro",
+    "entities": [
+      {
+        "start": 11,
+        "end": 16,
+        "value": "retro",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note",
+        "start": 6,
+        "end": 10,
+        "confidence": 0.8228927254676819,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "ghim ghi chú họp tuần",
+    "entities": [
+      {
+        "start": 13,
+        "end": 21,
+        "value": "họp tuần",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "chú",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.22173458337783813,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_title",
+        "value": "họp tuần",
+        "start": 13,
+        "end": 21,
+        "confidence": 0.48007774353027344,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "unpin note retro liền",
+    "entities": [
+      {
+        "start": 11,
+        "end": 16,
+        "value": "retro",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note",
+        "start": 6,
+        "end": 10,
+        "confidence": 0.7795834541320801,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "ghim ghi chú họp tuần giúp mình",
+    "entities": [
+      {
+        "start": 13,
+        "end": 21,
+        "value": "họp tuần",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 9,
+        "end": 12,
+        "confidence": 0.34436681866645813,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_title",
+        "value": "họp tuần",
+        "start": 13,
+        "end": 21,
+        "confidence": 0.4290815144777298,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "bỏ ghim ghi chú ý tưởng sprint nha",
+    "entities": [
+      {
+        "start": 16,
+        "end": 30,
+        "value": "ý tưởng sprint",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "ý",
+        "start": 16,
+        "end": 17,
+        "confidence": 0.34839746356010437,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "unpin note retro nha",
+    "entities": [
+      {
+        "start": 11,
+        "end": 16,
+        "value": "retro",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note",
+        "start": 6,
+        "end": 10,
+        "confidence": 0.7622126340866089,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "cập nhật note meeting thành meeting v2",
+    "entities": [
+      {
+        "start": 14,
+        "end": 21,
+        "value": "meeting",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 28,
+        "end": 38,
+        "value": "meeting v2",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note meeting",
+        "start": 9,
+        "end": 21,
+        "confidence": 0.4163450598716736,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_title",
+        "value": "meeting v2",
+        "start": 28,
+        "end": 38,
+        "confidence": 0.6678952872753143,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thay đổi note idea nội dung triển khai giai đoạn 2",
+    "entities": [
+      {
+        "start": 14,
+        "end": 18,
+        "value": "idea",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 28,
+        "end": 50,
+        "value": "triển khai giai đoạn 2",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "idea",
+        "start": 14,
+        "end": 18,
+        "confidence": 0.57945317029953,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "task_title",
+        "value": "dung triển",
+        "start": 23,
+        "end": 33,
+        "confidence": 0.24370132386684418,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_date",
+        "value": "giai",
+        "start": 39,
+        "end": 43,
+        "confidence": 0.2363780289888382,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "đoạn",
+        "start": 44,
+        "end": 48,
+        "confidence": 0.286526083946228,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "edit note project ideas",
+    "entities": [
+      {
+        "start": 10,
+        "end": 23,
+        "value": "project ideas",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note project",
+        "start": 5,
+        "end": 17,
+        "confidence": 0.6472070217132568,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "sửa ghi chú shopping list",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "shopping list",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "shopping list",
+        "start": 12,
+        "end": 25,
+        "confidence": 0.7235342264175415,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "cập nhật ghi chú kế hoạch",
+    "entities": [
+      {
+        "start": 17,
+        "end": 25,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "chú",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.26391279697418213,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "update note title họp team",
+    "entities": [
+      {
+        "start": 18,
+        "end": 26,
+        "value": "họp team",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "thay nội dung note bug list thành fix payment bug",
+    "entities": [
+      {
+        "start": 19,
+        "end": 27,
+        "value": "bug list",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "value": "fix payment bug",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 14,
+        "end": 18,
+        "confidence": 0.5968109965324402,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.685134768486023,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "note_text",
+        "value": "thành fix",
+        "start": 28,
+        "end": 37,
+        "confidence": 0.6235599517822266,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "cập nhật note meeting thành meeting v2 nha",
+    "entities": [
+      {
+        "start": 14,
+        "end": 21,
+        "value": "meeting",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 28,
+        "end": 38,
+        "value": "meeting v2",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note meeting",
+        "start": 9,
+        "end": 21,
+        "confidence": 0.4321122169494629,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_title",
+        "value": "meeting v2",
+        "start": 28,
+        "end": 38,
+        "confidence": 0.6633965075016022,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thay đổi note idea nội dung triển khai giai đoạn 2 ngay",
+    "entities": [
+      {
+        "start": 14,
+        "end": 18,
+        "value": "idea",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 28,
+        "end": 50,
+        "value": "triển khai giai đoạn 2",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "idea",
+        "start": 14,
+        "end": 18,
+        "confidence": 0.5729617476463318,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "task_title",
+        "value": "dung",
+        "start": 23,
+        "end": 27,
+        "confidence": 0.2717926502227783,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "edit note project ideas đi",
+    "entities": [
+      {
+        "start": 10,
+        "end": 23,
+        "value": "project ideas",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note project",
+        "start": 5,
+        "end": 17,
+        "confidence": 0.6838298141956329,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "sửa ghi chú shopping list cho tôi",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "shopping list",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "shopping",
+        "start": 12,
+        "end": 20,
+        "confidence": 0.7284509539604187,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "cập nhật ghi chú kế hoạch nhé",
+    "entities": [
+      {
+        "start": 17,
+        "end": 25,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.3060275912284851,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "update note title họp team liền",
+    "entities": [
+      {
+        "start": 18,
+        "end": 26,
+        "value": "họp team",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "thay nội dung note bug list thành fix payment bug giúp mình",
+    "entities": [
+      {
+        "start": 19,
+        "end": 27,
+        "value": "bug list",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "value": "fix payment bug",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.8639020323753357,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "note_text",
+        "value": "thành fix",
+        "start": 28,
+        "end": 37,
+        "confidence": 0.6069019734859467,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.6485633254051208,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "cập nhật note meeting thành meeting v2 với",
+    "entities": [
+      {
+        "start": 14,
+        "end": 21,
+        "value": "meeting",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 28,
+        "end": 38,
+        "value": "meeting v2",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 9,
+        "end": 13,
+        "confidence": 0.5346505641937256,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "meeting",
+        "start": 14,
+        "end": 21,
+        "confidence": 0.4363875389099121,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "note_title",
+        "value": "meeting v2",
+        "start": 28,
+        "end": 38,
+        "confidence": 0.6495187878608704,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thay đổi note idea nội dung triển khai giai đoạn 2 đi",
+    "entities": [
+      {
+        "start": 14,
+        "end": 18,
+        "value": "idea",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 28,
+        "end": 50,
+        "value": "triển khai giai đoạn 2",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "idea",
+        "start": 14,
+        "end": 18,
+        "confidence": 0.569962203502655,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "task_title",
+        "value": "dung triển",
+        "start": 23,
+        "end": 33,
+        "confidence": 0.22935793548822403,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "edit note project ideas nhé",
+    "entities": [
+      {
+        "start": 10,
+        "end": 23,
+        "value": "project ideas",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note project",
+        "start": 5,
+        "end": 17,
+        "confidence": 0.67600879073143,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "sửa ghi chú shopping list liền",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "shopping list",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "shopping list",
+        "start": 12,
+        "end": 25,
+        "confidence": 0.6580034792423248,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "cập nhật ghi chú kế hoạch giúp mình",
+    "entities": [
+      {
+        "start": 17,
+        "end": 25,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.4044637382030487,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "update note title họp team nha",
+    "entities": [
+      {
+        "start": 18,
+        "end": 26,
+        "value": "họp team",
+        "entity": "note_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "thay nội dung note bug list thành fix payment bug ngay",
+    "entities": [
+      {
+        "start": 19,
+        "end": 27,
+        "value": "bug list",
+        "entity": "note_keyword"
+      },
+      {
+        "start": 34,
+        "end": 49,
+        "value": "fix payment bug",
+        "entity": "note_text"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.8347548842430115,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "note_text",
+        "value": "thành fix",
+        "start": 28,
+        "end": 37,
+        "confidence": 0.614753007888794,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.35779839754104614,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa note shopping",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "shopping",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 4,
+        "end": 8,
+        "confidence": 0.57610684633255,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "shopping",
+        "start": 9,
+        "end": 17,
+        "confidence": 0.4759780764579773,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa ghi chú nháp",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "nháp",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "delete note meeting notes",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "meeting notes",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "note",
+        "start": 7,
+        "end": 11,
+        "confidence": 0.46034494042396545,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "remove note idea",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "idea",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 7,
+        "end": 11,
+        "confidence": 0.8042581677436829,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa note tên bug list",
+    "entities": [
+      {
+        "start": 13,
+        "end": 21,
+        "value": "bug list",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.49295514822006226,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa giúp mình note kế hoạch",
+    "entities": [
+      {
+        "start": 19,
+        "end": 27,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "kế",
+        "start": 19,
+        "end": 21,
+        "confidence": 0.6181064248085022,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "delete this note retro",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "value": "retro",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.7195991277694702,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "remove note project ideas",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "project ideas",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note project",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.5941473245620728,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá ghi chú rasa",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "rasa",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 8,
+        "end": 11,
+        "confidence": 0.35000190138816833,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa ghi chú nháp ngay",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "nháp",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 8,
+        "end": 11,
+        "confidence": 0.4618653953075409,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "nháp",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.26504576206207275,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "delete note meeting notes với",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "meeting notes",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note meeting",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.5096621960401535,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "remove note idea đi",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "idea",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 7,
+        "end": 11,
+        "confidence": 0.8635949492454529,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa note tên bug list cho tôi",
+    "entities": [
+      {
+        "start": 13,
+        "end": 21,
+        "value": "bug list",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.6923357248306274,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "delete this note retro liền",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "value": "retro",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.8156400918960571,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "remove note project ideas giúp mình",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "project ideas",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note project",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.6344763040542603,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá ghi chú rasa nha",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "rasa",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 8,
+        "end": 11,
+        "confidence": 0.47803735733032227,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa ghi chú nháp đi",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "nháp",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 8,
+        "end": 11,
+        "confidence": 0.4933185577392578,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "delete note meeting notes cho tôi",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "meeting notes",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note meeting",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.5225405693054199,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "remove note idea nhé",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "idea",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 7,
+        "end": 11,
+        "confidence": 0.8141098022460938,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa note tên bug list liền",
+    "entities": [
+      {
+        "start": 13,
+        "end": 21,
+        "value": "bug list",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "bug",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.68367600440979,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa giúp mình note kế hoạch giúp mình",
+    "entities": [
+      {
+        "start": 19,
+        "end": 27,
+        "value": "kế hoạch",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "kế",
+        "start": 19,
+        "end": 21,
+        "confidence": 0.7575713992118835,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "delete this note retro nha",
+    "entities": [
+      {
+        "start": 17,
+        "end": 22,
+        "value": "retro",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.7919102907180786,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "remove note project ideas ngay",
+    "entities": [
+      {
+        "start": 12,
+        "end": 25,
+        "value": "project ideas",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "note project",
+        "start": 7,
+        "end": 19,
+        "confidence": 0.629584401845932,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá ghi chú rasa với",
+    "entities": [
+      {
+        "start": 12,
+        "end": 16,
+        "value": "rasa",
+        "entity": "note_keyword"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "chú",
+        "start": 8,
+        "end": 11,
+        "confidence": 0.3625088036060333,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "chào trợ lý",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "lý",
+        "start": 9,
+        "end": 11,
+        "confidence": 0.7406942844390869,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "random text",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "text",
+        "start": 7,
+        "end": 11,
+        "confidence": 0.5039902329444885,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "đánh giá hiệu suất tuần",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "suất tuần",
+        "start": 14,
+        "end": 23,
+        "confidence": 0.49173010885715485,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "kết quả làm việc tuần này",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "việc",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.1771376132965088,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xem thống kê tuần",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "kê tuần",
+        "start": 10,
+        "end": 17,
+        "confidence": 0.5234743058681488,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "đánh giá hiệu suất tuần đi",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "suất",
+        "start": 14,
+        "end": 18,
+        "confidence": 0.5264725685119629,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "đánh giá hiệu suất tuần nhé",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "suất tuần",
+        "start": 14,
+        "end": 23,
+        "confidence": 0.4442739933729172,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "gợi ý thứ tự công việc",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "tự",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.2833356559276581,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "gợi ý thứ tự công việc với",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "tự",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.36980175971984863,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "note_keyword",
+        "value": "công",
+        "start": 13,
+        "end": 17,
+        "confidence": 0.21315477788448334,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "gợi ý thứ tự công việc cho tôi",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "công",
+        "start": 13,
+        "end": 17,
+        "confidence": 0.302336722612381,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task viết báo cáo",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.6028808355331421,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.4054504632949829,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task viết báo cáo ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 30,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.8644935488700867,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.43975791335105896,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.7971560955047607,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.8273200392723083,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task viết báo cáo ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 30,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 31,
+        "end": 34,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.8287549614906311,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.6064022183418274,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.8166602253913879,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.8919500112533569,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 31,
+        "end": 34,
+        "confidence": 0.7604418992996216,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task viết báo cáo ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 30,
+        "end": 33,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 22,
+        "end": 24,
+        "confidence": 0.3629634380340576,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 25,
+        "end": 29,
+        "confidence": 0.6214784979820251,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 30,
+        "end": 33,
+        "confidence": 0.5504416823387146,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task viết báo cáo hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 26,
+        "end": 29,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.9102641940116882,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.8750904202461243,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task học sql",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.7553771138191223,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task học sql ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 17,
+        "end": 25,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.8753523230552673,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.7816056609153748,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.7654934525489807,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task học sql ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 17,
+        "end": 25,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 26,
+        "end": 29,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.8516811728477478,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.7916514277458191,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.874363899230957,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.6575182676315308,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task học sql ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 25,
+        "end": 28,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 17,
+        "end": 19,
+        "confidence": 0.6204863786697388,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 20,
+        "end": 24,
+        "confidence": 0.6269192695617676,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 25,
+        "end": 28,
+        "confidence": 0.5359669327735901,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task học sql hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 21,
+        "end": 24,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 17,
+        "end": 20,
+        "confidence": 0.9076840281486511,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 21,
+        "end": 24,
+        "confidence": 0.8419623374938965,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task review code",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 16,
+        "end": 20,
+        "confidence": 0.40062007308006287,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task review code ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 21,
+        "end": 29,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 16,
+        "end": 20,
+        "confidence": 0.8828139901161194,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 21,
+        "end": 25,
+        "confidence": 0.8074315190315247,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.7814554572105408,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task review code ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 21,
+        "end": 29,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 30,
+        "end": 33,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 16,
+        "end": 20,
+        "confidence": 0.8790141940116882,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 21,
+        "end": 25,
+        "confidence": 0.8332949876785278,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.8880512118339539,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 30,
+        "end": 33,
+        "confidence": 0.7728082537651062,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task review code ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 29,
+        "end": 32,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 21,
+        "end": 23,
+        "confidence": 0.7053963541984558,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.6845721006393433,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 29,
+        "end": 32,
+        "confidence": 0.6080796718597412,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task review code hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 25,
+        "end": 28,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 21,
+        "end": 24,
+        "confidence": 0.916151762008667,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 25,
+        "end": 28,
+        "confidence": 0.8608793616294861,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task gọi khách hàng",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tạo task gọi khách hàng ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      },
+      {
+        "start": 24,
+        "end": 32,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "khách",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.7048891186714172,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "hàng",
+        "start": 19,
+        "end": 23,
+        "confidence": 0.5599090456962585,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.7822551131248474,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 29,
+        "end": 32,
+        "confidence": 0.7801704406738281,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task gọi khách hàng ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      },
+      {
+        "start": 24,
+        "end": 32,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 33,
+        "end": 36,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "khách",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.6780768632888794,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "hàng",
+        "start": 19,
+        "end": 23,
+        "confidence": 0.6583983302116394,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.8500582575798035,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 29,
+        "end": 32,
+        "confidence": 0.8917256593704224,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 33,
+        "end": 36,
+        "confidence": 0.74217289686203,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task gọi khách hàng ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      },
+      {
+        "start": 32,
+        "end": 35,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "hàng",
+        "start": 19,
+        "end": 23,
+        "confidence": 0.40003350377082825,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 24,
+        "end": 26,
+        "confidence": 0.6698827147483826,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 27,
+        "end": 31,
+        "confidence": 0.6382391452789307,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 32,
+        "end": 35,
+        "confidence": 0.6006030440330505,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task gọi khách hàng hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      },
+      {
+        "start": 28,
+        "end": 31,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 24,
+        "end": 27,
+        "confidence": 0.9104989767074585,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.8773792386054993,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task chuẩn bị slide",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tạo task chuẩn bị slide ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      },
+      {
+        "start": 24,
+        "end": 32,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bị",
+        "start": 15,
+        "end": 17,
+        "confidence": 0.6213576793670654,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_date",
+        "value": "slide",
+        "start": 18,
+        "end": 23,
+        "confidence": 0.7284471988677979,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.7841776609420776,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 29,
+        "end": 32,
+        "confidence": 0.7982677817344666,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task chuẩn bị slide ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      },
+      {
+        "start": 24,
+        "end": 32,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 33,
+        "end": 36,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bị",
+        "start": 15,
+        "end": 17,
+        "confidence": 0.6028485894203186,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_date",
+        "value": "slide",
+        "start": 18,
+        "end": 23,
+        "confidence": 0.7056919932365417,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.8193354606628418,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 29,
+        "end": 32,
+        "confidence": 0.8826009035110474,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 33,
+        "end": 36,
+        "confidence": 0.7376271486282349,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task chuẩn bị slide ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      },
+      {
+        "start": 32,
+        "end": 35,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 24,
+        "end": 26,
+        "confidence": 0.572837233543396,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 27,
+        "end": 31,
+        "confidence": 0.6364389061927795,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 32,
+        "end": 35,
+        "confidence": 0.5816041231155396,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task chuẩn bị slide hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      },
+      {
+        "start": 28,
+        "end": 31,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 24,
+        "end": 27,
+        "confidence": 0.9056759476661682,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.8470950126647949,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task làm bài tập",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.483020544052124,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task làm bài tập ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      },
+      {
+        "start": 21,
+        "end": 29,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.68724524974823,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_date",
+        "value": "tập",
+        "start": 17,
+        "end": 20,
+        "confidence": 0.5206165313720703,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 21,
+        "end": 25,
+        "confidence": 0.7490952610969543,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.855566143989563,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task làm bài tập ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      },
+      {
+        "start": 21,
+        "end": 29,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 30,
+        "end": 33,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.6099846959114075,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "tập",
+        "start": 17,
+        "end": 20,
+        "confidence": 0.42819106578826904,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 21,
+        "end": 25,
+        "confidence": 0.7850814461708069,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.8954343199729919,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 30,
+        "end": 33,
+        "confidence": 0.7625170350074768,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task làm bài tập ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      },
+      {
+        "start": 29,
+        "end": 32,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 21,
+        "end": 23,
+        "confidence": 0.4477992355823517,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.604011058807373,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 29,
+        "end": 32,
+        "confidence": 0.5229461789131165,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task làm bài tập hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      },
+      {
+        "start": 25,
+        "end": 28,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 21,
+        "end": 24,
+        "confidence": 0.908028781414032,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 25,
+        "end": 28,
+        "confidence": 0.8594101667404175,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task đọc tài liệu",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "đọc tài liệu",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tạo task đọc tài liệu ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "đọc tài liệu",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 30,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "tài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.840740978717804,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_date",
+        "value": "liệu",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.4394772946834564,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.7334901690483093,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.7997938394546509,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task đọc tài liệu ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "đọc tài liệu",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 30,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 31,
+        "end": 34,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "tài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.8615131974220276,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "liệu",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.49335622787475586,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.7693483829498291,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.8808097243309021,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 31,
+        "end": 34,
+        "confidence": 0.7040911912918091,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task đọc tài liệu ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "đọc tài liệu",
+        "entity": "task_title"
+      },
+      {
+        "start": 30,
+        "end": 33,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 22,
+        "end": 24,
+        "confidence": 0.5148268342018127,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 25,
+        "end": 29,
+        "confidence": 0.6741719841957092,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 30,
+        "end": 33,
+        "confidence": 0.5982652306556702,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task đọc tài liệu hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "đọc tài liệu",
+        "entity": "task_title"
+      },
+      {
+        "start": 26,
+        "end": 29,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.9066988229751587,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.8330825567245483,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task chốt proposal",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "chốt proposal",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "proposal",
+        "start": 14,
+        "end": 22,
+        "confidence": 0.5879319310188293,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task chốt proposal ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "chốt proposal",
+        "entity": "task_title"
+      },
+      {
+        "start": 23,
+        "end": 31,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "proposal",
+        "start": 14,
+        "end": 22,
+        "confidence": 0.7494315505027771,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 23,
+        "end": 27,
+        "confidence": 0.7321727871894836,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.7233396768569946,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task chốt proposal ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "chốt proposal",
+        "entity": "task_title"
+      },
+      {
+        "start": 23,
+        "end": 31,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 32,
+        "end": 35,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "proposal",
+        "start": 14,
+        "end": 22,
+        "confidence": 0.7178237438201904,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 23,
+        "end": 27,
+        "confidence": 0.7837067246437073,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.8749004602432251,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 32,
+        "end": 35,
+        "confidence": 0.6188787221908569,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task chốt proposal ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "chốt proposal",
+        "entity": "task_title"
+      },
+      {
+        "start": 31,
+        "end": 34,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 23,
+        "end": 25,
+        "confidence": 0.6716867685317993,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 26,
+        "end": 30,
+        "confidence": 0.5977153778076172,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 31,
+        "end": 34,
+        "confidence": 0.5645195841789246,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task chốt proposal hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 22,
+        "value": "chốt proposal",
+        "entity": "task_title"
+      },
+      {
+        "start": 27,
+        "end": 30,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.8977670669555664,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.6755774617195129,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task họp team",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tạo task họp team ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      },
+      {
+        "start": 18,
+        "end": 26,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "team",
+        "start": 13,
+        "end": 17,
+        "confidence": 0.8472864627838135,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 18,
+        "end": 22,
+        "confidence": 0.761637806892395,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.7251251935958862,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task họp team ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      },
+      {
+        "start": 18,
+        "end": 26,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 27,
+        "end": 30,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "team",
+        "start": 13,
+        "end": 17,
+        "confidence": 0.7763482928276062,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 18,
+        "end": 22,
+        "confidence": 0.795852541923523,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.8702907562255859,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.7268586158752441,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task họp team ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      },
+      {
+        "start": 26,
+        "end": 29,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 18,
+        "end": 20,
+        "confidence": 0.6887882351875305,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 21,
+        "end": 25,
+        "confidence": 0.6399626731872559,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.5947317481040955,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task họp team hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 25,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.9136868119239807,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.8529619574546814,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task gửi email",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "email",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.49384817481040955,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task gửi email ngày mai",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      },
+      {
+        "start": 19,
+        "end": 27,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "email",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.8810051679611206,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 19,
+        "end": 23,
+        "confidence": 0.7842297554016113,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.8055466413497925,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "tạo task gửi email ngày mai 14h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      },
+      {
+        "start": 19,
+        "end": 27,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 28,
+        "end": 31,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "email",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.8541977405548096,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 19,
+        "end": 23,
+        "confidence": 0.8112198114395142,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.8860951662063599,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.7610189318656921,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task gửi email ưu tiên cao",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      },
+      {
+        "start": 27,
+        "end": 30,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 19,
+        "end": 21,
+        "confidence": 0.6677060723304749,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.6248427629470825,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.5842427015304565,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "tạo task gửi email hạn 16h",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      },
+      {
+        "start": 23,
+        "end": 26,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.913885772228241,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.8437578678131104,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task viết báo cáo",
+    "entities": [
+      {
+        "start": 10,
+        "end": 22,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 15,
+        "end": 18,
+        "confidence": 0.576692521572113,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.3467286229133606,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "thêm task viết báo cáo ngày mai",
+    "entities": [
+      {
+        "start": 10,
+        "end": 22,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 23,
+        "end": 31,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 15,
+        "end": 18,
+        "confidence": 0.863759458065033,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.43788570165634155,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 23,
+        "end": 27,
+        "confidence": 0.7931704521179199,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.8250851631164551,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "thêm task viết báo cáo ngày mai 14h",
+    "entities": [
+      {
+        "start": 10,
+        "end": 22,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 23,
+        "end": 31,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 32,
+        "end": 35,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 15,
+        "end": 18,
+        "confidence": 0.8258837461471558,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 19,
+        "end": 22,
+        "confidence": 0.598269522190094,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 23,
+        "end": 27,
+        "confidence": 0.8197513818740845,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 28,
+        "end": 31,
+        "confidence": 0.8945716023445129,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 32,
+        "end": 35,
+        "confidence": 0.7681493759155273,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task viết báo cáo ưu tiên cao",
+    "entities": [
+      {
+        "start": 10,
+        "end": 22,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 31,
+        "end": 34,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 26,
+        "end": 30,
+        "confidence": 0.5902760624885559,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 31,
+        "end": 34,
+        "confidence": 0.5177273750305176,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task viết báo cáo hạn 16h",
+    "entities": [
+      {
+        "start": 10,
+        "end": 22,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      },
+      {
+        "start": 27,
+        "end": 30,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.9100990891456604,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.8753417134284973,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task học sql",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.7769232392311096,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task học sql ngày mai",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 18,
+        "end": 26,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.8799168467521667,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 18,
+        "end": 22,
+        "confidence": 0.7783870697021484,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.7618790864944458,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "thêm task học sql ngày mai 14h",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 18,
+        "end": 26,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 27,
+        "end": 30,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.8631764650344849,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 18,
+        "end": 22,
+        "confidence": 0.7965507507324219,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 23,
+        "end": 26,
+        "confidence": 0.8775655627250671,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.659868061542511,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task học sql ưu tiên cao",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 26,
+        "end": 29,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 18,
+        "end": 20,
+        "confidence": 0.6204264760017395,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 21,
+        "end": 25,
+        "confidence": 0.6214854717254639,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.5340417623519897,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task học sql hạn 16h",
+    "entities": [
+      {
+        "start": 10,
+        "end": 17,
+        "value": "học sql",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 25,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.9082189202308655,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.8412933945655823,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task review code",
+    "entities": [
+      {
+        "start": 10,
+        "end": 21,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.4864635765552521,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "thêm task review code ngày mai",
+    "entities": [
+      {
+        "start": 10,
+        "end": 21,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 30,
+        "value": "ngày mai",
+        "entity": "due_date"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.8762441873550415,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.7915208339691162,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.7610300183296204,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "thêm task review code ngày mai 14h",
+    "entities": [
+      {
+        "start": 10,
+        "end": 21,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 22,
+        "end": 30,
+        "value": "ngày mai",
+        "entity": "due_date"
+      },
+      {
+        "start": 31,
+        "end": 34,
+        "value": "14h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 17,
+        "end": 21,
+        "confidence": 0.8653382658958435,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "ngày",
+        "start": 22,
+        "end": 26,
+        "confidence": 0.8263371586799622,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "mai",
+        "start": 27,
+        "end": 30,
+        "confidence": 0.8879781365394592,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "14h",
+        "start": 31,
+        "end": 34,
+        "confidence": 0.7770706415176392,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task review code ưu tiên cao",
+    "entities": [
+      {
+        "start": 10,
+        "end": 21,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 30,
+        "end": 33,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 22,
+        "end": 24,
+        "confidence": 0.6962480545043945,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 25,
+        "end": 29,
+        "confidence": 0.6797053813934326,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 30,
+        "end": 33,
+        "confidence": 0.6076682806015015,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "thêm task review code hạn 16h",
+    "entities": [
+      {
+        "start": 10,
+        "end": 21,
+        "value": "review code",
+        "entity": "task_title"
+      },
+      {
+        "start": 26,
+        "end": 29,
+        "value": "16h",
+        "entity": "due_time"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_time",
+        "value": "hạn",
+        "start": 22,
+        "end": 25,
+        "confidence": 0.9167605042457581,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "16h",
+        "start": 26,
+        "end": 29,
+        "confidence": 0.8617719411849976,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa task viết báo cáo",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.6373082399368286,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.47683337330818176,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên viết báo cáo",
+    "entities": [
+      {
+        "start": 16,
+        "end": 28,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên viết báo cáo",
+        "start": 12,
+        "end": 28,
+        "confidence": 0.9591370224952698,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task học sql",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.7540432214736938,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên học sql",
+    "entities": [
+      {
+        "start": 16,
+        "end": 23,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên học sql",
+        "start": 12,
+        "end": 23,
+        "confidence": 0.9597450892130533,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task review code",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 16,
+        "end": 20,
+        "confidence": 0.6154739260673523,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên review code",
+    "entities": [
+      {
+        "start": 16,
+        "end": 27,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên review code",
+        "start": 12,
+        "end": 27,
+        "confidence": 0.965620239575704,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task gọi khách hàng",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xóa task có tên gọi khách hàng",
+    "entities": [
+      {
+        "start": 16,
+        "end": 30,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên gọi khách hàng",
+        "start": 12,
+        "end": 30,
+        "confidence": 0.9598823487758636,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task chuẩn bị slide",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xóa task có tên chuẩn bị slide",
+    "entities": [
+      {
+        "start": 16,
+        "end": 30,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên chuẩn bị slide",
+        "start": 12,
+        "end": 30,
+        "confidence": 0.9550302028656006,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task làm bài tập",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.5138862729072571,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên làm bài tập",
+    "entities": [
+      {
+        "start": 16,
+        "end": 27,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên làm bài tập",
+        "start": 12,
+        "end": 27,
+        "confidence": 0.9688243567943573,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task họp team",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "team",
+        "start": 13,
+        "end": 17,
+        "confidence": 0.48584863543510437,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên họp team",
+    "entities": [
+      {
+        "start": 16,
+        "end": 24,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên họp team",
+        "start": 12,
+        "end": 24,
+        "confidence": 0.9658035437266032,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task gửi email",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "email",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.6461825370788574,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên gửi email",
+    "entities": [
+      {
+        "start": 16,
+        "end": 25,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên gửi email",
+        "start": 12,
+        "end": 25,
+        "confidence": 0.9669591188430786,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task fix bug",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "fix bug",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bug",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.4419333040714264,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên fix bug",
+    "entities": [
+      {
+        "start": 16,
+        "end": 23,
+        "value": "fix bug",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên fix bug",
+        "start": 12,
+        "end": 23,
+        "confidence": 0.9611307581265768,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task mua đồ",
+    "entities": [
+      {
+        "start": 9,
+        "end": 15,
+        "value": "mua đồ",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "đồ",
+        "start": 13,
+        "end": 15,
+        "confidence": 0.5411630272865295,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa task có tên mua đồ",
+    "entities": [
+      {
+        "start": 16,
+        "end": 22,
+        "value": "mua đồ",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên mua đồ",
+        "start": 12,
+        "end": 22,
+        "confidence": 0.9664397041002909,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task viết báo cáo",
+    "entities": [
+      {
+        "start": 9,
+        "end": 21,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "báo",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.5674962997436523,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "due_time",
+        "value": "cáo",
+        "start": 18,
+        "end": 21,
+        "confidence": 0.3372851014137268,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên viết báo cáo",
+    "entities": [
+      {
+        "start": 16,
+        "end": 28,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên viết báo cáo",
+        "start": 12,
+        "end": 28,
+        "confidence": 0.9527094662189484,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task học sql",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "sql",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.726205050945282,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên học sql",
+    "entities": [
+      {
+        "start": 16,
+        "end": 23,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên học sql",
+        "start": 12,
+        "end": 23,
+        "confidence": 0.9521627624829611,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task review code",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "code",
+        "start": 16,
+        "end": 20,
+        "confidence": 0.4384292960166931,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên review code",
+    "entities": [
+      {
+        "start": 16,
+        "end": 27,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên review code",
+        "start": 12,
+        "end": 27,
+        "confidence": 0.9684099356333414,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task gọi khách hàng",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xoá task có tên gọi khách hàng",
+    "entities": [
+      {
+        "start": 16,
+        "end": 30,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên gọi khách hàng",
+        "start": 12,
+        "end": 30,
+        "confidence": 0.9568564295768738,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task chuẩn bị slide",
+    "entities": [
+      {
+        "start": 9,
+        "end": 23,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xoá task có tên chuẩn bị slide",
+    "entities": [
+      {
+        "start": 16,
+        "end": 30,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên chuẩn bị slide",
+        "start": 12,
+        "end": 30,
+        "confidence": 0.9578828364610672,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task làm bài tập",
+    "entities": [
+      {
+        "start": 9,
+        "end": 20,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bài",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.4641664922237396,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên làm bài tập",
+    "entities": [
+      {
+        "start": 16,
+        "end": 27,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên làm bài tập",
+        "start": 12,
+        "end": 27,
+        "confidence": 0.9684393256902695,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task họp team",
+    "entities": [
+      {
+        "start": 9,
+        "end": 17,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xoá task có tên họp team",
+    "entities": [
+      {
+        "start": 16,
+        "end": 24,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên họp team",
+        "start": 12,
+        "end": 24,
+        "confidence": 0.9676714340845743,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task gửi email",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "email",
+        "start": 13,
+        "end": 18,
+        "confidence": 0.44644129276275635,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên gửi email",
+    "entities": [
+      {
+        "start": 16,
+        "end": 25,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên gửi email",
+        "start": 12,
+        "end": 25,
+        "confidence": 0.968086302280426,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task fix bug",
+    "entities": [
+      {
+        "start": 9,
+        "end": 16,
+        "value": "fix bug",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "bug",
+        "start": 13,
+        "end": 16,
+        "confidence": 0.4767047166824341,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên fix bug",
+    "entities": [
+      {
+        "start": 16,
+        "end": 23,
+        "value": "fix bug",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên fix bug",
+        "start": 12,
+        "end": 23,
+        "confidence": 0.9639939665794373,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task mua đồ",
+    "entities": [
+      {
+        "start": 9,
+        "end": 15,
+        "value": "mua đồ",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "đồ",
+        "start": 13,
+        "end": 15,
+        "confidence": 0.5847902297973633,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá task có tên mua đồ",
+    "entities": [
+      {
+        "start": 16,
+        "end": 22,
+        "value": "mua đồ",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "tên mua đồ",
+        "start": 12,
+        "end": 22,
+        "confidence": 0.9669720331827799,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ viết báo cáo",
+    "entities": [
+      {
+        "start": 13,
+        "end": 25,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ viết báo cáo",
+        "start": 10,
+        "end": 25,
+        "confidence": 0.7682628929615021,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên viết báo cáo",
+    "entities": [
+      {
+        "start": 20,
+        "end": 32,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.7102376222610474,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "task_title",
+        "value": "viết báo cáo",
+        "start": 20,
+        "end": 32,
+        "confidence": 0.8537687460581461,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ học sql",
+    "entities": [
+      {
+        "start": 13,
+        "end": 20,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ học sql",
+        "start": 10,
+        "end": 20,
+        "confidence": 0.7433609167734782,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên học sql",
+    "entities": [
+      {
+        "start": 20,
+        "end": 27,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.7772707343101501,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ review code",
+    "entities": [
+      {
+        "start": 13,
+        "end": 24,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ review code",
+        "start": 10,
+        "end": 24,
+        "confidence": 0.9071056445439657,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên review code",
+    "entities": [
+      {
+        "start": 20,
+        "end": 31,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.8374791145324707,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ gọi khách hàng",
+    "entities": [
+      {
+        "start": 13,
+        "end": 27,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ gọi khách hàng",
+        "start": 10,
+        "end": 27,
+        "confidence": 0.8073411285877228,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên gọi khách hàng",
+    "entities": [
+      {
+        "start": 20,
+        "end": 34,
+        "value": "gọi khách hàng",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.8058531880378723,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "task_title",
+        "value": "tên gọi khách hàng",
+        "start": 16,
+        "end": 34,
+        "confidence": 0.9176085144281387,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ chuẩn bị slide",
+    "entities": [
+      {
+        "start": 13,
+        "end": 27,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xóa nhiệm vụ có tên chuẩn bị slide",
+    "entities": [
+      {
+        "start": 20,
+        "end": 34,
+        "value": "chuẩn bị slide",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xóa nhiệm vụ làm bài tập",
+    "entities": [
+      {
+        "start": 13,
+        "end": 24,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ làm bài tập",
+        "start": 10,
+        "end": 24,
+        "confidence": 0.8619461059570312,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên làm bài tập",
+    "entities": [
+      {
+        "start": 20,
+        "end": 31,
+        "value": "làm bài tập",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xóa nhiệm vụ họp team",
+    "entities": [
+      {
+        "start": 13,
+        "end": 21,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ họp team",
+        "start": 10,
+        "end": 21,
+        "confidence": 0.7629675269126892,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên họp team",
+    "entities": [
+      {
+        "start": 20,
+        "end": 28,
+        "value": "họp team",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.8836776614189148,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "task_title",
+        "value": "tên họp team",
+        "start": 16,
+        "end": 28,
+        "confidence": 0.8694157004356384,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ gửi email",
+    "entities": [
+      {
+        "start": 13,
+        "end": 22,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ gửi email",
+        "start": 10,
+        "end": 22,
+        "confidence": 0.8055062294006348,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên gửi email",
+    "entities": [
+      {
+        "start": 20,
+        "end": 29,
+        "value": "gửi email",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.852532684803009,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ fix bug",
+    "entities": [
+      {
+        "start": 13,
+        "end": 20,
+        "value": "fix bug",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ fix bug",
+        "start": 10,
+        "end": 20,
+        "confidence": 0.7129050195217133,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ có tên fix bug",
+    "entities": [
+      {
+        "start": 20,
+        "end": 27,
+        "value": "fix bug",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.5442652702331543,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xóa nhiệm vụ mua đồ",
+    "entities": [
+      {
+        "start": 13,
+        "end": 19,
+        "value": "mua đồ",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "xóa nhiệm vụ có tên mua đồ",
+    "entities": [
+      {
+        "start": 20,
+        "end": 26,
+        "value": "mua đồ",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ",
+        "start": 10,
+        "end": 12,
+        "confidence": 0.7458399534225464,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá nhiệm vụ viết báo cáo",
+    "entities": [
+      {
+        "start": 13,
+        "end": 25,
+        "value": "viết báo cáo",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ viết báo cáo",
+        "start": 10,
+        "end": 25,
+        "confidence": 0.9157299399375916,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá nhiệm vụ học sql",
+    "entities": [
+      {
+        "start": 13,
+        "end": 20,
+        "value": "học sql",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ học sql",
+        "start": 10,
+        "end": 20,
+        "confidence": 0.844543973604838,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "xoá nhiệm vụ review code",
+    "entities": [
+      {
+        "start": 13,
+        "end": 24,
+        "value": "review code",
+        "entity": "task_title"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "task_title",
+        "value": "vụ review code",
+        "start": 10,
+        "end": 24,
+        "confidence": 0.9557456175486246,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "đồng ý xóa danh sách vừa chọn",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "danh",
+        "start": 11,
+        "end": 15,
+        "confidence": 0.39622563123703003,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "đồng ý xóa danh sách vừa chọn ngay",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "danh",
+        "start": 11,
+        "end": 15,
+        "confidence": 0.6684638857841492,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "đồng ý xóa danh sách vừa chọn đi",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "danh",
+        "start": 11,
+        "end": 15,
+        "confidence": 0.5974440574645996,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "rollback thao tác xóa task",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "due_date",
+        "value": "tác",
+        "start": 14,
+        "end": 17,
+        "confidence": 0.3680516481399536,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "rollback thao tác xóa task nha",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "thao",
+        "start": 9,
+        "end": 13,
+        "confidence": 0.45404115319252014,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "lọc task todo",
+    "entities": [
+      {
+        "start": 9,
+        "end": 13,
+        "value": "todo",
+        "entity": "task_status"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "lọc task completed",
+    "entities": [
+      {
+        "start": 9,
+        "end": 18,
+        "value": "completed",
+        "entity": "task_status"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "filter tasks status in-progress",
+    "entities": [
+      {
+        "start": 20,
+        "end": 31,
+        "value": "in-progress",
+        "entity": "task_status"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "cho mình task ưu tiên high",
+    "entities": [
+      {
+        "start": 22,
+        "end": 26,
+        "value": "high",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "lọc task ưu tiên low",
+    "entities": [
+      {
+        "start": 17,
+        "end": 20,
+        "value": "low",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 9,
+        "end": 11,
+        "confidence": 0.319135844707489,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "lọc task status todo ưu tiên high",
+    "entities": [
+      {
+        "start": 16,
+        "end": 20,
+        "value": "todo",
+        "entity": "task_status"
+      },
+      {
+        "start": 29,
+        "end": 33,
+        "value": "high",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "status",
+        "start": 9,
+        "end": 15,
+        "confidence": 0.29084232449531555,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 21,
+        "end": 23,
+        "confidence": 0.37969979643821716,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 24,
+        "end": 28,
+        "confidence": 0.33929768204689026,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "filter tasks priority medium and status completed",
+    "entities": [
+      {
+        "start": 22,
+        "end": 28,
+        "value": "medium",
+        "entity": "priority"
+      },
+      {
+        "start": 40,
+        "end": 49,
+        "value": "completed",
+        "entity": "task_status"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "medium",
+        "start": 22,
+        "end": 28,
+        "confidence": 0.18808303773403168,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  },
+  {
+    "text": "lọc task nhãn work",
+    "entities": [
+      {
+        "start": 14,
+        "end": 18,
+        "value": "work",
+        "entity": "task_label"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "note_title",
+        "value": "nhãn work",
+        "start": 9,
+        "end": 18,
+        "confidence": 0.3362937420606613,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "lọc task label personal",
+    "entities": [
+      {
+        "start": 15,
+        "end": 23,
+        "value": "personal",
+        "entity": "task_label"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "label",
+        "start": 9,
+        "end": 14,
+        "confidence": 0.29969528317451477,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "lọc task chứa báo cáo",
+    "entities": [
+      {
+        "start": 14,
+        "end": 21,
+        "value": "báo cáo",
+        "entity": "search_query"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "filter tasks contains meeting",
+    "entities": [
+      {
+        "start": 22,
+        "end": 29,
+        "value": "meeting",
+        "entity": "search_query"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "tìm task sql",
+    "entities": [
+      {
+        "start": 9,
+        "end": 12,
+        "value": "sql",
+        "entity": "search_query"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "lọc task từ 2026-04-26T00:00:00 đến 2026-04-30T23:59:59",
+    "entities": [
+      {
+        "start": 12,
+        "end": 31,
+        "value": "2026-04-26T00:00:00",
+        "entity": "due_from"
+      },
+      {
+        "start": 36,
+        "end": 55,
+        "value": "2026-04-30T23:59:59",
+        "entity": "due_to"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "filter tasks from 2026-05-01T00:00:00 to 2026-05-07T23:59:59",
+    "entities": [
+      {
+        "start": 18,
+        "end": 37,
+        "value": "2026-05-01T00:00:00",
+        "entity": "due_from"
+      },
+      {
+        "start": 41,
+        "end": 60,
+        "value": "2026-05-07T23:59:59",
+        "entity": "due_to"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "lọc task todo nhãn work chứa report",
+    "entities": [
+      {
+        "start": 9,
+        "end": 13,
+        "value": "todo",
+        "entity": "task_status"
+      },
+      {
+        "start": 19,
+        "end": 23,
+        "value": "work",
+        "entity": "task_label"
+      },
+      {
+        "start": 29,
+        "end": 35,
+        "value": "report",
+        "entity": "search_query"
+      }
+    ],
+    "predicted_entities": []
+  },
+  {
+    "text": "cho mình danh sách task theo bộ lọc",
+    "entities": [],
+    "predicted_entities": [
+      {
+        "entity": "note_keyword",
+        "value": "sách",
+        "start": 14,
+        "end": 18,
+        "confidence": 0.2950613498687744,
+        "extractor": "PhobertEntityExtractor"
+      }
+    ]
+  },
+  {
+    "text": "lọc task ưu tiên cao",
+    "entities": [
+      {
+        "start": 17,
+        "end": 20,
+        "value": "cao",
+        "entity": "priority"
+      }
+    ],
+    "predicted_entities": [
+      {
+        "entity": "priority",
+        "value": "ưu",
+        "start": 9,
+        "end": 11,
+        "confidence": 0.5217770934104919,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "tiên",
+        "start": 12,
+        "end": 16,
+        "confidence": 0.38902342319488525,
+        "extractor": "PhobertEntityExtractor"
+      },
+      {
+        "entity": "priority",
+        "value": "high",
+        "start": 17,
+        "end": 20,
+        "confidence": 0.44500982761383057,
+        "extractor": "PhobertEntityExtractor",
+        "processors": [
+          "EntitySynonymMapper"
+        ]
+      }
+    ]
+  }
+]

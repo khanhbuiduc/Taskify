@@ -1,0 +1,6 @@
+version: "3.1"
+stories:
+- story: kiểm thử lọc task (C:\Users\HP PC\source\repos\Taskify\rasa\tests\test_stories.yml)
+  steps:
+  - intent: filter_tasks
+  - action: action_filter_tasks  # predicted: action_default_fallback

@@ -53,3 +53,8 @@ rules:
   steps:
   - intent: list_tasks_by_date
   - action: action_list_tasks
+
+- rule: Filter tasks directly
+  steps:
+  - intent: filter_tasks
+  - action: action_filter_tasks

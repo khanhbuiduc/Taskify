@@ -72,7 +72,7 @@ It exists to prevent id-to-intent mismatch when loading PhoBERT checkpoints into
 }
 ```
 
-## Target Intent Set After Refactor (20 intents)
+## Target Intent Set After Refactor (21 intents)
 1. greet
 2. goodbye
 3. affirm
@@ -82,17 +82,18 @@ It exists to prevent id-to-intent mismatch when loading PhoBERT checkpoints into
 7. list_tasks_by_date
 8. summarize_week
 9. help_prioritize
-10. create_task
-11. create_note
-12. list_notes
-13. search_notes
-14. pin_note
-15. update_note
-16. delete_note
-17. delete_task
-18. confirm_delete_selection
-19. undo_delete_task
-20. nlu_fallback
+10. filter_tasks
+11. create_task
+12. create_note
+13. list_notes
+14. search_notes
+15. pin_note
+16. update_note
+17. delete_note
+18. delete_task
+19. confirm_delete_selection
+20. undo_delete_task
+21. nlu_fallback
 
 Do not use `sorted()` when building label ids. Export and keep the exact training-order mapping from the external training script.
 

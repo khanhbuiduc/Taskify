@@ -68,11 +68,31 @@ export type UndoResultPayload = {
   restoredTaskIds: string[];
 };
 
+export type TaskListPagePayload = {
+  type: "task_list_page";
+  tasks: Task[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+  appliedFilters?: {
+    search?: string | null;
+    status?: string | null;
+    priority?: string | null;
+    label?: string | null;
+    dueFrom?: string | null;
+    dueTo?: string | null;
+  };
+};
+
 export type AssistantPayload =
   | TaskPickerPayload
   | NotePickerPayload
   | DeleteResultPayload
-  | UndoResultPayload;
+  | UndoResultPayload
+  | TaskListPagePayload;
 
 // ---------------------------------------------------------------------------
 // Task list parser (Rasa format_task_list output)
@@ -311,6 +331,9 @@ export function parseAssistantPayload(
     }
     if (parsed.type === "undo_result") {
       return parsed as UndoResultPayload;
+    }
+    if (parsed.type === "task_list_page") {
+      return parsed as TaskListPagePayload;
     }
 
     return null;

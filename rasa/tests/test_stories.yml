@@ -1,0 +1,62 @@
+version: "3.1"
+
+stories:
+  - story: kiểm thử luồng chào hỏi
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - action: utter_ask_howcanhelp
+
+  - story: kiểm thử hỏi trợ giúp
+    steps:
+      - intent: ask_howcanhelp
+      - action: utter_ask_howcanhelp
+
+  - story: kiểm thử liệt kê task quá hạn
+    steps:
+      - intent: list_overdue_tasks
+      - action: action_list_tasks
+
+  - story: kiểm thử lọc task
+    steps:
+      - intent: filter_tasks
+      - action: action_filter_tasks
+
+  - story: kiểm thử liệt kê ghi chú
+    steps:
+      - intent: list_notes
+      - action: action_list_notes
+
+  - story: kiểm thử tạo ghi chú
+    steps:
+      - intent: create_note
+      - action: action_create_note
+
+  - story: kiểm thử form tạo task luồng thành công
+    steps:
+      - intent: create_task
+      - action: create_task_form
+      - active_loop: create_task_form
+      - intent: create_task
+      - action: create_task_form
+      - active_loop: null
+      - action: action_create_task
+
+  - story: kiểm thử form tạo task luồng hủy
+    steps:
+      - intent: create_task
+      - action: create_task_form
+      - active_loop: create_task_form
+      - intent: deny
+      - action: action_cancel_create_task
+      - active_loop: null
+
+  - story: kiểm thử fallback
+    steps:
+      - intent: nlu_fallback
+      - action: utter_default
+
+  - story: kiểm thử tạm biệt
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye

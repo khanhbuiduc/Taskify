@@ -376,6 +376,23 @@ def build_dataset():
         ),
         25,
     )
+    intents["filter_tasks"] = expand(
+        uniq(
+            [
+                "lọc task todo",
+                "lọc task completed",
+                "lọc task in-progress",
+                "lọc task ưu tiên cao",
+                "lọc task ưu tiên thấp",
+                "lọc task status todo ưu tiên high",
+                "lọc task nhãn work",
+                "lọc task label personal",
+                "lọc task chứa báo cáo",
+                "filter tasks contains meeting",
+            ]
+        ),
+        25,
+    )
     intents["create_task"] = create_task_examples()[:65]
     intents["delete_task"] = delete_task_examples()[:65]
     intents["confirm_delete_selection"] = expand(
@@ -463,6 +480,7 @@ def render_nlu(intents):
         "list_tasks_by_date",
         "summarize_week",
         "help_prioritize",
+        "filter_tasks",
         "create_task",
         "delete_task",
         "confirm_delete_selection",

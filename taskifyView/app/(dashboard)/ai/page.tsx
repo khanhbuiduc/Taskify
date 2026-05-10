@@ -1,16 +1,16 @@
 "use client";
 
 /**
- * app/(dashboard)/ai/page.tsx — AI Chat page (orchestrator).
+ * app/(dashboard)/ai/page.tsx â€” AI Chat page (orchestrator).
  *
- * Tất cả UI components được tách vào components/javis/:
- *   - ChatSidebar        – panel danh sách hội thoại
- *   - ChatMessageList    – danh sách tin nhắn + typing indicator
- *   - ChatInputBar       – ô nhập, voice, suggested prompts
+ * Táº¥t cáº£ UI components Ä‘Æ°á»£c tÃ¡ch vÃ o components/javis/:
+ *   - ChatSidebar        â€“ panel danh sÃ¡ch há»™i thoáº¡i
+ *   - ChatMessageList    â€“ danh sÃ¡ch tin nháº¯n + typing indicator
+ *   - ChatInputBar       â€“ Ã´ nháº­p, voice, suggested prompts
  *
  * Pure utils & hooks:
- *   - chat-utils.ts       – parse/match helpers
- *   - use-resolved-tasks  – cache messageId → taskId
+ *   - chat-utils.ts       â€“ parse/match helpers
+ *   - use-resolved-tasks  â€“ cache messageId â†’ taskId
  */
 
 import { useState, useRef, useEffect, useMemo } from "react";
@@ -32,7 +32,7 @@ import { TaskModal } from "@/components/task/task-modal";
 import { DeleteDialog } from "@/components/task/delete-dialog";
 import { NoteEditorDialog } from "@/components/notes/note-editor-dialog";
 
-import { ChatSidebar } from "@/components/javis/chat-sidebar";
+
 import { ChatMessageList } from "@/components/javis/chat-message-list";
 import { ChatInputBar } from "@/components/javis/chat-input-bar";
 import { useResolvedTasks } from "@/components/javis/use-resolved-tasks";
@@ -42,7 +42,7 @@ import type { ChatMessageRole, Note } from "@/lib/types";
 const READ_REPLIES_STORAGE_KEY = "taskify.ai.read-replies-aloud";
 
 export default function AILayoutPage() {
-  // ── Chat session store ──────────────────────────────────────────────────
+  // â”€â”€ Chat session store â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const {
     sessions,
     activeSessionId,
@@ -55,17 +55,17 @@ export default function AILayoutPage() {
     isSending,
   } = useChatSessionStore();
 
-  // ── Local state ─────────────────────────────────────────────────────────
+  // â”€â”€ Local state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [isTyping] = useState(false);
   const [input, setInput] = useState("");
   const [readRepliesAloud, setReadRepliesAloud] = useState(true);
   const [hasLoadedVoicePreference, setHasLoadedVoicePreference] =
     useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+
   const lastSessionIdRef = useRef<string | null>(null);
   const toastedMessageIdsRef = useRef<Set<string>>(new Set());
 
-  // ── Note store & actions ────────────────────────────────────────────────
+  // â”€â”€ Note store & actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const { notes, createNote, updateNote, deleteNote, togglePin } = useNoteStore();
   const [noteDialogOpen, setNoteDialogOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
@@ -83,7 +83,7 @@ export default function AILayoutPage() {
     }
   };
 
-  // ── Speech ───────────────────────────────────────────────────────────────
+  // â”€â”€ Speech â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const {
     isSupported: isSpeechRecognitionSupported,
     isListening,
@@ -101,7 +101,7 @@ export default function AILayoutPage() {
     cancel: cancelSpeech,
   } = useSpeechSynthesis({ lang: "vi-VN" });
 
-  // ── Task store & actions ─────────────────────────────────────────────────
+  // â”€â”€ Task store & actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const { tasks, fetchTasks, updateTaskStatus } = useTaskStore();
   const {
     modalOpen,
@@ -121,11 +121,11 @@ export default function AILayoutPage() {
     handleSaveTask,
   } = useTaskActions();
 
-  // ── Resolved task cache ──────────────────────────────────────────────────
+  // â”€â”€ Resolved task cache â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const { resolvedTaskIdMap, handleTaskCardClick, handleTaskCardStatusToggle } =
     useResolvedTasks(tasks, fetchTasks, openDetail, updateTaskStatus);
 
-  // ── Derive display messages ──────────────────────────────────────────────
+  // â”€â”€ Derive display messages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const combinedMessages = useMemo(() => {
     if (!activeSessionId) return [];
     const list = persistedMessages[activeSessionId] ?? [];
@@ -140,12 +140,12 @@ export default function AILayoutPage() {
       .filter((message) => {
         if (message.role !== "assistant") return true;
         const payload = parseAssistantPayload(message.metadataJson ?? null);
-        return !payload || payload.type === "task_picker";
+        return !payload || (payload.type !== "delete_result" && payload.type !== "undo_result");
       })
       .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   }, [activeSessionId, persistedMessages]);
 
-  // ── Effects ──────────────────────────────────────────────────────────────
+  // â”€â”€ Effects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   useEffect(() => {
     void init();
   }, [init]);
@@ -225,7 +225,7 @@ export default function AILayoutPage() {
     }
   }, [activeSessionId, persistedMessages]);
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
+  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleSend = async (forcedMessage?: string, metadata?: unknown) => {
     const msg = (forcedMessage ?? input).trim();
     if (!msg) return;
@@ -249,19 +249,24 @@ export default function AILayoutPage() {
   };
 
   const handleDeleteSelectionConfirm = (taskIds: string[]) => {
-    void handleSend("xác nhận xóa các task đã chọn", {
+    void handleSend("xÃ¡c nháº­n xÃ³a cÃ¡c task Ä‘Ã£ chá»n", {
       action: "confirm_delete_selection",
       taskIds,
     });
   };
 
   const handleUndoDelete = (undoToken: string) => {
-    void handleSend("undo xóa task", {
+    void handleSend("undo xÃ³a task", {
       action: "undo_delete",
       undoToken,
     });
   };
-
+  const handleTaskFilterPage = (direction: "next" | "prev") => {
+    void handleSend("lọc task", {
+      action: "task_filter_page",
+      direction,
+    });
+  };
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -286,36 +291,15 @@ export default function AILayoutPage() {
     startListening(input);
   };
 
-  // ── Render ───────────────────────────────────────────────────────────────
+  // â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
     <div className="flex h-[calc(100vh-7rem)] gap-3">
-      {/* ── Sidebar ── */}
-      <ChatSidebar
-        sessions={sessions}
-        activeSessionId={activeSessionId}
-        isSending={isSending}
-        collapsed={collapsed}
-        onSelectSession={(id) => void selectSession(id)}
-        onNewSession={() => void createNewSession()}
-        onDeleteSession={(id) => void deleteSession(id)}
-      />
+      {/* â”€â”€ Sidebar â”€â”€ */}
 
-      {/* ── Chat pane ── */}
+
+      {/* â”€â”€ Chat pane â”€â”€ */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Collapse toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 self-start"
-          onClick={() => setCollapsed((v) => !v)}
-          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {collapsed ? (
-            <ChevronRight className="h-4 w-4" />
-          ) : (
-            <ChevronLeft className="h-4 w-4" />
-          )}
-        </Button>
+
 
         <Card
           className={cn(
@@ -336,12 +320,13 @@ export default function AILayoutPage() {
               await updateTaskStatus(task.id, next);
             }}
             onConfirmDeleteSelection={handleDeleteSelectionConfirm}
+            onTaskFilterPage={handleTaskFilterPage}
             onNoteCardEdit={(note) => {
               setEditingNote(note);
               setNoteDialogOpen(true);
             }}
             onNoteCardDelete={(note) => {
-              void handleSend("xác nhận xóa các note đã chọn", {
+              void handleSend("xÃ¡c nháº­n xÃ³a cÃ¡c note Ä‘Ã£ chá»n", {
                 action: "confirm_delete_note",
                 noteIds: [note.id]
               });
