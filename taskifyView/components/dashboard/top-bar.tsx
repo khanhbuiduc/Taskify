@@ -15,24 +15,22 @@ import { ThemeToggle } from "./theme-toggle";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useAuthStore } from "@/lib/auth-store";
 import { API_CONFIG } from "@/lib/api/config";
-import {
-  useNotificationStore,
-  type Notification,
-} from "@/lib/notification-store";
+import { useNotificationStore } from "@/lib/notification-store";
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-type View =
-  | "tasks"
-  | "notes"
-  | "events"
-  | "finance"
-  | "ai-chat"
-  | "settings"
-  | "focus";
+type View = "tasks" | "notes" | "events" | "finance" | "ai-chat" | "settings" | "focus";
 
 const viewTitles: Record<string, { title: string; subtitle: string }> = {
+  "/settingsaccount": {
+    title: "Account Settings",
+    subtitle: "Manage your account and preferences",
+  },
+  "/settings": {
+    title: "Settings",
+    subtitle: "Manage workspace configuration and integrations",
+  },
   "/tasks": { title: "Tasks", subtitle: "Manage your tasks and projects" },
   "/notes": { title: "Notes", subtitle: "Capture your thoughts and ideas" },
   "/events": { title: "Events", subtitle: "Manage your schedule and events" },
@@ -41,18 +39,12 @@ const viewTitles: Record<string, { title: string; subtitle: string }> = {
     title: "AI Assistant",
     subtitle: "Chat with AI to manage tasks",
   },
-  "/settings": {
-    title: "Account Settings",
-    subtitle: "Manage your account and preferences",
-  },
   "/focus": {
     title: "Focus Session",
     subtitle: "Stay focused and productive",
   },
 };
 
-
-// Helper function to format time ago
 function formatTimeAgo(dateString: string): string {
   const date = new Date(dateString);
   const now = new Date();
@@ -71,14 +63,10 @@ interface TopBarProps {
   onNewTask?: () => void;
 }
 
-export function TopBar({
-  currentView,
-  onOpenSettings,
-  onNewTask,
-}: TopBarProps = {}) {
+export function TopBar({ currentView, onOpenSettings, onNewTask }: TopBarProps = {}) {
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const viewPathMap: Record<View, string> = {
     tasks: "/tasks",
     notes: "/notes",
@@ -99,6 +87,7 @@ export function TopBar({
     }
   }
   const { title, subtitle } = titleData;
+
   const { user, logout } = useAuthStore();
   const {
     notifications,
@@ -111,7 +100,6 @@ export function TopBar({
     updateSettings: updateNotificationSettings,
   } = useNotificationStore();
 
-  // Initialize notifications on mount
   useEffect(() => {
     initializeNotifications();
   }, [initializeNotifications]);
@@ -137,11 +125,9 @@ export function TopBar({
 
   const getAvatarUrl = () => {
     if (!user?.avatarUrl) return null;
-    // If avatarUrl is absolute URL, use it directly
     if (user.avatarUrl.startsWith("http")) {
       return user.avatarUrl;
     }
-    // Otherwise, prepend API base URL
     return `${API_CONFIG.baseURL}${user.avatarUrl}`;
   };
 
@@ -152,16 +138,13 @@ export function TopBar({
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 backdrop-blur-sm px-6">
-      {/* Page Title */}
       <div>
         <h1 className="text-xl font-semibold text-foreground">{title}</h1>
         <p className="text-sm text-muted-foreground hidden sm:block">{subtitle}</p>
       </div>
 
-      {/* Actions */}
       <div className="flex items-center gap-3">
-        {/* Add Task Button */}
-        {onNewTask && !pathname.startsWith("/settings") && (
+        {onNewTask && !pathname.startsWith("/settings") && !pathname.startsWith("/settingsaccount") && (
           <Button
             onClick={onNewTask}
             size="sm"
@@ -172,10 +155,8 @@ export function TopBar({
           </Button>
         )}
 
-        {/* Theme Toggle */}
         <ThemeToggle />
 
-        {/* Notifications */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
@@ -189,9 +170,7 @@ export function TopBar({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80">
             <div className="flex items-center justify-between px-2">
-              <DropdownMenuLabel className="px-0">
-                Notifications
-              </DropdownMenuLabel>
+              <DropdownMenuLabel className="px-0">Notifications</DropdownMenuLabel>
               <div className="flex items-center gap-1">
                 <Button
                   variant="ghost"
@@ -203,11 +182,7 @@ export function TopBar({
                       soundEnabled: !notificationSettings.soundEnabled,
                     });
                   }}
-                  title={
-                    notificationSettings.soundEnabled
-                      ? "Mute sounds"
-                      : "Unmute sounds"
-                  }
+                  title={notificationSettings.soundEnabled ? "Mute sounds" : "Unmute sounds"}
                 >
                   {notificationSettings.soundEnabled ? (
                     <Volume2 className="h-3.5 w-3.5 text-muted-foreground" />
@@ -233,9 +208,7 @@ export function TopBar({
             </div>
             <DropdownMenuSeparator />
             {notifications.length === 0 ? (
-              <div className="py-8 text-center text-sm text-muted-foreground">
-                No notifications yet
-              </div>
+              <div className="py-8 text-center text-sm text-muted-foreground">No notifications yet</div>
             ) : (
               <ScrollArea className="h-[300px]">
                 {notifications.slice(0, 20).map((notification) => (
@@ -243,19 +216,12 @@ export function TopBar({
                     key={notification.id}
                     className={cn(
                       "flex flex-col items-start gap-1 py-3 px-2 cursor-pointer hover:bg-muted/50 border-l-2",
-                      notification.read
-                        ? "border-l-transparent opacity-60"
-                        : "border-l-accent bg-accent/5",
+                      notification.read ? "border-l-transparent opacity-60" : "border-l-accent bg-accent/5",
                     )}
                     onClick={() => markAsRead(notification.id)}
                   >
                     <div className="flex items-start justify-between w-full gap-2">
-                      <span
-                        className={cn(
-                          "font-medium text-sm",
-                          !notification.read && "text-foreground",
-                        )}
-                      >
+                      <span className={cn("font-medium text-sm", !notification.read && "text-foreground")}>
                         {notification.title}
                       </span>
                       <Button
@@ -270,9 +236,7 @@ export function TopBar({
                         <Trash2 className="h-3 w-3 text-muted-foreground hover:text-destructive" />
                       </Button>
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      {notification.message}
-                    </span>
+                    <span className="text-xs text-muted-foreground">{notification.message}</span>
                     <span className="text-[10px] text-muted-foreground/60">
                       {formatTimeAgo(notification.createdAt)}
                     </span>
@@ -283,16 +247,12 @@ export function TopBar({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* User Avatar */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="rounded-full">
               <Avatar className="h-8 w-8">
                 {getAvatarUrl() && (
-                  <AvatarImage
-                    src={getAvatarUrl()!}
-                    alt={user?.userName || user?.email || "User"}
-                  />
+                  <AvatarImage src={getAvatarUrl()!} alt={user?.userName || user?.email || "User"} />
                 )}
                 <AvatarFallback className="bg-accent/20 text-accent text-sm font-medium">
                   {getInitials()}
@@ -303,17 +263,14 @@ export function TopBar({
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => onOpenSettings?.() ?? router.push("/settings")}>
+            <DropdownMenuItem
+              onClick={() => onOpenSettings?.() ?? router.push("/settingsaccount")}
+            >
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => onOpenSettings?.() ?? router.push("/settings")}>
-              Settings
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/settings")}>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="text-destructive"
-              onClick={handleLogout}
-            >
+            <DropdownMenuItem className="text-destructive" onClick={handleLogout}>
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

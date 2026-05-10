@@ -9,7 +9,6 @@ import {
   Settings,
   HelpCircle,
   LogOut,
-  MessageSquare,
   Timer,
   Book,
   CalendarDays,
@@ -24,7 +23,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useAuthStore } from "@/lib/auth-store";
 import { useChatSessionStore } from "@/lib/chat-session-store";
 import { API_CONFIG } from "@/lib/api/config";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 import {
   Sidebar as UISidebar,
@@ -52,7 +55,11 @@ type View =
   | "settings"
   | "focus";
 
-const productivityItems: { icon: React.ElementType; label: string; href: string }[] = [
+const productivityItems: {
+  icon: React.ElementType;
+  label: string;
+  href: string;
+}[] = [
   { icon: CheckSquare, label: "Task", href: "/tasks" },
   { icon: Book, label: "Notes", href: "/notes" },
   { icon: CalendarDays, label: "Events", href: "/events" },
@@ -72,13 +79,25 @@ export function Sidebar({}: SidebarProps = {}) {
   const { user, logout } = useAuthStore();
   const pathname = usePathname();
   const { state } = useSidebar();
-  const { sessions, activeSessionId, createNewSession, selectSession, deleteSession } = useChatSessionStore();
+  const { sessions, activeSessionId, createNewSession, selectSession, deleteSession } =
+    useChatSessionStore();
 
   const getInitials = (email: string, userName?: string) => {
     if (userName) {
-      return userName.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
+      return userName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2);
     }
-    return email.split("@")[0].split(".").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
+    return email
+      .split("@")[0]
+      .split(".")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   const getAvatarUrl = () => {
@@ -96,7 +115,10 @@ export function Sidebar({}: SidebarProps = {}) {
     <UISidebar collapsible="icon" className="border-border">
       <SidebarHeader className="h-16 flex flex-row items-center justify-between px-3 py-2">
         {state === "expanded" && (
-          <Link href="/tasks" className="flex flex-1 items-center gap-3 overflow-hidden cursor-pointer hover:opacity-80 px-1">
+          <Link
+            href="/tasks"
+            className="flex flex-1 items-center gap-3 overflow-hidden cursor-pointer hover:opacity-80 px-1"
+          >
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 overflow-hidden">
               <Image
                 src="/jarvis-light.png"
@@ -125,18 +147,19 @@ export function Sidebar({}: SidebarProps = {}) {
       </SidebarHeader>
 
       <SidebarContent className="py-2 gap-4">
-        {/* Assistant Group */}
         <SidebarGroup>
           <SidebarGroupLabel>Assistant</SidebarGroupLabel>
           <SidebarMenu>
-            {/* New Chat Button (Combined AI Chat) */}
             <SidebarMenuItem>
               <SidebarMenuButton
                 onClick={() => {
                   createNewSession();
                   if (!pathname.startsWith("/ai")) router.push("/ai");
                 }}
-                isActive={pathname.startsWith("/ai") && (!activeSessionId || !sessions.some((s) => s.id === activeSessionId))}
+                isActive={
+                  pathname.startsWith("/ai") &&
+                  (!activeSessionId || !sessions.some((s) => s.id === activeSessionId))
+                }
                 tooltip="New chat"
                 className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500 cursor-pointer"
               >
@@ -145,7 +168,6 @@ export function Sidebar({}: SidebarProps = {}) {
               </SidebarMenuButton>
             </SidebarMenuItem>
 
-            {/* Recent Chats Collapsible */}
             <Collapsible defaultOpen className="group/collapsible">
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
@@ -157,7 +179,9 @@ export function Sidebar({}: SidebarProps = {}) {
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {sessions.length === 0 ? (
-                      <div className="text-xs text-muted-foreground px-2 py-2">No conversations yet.</div>
+                      <div className="text-xs text-muted-foreground px-2 py-2">
+                        No conversations yet.
+                      </div>
                     ) : (
                       sessions.map((session) => (
                         <SidebarMenuSubItem key={session.id}>
@@ -194,7 +218,6 @@ export function Sidebar({}: SidebarProps = {}) {
           </SidebarMenu>
         </SidebarGroup>
 
-        {/* Productivity Group */}
         <SidebarGroup>
           <SidebarGroupLabel>Productivity</SidebarGroupLabel>
           <SidebarMenu>
@@ -216,7 +239,6 @@ export function Sidebar({}: SidebarProps = {}) {
           </SidebarMenu>
         </SidebarGroup>
 
-        {/* Focus Group */}
         <SidebarGroup>
           <SidebarGroupLabel>Focus</SidebarGroupLabel>
           <SidebarMenu>
@@ -242,7 +264,7 @@ export function Sidebar({}: SidebarProps = {}) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              isActive={pathname.startsWith("/settings")}
+              isActive={pathname === "/settings"}
               tooltip="Settings"
               className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500"
             >
@@ -272,28 +294,24 @@ export function Sidebar({}: SidebarProps = {}) {
             </SidebarMenuButton>
           </SidebarMenuItem>
 
-          {/* User Profile */}
           {user && (
             <SidebarMenuItem className="mt-4">
               <SidebarMenuButton
                 asChild
                 size="lg"
+                isActive={pathname.startsWith("/settingsaccount")}
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border border-transparent"
               >
-                <Link href="/settings">
+                <Link href="/settingsaccount">
                   <Avatar className="h-8 w-8 rounded-lg shrink-0">
-                    {getAvatarUrl() && (
-                      <AvatarImage src={getAvatarUrl()!} alt={getDisplayName()} />
-                    )}
+                    {getAvatarUrl() && <AvatarImage src={getAvatarUrl()!} alt={getDisplayName()} />}
                     <AvatarFallback className="bg-accent/20 text-accent text-xs font-medium rounded-lg">
                       {getInitials(user.email, user.userName)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">{getDisplayName()}</span>
-                    <span className="truncate text-xs opacity-70">
-                      {user.roles.join(", ")}
-                    </span>
+                    <span className="truncate text-xs opacity-70">{user.roles.join(", ")}</span>
                   </div>
                 </Link>
               </SidebarMenuButton>
