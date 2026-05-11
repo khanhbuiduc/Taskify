@@ -27,9 +27,26 @@ function toDateInput(value?: string): string {
 }
 
 export default function FinancePage() {
-  const { entries, summary, isLoading, isSummaryLoading, error, filters, setFilters, refresh, createEntry, updateEntry, deleteEntry } =
-    useFinanceStore();
-  const { categories, fetchCategories, createCategory, updateCategory, deleteCategory } = useFinanceCategoryStore();
+  const {
+    entries,
+    summary,
+    isLoading,
+    isSummaryLoading,
+    error,
+    filters,
+    setFilters,
+    refresh,
+    createEntry,
+    updateEntry,
+    deleteEntry,
+  } = useFinanceStore();
+  const {
+    categories,
+    fetchCategories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+  } = useFinanceCategoryStore();
 
   const [entryDialogOpen, setEntryDialogOpen] = useState(false);
   const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
@@ -47,7 +64,7 @@ export default function FinancePage() {
       category: category || undefined,
       search: search.trim() || undefined,
     }),
-    [from, to, category, search]
+    [from, to, category, search],
   );
 
   useEffect(() => {
@@ -59,7 +76,12 @@ export default function FinancePage() {
     fetchCategories().catch(() => {});
   }, [fetchCategories]);
 
-  const handleSaveEntry = async (payload: { date: string; category: string; description?: string; amount: number }) => {
+  const handleSaveEntry = async (payload: {
+    date: string;
+    category: string;
+    description?: string;
+    amount: number;
+  }) => {
     if (editingEntry) {
       await updateEntry(editingEntry.id, payload);
     } else {
@@ -82,7 +104,7 @@ export default function FinancePage() {
         onRefresh={() => refresh().catch(() => {})}
         onCreate={() => {
           if (categories.length === 0) {
-            toast.error("Create at least one category before adding expenses.");
+            toast.error("Tạo ít nhất một danh mục trước khi thêm chi phí.");
             setCategoryDialogOpen(true);
             return;
           }
@@ -110,9 +132,9 @@ export default function FinancePage() {
 
       <Tabs defaultValue="table" className="space-y-4">
         <TabsList>
-          <TabsTrigger value="table">Table</TabsTrigger>
-          <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-          <TabsTrigger value="calendar">Calendar</TabsTrigger>
+          <TabsTrigger value="table">Bảng</TabsTrigger>
+          <TabsTrigger value="dashboard">Bảng điều khiển</TabsTrigger>
+          <TabsTrigger value="calendar">Lịch</TabsTrigger>
         </TabsList>
 
         <TabsContent value="table">
@@ -124,7 +146,7 @@ export default function FinancePage() {
             }}
             onDelete={(entry) =>
               deleteEntry(entry.id).catch(() => {
-                toast.error("Failed to delete finance entry");
+                toast.error("Xóa mục tài chính thất bại");
               })
             }
           />
@@ -146,7 +168,7 @@ export default function FinancePage() {
         categories={categories}
         onSave={(payload) =>
           handleSaveEntry(payload).catch(() => {
-            toast.error("Failed to save finance entry");
+            toast.error("Lưu mục tài chính thất bại");
           })
         }
       />
@@ -159,7 +181,7 @@ export default function FinancePage() {
           try {
             await createCategory(payload);
           } catch {
-            toast.error("Failed to create category");
+            toast.error("Tạo danh mục thất bại");
           }
         }}
         onUpdate={async (id, payload) => {
@@ -167,14 +189,14 @@ export default function FinancePage() {
             await updateCategory(id, payload);
             await refresh();
           } catch {
-            toast.error("Failed to update category");
+            toast.error("Cập nhật danh mục thất bại");
           }
         }}
         onDelete={async (id) => {
           try {
             await deleteCategory(id);
           } catch {
-            toast.error("Failed to delete category");
+            toast.error("Xóa danh mục thất bại");
           }
         }}
       />

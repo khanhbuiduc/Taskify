@@ -1,16 +1,16 @@
 "use client";
 
 /**
- * app/(dashboard)/ai/page.tsx â€” AI Chat page (orchestrator).
+ * app/(dashboard)/ai/page.tsx — AI Chat page (orchestrator).
  *
- * Táº¥t cáº£ UI components Ä‘Æ°á»£c tÃ¡ch vÃ o components/javis/:
- *   - ChatSidebar        â€“ panel danh sÃ¡ch há»™i thoáº¡i
- *   - ChatMessageList    â€“ danh sÃ¡ch tin nháº¯n + typing indicator
- *   - ChatInputBar       â€“ Ã´ nháº­p, voice, suggested prompts
+ * Tất cả UI components được tách vào components/javis/:
+ *   - ChatSidebar        – panel danh sách hội thoại
+ *   - ChatMessageList    – danh sách tin nhắn + typing indicator
+ *   - ChatInputBar       – ô nhập, voice, suggested prompts
  *
  * Pure utils & hooks:
- *   - chat-utils.ts       â€“ parse/match helpers
- *   - use-resolved-tasks  â€“ cache messageId â†’ taskId
+ *   - chat-utils.ts       – parse/match helpers
+ *   - use-resolved-tasks  – cache messageId → taskId
  */
 
 import { useState, useRef, useEffect, useMemo } from "react";
@@ -32,7 +32,6 @@ import { TaskModal } from "@/components/task/task-modal";
 import { DeleteDialog } from "@/components/task/delete-dialog";
 import { NoteEditorDialog } from "@/components/notes/note-editor-dialog";
 
-
 import { ChatMessageList } from "@/components/javis/chat-message-list";
 import { ChatInputBar } from "@/components/javis/chat-input-bar";
 import { useResolvedTasks } from "@/components/javis/use-resolved-tasks";
@@ -42,7 +41,7 @@ import type { ChatMessageRole, Note } from "@/lib/types";
 const READ_REPLIES_STORAGE_KEY = "taskify.ai.read-replies-aloud";
 
 export default function AILayoutPage() {
-  // â”€â”€ Chat session store â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Chat session store ──────────────────────────────────────────────────────────────────────
   const {
     sessions,
     activeSessionId,
@@ -55,7 +54,7 @@ export default function AILayoutPage() {
     isSending,
   } = useChatSessionStore();
 
-  // â”€â”€ Local state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Local state ───────────────────────────────────────────────────────────────────────────────
   const [isTyping] = useState(false);
   const [input, setInput] = useState("");
   const [readRepliesAloud, setReadRepliesAloud] = useState(true);
@@ -65,12 +64,17 @@ export default function AILayoutPage() {
   const lastSessionIdRef = useRef<string | null>(null);
   const toastedMessageIdsRef = useRef<Set<string>>(new Set());
 
-  // â”€â”€ Note store & actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  const { notes, createNote, updateNote, deleteNote, togglePin } = useNoteStore();
+  // ── Note store & actions ────────────────────────────────────────────────────────────────────
+  const { notes, createNote, updateNote, deleteNote, togglePin } =
+    useNoteStore();
   const [noteDialogOpen, setNoteDialogOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
-  
-  const handleNoteSave = async (payload: { title: string; content?: string; isPinned?: boolean }) => {
+
+  const handleNoteSave = async (payload: {
+    title: string;
+    content?: string;
+    isPinned?: boolean;
+  }) => {
     try {
       if (editingNote) {
         await updateNote(editingNote.id, payload);
@@ -79,11 +83,11 @@ export default function AILayoutPage() {
       }
       setNoteDialogOpen(false);
     } catch {
-      toast.error("Failed to save note");
+      toast.error("Lưu ghi chú thất bại");
     }
   };
 
-  // â”€â”€ Speech â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Speech ────────────────────────────────────────────────────────────────────────────────────
   const {
     isSupported: isSpeechRecognitionSupported,
     isListening,
@@ -101,7 +105,7 @@ export default function AILayoutPage() {
     cancel: cancelSpeech,
   } = useSpeechSynthesis({ lang: "vi-VN" });
 
-  // â”€â”€ Task store & actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Task store & actions ────────────────────────────────────────────────────────────────────
   const { tasks, fetchTasks, updateTaskStatus } = useTaskStore();
   const {
     modalOpen,
@@ -121,11 +125,11 @@ export default function AILayoutPage() {
     handleSaveTask,
   } = useTaskActions();
 
-  // â”€â”€ Resolved task cache â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Resolved task cache ─────────────────────────────────────────────────────────────────────
   const { resolvedTaskIdMap, handleTaskCardClick, handleTaskCardStatusToggle } =
     useResolvedTasks(tasks, fetchTasks, openDetail, updateTaskStatus);
 
-  // â”€â”€ Derive display messages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Derive display messages ─────────────────────────────────────────────────────────────────
   const combinedMessages = useMemo(() => {
     if (!activeSessionId) return [];
     const list = persistedMessages[activeSessionId] ?? [];
@@ -140,12 +144,15 @@ export default function AILayoutPage() {
       .filter((message) => {
         if (message.role !== "assistant") return true;
         const payload = parseAssistantPayload(message.metadataJson ?? null);
-        return !payload || (payload.type !== "delete_result" && payload.type !== "undo_result");
+        return (
+          !payload ||
+          (payload.type !== "delete_result" && payload.type !== "undo_result")
+        );
       })
       .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   }, [activeSessionId, persistedMessages]);
 
-  // â”€â”€ Effects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Effects ───────────────────────────────────────────────────────────────────────────────────
   useEffect(() => {
     void init();
   }, [init]);
@@ -178,7 +185,9 @@ export default function AILayoutPage() {
     const sessionId = activeSessionId;
     if (!sessionId) return;
     const existingMessages = persistedMessages[sessionId] ?? [];
-    toastedMessageIdsRef.current = new Set(existingMessages.map((message) => message.id));
+    toastedMessageIdsRef.current = new Set(
+      existingMessages.map((message) => message.id),
+    );
   }, [activeSessionId]);
 
   useEffect(() => {
@@ -206,26 +215,28 @@ export default function AILayoutPage() {
         const expiresAtMs = new Date(payload.expiresAtUtc).getTime();
         const now = Date.now();
         const stillValid = Number.isFinite(expiresAtMs) && expiresAtMs > now;
-        const secondsLeft = stillValid ? Math.max(1, Math.ceil((expiresAtMs - now) / 1000)) : 0;
+        const secondsLeft = stillValid
+          ? Math.max(1, Math.ceil((expiresAtMs - now) / 1000))
+          : 0;
 
-        toast.success(`Da xoa ${payload.deletedCount} task`, {
+        toast.success(`Đã xóa ${payload.deletedCount} task`, {
           description: stillValid
-            ? `Ban co the hoan tac trong ${secondsLeft} giay.`
-            : "Da het thoi gian hoan tac.",
+            ? `Bạn có thể hoàn tác trong ${secondsLeft} giây.`
+            : "Đã hết thời gian hoàn tác.",
           action: stillValid
             ? {
-                label: "Undo",
+                label: "Hoàn tác",
                 onClick: () => handleUndoDelete(payload.undoToken),
               }
             : undefined,
         });
       } else if (payload.type === "undo_result") {
-        toast.success(`Da khoi phuc ${payload.restoredCount} task`);
+        toast.success(`Đã khôi phục ${payload.restoredCount} task`);
       }
     }
   }, [activeSessionId, persistedMessages]);
 
-  // â”€â”€ Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Handlers ──────────────────────────────────────────────────────────────────────────────────
   const handleSend = async (forcedMessage?: string, metadata?: unknown) => {
     const msg = (forcedMessage ?? input).trim();
     if (!msg) return;
@@ -249,14 +260,14 @@ export default function AILayoutPage() {
   };
 
   const handleDeleteSelectionConfirm = (taskIds: string[]) => {
-    void handleSend("xÃ¡c nháº­n xÃ³a cÃ¡c task Ä‘Ã£ chá»n", {
+    void handleSend("xác nhận xóa các task đã chọn", {
       action: "confirm_delete_selection",
       taskIds,
     });
   };
 
   const handleUndoDelete = (undoToken: string) => {
-    void handleSend("undo xÃ³a task", {
+    void handleSend("hoàn tác xóa task", {
       action: "undo_delete",
       undoToken,
     });
@@ -291,16 +302,13 @@ export default function AILayoutPage() {
     startListening(input);
   };
 
-  // â”€â”€ Render â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Render ────────────────────────────────────────────────────────────────────────────────────
   return (
     <div className="flex h-[calc(100vh-7rem)] gap-3">
-      {/* â”€â”€ Sidebar â”€â”€ */}
+      {/* ── Sidebar ── */}
 
-
-      {/* â”€â”€ Chat pane â”€â”€ */}
+      {/* ── Chat pane ── */}
       <div className="flex-1 flex flex-col min-w-0">
-
-
         <Card
           className={cn(
             "flex-1 flex flex-col overflow-hidden bg-card border-border",
@@ -326,16 +334,16 @@ export default function AILayoutPage() {
               setNoteDialogOpen(true);
             }}
             onNoteCardDelete={(note) => {
-              void handleSend("xÃ¡c nháº­n xÃ³a cÃ¡c note Ä‘Ã£ chá»n", {
+              void handleSend("xác nhận xóa các note đã chọn", {
                 action: "confirm_delete_note",
-                noteIds: [note.id]
+                noteIds: [note.id],
               });
             }}
             onNoteCardTogglePin={async (note) => {
               try {
                 await togglePin(note.id);
               } catch {
-                toast.error("Failed to pin note");
+                toast.error("Ghim ghi chú thất bại");
               }
             }}
           />

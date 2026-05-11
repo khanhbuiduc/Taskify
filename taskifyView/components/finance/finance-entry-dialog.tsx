@@ -2,10 +2,23 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { FinanceCategory, FinanceEntry } from "@/lib/types";
 
@@ -14,7 +27,12 @@ interface FinanceEntryDialogProps {
   onOpenChange: (open: boolean) => void;
   entry?: FinanceEntry | null;
   categories: FinanceCategory[];
-  onSave: (payload: { date: string; category: string; description?: string; amount: number }) => Promise<void>;
+  onSave: (payload: {
+    date: string;
+    category: string;
+    description?: string;
+    amount: number;
+  }) => Promise<void>;
 }
 
 function toDateInput(value: string): string {
@@ -30,7 +48,13 @@ function todayDateInput(): string {
   return toDateInput(new Date().toISOString());
 }
 
-export function FinanceEntryDialog({ open, onOpenChange, entry, categories, onSave }: FinanceEntryDialogProps) {
+export function FinanceEntryDialog({
+  open,
+  onOpenChange,
+  entry,
+  categories,
+  onSave,
+}: FinanceEntryDialogProps) {
   const [date, setDate] = useState(todayDateInput());
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -76,20 +100,28 @@ export function FinanceEntryDialog({ open, onOpenChange, entry, categories, onSa
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>{entry ? "Edit expense" : "New expense"}</DialogTitle>
-          <DialogDescription>Track your spending with date, category, description, and amount.</DialogDescription>
+          <DialogTitle>{entry ? "Sửa chi phí" : "Chi phí mới"}</DialogTitle>
+          <DialogDescription>
+            Theo dõi chi tiêu của bạn với ngày, danh mục, mô tả và số tiền.
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-2">
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label htmlFor="finance-date">Date</Label>
-              <Input id="finance-date" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+              <Label htmlFor="finance-date">Ngày</Label>
+              <Input
+                id="finance-date"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
             </div>
             <div className="space-y-2">
-              <Label>Category</Label>
+              <Label>Danh mục</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder="Chọn danh mục" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((item) => (
@@ -102,18 +134,18 @@ export function FinanceEntryDialog({ open, onOpenChange, entry, categories, onSa
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="finance-description">Description</Label>
+            <Label htmlFor="finance-description">Mô tả</Label>
             <Textarea
               id="finance-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="What did you spend on?"
+              placeholder="Bạn đã chi tiêu vào việc gì?"
               maxLength={500}
               rows={4}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="finance-amount">Amount (VND)</Label>
+            <Label htmlFor="finance-amount">Số tiền (VND)</Label>
             <Input
               id="finance-amount"
               type="number"
@@ -126,11 +158,18 @@ export function FinanceEntryDialog({ open, onOpenChange, entry, categories, onSa
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSaving}>
-            Cancel
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isSaving}
+          >
+            Hủy
           </Button>
-          <Button onClick={handleSubmit} disabled={!canSave || isSaving || categories.length === 0}>
-            {isSaving ? "Saving..." : "Save"}
+          <Button
+            onClick={handleSubmit}
+            disabled={!canSave || isSaving || categories.length === 0}
+          >
+            {isSaving ? "Đang lưu..." : "Lưu"}
           </Button>
         </DialogFooter>
       </DialogContent>

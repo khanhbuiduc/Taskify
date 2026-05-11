@@ -3,12 +3,22 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import type { FinanceEntry } from "@/lib/types";
 import { Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const vndFormatter = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" });
+const vndFormatter = new Intl.NumberFormat("vi-VN", {
+  style: "currency",
+  currency: "VND",
+});
 
 interface FinanceTableProps {
   entries: FinanceEntry[];
@@ -21,8 +31,10 @@ export function FinanceTable({ entries, onEdit, onDelete }: FinanceTableProps) {
     return (
       <Card className="border-dashed">
         <CardContent className="py-10 text-center">
-          <p className="text-lg font-semibold">No expenses found</p>
-          <p className="text-muted-foreground">Create your first expense entry to start tracking.</p>
+          <p className="text-lg font-semibold">Không tìm thấy chi phí</p>
+          <p className="text-muted-foreground">
+            Tạo mục chi phí đầu tiên của bạn để bắt đầu theo dõi.
+          </p>
         </CardContent>
       </Card>
     );
@@ -33,38 +45,46 @@ export function FinanceTable({ entries, onEdit, onDelete }: FinanceTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Date</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-            <TableHead className="w-[120px] text-right">Actions</TableHead>
+            <TableHead>Ngày</TableHead>
+            <TableHead>Danh mục</TableHead>
+            <TableHead>Mô tả</TableHead>
+            <TableHead className="text-right">Số tiền</TableHead>
+            <TableHead className="w-[120px] text-right">Hành động</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {entries.map((entry) => (
-            <TableRow 
+            <TableRow
               key={entry.id}
               className="cursor-pointer hover:bg-muted/50 transition-colors"
               onClick={() => onEdit(entry)}
             >
-              <TableCell>{new Date(entry.date).toLocaleDateString("vi-VN")}</TableCell>
+              <TableCell>
+                {new Date(entry.date).toLocaleDateString("vi-VN")}
+              </TableCell>
               <TableCell>
                 <Badge variant="secondary">{entry.category}</Badge>
               </TableCell>
-              <TableCell className="max-w-[420px] truncate">{entry.description || "-"}</TableCell>
-              <TableCell 
+              <TableCell className="max-w-[420px] truncate">
+                {entry.description || "-"}
+              </TableCell>
+              <TableCell
                 className={cn(
                   "text-right font-medium",
-                  entry.amount < 0 ? "text-red-500" : entry.amount > 0 ? "text-green-500" : ""
+                  entry.amount < 0
+                    ? "text-red-500"
+                    : entry.amount > 0
+                      ? "text-green-500"
+                      : "",
                 )}
               >
                 {vndFormatter.format(entry.amount)}
               </TableCell>
               <TableCell className="text-right">
                 <div className="inline-flex items-center gap-1">
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
+                  <Button
+                    variant="ghost"
+                    size="icon"
                     onClick={(e) => {
                       e.stopPropagation();
                       onDelete(entry);

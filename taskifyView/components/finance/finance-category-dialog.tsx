@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -71,23 +78,28 @@ export function FinanceCategoryDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Manage finance categories</DialogTitle>
-          <DialogDescription>Create, rename, and remove your categories.</DialogDescription>
+          <DialogTitle>Quản lý danh mục tài chính</DialogTitle>
+          <DialogDescription>
+            Tạo, đổi tên và xóa danh mục của bạn.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="new-finance-category">New category</Label>
+            <Label htmlFor="new-finance-category">Danh mục mới</Label>
             <div className="flex gap-2">
               <Input
                 id="new-finance-category"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                placeholder="e.g. Food, Transport, Bills"
+                placeholder="ví dụ: Đồ ăn, Di chuyển, Hóa đơn"
                 maxLength={60}
               />
-              <Button onClick={handleCreate} disabled={isSaving || !newName.trim()}>
-                Add
+              <Button
+                onClick={handleCreate}
+                disabled={isSaving || !newName.trim()}
+              >
+                Thêm
               </Button>
             </div>
           </div>
@@ -95,10 +107,15 @@ export function FinanceCategoryDialog({
           <ScrollArea className="h-64 rounded-md border p-3">
             <div className="space-y-2">
               {categories.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No categories yet.</p>
+                <p className="text-sm text-muted-foreground">
+                  Chưa có danh mục nào.
+                </p>
               ) : (
                 categories.map((category) => (
-                  <div key={category.id} className="flex items-center gap-2 rounded-md border p-2">
+                  <div
+                    key={category.id}
+                    className="flex items-center gap-2 rounded-md border p-2"
+                  >
                     {editingId === category.id ? (
                       <>
                         <Input
@@ -107,17 +124,34 @@ export function FinanceCategoryDialog({
                           maxLength={60}
                           className="h-8"
                         />
-                        <Button size="icon" variant="ghost" onClick={saveEdit} disabled={isSaving || !editingName.trim()}>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={saveEdit}
+                          disabled={isSaving || !editingName.trim()}
+                        >
                           <Check className="h-4 w-4" />
                         </Button>
-                        <Button size="icon" variant="ghost" onClick={cancelEdit} disabled={isSaving}>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={cancelEdit}
+                          disabled={isSaving}
+                        >
                           <X className="h-4 w-4" />
                         </Button>
                       </>
                     ) : (
                       <>
-                        <p className="flex-1 text-sm font-medium">{category.name}</p>
-                        <Button size="icon" variant="ghost" onClick={() => startEdit(category)} disabled={isSaving}>
+                        <p className="flex-1 text-sm font-medium">
+                          {category.name}
+                        </p>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={() => startEdit(category)}
+                          disabled={isSaving}
+                        >
                           <Pencil className="h-4 w-4" />
                         </Button>
                         <Button
@@ -138,8 +172,12 @@ export function FinanceCategoryDialog({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSaving}>
-            Close
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            disabled={isSaving}
+          >
+            Đóng
           </Button>
         </DialogFooter>
       </DialogContent>
