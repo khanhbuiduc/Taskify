@@ -10,7 +10,7 @@ rules:
 - rule: Say default when out of scope
   steps:
   - intent: nlu_fallback
-  - action: utter_default
+  - action: action_fallback_gemini
 
 - rule: Activate create task form
   steps:

@@ -21,3 +21,4 @@ from actions.note.note_actions import (  # noqa: F401
     ActionSearchNotes,
     ActionTogglePinNote,
 )
+from actions.fallback_actions import ActionFallbackGemini  # noqa: F401

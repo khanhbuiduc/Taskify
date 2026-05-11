@@ -251,6 +251,7 @@ actions:
   - action_update_note
   - action_delete_note
   - action_handle_confirmation
+  - action_fallback_gemini
 
 forms:
   create_task_form:
