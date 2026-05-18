@@ -81,6 +81,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOrUser", policy => policy.RequireRole("Admin", "User"));
 });
 
+builder.Services.AddDataProtection();
+
 // Register repositories and Unit of Work
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<ILabelRepository, LabelRepository>();
@@ -97,6 +99,21 @@ builder.Services.AddHttpClient<IRasaChatService, RasaChatService>((sp, client) =
     client.BaseAddress = new Uri(baseUrl);
     client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Rasa:TimeoutSeconds", 15));
 });
+
+builder.Services.AddHttpClient<IGeminiCredentialService, GeminiCredentialService>((sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri("https://generativelanguage.googleapis.com");
+    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Gemini:TimeoutSeconds", 15));
+});
+
+builder.Services.AddHttpClient<IOllamaFallbackService, OllamaFallbackService>((sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Ollama:TimeoutSeconds", 30));
+});
+
+builder.Services.AddScoped<IAiFallbackService, AiFallbackService>();
 
 // Configure CORS for frontend (Next.js on localhost:3000)
 // Configure CORS for frontend (Next.js on localhost:3000)

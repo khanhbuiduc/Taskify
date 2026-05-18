@@ -36,10 +36,9 @@ _load_dotenv()
 # ---------------------------------------------------------------------------
 TASKIFY_API_URL = os.getenv("TASKIFY_API_URL", "http://localhost:5116")
 RASA_API_KEY = os.getenv("RASA_API_KEY", "rasa-internal-api-key-taskify-2026")
-REQUEST_TIMEOUT = 10  # seconds
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-latest").strip()
-GEMINI_API_TIMEOUT = int(os.getenv("GEMINI_API_TIMEOUT", "15"))
+# The backend may fan out to slower local providers such as Ollama, so
+# the action server should wait longer than the provider-level timeout.
+REQUEST_TIMEOUT = int(os.getenv("TASKIFY_API_TIMEOUT", "60"))  # seconds
 
 # ---------------------------------------------------------------------------
 # Logging

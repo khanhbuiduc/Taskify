@@ -65,6 +65,16 @@ namespace TaskifyAPI.Data
         /// </summary>
         public DbSet<TaskDeleteUndoToken> TaskDeleteUndoTokens { get; set; }
 
+        /// <summary>
+        /// DbSet for user-scoped Gemini API credentials
+        /// </summary>
+        public DbSet<UserGeminiCredential> UserGeminiCredentials { get; set; }
+
+        /// <summary>
+        /// DbSet for user-scoped AI fallback provider settings
+        /// </summary>
+        public DbSet<UserAiFallbackSettings> UserAiFallbackSettings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -377,6 +387,68 @@ namespace TaskifyAPI.Data
                     .HasMaxLength(2000);
 
                 entity.HasIndex(e => new { e.UserId, e.ExpiresAtUtc });
+            });
+
+            modelBuilder.Entity<UserGeminiCredential>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.EncryptedApiKey)
+                    .IsRequired()
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.Status)
+                    .HasConversion<string>()
+                    .HasMaxLength(32);
+
+                entity.Property(e => e.LastValidationError)
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.CreatedAtUtc)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UpdatedAtUtc)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<UserAiFallbackSettings>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.ActiveProvider)
+                    .HasConversion<string>()
+                    .HasMaxLength(32);
+
+                entity.Property(e => e.OllamaBaseUrl)
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.OllamaModel)
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.LastOllamaValidationError)
+                    .HasMaxLength(1000);
+
+                entity.Property(e => e.CreatedAtUtc)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(e => e.UpdatedAtUtc)
+                    .HasDefaultValueSql("GETUTCDATE()");
+
+                entity.HasOne(e => e.User)
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Seed roles with deterministic IDs to avoid duplicate inserts on migrations

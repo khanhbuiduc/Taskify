@@ -56,6 +56,8 @@ export interface FinanceSummary {
 }
 
 export type ChatMessageRole = "user" | "assistant"
+export type GeminiCredentialStatus = "NotConfigured" | "Valid" | "Invalid" | "ValidationFailed"
+export type AiProvider = "Gemini" | "Ollama"
 
 export interface ChatSession {
   id: string
@@ -70,4 +72,32 @@ export interface ChatMessage {
   text: string
   metadataJson?: string | null
   sentAt: string
+}
+
+export interface GeminiCredentialStatusResponse {
+  configured: boolean
+  status: GeminiCredentialStatus
+  lastValidatedAtUtc?: string | null
+  lastValidationError?: string | null
+}
+
+export interface OllamaModelSummary {
+  name: string
+  family?: string | null
+  parameterSize?: string | null
+  quantizationLevel?: string | null
+}
+
+export interface OllamaSettingsStatus {
+  configured: boolean
+  baseUrl?: string | null
+  model?: string | null
+  lastValidatedAtUtc?: string | null
+  lastValidationError?: string | null
+}
+
+export interface AiFallbackSettingsResponse {
+  activeProvider: AiProvider | null
+  gemini: GeminiCredentialStatusResponse
+  ollama: OllamaSettingsStatus
 }

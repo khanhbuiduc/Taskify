@@ -10,23 +10,13 @@ Custom actions that call TaskifyAPI to filter/create/delete tasks, manage notes,
 
 ## Gemini fallback (optional)
 
-When Rasa predicts `nlu_fallback`, Taskify can call Gemini via `action_fallback_gemini`.
+When Rasa predicts `nlu_fallback`, `action_fallback_gemini` calls the generic internal AI fallback endpoint in `TaskifyAPI`.
 
-You can either set env vars manually or put them in `rasa/actions/.env`.
-
-Manual way before starting action server:
-
-```powershell
-$env:GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
-$env:GEMINI_MODEL="gemini-flash-latest"
-$env:GEMINI_API_TIMEOUT="15"
-```
-
-- `GEMINI_API_KEY`: required to enable Gemini fallback.
-- `GEMINI_MODEL`: optional, defaults to `gemini-flash-latest`.
-- `GEMINI_API_TIMEOUT`: optional, defaults to `15` seconds.
-
-If `GEMINI_API_KEY` is missing or Gemini call fails, bot falls back to `utter_default`.
+- Gemini API keys are stored per user in the backend database.
+- Ollama configuration can also be stored per user in the backend.
+- Rasa only needs `TASKIFY_API_URL` and `RASA_API_KEY` so it can call the internal endpoint.
+- Backend decides whether the active fallback provider for that user is Gemini or Ollama.
+- If the selected provider is not configured or the backend call fails, the bot falls back to `utter_default`.
 
 ## Enable in Rasa
 
