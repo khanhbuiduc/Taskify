@@ -14,8 +14,8 @@ Actions:
 import logging
 import json
 import re
-from typing import Any, Dict, List, Optional, Text
-from datetime import datetime
+from typing import Any, Dict, List, Optional, Text, Tuple
+from datetime import datetime, timedelta
 
 import requests
 from rasa_sdk import Action, Tracker
@@ -35,8 +35,8 @@ from actions.common.text_utils import (
 from actions.common.date_utils import (
     build_due_datetime,
     extract_duckling_time_window,
-    filter_tasks_due_in_window,
     normalize_priority,
+    parse_due_date,
 )
 from actions.common.delete_match_utils import (
     extract_delete_query,
@@ -140,6 +140,75 @@ def _extract_search_from_text(text: str) -> Optional[str]:
     return None
 
 
+def _has_overdue_filter(latest_message: Dict[Text, Any], text: str) -> bool:
+    due_state = (_first_entity(latest_message, "task_due_state") or "").strip().lower()
+    lowered = text.lower()
+    overdue_terms = [
+        "overdue",
+        "quá hạn",
+        "qua han",
+        "trễ hạn",
+        "tre han",
+        "quá deadline",
+        "qua deadline",
+        "đã quá deadline",
+        "da qua deadline",
+    ]
+    return any(term in due_state or term in lowered for term in overdue_terms)
+
+
+def _extract_due_date_phrase(latest_message: Dict[Text, Any], text: str) -> Optional[str]:
+    due_date_entity = _first_entity(latest_message, "due_date")
+    if due_date_entity:
+        return due_date_entity
+
+    match = re.search(
+        r"\b(today|tomorrow|day after tomorrow|next week|next month|next monday|next tuesday|next wednesday|next thursday|next friday|next saturday|next sunday)\b",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if match:
+        return match.group(1)
+
+    match = re.search(
+        r"(hôm nay|ngày mai|ngày kia|tuần sau|tháng sau|chiều nay|tối nay|sáng mai|"
+        r"thứ hai|thứ ba|thứ tư|thứ năm|thứ sáu|thứ bảy|chủ nhật|\d{1,2}/\d{1,2}(?:/\d{2,4})?)",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if match:
+        return match.group(1)
+
+    return None
+
+
+def _extract_due_window_from_message(
+    latest_message: Dict[Text, Any],
+    text: str,
+) -> Optional[Tuple[Optional[str], Optional[str]]]:
+    due_from_entity = _parse_iso_datetime(_first_entity(latest_message, "due_from"))
+    due_to_entity = _parse_iso_datetime(_first_entity(latest_message, "due_to"))
+    if due_from_entity or due_to_entity:
+        return due_from_entity, due_to_entity
+
+    time_window = extract_duckling_time_window(latest_message)
+    if time_window:
+        window_start, window_end = time_window
+        return window_start.isoformat(), window_end.isoformat()
+
+    due_date_phrase = _extract_due_date_phrase(latest_message, text)
+    if not due_date_phrase:
+        return None
+
+    parsed_date, _inferred_time, had_date = parse_due_date(due_date_phrase, datetime.now())
+    if not had_date:
+        return None
+
+    window_start = parsed_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    window_end = window_start + timedelta(days=1) - timedelta(microseconds=1)
+    return window_start.isoformat(), window_end.isoformat()
+
+
 def _parse_iso_datetime(value: Optional[str]) -> Optional[str]:
     if not value:
         return None
@@ -182,48 +251,7 @@ class ActionListTasks(Action):
 
                 latest_intent = tracker.latest_message.get("intent", {}).get("name", "")
 
-                if latest_intent == "list_tasks_by_date":
-                    time_window = extract_duckling_time_window(tracker.latest_message or {})
-                    if not time_window:
-                        message = t(
-                            locale,
-                            "I couldn't understand the date. Try: today, tomorrow, day after tomorrow, yesterday, two days ago, or 30/4.",
-                            "Mình chưa hiểu mốc ngày. Bạn thử nói: hôm nay, ngày mai, ngày kia, hôm qua, hôm kia, hoặc 30/4.",
-                        )
-                    else:
-                        window_start, window_end = time_window
-                        tasks_for_date = filter_tasks_due_in_window(tasks, window_start, window_end)
-                        target_day = window_start.strftime("%d/%m/%Y")
-
-                        if tasks_for_date:
-                            message = t(
-                                locale,
-                                f"Tasks due on {target_day} ({len(tasks_for_date)}):\n\n{format_task_list(tasks_for_date, locale)}",
-                                f"Task hạn ngày {target_day} ({len(tasks_for_date)}):\n\n{format_task_list(tasks_for_date, locale)}",
-                            )
-                        else:
-                            message = t(
-                                locale,
-                                f"You have no pending tasks due on {target_day}.",
-                                f"Bạn không có task chưa hoàn thành nào hạn ngày {target_day}.",
-                            )
-
-                elif latest_intent == "list_overdue_tasks":
-                    overdue_tasks = [item for item in tasks if item.get("isOverdue", False)]
-                    if overdue_tasks:
-                        message = t(
-                            locale,
-                            f"You have {len(overdue_tasks)} overdue task(s):\n\n{format_task_list(overdue_tasks, locale)}",
-                            f"Bạn có {len(overdue_tasks)} task quá hạn:\n\n{format_task_list(overdue_tasks, locale)}",
-                        )
-                    else:
-                        message = t(
-                            locale,
-                            "Great news! You don't have any overdue tasks.",
-                            "Tin tốt là bạn không có task quá hạn nào.",
-                        )
-
-                elif latest_intent == "help_prioritize":
+                if latest_intent == "help_prioritize":
                     priority_order = {"high": 0, "medium": 1, "low": 2}
                     pending_tasks = [item for item in tasks if item.get("status") != "completed"]
                     sorted_tasks = sorted(
@@ -371,9 +399,9 @@ class ActionFilterTasks(Action):
             "pageSize": int(state.get("pageSize") or FILTER_PAGE_SIZE_DEFAULT),
         }
 
-        for key in ("search", "status", "priority", "label", "dueFrom", "dueTo"):
+        for key in ("search", "status", "priority", "label", "dueFrom", "dueTo", "overdue"):
             value = state.get(key)
-            if value:
+            if value is not None and value != "":
                 params[key] = value
 
         try:
@@ -419,6 +447,7 @@ class ActionFilterTasks(Action):
                         "label": state.get("label"),
                         "dueFrom": state.get("dueFrom"),
                         "dueTo": state.get("dueTo"),
+                        "overdue": state.get("overdue"),
                     },
                 }
 
@@ -505,7 +534,7 @@ class ActionFilterTasks(Action):
             "dueDate": task.get("dueDate"),
             "createdAt": task.get("createdAt"),
             "isOverdue": bool(task.get("isOverdue", False)),
-            "labels": [],
+            "labels": task.get("labels", []),
         }
 
     def _build_filter_state_from_message(
@@ -522,6 +551,7 @@ class ActionFilterTasks(Action):
             "label": None,
             "dueFrom": None,
             "dueTo": None,
+            "overdue": None,
             "page": 1,
             "pageSize": int(previous_state.get("pageSize") or FILTER_PAGE_SIZE_DEFAULT),
         }
@@ -530,29 +560,22 @@ class ActionFilterTasks(Action):
         priority_entity = _first_entity(latest_message, "priority")
         label_entity = _first_entity(latest_message, "task_label")
         search_entity = _first_entity(latest_message, "search_query")
-        due_from_entity = _parse_iso_datetime(_first_entity(latest_message, "due_from"))
-        due_to_entity = _parse_iso_datetime(_first_entity(latest_message, "due_to"))
-
         merged["status"] = _normalize_status_value(status_entity) or _normalize_status_from_text(latest_text)
         merged["priority"] = _normalize_priority_value(priority_entity) or _normalize_priority_from_text(latest_text)
         merged["label"] = label_entity or _extract_label_from_text(latest_text)
         merged["search"] = search_entity or _extract_search_from_text(latest_text)
-        merged["dueFrom"] = due_from_entity
-        merged["dueTo"] = due_to_entity
+        merged["overdue"] = True if _has_overdue_filter(latest_message, latest_text) else None
 
-        if not merged["dueFrom"] and not merged["dueTo"]:
-            time_window = extract_duckling_time_window(latest_message)
-            if time_window:
-                window_start, window_end = time_window
-                merged["dueFrom"] = window_start.isoformat()
-                merged["dueTo"] = window_end.isoformat()
+        due_window = _extract_due_window_from_message(latest_message, latest_text)
+        if due_window:
+            merged["dueFrom"], merged["dueTo"] = due_window
 
         # If no new filter was extracted, keep previous state for better UX.
         has_any_filter = any(
-            merged.get(key) for key in ("search", "status", "priority", "label", "dueFrom", "dueTo")
+            merged.get(key) for key in ("search", "status", "priority", "label", "dueFrom", "dueTo", "overdue")
         )
         if not has_any_filter and previous_state:
-            for key in ("search", "status", "priority", "label", "dueFrom", "dueTo"):
+            for key in ("search", "status", "priority", "label", "dueFrom", "dueTo", "overdue"):
                 merged[key] = previous_state.get(key)
 
         return merged

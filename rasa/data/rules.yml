@@ -49,11 +49,6 @@ rules:
   - intent: undo_delete_task
   - action: action_delete_task
 
-- rule: List tasks by date directly
-  steps:
-  - intent: list_tasks_by_date
-  - action: action_list_tasks
-
 - rule: Filter tasks directly
   steps:
   - intent: filter_tasks

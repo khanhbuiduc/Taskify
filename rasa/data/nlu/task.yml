@@ -2,62 +2,6 @@
 version: "3.1"
 
 nlu:
-  - intent: list_overdue_tasks
-    examples: |
-      - task nào quá hạn
-      - liệt kê task quá hạn
-      - xem công việc quá hạn
-      - có task nào trễ hạn không
-      - cho tôi danh sách quá hạn
-      - show overdue tasks
-      - overdue tasks list
-      - nhiệm vụ nào đã trễ
-      - xem việc đã quá deadline
-      - task trễ hạn hôm nay
-      - task nào quá hạn giúp mình
-      - liệt kê task quá hạn nha
-      - xem công việc quá hạn ngay
-      - có task nào trễ hạn không với
-      - cho tôi danh sách quá hạn đi
-      - show overdue tasks cho tôi
-      - overdue tasks list nhé
-      - nhiệm vụ nào đã trễ liền
-      - xem việc đã quá deadline giúp mình
-      - task trễ hạn hôm nay nha
-      - task nào quá hạn ngay
-      - liệt kê task quá hạn với
-      - xem công việc quá hạn đi
-      - có task nào trễ hạn không cho tôi
-      - cho tôi danh sách quá hạn nhé
-
-  - intent: list_tasks_by_date
-    examples: |
-      - xem task hôm nay
-      - xem task ngày mai
-      - liệt kê task thứ hai
-      - xem việc ngày kia
-      - task ngày 30/4
-      - công việc đến hạn ngày mai
-      - show tasks for tomorrow
-      - tasks due today
-      - xem task tuần sau
-      - liệt kê task theo ngày
-      - xem task hôm nay giúp mình
-      - xem task ngày mai nha
-      - liệt kê task thứ hai ngay
-      - xem việc ngày kia với
-      - task ngày 30/4 đi
-      - công việc đến hạn ngày mai cho tôi
-      - show tasks for tomorrow nhé
-      - tasks due today liền
-      - xem task tuần sau giúp mình
-      - liệt kê task theo ngày nha
-      - xem task hôm nay ngay
-      - xem task ngày mai với
-      - liệt kê task thứ hai đi
-      - xem việc ngày kia cho tôi
-      - task ngày 30/4 nhé
-
   - intent: summarize_week
     examples: |
       - tóm tắt tuần này
@@ -113,6 +57,79 @@ nlu:
       - mình nên làm gì trước đi
       - gợi ý thứ tự công việc cho tôi
       - việc nào cấp bách nhé
+
+  - intent: filter_tasks
+    examples: |
+      - xem task
+      - liệt kê task
+      - danh sách công việc
+      - show tasks
+      - list my tasks
+      - lọc task
+      - tìm task
+      - task nào [quá hạn](task_due_state)
+      - liệt kê task [trễ hạn](task_due_state)
+      - show [overdue](task_due_state) tasks
+      - xem việc [đã quá deadline](task_due_state)
+      - xem task [hôm nay](due_date)
+      - liệt kê công việc đến hạn [hôm nay](due_date)
+      - task due [hôm nay](due_date)
+      - xem task [ngày mai](due_date)
+      - liệt kê công việc đến hạn [ngày mai](due_date)
+      - task due [ngày mai](due_date)
+      - xem task [ngày kia](due_date)
+      - liệt kê công việc đến hạn [ngày kia](due_date)
+      - task due [ngày kia](due_date)
+      - xem task [tuần sau](due_date)
+      - liệt kê công việc đến hạn [tuần sau](due_date)
+      - task due [tuần sau](due_date)
+      - xem task [thứ hai](due_date)
+      - liệt kê công việc đến hạn [thứ hai](due_date)
+      - task due [thứ hai](due_date)
+      - xem task [30/4](due_date)
+      - liệt kê công việc đến hạn [30/4](due_date)
+      - task due [30/4](due_date)
+      - lọc task trạng thái [todo](task_status)
+      - lọc task trạng thái [in-progress](task_status)
+      - lọc task trạng thái [completed](task_status)
+      - lọc task trạng thái [chưa làm](task_status)
+      - lọc task trạng thái [đang làm](task_status)
+      - lọc task trạng thái [hoàn thành](task_status)
+      - lọc task ưu tiên [cao](priority)
+      - lọc task ưu tiên [trung bình](priority)
+      - lọc task ưu tiên [thấp](priority)
+      - lọc task ưu tiên [high](priority)
+      - lọc task ưu tiên [medium](priority)
+      - lọc task ưu tiên [low](priority)
+      - lọc task nhãn [work](task_label)
+      - lọc task nhãn [personal](task_label)
+      - lọc task nhãn [học tập](task_label)
+      - lọc task nhãn [khách hàng](task_label)
+      - tìm task chứa [báo cáo](search_query)
+      - filter tasks contains [báo cáo](search_query)
+      - tìm task chứa [meeting](search_query)
+      - filter tasks contains [meeting](search_query)
+      - tìm task chứa [sql](search_query)
+      - filter tasks contains [sql](search_query)
+      - tìm task chứa [proposal](search_query)
+      - filter tasks contains [proposal](search_query)
+      - tìm task chứa [email](search_query)
+      - filter tasks contains [email](search_query)
+      - lọc task [todo](task_status) ưu tiên [cao](priority)
+      - xem task [đang làm](task_status) nhãn [work](task_label)
+      - liệt kê task [quá hạn](task_due_state) ưu tiên [high](priority)
+      - xem task [ngày mai](due_date) ưu tiên [cao](priority)
+      - tìm task chứa [báo cáo](search_query) nhãn [work](task_label)
+      - show [overdue](task_due_state) tasks with [high](priority) priority
+      - xem task giúp mình
+      - liệt kê task nha
+      - danh sách công việc ngay
+      - show tasks với
+      - list my tasks đi
+      - lọc task cho tôi
+      - tìm task nhé
+      - task nào [quá hạn](task_due_state) liền
+      - liệt kê task [trễ hạn](task_due_state) giúp mình
 
   - intent: create_task
     examples: |
@@ -315,26 +332,3 @@ nlu:
       - rollback thao tác xóa task nha
       - hủy xóa task ngay
       - restore deleted task với
-
-  - intent: filter_tasks
-    examples: |
-      - lọc task [todo](task_status)
-      - lọc task [completed](task_status)
-      - filter tasks status [in-progress](task_status)
-      - cho mình task ưu tiên [high](priority)
-      - lọc task ưu tiên [low](priority)
-      - lọc task status [todo](task_status) ưu tiên [high](priority)
-      - filter tasks priority [medium](priority) and status [completed](task_status)
-      - lọc task nhãn [work](task_label)
-      - lọc task label [personal](task_label)
-      - lọc task chứa [báo cáo](search_query)
-      - filter tasks contains [meeting](search_query)
-      - tìm task [sql](search_query)
-      - lọc task từ [2026-04-26T00:00:00](due_from) đến [2026-04-30T23:59:59](due_to)
-      - filter tasks from [2026-05-01T00:00:00](due_from) to [2026-05-07T23:59:59](due_to)
-      - lọc task [todo](task_status) nhãn [work](task_label) chứa [report](search_query)
-      - cho mình danh sách task theo bộ lọc
-      - hiển thị task đã lọc
-      - filter my tasks
-      - lọc task ưu tiên [cao](priority)
-      - lọc task đang làm

@@ -12,11 +12,6 @@ stories:
       - intent: ask_howcanhelp
       - action: utter_ask_howcanhelp
 
-  - story: kiểm thử liệt kê task quá hạn
-    steps:
-      - intent: list_overdue_tasks
-      - action: action_list_tasks
-
   - story: kiểm thử lọc task
     steps:
       - intent: filter_tasks

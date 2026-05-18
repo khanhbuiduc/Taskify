@@ -1320,206 +1320,6 @@
     "intent": "nlu_fallback"
   },
   {
-    "text": "task nào quá hạn",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "liệt_kê task quá hạn",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "xem công_việc quá hạn",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "có task nào trễ hạn không",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "cho tôi danh_sách quá hạn",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "show overdue tasks",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "overdue tasks list",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "nhiệm_vụ nào đã trễ",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "xem việc đã quá deadline",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "task trễ hạn hôm_nay",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "task nào quá hạn giúp mình",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "liệt_kê task quá hạn nha",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "xem công_việc quá hạn ngay",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "có task nào trễ hạn không với",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "cho tôi danh_sách quá hạn đi",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "show overdue tasks cho tôi",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "overdue tasks list nhé",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "nhiệm_vụ nào đã trễ liền",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "xem việc đã quá deadline giúp mình",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "task trễ hạn hôm_nay nha",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "task nào quá hạn ngay",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "liệt_kê task quá hạn với",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "xem công_việc quá hạn đi",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "có task nào trễ hạn không cho tôi",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "cho tôi danh_sách quá hạn nhé",
-    "intent": "list_overdue_tasks"
-  },
-  {
-    "text": "xem task hôm_nay",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task ngày_mai",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "liệt_kê task thứ hai",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem việc ngày_kia",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "task ngày 30/4",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "công_việc đến hạn ngày_mai",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "show tasks for tomorrow",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "tasks due today",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task tuần sau",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "liệt_kê task theo ngày",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task hôm_nay giúp mình",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task ngày_mai nha",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "liệt_kê task thứ hai ngay",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem việc ngày_kia với",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "task ngày 30/4 đi",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "công_việc đến hạn ngày_mai cho tôi",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "show tasks for tomorrow nhé",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "tasks due today liền",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task tuần sau giúp mình",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "liệt_kê task theo ngày nha",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task hôm_nay ngay",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem task ngày_mai với",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "liệt_kê task thứ hai đi",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "xem việc ngày_kia cho tôi",
-    "intent": "list_tasks_by_date"
-  },
-  {
-    "text": "task ngày 30/4 nhé",
-    "intent": "list_tasks_by_date"
-  },
-  {
     "text": "tóm_tắt tuần này",
     "intent": "summarize_week"
   },
@@ -1718,6 +1518,286 @@
   {
     "text": "việc nào cấp_bách nhé",
     "intent": "help_prioritize"
+  },
+  {
+    "text": "xem task",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê task",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "danh_sách công_việc",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "show tasks",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "list my tasks",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task nào quá hạn",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê task trễ hạn",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "show overdue tasks",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem việc đã quá deadline",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task hôm_nay",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê công_việc đến hạn hôm_nay",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task due hôm_nay",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task ngày_mai",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê công_việc đến hạn ngày_mai",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task due ngày_mai",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task ngày_kia",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê công_việc đến hạn ngày_kia",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task due ngày_kia",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task tuần sau",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê công_việc đến hạn tuần sau",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task due tuần sau",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task thứ hai",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê công_việc đến hạn thứ hai",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task due thứ hai",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task 30/4",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê công_việc đến hạn 30/4",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task due 30/4",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task trạng_thái todo",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task trạng_thái in-progress",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task trạng_thái completed",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task trạng_thái chưa làm",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task trạng_thái đang làm",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task trạng_thái hoàn_thành",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task ưu_tiên cao",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task ưu_tiên trung_bình",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task ưu_tiên thấp",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task ưu_tiên high",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task ưu_tiên medium",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task ưu_tiên low",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task nhãn work",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task nhãn personal",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task nhãn học_tập",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task nhãn khách_hàng",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task chứa báo_cáo",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "filter tasks contains báo_cáo",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task chứa meeting",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "filter tasks contains meeting",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task chứa sql",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "filter tasks contains sql",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task chứa proposal",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "filter tasks contains proposal",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task chứa email",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "filter tasks contains email",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task todo ưu_tiên cao",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task đang làm nhãn work",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê task quá hạn ưu_tiên high",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task ngày_mai ưu_tiên cao",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task chứa báo_cáo nhãn work",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "show overdue tasks with high priority",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "xem task giúp mình",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê task nha",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "danh_sách công_việc ngay",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "show tasks với",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "list my tasks đi",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "lọc task cho tôi",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "tìm task nhé",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "task nào quá hạn liền",
+    "intent": "filter_tasks"
+  },
+  {
+    "text": "liệt_kê task trễ hạn giúp mình",
+    "intent": "filter_tasks"
   },
   {
     "text": "tạo task viết báo_cáo",
@@ -2060,86 +2140,6 @@
     "intent": "delete_task"
   },
   {
-    "text": "xoá task viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task review code",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên review code",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task gọi khách_hàng",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên gọi khách_hàng",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task chuẩn_bị slide",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên chuẩn_bị slide",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task làm bài_tập",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên làm bài_tập",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task họp team",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên họp team",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task gửi email",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên gửi email",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task fix bug",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên fix bug",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task mua đồ",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên mua đồ",
-    "intent": "delete_task"
-  },
-  {
     "text": "xoá nhiệm_vụ viết báo_cáo",
     "intent": "delete_task"
   },
@@ -2217,26 +2217,6 @@
   },
   {
     "text": "xoá nhiệm_vụ có tên mua đồ",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ review code",
     "intent": "delete_task"
   },
   {
@@ -2478,85 +2458,5 @@
   {
     "text": "restore deleted task với",
     "intent": "undo_delete_task"
-  },
-  {
-    "text": "lọc task todo",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task completed",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "filter tasks status in-progress",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "cho mình task ưu_tiên high",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task ưu_tiên low",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task status todo ưu_tiên high",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "filter tasks priority medium and status completed",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task nhãn work",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task label personal",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task chứa báo_cáo",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "filter tasks contains meeting",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "tìm task sql",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task từ 2026-04-26 T 00:00:00 đến 2026-04-30 T 23:59:59",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "filter tasks from 2026-05-01 T 00:00:00 to 2026-05-07 T 23:59:59",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task todo nhãn work chứa report",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "cho mình danh_sách task theo bộ lọc",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "hiển_thị task đã lọc",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "filter my tasks",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task ưu_tiên cao",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task đang làm",
-    "intent": "filter_tasks"
   }
 ]

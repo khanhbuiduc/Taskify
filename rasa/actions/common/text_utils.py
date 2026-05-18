@@ -228,6 +228,41 @@ def strip_title_prefixes(value: str) -> str:
     return candidate
 
 
+def strip_trailing_task_metadata(value: str) -> str:
+    candidate = normalize_whitespace(value)
+    previous = None
+    metadata_terms = sorted(DATE_ONLY_TERMS | PRIORITY_ONLY_TERMS, key=len, reverse=True)
+
+    while candidate and candidate != previous:
+        previous = candidate
+        lowered = candidate.lower()
+        for term in metadata_terms:
+            if lowered == term:
+                return ""
+            if lowered.endswith(f" {term}"):
+                candidate = normalize_whitespace(candidate[: -len(term)])
+                candidate = normalize_whitespace(
+                    re.sub(
+                        r"(deadline|hạn|due|priority|ưu tiên|lúc|vào|at|by|before|trước)$",
+                        "",
+                        candidate,
+                        flags=re.IGNORECASE,
+                    )
+                )
+                break
+        else:
+            match = re.search(
+                r"(\s+(hạn|deadline|due|lúc|at|by|before|trước))?\s+"
+                r"(\d{1,2}h\d{0,2}|\d{1,2}:\d{2}|\d{1,2}\s*(am|pm))$",
+                candidate,
+                flags=re.IGNORECASE,
+            )
+            if match:
+                candidate = normalize_whitespace(candidate[: match.start()])
+
+    return candidate
+
+
 # ---------------------------------------------------------------------------
 # Entity span utilities
 # ---------------------------------------------------------------------------
@@ -317,6 +352,7 @@ def is_metadata_only(message: Optional[str]) -> bool:
 
 def clean_task_title(candidate: Optional[str]) -> Optional[str]:
     value = strip_title_prefixes(candidate or "")
+    value = strip_trailing_task_metadata(value)
     value = normalize_whitespace(value)
     if not value:
         return None

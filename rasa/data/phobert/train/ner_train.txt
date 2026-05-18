@@ -1603,287 +1603,6 @@ input O
 lorem O
 ipsum O
 
-task O
-nào O
-quá O
-hạn O
-
-liệt_kê O
-task O
-quá O
-hạn O
-
-xem O
-công_việc O
-quá O
-hạn O
-
-có O
-task O
-nào O
-trễ O
-hạn O
-không O
-
-cho O
-tôi O
-danh_sách O
-quá O
-hạn O
-
-show O
-overdue O
-tasks O
-
-overdue O
-tasks O
-list O
-
-nhiệm_vụ O
-nào O
-đã O
-trễ O
-
-xem O
-việc O
-đã O
-quá O
-deadline O
-
-task O
-trễ O
-hạn O
-hôm_nay O
-
-task O
-nào O
-quá O
-hạn O
-giúp O
-mình O
-
-liệt_kê O
-task O
-quá O
-hạn O
-nha O
-
-xem O
-công_việc O
-quá O
-hạn O
-ngay O
-
-có O
-task O
-nào O
-trễ O
-hạn O
-không O
-với O
-
-cho O
-tôi O
-danh_sách O
-quá O
-hạn O
-đi O
-
-show O
-overdue O
-tasks O
-cho O
-tôi O
-
-overdue O
-tasks O
-list O
-nhé O
-
-nhiệm_vụ O
-nào O
-đã O
-trễ O
-liền O
-
-xem O
-việc O
-đã O
-quá O
-deadline O
-giúp O
-mình O
-
-task O
-trễ O
-hạn O
-hôm_nay O
-nha O
-
-task O
-nào O
-quá O
-hạn O
-ngay O
-
-liệt_kê O
-task O
-quá O
-hạn O
-với O
-
-xem O
-công_việc O
-quá O
-hạn O
-đi O
-
-có O
-task O
-nào O
-trễ O
-hạn O
-không O
-cho O
-tôi O
-
-cho O
-tôi O
-danh_sách O
-quá O
-hạn O
-nhé O
-
-xem O
-task O
-hôm_nay O
-
-xem O
-task O
-ngày_mai O
-
-liệt_kê O
-task O
-thứ O
-hai O
-
-xem O
-việc O
-ngày_kia O
-
-task O
-ngày O
-30/4 O
-
-công_việc O
-đến O
-hạn O
-ngày_mai O
-
-show O
-tasks O
-for O
-tomorrow O
-
-tasks O
-due O
-today O
-
-xem O
-task O
-tuần O
-sau O
-
-liệt_kê O
-task O
-theo O
-ngày O
-
-xem O
-task O
-hôm_nay O
-giúp O
-mình O
-
-xem O
-task O
-ngày_mai O
-nha O
-
-liệt_kê O
-task O
-thứ O
-hai O
-ngay O
-
-xem O
-việc O
-ngày_kia O
-với O
-
-task O
-ngày O
-30/4 O
-đi O
-
-công_việc O
-đến O
-hạn O
-ngày_mai O
-cho O
-tôi O
-
-show O
-tasks O
-for O
-tomorrow O
-nhé O
-
-tasks O
-due O
-today O
-liền O
-
-xem O
-task O
-tuần O
-sau O
-giúp O
-mình O
-
-liệt_kê O
-task O
-theo O
-ngày O
-nha O
-
-xem O
-task O
-hôm_nay O
-ngay O
-
-xem O
-task O
-ngày_mai O
-với O
-
-liệt_kê O
-task O
-thứ O
-hai O
-đi O
-
-xem O
-việc O
-ngày_kia O
-cho O
-tôi O
-
-task O
-ngày O
-30/4 O
-nhé O
-
 tóm_tắt O
 tuần O
 này O
@@ -2157,1203 +1876,194 @@ nào O
 cấp_bách O
 nhé O
 
-tạo O
+xem O
 task O
-viết B-task_title
-báo_cáo I-task_title
 
-tạo O
+liệt_kê O
 task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
 
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-hạn O
-16h B-due_time
-
-thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-
-thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
-
-thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ưu_tiên O
-cao B-priority
-
-thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-hạn O
-16h B-due_time
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-ưu_tiên O
-cao B-priority
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-hạn O
-16h B-due_time
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-ưu_tiên O
-cao B-priority
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-hạn O
-16h B-due_time
-
-xoá O
-task O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-có O
-tên O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-có O
-tên O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-có O
-tên O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-có O
-tên O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-có O
-tên O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-có O
-tên O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-có O
-tên O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-task O
-có O
-tên O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-task O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-có O
-tên O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-có O
-tên O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-có O
-tên O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-có O
-tên O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-có O
-tên O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-có O
-tên O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-có O
-tên O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-task O
-có O
-tên O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-nhiệm_vụ O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-review B-task_title
-code I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-review B-task_title
-code I-task_title
-
-xoá O
-nhiệm_vụ O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-nhiệm_vụ O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-nhiệm_vụ O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-nhiệm_vụ O
-họp B-task_title
-team I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-họp B-task_title
-team I-task_title
-
-xoá O
-nhiệm_vụ O
-gửi B-task_title
-email I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-gửi B-task_title
-email I-task_title
-
-xoá O
-nhiệm_vụ O
-fix B-task_title
-bug I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-fix B-task_title
-bug I-task_title
-
-xoá O
-nhiệm_vụ O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-nhiệm_vụ O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-review B-task_title
-code I-task_title
-
-xác_nhận O
-xoá O
-các O
-task O
-đã O
-chọn O
-
-ok O
-xoá O
-các O
-task O
-đã O
-chọn O
-
-đồng_ý O
-xoá O
 danh_sách O
-vừa O
-chọn O
+công_việc O
 
-confirm O
-delete O
-selected O
+show O
 tasks O
 
-xoá O
-hết O
-những O
-task O
-đã O
-chọn O
-
-tiếp_tục O
-xoá O
-các O
-mục O
-đã O
-chọn O
-
-chắc_chắn O
-xoá O
-các O
-task O
-này O
-
-xoá O
-các O
-task O
-đã O
-đánh_dấu O
-
-yes O
-delete O
-selected O
+list O
+my O
 tasks O
-
-tiến_hành O
-xoá O
-lựa_chọn O
-
-xác_nhận O
-xoá O
-các O
-task O
-đã O
-chọn O
-giúp O
-mình O
-
-ok O
-xoá O
-các O
-task O
-đã O
-chọn O
-nha O
-
-đồng_ý O
-xoá O
-danh_sách O
-vừa O
-chọn O
-ngay O
-
-confirm O
-delete O
-selected O
-tasks O
-với O
-
-xoá O
-hết O
-những O
-task O
-đã O
-chọn O
-đi O
-
-tiếp_tục O
-xoá O
-các O
-mục O
-đã O
-chọn O
-cho O
-tôi O
-
-chắc_chắn O
-xoá O
-các O
-task O
-này O
-nhé O
-
-xoá O
-các O
-task O
-đã O
-đánh_dấu O
-liền O
-
-yes O
-delete O
-selected O
-tasks O
-giúp O
-mình O
-
-tiến_hành O
-xoá O
-lựa_chọn O
-nha O
-
-xác_nhận O
-xoá O
-các O
-task O
-đã O
-chọn O
-ngay O
-
-ok O
-xoá O
-các O
-task O
-đã O
-chọn O
-với O
-
-đồng_ý O
-xoá O
-danh_sách O
-vừa O
-chọn O
-đi O
-
-confirm O
-delete O
-selected O
-tasks O
-cho O
-tôi O
-
-xoá O
-hết O
-những O
-task O
-đã O
-chọn O
-nhé O
-
-tiếp_tục O
-xoá O
-các O
-mục O
-đã O
-chọn O
-liền O
-
-chắc_chắn O
-xoá O
-các O
-task O
-này O
-giúp O
-mình O
-
-xoá O
-các O
-task O
-đã O
-đánh_dấu O
-nha O
-
-yes O
-delete O
-selected O
-tasks O
-ngay O
-
-tiến_hành O
-xoá O
-lựa_chọn O
-với O
-
-hoàn O
-tác O
-xoá O
-task O
-
-undo O
-xoá O
-task O
-
-khôi_phục O
-task O
-vừa O
-xoá O
-
-lấy O
-lại O
-task O
-vừa O
-xoá O
-
-undo O
-delete O
-task O
-
-phục_hồi O
-task O
-mới O
-xoá O
-
-trả O
-lại O
-task O
-đã O
-xoá O
-
-rollback O
-thao_tác O
-xoá O
-task O
-
-huỷ O
-xoá O
-task O
-
-restore O
-deleted O
-task O
-
-hoàn O
-tác O
-xoá O
-task O
-giúp O
-mình O
-
-undo O
-xoá O
-task O
-nha O
-
-khôi_phục O
-task O
-vừa O
-xoá O
-ngay O
-
-lấy O
-lại O
-task O
-vừa O
-xoá O
-với O
-
-undo O
-delete O
-task O
-đi O
-
-phục_hồi O
-task O
-mới O
-xoá O
-cho O
-tôi O
-
-trả O
-lại O
-task O
-đã O
-xoá O
-nhé O
-
-rollback O
-thao_tác O
-xoá O
-task O
-liền O
-
-huỷ O
-xoá O
-task O
-giúp O
-mình O
-
-restore O
-deleted O
-task O
-nha O
-
-hoàn O
-tác O
-xoá O
-task O
-ngay O
-
-undo O
-xoá O
-task O
-với O
-
-khôi_phục O
-task O
-vừa O
-xoá O
-đi O
-
-lấy O
-lại O
-task O
-vừa O
-xoá O
-cho O
-tôi O
-
-undo O
-delete O
-task O
-nhé O
-
-phục_hồi O
-task O
-mới O
-xoá O
-liền O
-
-trả O
-lại O
-task O
-đã O
-xoá O
-giúp O
-mình O
-
-rollback O
-thao_tác O
-xoá O
-task O
-nha O
-
-huỷ O
-xoá O
-task O
-ngay O
-
-restore O
-deleted O
-task O
-với O
 
 lọc O
 task O
+
+tìm O
+task O
+
+task O
+nào O
+quá B-task_due_state
+hạn I-task_due_state
+
+liệt_kê O
+task O
+trễ B-task_due_state
+hạn I-task_due_state
+
+show O
+overdue B-task_due_state
+tasks O
+
+xem O
+việc O
+đã B-task_due_state
+quá I-task_due_state
+deadline I-task_due_state
+
+xem O
+task O
+hôm_nay B-due_date
+
+liệt_kê O
+công_việc O
+đến O
+hạn O
+hôm_nay B-due_date
+
+task O
+due O
+hôm_nay B-due_date
+
+xem O
+task O
+ngày_mai B-due_date
+
+liệt_kê O
+công_việc O
+đến O
+hạn O
+ngày_mai B-due_date
+
+task O
+due O
+ngày_mai B-due_date
+
+xem O
+task O
+ngày_kia B-due_date
+
+liệt_kê O
+công_việc O
+đến O
+hạn O
+ngày_kia B-due_date
+
+task O
+due O
+ngày_kia B-due_date
+
+xem O
+task O
+tuần B-due_date
+sau I-due_date
+
+liệt_kê O
+công_việc O
+đến O
+hạn O
+tuần B-due_date
+sau I-due_date
+
+task O
+due O
+tuần B-due_date
+sau I-due_date
+
+xem O
+task O
+thứ B-due_date
+hai I-due_date
+
+liệt_kê O
+công_việc O
+đến O
+hạn O
+thứ B-due_date
+hai I-due_date
+
+task O
+due O
+thứ B-due_date
+hai I-due_date
+
+xem O
+task O
+30/4 B-due_date
+
+liệt_kê O
+công_việc O
+đến O
+hạn O
+30/4 B-due_date
+
+task O
+due O
+30/4 B-due_date
+
+lọc O
+task O
+trạng_thái O
 todo B-task_status
 
 lọc O
 task O
-completed B-task_status
-
-filter O
-tasks O
-status O
+trạng_thái O
 in-progress B-task_status
 
-cho O
-mình O
+lọc O
+task O
+trạng_thái O
+completed B-task_status
+
+lọc O
+task O
+trạng_thái O
+chưa B-task_status
+làm I-task_status
+
+lọc O
+task O
+trạng_thái O
+đang B-task_status
+làm I-task_status
+
+lọc O
+task O
+trạng_thái O
+hoàn_thành B-task_status
+
+lọc O
+task O
+ưu_tiên O
+cao B-priority
+
+lọc O
+task O
+ưu_tiên O
+trung_bình B-priority
+
+lọc O
+task O
+ưu_tiên O
+thấp B-priority
+
+lọc O
 task O
 ưu_tiên O
 high B-priority
+
+lọc O
+task O
+ưu_tiên O
+medium B-priority
 
 lọc O
 task O
@@ -3362,33 +2072,38 @@ low B-priority
 
 lọc O
 task O
-status O
-todo B-task_status
-ưu_tiên O
-high B-priority
-
-filter O
-tasks O
-priority O
-medium B-priority
-and O
-status O
-completed B-task_status
-
-lọc O
-task O
 nhãn O
 work B-task_label
 
 lọc O
 task O
-label O
+nhãn O
 personal B-task_label
 
 lọc O
 task O
+nhãn O
+học_tập B-task_label
+
+lọc O
+task O
+nhãn O
+khách_hàng B-task_label
+
+tìm O
+task O
 chứa O
 báo_cáo B-search_query
+
+filter O
+tasks O
+contains O
+báo_cáo B-search_query
+
+tìm O
+task O
+chứa O
+meeting B-search_query
 
 filter O
 tasks O
@@ -3397,62 +2112,1294 @@ meeting B-search_query
 
 tìm O
 task O
+chứa O
 sql B-search_query
-
-lọc O
-task O
-từ O
-2026-04-26 B-due_from
-T I-due_from
-00:00:00 I-due_from
-đến O
-2026-04-30 B-due_to
-T I-due_to
-23:59:59 I-due_to
 
 filter O
 tasks O
-from O
-2026-05-01 B-due_from
-T I-due_from
-00:00:00 I-due_from
-to O
-2026-05-07 B-due_to
-T I-due_to
-23:59:59 I-due_to
+contains O
+sql B-search_query
+
+tìm O
+task O
+chứa O
+proposal B-search_query
+
+filter O
+tasks O
+contains O
+proposal B-search_query
+
+tìm O
+task O
+chứa O
+email B-search_query
+
+filter O
+tasks O
+contains O
+email B-search_query
 
 lọc O
 task O
 todo B-task_status
-nhãn O
-work B-task_label
-chứa O
-report B-search_query
-
-cho O
-mình O
-danh_sách O
-task O
-theo O
-bộ O
-lọc O
-
-hiển_thị O
-task O
-đã O
-lọc O
-
-filter O
-my O
-tasks O
-
-lọc O
-task O
 ưu_tiên O
 cao B-priority
 
+xem O
+task O
+đang B-task_status
+làm I-task_status
+nhãn O
+work B-task_label
+
+liệt_kê O
+task O
+quá B-task_due_state
+hạn I-task_due_state
+ưu_tiên O
+high B-priority
+
+xem O
+task O
+ngày_mai B-due_date
+ưu_tiên O
+cao B-priority
+
+tìm O
+task O
+chứa O
+báo_cáo B-search_query
+nhãn O
+work B-task_label
+
+show O
+overdue B-task_due_state
+tasks O
+with O
+high B-priority
+priority O
+
+xem O
+task O
+giúp O
+mình O
+
+liệt_kê O
+task O
+nha O
+
+danh_sách O
+công_việc O
+ngay O
+
+show O
+tasks O
+với O
+
+list O
+my O
+tasks O
+đi O
+
 lọc O
 task O
-đang O
-làm O
+cho O
+tôi O
+
+tìm O
+task O
+nhé O
+
+task O
+nào O
+quá B-task_due_state
+hạn I-task_due_state
+liền O
+
+liệt_kê O
+task O
+trễ B-task_due_state
+hạn I-task_due_state
+giúp O
+mình O
+
+tạo O
+task O
+viết B-task_title
+báo_cáo I-task_title
+
+tạo O
+task O
+viết B-task_title
+báo_cáo I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+viết B-task_title
+báo_cáo I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+viết B-task_title
+báo_cáo I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+viết B-task_title
+báo_cáo I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+học B-task_title
+sql I-task_title
+
+tạo O
+task O
+học B-task_title
+sql I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+học B-task_title
+sql I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+học B-task_title
+sql I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+học B-task_title
+sql I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+review B-task_title
+code I-task_title
+
+tạo O
+task O
+review B-task_title
+code I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+review B-task_title
+code I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+review B-task_title
+code I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+review B-task_title
+code I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+
+tạo O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+
+tạo O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+làm B-task_title
+bài_tập I-task_title
+
+tạo O
+task O
+làm B-task_title
+bài_tập I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+làm B-task_title
+bài_tập I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+làm B-task_title
+bài_tập I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+làm B-task_title
+bài_tập I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+đọc B-task_title
+tài_liệu I-task_title
+
+tạo O
+task O
+đọc B-task_title
+tài_liệu I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+đọc B-task_title
+tài_liệu I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+đọc B-task_title
+tài_liệu I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+đọc B-task_title
+tài_liệu I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+chốt B-task_title
+proposal I-task_title
+
+tạo O
+task O
+chốt B-task_title
+proposal I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+chốt B-task_title
+proposal I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+chốt B-task_title
+proposal I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+chốt B-task_title
+proposal I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+họp B-task_title
+team I-task_title
+
+tạo O
+task O
+họp B-task_title
+team I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+họp B-task_title
+team I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+họp B-task_title
+team I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+họp B-task_title
+team I-task_title
+hạn O
+16h B-due_time
+
+tạo O
+task O
+gửi B-task_title
+email I-task_title
+
+tạo O
+task O
+gửi B-task_title
+email I-task_title
+ngày_mai B-due_date
+
+tạo O
+task O
+gửi B-task_title
+email I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+tạo O
+task O
+gửi B-task_title
+email I-task_title
+ưu_tiên O
+cao B-priority
+
+tạo O
+task O
+gửi B-task_title
+email I-task_title
+hạn O
+16h B-due_time
+
+thêm O
+task O
+viết B-task_title
+báo_cáo I-task_title
+
+thêm O
+task O
+viết B-task_title
+báo_cáo I-task_title
+ngày_mai B-due_date
+
+thêm O
+task O
+viết B-task_title
+báo_cáo I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+thêm O
+task O
+viết B-task_title
+báo_cáo I-task_title
+ưu_tiên O
+cao B-priority
+
+thêm O
+task O
+viết B-task_title
+báo_cáo I-task_title
+hạn O
+16h B-due_time
+
+thêm O
+task O
+học B-task_title
+sql I-task_title
+
+thêm O
+task O
+học B-task_title
+sql I-task_title
+ngày_mai B-due_date
+
+thêm O
+task O
+học B-task_title
+sql I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+thêm O
+task O
+học B-task_title
+sql I-task_title
+ưu_tiên O
+cao B-priority
+
+thêm O
+task O
+học B-task_title
+sql I-task_title
+hạn O
+16h B-due_time
+
+thêm O
+task O
+review B-task_title
+code I-task_title
+
+thêm O
+task O
+review B-task_title
+code I-task_title
+ngày_mai B-due_date
+
+thêm O
+task O
+review B-task_title
+code I-task_title
+ngày_mai B-due_date
+14h B-due_time
+
+thêm O
+task O
+review B-task_title
+code I-task_title
+ưu_tiên O
+cao B-priority
+
+thêm O
+task O
+review B-task_title
+code I-task_title
+hạn O
+16h B-due_time
+
+xoá O
+task O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+task O
+có O
+tên O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+task O
+học B-task_title
+sql I-task_title
+
+xoá O
+task O
+có O
+tên O
+học B-task_title
+sql I-task_title
+
+xoá O
+task O
+review B-task_title
+code I-task_title
+
+xoá O
+task O
+có O
+tên O
+review B-task_title
+code I-task_title
+
+xoá O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+
+xoá O
+task O
+có O
+tên O
+gọi B-task_title
+khách_hàng I-task_title
+
+xoá O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+
+xoá O
+task O
+có O
+tên O
+chuẩn_bị B-task_title
+slide I-task_title
+
+xoá O
+task O
+làm B-task_title
+bài_tập I-task_title
+
+xoá O
+task O
+có O
+tên O
+làm B-task_title
+bài_tập I-task_title
+
+xoá O
+task O
+họp B-task_title
+team I-task_title
+
+xoá O
+task O
+có O
+tên O
+họp B-task_title
+team I-task_title
+
+xoá O
+task O
+gửi B-task_title
+email I-task_title
+
+xoá O
+task O
+có O
+tên O
+gửi B-task_title
+email I-task_title
+
+xoá O
+task O
+fix B-task_title
+bug I-task_title
+
+xoá O
+task O
+có O
+tên O
+fix B-task_title
+bug I-task_title
+
+xoá O
+task O
+mua B-task_title
+đồ I-task_title
+
+xoá O
+task O
+có O
+tên O
+mua B-task_title
+đồ I-task_title
+
+xoá O
+task O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+task O
+có O
+tên O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+task O
+học B-task_title
+sql I-task_title
+
+xoá O
+task O
+có O
+tên O
+học B-task_title
+sql I-task_title
+
+xoá O
+task O
+review B-task_title
+code I-task_title
+
+xoá O
+task O
+có O
+tên O
+review B-task_title
+code I-task_title
+
+xoá O
+task O
+gọi B-task_title
+khách_hàng I-task_title
+
+xoá O
+task O
+có O
+tên O
+gọi B-task_title
+khách_hàng I-task_title
+
+xoá O
+task O
+chuẩn_bị B-task_title
+slide I-task_title
+
+xoá O
+task O
+có O
+tên O
+chuẩn_bị B-task_title
+slide I-task_title
+
+xoá O
+task O
+làm B-task_title
+bài_tập I-task_title
+
+xoá O
+task O
+có O
+tên O
+làm B-task_title
+bài_tập I-task_title
+
+xoá O
+task O
+họp B-task_title
+team I-task_title
+
+xoá O
+task O
+có O
+tên O
+họp B-task_title
+team I-task_title
+
+xoá O
+task O
+gửi B-task_title
+email I-task_title
+
+xoá O
+task O
+có O
+tên O
+gửi B-task_title
+email I-task_title
+
+xoá O
+task O
+fix B-task_title
+bug I-task_title
+
+xoá O
+task O
+có O
+tên O
+fix B-task_title
+bug I-task_title
+
+xoá O
+task O
+mua B-task_title
+đồ I-task_title
+
+xoá O
+task O
+có O
+tên O
+mua B-task_title
+đồ I-task_title
+
+xoá O
+nhiệm_vụ O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+nhiệm_vụ O
+học B-task_title
+sql I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+học B-task_title
+sql I-task_title
+
+xoá O
+nhiệm_vụ O
+review B-task_title
+code I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+review B-task_title
+code I-task_title
+
+xoá O
+nhiệm_vụ O
+gọi B-task_title
+khách_hàng I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+gọi B-task_title
+khách_hàng I-task_title
+
+xoá O
+nhiệm_vụ O
+chuẩn_bị B-task_title
+slide I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+chuẩn_bị B-task_title
+slide I-task_title
+
+xoá O
+nhiệm_vụ O
+làm B-task_title
+bài_tập I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+làm B-task_title
+bài_tập I-task_title
+
+xoá O
+nhiệm_vụ O
+họp B-task_title
+team I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+họp B-task_title
+team I-task_title
+
+xoá O
+nhiệm_vụ O
+gửi B-task_title
+email I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+gửi B-task_title
+email I-task_title
+
+xoá O
+nhiệm_vụ O
+fix B-task_title
+bug I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+fix B-task_title
+bug I-task_title
+
+xoá O
+nhiệm_vụ O
+mua B-task_title
+đồ I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+mua B-task_title
+đồ I-task_title
+
+xoá O
+nhiệm_vụ O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+viết B-task_title
+báo_cáo I-task_title
+
+xoá O
+nhiệm_vụ O
+học B-task_title
+sql I-task_title
+
+xoá O
+nhiệm_vụ O
+có O
+tên O
+học B-task_title
+sql I-task_title
+
+xoá O
+nhiệm_vụ O
+review B-task_title
+code I-task_title
+
+xác_nhận O
+xoá O
+các O
+task O
+đã O
+chọn O
+
+ok O
+xoá O
+các O
+task O
+đã O
+chọn O
+
+đồng_ý O
+xoá O
+danh_sách O
+vừa O
+chọn O
+
+confirm O
+delete O
+selected O
+tasks O
+
+xoá O
+hết O
+những O
+task O
+đã O
+chọn O
+
+tiếp_tục O
+xoá O
+các O
+mục O
+đã O
+chọn O
+
+chắc_chắn O
+xoá O
+các O
+task O
+này O
+
+xoá O
+các O
+task O
+đã O
+đánh_dấu O
+
+yes O
+delete O
+selected O
+tasks O
+
+tiến_hành O
+xoá O
+lựa_chọn O
+
+xác_nhận O
+xoá O
+các O
+task O
+đã O
+chọn O
+giúp O
+mình O
+
+ok O
+xoá O
+các O
+task O
+đã O
+chọn O
+nha O
+
+đồng_ý O
+xoá O
+danh_sách O
+vừa O
+chọn O
+ngay O
+
+confirm O
+delete O
+selected O
+tasks O
+với O
+
+xoá O
+hết O
+những O
+task O
+đã O
+chọn O
+đi O
+
+tiếp_tục O
+xoá O
+các O
+mục O
+đã O
+chọn O
+cho O
+tôi O
+
+chắc_chắn O
+xoá O
+các O
+task O
+này O
+nhé O
+
+xoá O
+các O
+task O
+đã O
+đánh_dấu O
+liền O
+
+yes O
+delete O
+selected O
+tasks O
+giúp O
+mình O
+
+tiến_hành O
+xoá O
+lựa_chọn O
+nha O
+
+xác_nhận O
+xoá O
+các O
+task O
+đã O
+chọn O
+ngay O
+
+ok O
+xoá O
+các O
+task O
+đã O
+chọn O
+với O
+
+đồng_ý O
+xoá O
+danh_sách O
+vừa O
+chọn O
+đi O
+
+confirm O
+delete O
+selected O
+tasks O
+cho O
+tôi O
+
+xoá O
+hết O
+những O
+task O
+đã O
+chọn O
+nhé O
+
+tiếp_tục O
+xoá O
+các O
+mục O
+đã O
+chọn O
+liền O
+
+chắc_chắn O
+xoá O
+các O
+task O
+này O
+giúp O
+mình O
+
+xoá O
+các O
+task O
+đã O
+đánh_dấu O
+nha O
+
+yes O
+delete O
+selected O
+tasks O
+ngay O
+
+tiến_hành O
+xoá O
+lựa_chọn O
+với O
+
+hoàn O
+tác O
+xoá O
+task O
+
+undo O
+xoá O
+task O
+
+khôi_phục O
+task O
+vừa O
+xoá O
+
+lấy O
+lại O
+task O
+vừa O
+xoá O
+
+undo O
+delete O
+task O
+
+phục_hồi O
+task O
+mới O
+xoá O
+
+trả O
+lại O
+task O
+đã O
+xoá O
+
+rollback O
+thao_tác O
+xoá O
+task O
+
+huỷ O
+xoá O
+task O
+
+restore O
+deleted O
+task O
+
+hoàn O
+tác O
+xoá O
+task O
+giúp O
+mình O
+
+undo O
+xoá O
+task O
+nha O
+
+khôi_phục O
+task O
+vừa O
+xoá O
+ngay O
+
+lấy O
+lại O
+task O
+vừa O
+xoá O
+với O
+
+undo O
+delete O
+task O
+đi O
+
+phục_hồi O
+task O
+mới O
+xoá O
+cho O
+tôi O
+
+trả O
+lại O
+task O
+đã O
+xoá O
+nhé O
+
+rollback O
+thao_tác O
+xoá O
+task O
+liền O
+
+huỷ O
+xoá O
+task O
+giúp O
+mình O
+
+restore O
+deleted O
+task O
+nha O
+
+hoàn O
+tác O
+xoá O
+task O
+ngay O
+
+undo O
+xoá O
+task O
+với O
+
+khôi_phục O
+task O
+vừa O
+xoá O
+đi O
+
+lấy O
+lại O
+task O
+vừa O
+xoá O
+cho O
+tôi O
+
+undo O
+delete O
+task O
+nhé O
+
+phục_hồi O
+task O
+mới O
+xoá O
+liền O
+
+trả O
+lại O
+task O
+đã O
+xoá O
+giúp O
+mình O
+
+rollback O
+thao_tác O
+xoá O
+task O
+nha O
+
+huỷ O
+xoá O
+task O
+ngay O
+
+restore O
+deleted O
+task O
+với O
 

@@ -114,6 +114,78 @@ def delete_task_examples():
     return uniq(examples)
 
 
+def filter_task_examples():
+    """Canonical task query intent.
+
+    Keep all list/search/filter variants under one intent and express the
+    difference through entities/slots: task_due_state, due_date, task_status,
+    priority, task_label, and search_query.
+    """
+    examples = [
+        "xem task",
+        "liệt kê task",
+        "danh sách công việc",
+        "show tasks",
+        "list my tasks",
+        "lọc task",
+        "tìm task",
+    ]
+
+    due_states = [
+        ("quá hạn", "task nào [quá hạn](task_due_state)"),
+        ("trễ hạn", "liệt kê task [trễ hạn](task_due_state)"),
+        ("overdue", "show [overdue](task_due_state) tasks"),
+        ("đã quá deadline", "xem việc [đã quá deadline](task_due_state)"),
+    ]
+    dates = [
+        "hôm nay",
+        "ngày mai",
+        "ngày kia",
+        "tuần sau",
+        "thứ hai",
+        "30/4",
+    ]
+    statuses = ["todo", "in-progress", "completed", "chưa làm", "đang làm", "hoàn thành"]
+    priorities = ["cao", "trung bình", "thấp", "high", "medium", "low"]
+    labels = ["work", "personal", "học tập", "khách hàng"]
+    keywords = ["báo cáo", "meeting", "sql", "proposal", "email"]
+
+    examples.extend(template for _label, template in due_states)
+    for date in dates:
+        examples.extend(
+            [
+                f"xem task [{date}](due_date)",
+                f"liệt kê công việc đến hạn [{date}](due_date)",
+                f"task due [{date}](due_date)",
+            ]
+        )
+    for status in statuses:
+        examples.append(f"lọc task trạng thái [{status}](task_status)")
+    for priority in priorities:
+        examples.append(f"lọc task ưu tiên [{priority}](priority)")
+    for label in labels:
+        examples.append(f"lọc task nhãn [{label}](task_label)")
+    for keyword in keywords:
+        examples.extend(
+            [
+                f"tìm task chứa [{keyword}](search_query)",
+                f"filter tasks contains [{keyword}](search_query)",
+            ]
+        )
+
+    examples.extend(
+        [
+            "lọc task [todo](task_status) ưu tiên [cao](priority)",
+            "xem task [đang làm](task_status) nhãn [work](task_label)",
+            "liệt kê task [quá hạn](task_due_state) ưu tiên [high](priority)",
+            "xem task [ngày mai](due_date) ưu tiên [cao](priority)",
+            "tìm task chứa [báo cáo](search_query) nhãn [work](task_label)",
+            "show [overdue](task_due_state) tasks with [high](priority) priority",
+        ]
+    )
+    return expand(uniq(examples), 70)
+
+
 def note_examples():
     create = uniq(
         [
@@ -308,40 +380,6 @@ def build_dataset():
         ),
         30,
     )
-    intents["list_overdue_tasks"] = expand(
-        uniq(
-            [
-                "task nào quá hạn",
-                "liệt kê task quá hạn",
-                "xem công việc quá hạn",
-                "có task nào trễ hạn không",
-                "cho tôi danh sách quá hạn",
-                "show overdue tasks",
-                "overdue tasks list",
-                "nhiệm vụ nào đã trễ",
-                "xem việc đã quá deadline",
-                "task trễ hạn hôm nay",
-            ]
-        ),
-        25,
-    )
-    intents["list_tasks_by_date"] = expand(
-        uniq(
-            [
-                "xem task hôm nay",
-                "xem task ngày mai",
-                "liệt kê task thứ hai",
-                "xem việc ngày kia",
-                "task ngày 30/4",
-                "công việc đến hạn ngày mai",
-                "show tasks for tomorrow",
-                "tasks due today",
-                "xem task tuần sau",
-                "liệt kê task theo ngày",
-            ]
-        ),
-        25,
-    )
     intents["summarize_week"] = expand(
         uniq(
             [
@@ -376,23 +414,7 @@ def build_dataset():
         ),
         25,
     )
-    intents["filter_tasks"] = expand(
-        uniq(
-            [
-                "lọc task todo",
-                "lọc task completed",
-                "lọc task in-progress",
-                "lọc task ưu tiên cao",
-                "lọc task ưu tiên thấp",
-                "lọc task status todo ưu tiên high",
-                "lọc task nhãn work",
-                "lọc task label personal",
-                "lọc task chứa báo cáo",
-                "filter tasks contains meeting",
-            ]
-        ),
-        25,
-    )
+    intents["filter_tasks"] = filter_task_examples()
     intents["create_task"] = create_task_examples()[:65]
     intents["delete_task"] = delete_task_examples()[:65]
     intents["confirm_delete_selection"] = expand(
@@ -476,8 +498,6 @@ def render_nlu(intents):
         "affirm",
         "deny",
         "ask_howcanhelp",
-        "list_overdue_tasks",
-        "list_tasks_by_date",
         "summarize_week",
         "help_prioritize",
         "filter_tasks",

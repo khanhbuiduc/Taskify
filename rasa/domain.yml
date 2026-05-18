@@ -7,8 +7,6 @@ intents:
   - affirm
   - deny
   - ask_howcanhelp
-  - list_overdue_tasks
-  - list_tasks_by_date
   - filter_tasks
   - summarize_week
   - help_prioritize
@@ -32,6 +30,7 @@ entities:
   - priority
   - task_status
   - task_label
+  - task_due_state
   - due_from
   - due_to
   - search_query
@@ -47,6 +46,8 @@ slots:
     mappings:
       - type: from_entity
         entity: task_title
+      - type: from_text
+        intent: create_task
       - type: from_text
         conditions:
           - active_loop: create_task_form
@@ -86,6 +87,13 @@ slots:
     mappings:
       - type: from_entity
         entity: task_label
+
+  task_due_state:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: task_due_state
 
   due_from:
     type: text

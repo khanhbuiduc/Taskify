@@ -99,3 +99,4 @@ _tmp_build
 # Ignore PhoBERT models
 rasa/data/phobert/model/
 rasa/data/phobert/phobert_models/
+rasa/data/model/

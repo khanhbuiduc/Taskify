@@ -18,16 +18,6 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
-- story: list overdue tasks
-  steps:
-  - intent: list_overdue_tasks
-  - action: action_list_tasks
-
-- story: list tasks by date
-  steps:
-  - intent: list_tasks_by_date
-  - action: action_list_tasks
-
 - story: filter tasks
   steps:
   - intent: filter_tasks

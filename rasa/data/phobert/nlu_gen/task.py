@@ -5,8 +5,6 @@ from typing import Dict, List
 from refactor_nlu_v2 import build_dataset
 
 TASK_INTENT_ORDER: List[str] = [
-    "list_overdue_tasks",
-    "list_tasks_by_date",
     "summarize_week",
     "help_prioritize",
     "filter_tasks",

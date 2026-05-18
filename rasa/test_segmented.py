@@ -2,7 +2,7 @@ import sys, io, os, json, torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-model_dir = r'data\phobert\model\intent_model'
+model_dir = r'data\model\intent_model'
 tok = AutoTokenizer.from_pretrained(model_dir)
 model = AutoModelForSequenceClassification.from_pretrained(model_dir)
 model.eval()

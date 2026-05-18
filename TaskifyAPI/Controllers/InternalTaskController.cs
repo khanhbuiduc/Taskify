@@ -121,6 +121,14 @@ namespace TaskifyAPI.Controllers
                     dbQuery = dbQuery.Where(t => t.DueDate <= query.DueTo.Value);
                 }
 
+                if (query.Overdue)
+                {
+                    var nowUtc = DateTime.UtcNow;
+                    dbQuery = dbQuery.Where(t =>
+                        t.Status != TaskItemStatus.Completed &&
+                        t.DueDate < nowUtc);
+                }
+
                 var orderedQuery = dbQuery.OrderBy(t => t.DueDate);
                 var totalCount = await orderedQuery.CountAsync();
 
@@ -559,6 +567,7 @@ namespace TaskifyAPI.Controllers
         public string? Label { get; set; }
         public DateTime? DueFrom { get; set; }
         public DateTime? DueTo { get; set; }
+        public bool Overdue { get; set; } = false;
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 5;
     }

@@ -1,6 +1,6 @@
 ﻿# Taskify Rasa Action Server (Phase 2)
 
-Custom actions that call TaskifyAPI to list/create tasks and summarize data.
+Custom actions that call TaskifyAPI to filter/create/delete tasks, manage notes, and summarize data.
 
 ## Setup
 
@@ -35,8 +35,8 @@ If `GEMINI_API_KEY` is missing or Gemini call fails, bot falls back to `utter_de
    action_endpoint:
      url: "http://localhost:5055/webhook"
    ```
-2. In `rasa/domain.yml`, uncomment the `actions:` block (action_list_tasks, action_create_task, action_summarize_week).
-3. Update `rasa/data/stories.yml` to use these actions instead of utter_* for list_overdue_tasks, create_task, summarize_week.
+2. In `rasa/domain.yml`, keep the `actions:` block in sync with the action classes.
+3. Use `filter_tasks` + slots/entities for task list queries such as overdue, by date, status, priority, label, and keyword.
 4. Retrain: `rasa train`
 
 ## Passing user context

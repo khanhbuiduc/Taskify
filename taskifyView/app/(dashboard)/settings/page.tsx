@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -94,7 +100,7 @@ function LogTabContent() {
   }, [selectedSessionId, selectSession, messages, loadMessages]);
 
   const selectedMessages = useMemo(
-    () => (selectedSessionId ? messages[selectedSessionId] ?? [] : []),
+    () => (selectedSessionId ? (messages[selectedSessionId] ?? []) : []),
     [messages, selectedSessionId],
   );
 
@@ -120,7 +126,11 @@ function LogTabContent() {
               </option>
             ))}
           </select>
-          <Button variant="outline" onClick={() => void refreshSessions()} disabled={isLoading}>
+          <Button
+            variant="outline"
+            onClick={() => void refreshSessions()}
+            disabled={isLoading}
+          >
             Refresh
           </Button>
         </div>
@@ -136,14 +146,22 @@ function LogTabContent() {
                 <div
                   key={m.id}
                   className={`rounded-md border p-3 ${
-                    isUser ? "bg-blue-50/40 border-blue-100" : "bg-emerald-50/40 border-emerald-100"
+                    isUser
+                      ? "bg-blue-50/40 border-blue-100 dark:bg-blue-900/50 dark:border-blue-700"
+                      : "bg-emerald-50/40 border-emerald-100 dark:bg-emerald-900/50 dark:border-emerald-700"
                   }`}
                 >
                   <div className="mb-2 flex items-center justify-between gap-2">
-                    <Badge variant="secondary">{isUser ? "User" : "Assistant"}</Badge>
-                    <span className="text-xs text-muted-foreground">{formatDateTime(m.sentAt)}</span>
+                    <Badge variant="secondary">
+                      {isUser ? "User" : "Assistant"}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">
+                      {formatDateTime(m.sentAt)}
+                    </span>
                   </div>
-                  <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">{m.text}</p>
+                  <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">
+                    {m.text}
+                  </p>
                   {prettyMetadata && (
                     <pre className="mt-3 overflow-auto rounded bg-black/90 p-3 text-xs text-green-200">
                       {prettyMetadata}
@@ -175,7 +193,7 @@ export default function SettingsPage() {
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className="data-[state=active]:text-green-600"
+              className="data-[state=active]:text-green-600 dark:data-[state=active]:bg-green-500 dark:data-[state=active]:text-white"
             >
               {tab.label}
             </TabsTrigger>
@@ -193,7 +211,7 @@ export default function SettingsPage() {
                       <TabsTrigger
                         key={tab.value}
                         value={tab.value}
-                        className="data-[state=active]:text-green-600"
+                        className="data-[state=active]:text-green-600 dark:data-[state=active]:bg-green-500 dark:data-[state=active]:text-white"
                       >
                         {tab.label}
                       </TabsTrigger>
@@ -215,7 +233,11 @@ export default function SettingsPage() {
           .filter((tab) => tab.value !== "model")
           .map((tab) => (
             <TabsContent key={tab.value} value={tab.value}>
-              {tab.value === "log" ? <LogTabContent /> : <ComingSoonCard title={tab.label} />}
+              {tab.value === "log" ? (
+                <LogTabContent />
+              ) : (
+                <ComingSoonCard title={tab.label} />
+              )}
             </TabsContent>
           ))}
       </Tabs>

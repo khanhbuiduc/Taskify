@@ -16,7 +16,7 @@ from rasa.shared.nlu.training_data.training_data import TrainingData
 # Đường dẫn tới ner_model
 _MODEL_DIR = os.path.join(
     os.path.dirname(__file__),
-    "..", "data", "phobert", "model", "ner_model"
+    "..", "data", "model", "ner_model"
 )
 _MODEL_DIR = os.path.abspath(_MODEL_DIR)
 

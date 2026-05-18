@@ -1,4 +1,4 @@
-﻿import json
+import json
 import os
 from typing import Any, Dict, List, Text
 
@@ -19,7 +19,6 @@ _MODEL_DIR = os.path.join(
     os.path.dirname(__file__),
     "..",
     "data",
-    "phobert",
     "model",
     "intent_model",
 )

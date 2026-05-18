@@ -223,6 +223,23 @@ def process_nlu_sources(file_paths: List[Path], rdrsegmenter):
     return intent_data, ner_data
 
 
+def dedupe_intent_rows(rows: List[dict]) -> Tuple[List[dict], int]:
+    deduped_rows = []
+    seen = set()
+    removed_count = 0
+
+    for row in rows:
+        key = (row["intent"], row["text"])
+        if key in seen:
+            removed_count += 1
+            continue
+
+        seen.add(key)
+        deduped_rows.append(row)
+
+    return deduped_rows, removed_count
+
+
 def save_intent_json(data, output_path: Path):
     with output_path.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
@@ -268,6 +285,8 @@ def main():
     )
 
     intent_data, ner_data = process_nlu_sources(input_files, rdrsegmenter)
+    intent_data, removed_duplicates = dedupe_intent_rows(intent_data)
+    print(f"Filtered {removed_duplicates} duplicate intent rows.")
 
     intent_output = resolve_path(current_dir, args.intent_output)
     ner_output = resolve_path(current_dir, args.ner_output)

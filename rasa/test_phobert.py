@@ -4,7 +4,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 from transformers import AutoModelForSequenceClassification, AutoModelForTokenClassification, AutoTokenizer
 
 # === TEST INTENT ===
-intent_dir = r'data\phobert\model\intent_model'
+intent_dir = r'data\model\intent_model'
 tok_i = AutoTokenizer.from_pretrained(intent_dir)
 model_i = AutoModelForSequenceClassification.from_pretrained(intent_dir)
 model_i.eval()
@@ -21,7 +21,7 @@ for t in tests_i:
     print(f'  [{probs[idx]:.1%}] "{t}" => {id2label_i[str(idx)]}')
 
 # === TEST NER ===
-ner_dir = r'data\phobert\model\ner_model'
+ner_dir = r'data\model\ner_model'
 tok_n = AutoTokenizer.from_pretrained(ner_dir)
 model_n = AutoModelForTokenClassification.from_pretrained(ner_dir)
 model_n.eval()
