@@ -92,6 +92,56 @@ stories:
   - intent: pin_note
   - action: action_toggle_pin_note
 
+- story: create finance entry
+  steps:
+  - intent: create_finance_entry
+  - action: action_create_finance_entry
+
+- story: list finance entries
+  steps:
+  - intent: list_finance_entries
+  - action: action_list_finance_entries
+
+- story: search finance entries
+  steps:
+  - intent: search_finance_entries
+  - action: action_search_finance_entries
+
+- story: update finance entry
+  steps:
+  - intent: update_finance_entry
+  - action: action_update_finance_entry
+
+- story: delete finance entry
+  steps:
+  - intent: delete_finance_entry
+  - action: action_delete_finance_entry
+
+- story: summarize finance
+  steps:
+  - intent: summarize_finance
+  - action: action_summarize_finance
+
+- story: create finance category
+  steps:
+  - intent: create_finance_category
+  - action: action_create_finance_category
+
+- story: list finance categories
+  steps:
+  - intent: list_finance_categories
+  - action: action_list_finance_categories
+
+- story: update finance category
+  steps:
+  - intent: update_finance_category
+  - action: action_update_finance_category
+
+- story: delete finance category
+  steps:
+  - intent: delete_finance_category
+  - action: action_delete_finance_category
+
 - story: fallback
   steps:
   - intent: nlu_fallback

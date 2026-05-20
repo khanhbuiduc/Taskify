@@ -18,6 +18,12 @@ namespace TaskifyAPI.Services
             string messageText,
             string locale,
             CancellationToken cancellationToken = default);
+
+        Task<string> NormalizeContextAsync(
+            string userId,
+            string messageText,
+            IReadOnlyList<Model.ChatMessage> history,
+            CancellationToken cancellationToken = default);
     }
 
     public sealed class GeminiNotConfiguredException : Exception

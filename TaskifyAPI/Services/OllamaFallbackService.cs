@@ -87,6 +87,32 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async Task<string> NormalizeContextAsync(
+            string baseUrl,
+            string model,
+            string messageText,
+            IReadOnlyList<Model.ChatMessage> history,
+            CancellationToken cancellationToken = default)
+        {
+            var normalizedBaseUrl = NormalizeBaseUrl(baseUrl);
+            var normalizedModel = (model ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(normalizedModel))
+            {
+                return messageText;
+            }
+
+            var prompt = AiFallbackPromptBuilder.BuildNormalizationPrompt(messageText, history);
+            try
+            {
+                var answer = await CallGenerateAsync(normalizedBaseUrl, normalizedModel, prompt, cancellationToken).ConfigureAwait(false);
+                return string.IsNullOrWhiteSpace(answer) ? messageText : answer;
+            }
+            catch (Exception)
+            {
+                return messageText;
+            }
+        }
+
         private async Task<string> CallGenerateAsync(string baseUrl, string model, string prompt, CancellationToken cancellationToken)
         {
             using var request = new HttpRequestMessage(HttpMethod.Post, $"{baseUrl}/api/generate");

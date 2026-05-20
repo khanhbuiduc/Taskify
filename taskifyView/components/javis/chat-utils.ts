@@ -3,7 +3,15 @@
  * No React imports, no side-effects: safe to use anywhere.
  */
 
-import type { Task, TaskPriority, TaskStatus, Note } from "@/lib/types";
+import type {
+  Task,
+  TaskPriority,
+  TaskStatus,
+  Note,
+  FinanceEntry,
+  FinanceSummary,
+  FinanceCategory,
+} from "@/lib/types";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -87,12 +95,31 @@ export type TaskListPagePayload = {
   };
 };
 
+export type FinanceEntryListPayload = {
+  type: "finance_entry_list" | "finance_entry_picker";
+  prompt?: string;
+  entries: FinanceEntry[];
+};
+
+export type FinanceSummaryPayload = {
+  type: "finance_summary";
+  summary: FinanceSummary;
+};
+
+export type FinanceCategoryListPayload = {
+  type: "finance_category_list";
+  categories: FinanceCategory[];
+};
+
 export type AssistantPayload =
   | TaskPickerPayload
   | NotePickerPayload
   | DeleteResultPayload
   | UndoResultPayload
-  | TaskListPagePayload;
+  | TaskListPagePayload
+  | FinanceEntryListPayload
+  | FinanceSummaryPayload
+  | FinanceCategoryListPayload;
 
 // ---------------------------------------------------------------------------
 // Task list parser (Rasa format_task_list output)
@@ -334,6 +361,15 @@ export function parseAssistantPayload(
     }
     if (parsed.type === "task_list_page") {
       return parsed as TaskListPagePayload;
+    }
+    if (parsed.type === "finance_entry_list" || parsed.type === "finance_entry_picker") {
+      return parsed as FinanceEntryListPayload;
+    }
+    if (parsed.type === "finance_summary") {
+      return parsed as FinanceSummaryPayload;
+    }
+    if (parsed.type === "finance_category_list") {
+      return parsed as FinanceCategoryListPayload;
     }
 
     return null;

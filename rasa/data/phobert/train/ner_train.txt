@@ -1,3 +1,456 @@
+thêm O
+chi_tiêu O
+50000 B-finance_amount
+danh_mục O
+ăn_uống B-finance_category
+mô_tả O
+cơm B-finance_description
+trưa I-finance_description
+
+ghi_nhận O
+chi_phí O
+120k B-finance_amount
+cho O
+cà_phê B-finance_description
+với I-finance_description
+team I-finance_description
+danh_mục O
+ăn_uống B-finance_category
+
+hôm_nay O
+tôi O
+tiêu O
+250000 B-finance_amount
+cho O
+đổ B-finance_description
+xăng I-finance_description
+loại O
+di_chuyển B-finance_category
+
+thêm O
+giao_dịch O
+1.2 B-finance_amount
+tr I-finance_amount
+danh_mục O
+mua_sắm B-finance_category
+nội_dung O
+mua B-finance_description
+bàn_phím I-finance_description
+
+tạo O
+chi_phí O
+85000 B-finance_amount
+ngày O
+hôm_nay B-finance_date
+cho O
+ăn B-finance_description
+tối I-finance_description
+
+add O
+expense O
+15 B-finance_amount
+category O
+food B-finance_category
+description O
+lunch B-finance_description
+
+record O
+expense O
+200000 B-finance_amount
+for O
+grab B-finance_description
+bike I-finance_description
+in O
+di_chuyển B-finance_category
+
+lưu O
+chi_tiêu O
+300k B-finance_amount
+ngày_mai B-finance_date
+danh_mục O
+hoá_đơn B-finance_category
+
+mình O
+vừa O
+chi O
+45000 B-finance_amount
+mua O
+trà B-finance_description
+sữa I-finance_description
+
+thêm O
+khoản O
+chi O
+700000 B-finance_amount
+cho O
+tiền B-finance_description
+điện I-finance_description
+danh_mục O
+hoá_đơn B-finance_category
+
+ghi O
+lại O
+35000 B-finance_amount
+tiền O
+gửi B-finance_description
+xe I-finance_description
+vào O
+di_chuyển B-finance_category
+
+tạo O
+finance O
+entry O
+99000 B-finance_amount
+cho O
+sách B-finance_description
+category O
+học_tập B-finance_category
+
+xem O
+chi_tiêu O
+gần O
+đây O
+
+liệt_kê O
+finance O
+
+danh_sách O
+giao_dịch O
+tài_chính O
+
+xem O
+các O
+khoản O
+chi O
+
+mở O
+danh_sách O
+chi_tiêu O
+
+show O
+my O
+expenses O
+
+list O
+finance O
+entries O
+
+xem O
+chi_tiêu O
+hôm_nay B-finance_date
+
+liệt_kê O
+khoản O
+chi O
+danh_mục O
+ăn_uống B-finance_category
+
+xem O
+giao_dịch O
+ngày_mai B-finance_date
+
+cho O
+tôi O
+xem O
+sổ O
+chi_tiêu O
+
+hiển_thị O
+các O
+mục O
+finance O
+mới O
+nhất O
+
+tìm O
+chi_tiêu O
+cà_phê B-finance_keyword
+
+tìm O
+khoản O
+chi O
+chứa O
+grab B-finance_keyword
+
+search O
+expenses O
+for O
+lunch B-finance_keyword
+
+lọc O
+chi_tiêu O
+danh_mục O
+ăn_uống B-finance_category
+
+có O
+khoản O
+chi O
+nào O
+về O
+đổ B-finance_keyword
+xăng I-finance_keyword
+
+tìm O
+giao_dịch O
+tiền B-finance_keyword
+điện I-finance_keyword
+
+tìm O
+finance O
+mua_sắm B-finance_keyword
+
+xem O
+chi_phí O
+liên_quan O
+team B-finance_keyword
+
+lọc O
+finance O
+category O
+di_chuyển B-finance_category
+
+tìm O
+khoản O
+tài_chính O
+có O
+bàn_phím B-finance_keyword
+
+sửa O
+chi_tiêu O
+cà_phê B-finance_keyword
+thành O
+60000 B-finance_amount
+
+cập_nhật O
+khoản O
+chi O
+grab B-finance_keyword
+danh_mục O
+di_chuyển B-finance_category
+
+đổi O
+giao_dịch O
+ăn B-finance_keyword
+tối I-finance_keyword
+thành O
+120000 B-finance_amount
+
+update O
+expense O
+lunch B-finance_keyword
+amount O
+20 B-finance_amount
+
+sửa O
+finance O
+tiền B-finance_keyword
+điện I-finance_keyword
+mô_tả O
+tiền B-finance_description
+điện I-finance_description
+tháng I-finance_description
+này I-finance_description
+
+cập_nhật O
+chi_phí O
+trà B-finance_keyword
+sữa I-finance_keyword
+ngày O
+hôm_nay B-finance_date
+
+đổi O
+danh_mục O
+khoản O
+chi O
+bàn_phím B-finance_keyword
+sang O
+mua_sắm B-finance_category
+
+sửa O
+khoản O
+tài_chính O
+đổ B-finance_keyword
+xăng I-finance_keyword
+thành O
+300000 B-finance_amount
+
+xoá O
+chi_tiêu O
+cà_phê B-finance_keyword
+
+xoá O
+khoản O
+chi O
+grab B-finance_keyword
+
+delete O
+expense O
+lunch B-finance_keyword
+
+remove O
+finance O
+entry O
+tiền B-finance_keyword
+điện I-finance_keyword
+
+xoá O
+giao_dịch O
+tài_chính O
+trà B-finance_keyword
+sữa I-finance_keyword
+
+xoá O
+chi_phí O
+danh_mục O
+ăn_uống B-finance_category
+
+xoá O
+khoản O
+finance O
+đổ B-finance_keyword
+xăng I-finance_keyword
+
+gỡ O
+mục O
+chi_tiêu O
+bàn_phím B-finance_keyword
+
+tổng_kết O
+chi_tiêu O
+
+thống_kê O
+tài_chính O
+
+tháng O
+này O
+tôi O
+tiêu O
+bao_nhiêu O
+
+tổng_chi O
+hôm_nay O
+
+báo_cáo O
+finance O
+
+summarize O
+my O
+expenses O
+
+finance O
+summary O
+
+tổng_kết O
+danh_mục O
+ăn_uống B-finance_category
+
+thống_kê O
+chi_tiêu O
+hôm_nay B-finance_date
+
+tính O
+tổng O
+khoản O
+chi O
+
+cho O
+tôi O
+báo_cáo O
+chi_phí O
+
+tạo O
+danh_mục O
+tài_chính O
+ăn_uống B-finance_category
+
+thêm O
+category O
+finance O
+di_chuyển B-finance_category
+
+tạo O
+loại O
+chi_tiêu O
+hoá_đơn B-finance_category
+
+add O
+finance O
+category O
+shopping B-finance_category
+
+thêm O
+danh_mục O
+giải_trí B-finance_category
+cho O
+finance O
+
+xem O
+danh_mục O
+tài_chính O
+
+liệt_kê O
+category O
+finance O
+
+danh_sách O
+loại O
+chi_tiêu O
+
+show O
+finance O
+categories O
+
+xem O
+các O
+danh_mục O
+chi_tiêu O
+
+đổi O
+danh_mục O
+ăn_uống B-finance_keyword
+thành O
+food B-finance_category
+
+sửa O
+category O
+di_chuyển B-finance_keyword
+thành O
+transport B-finance_category
+
+cập_nhật O
+danh_mục O
+tài_chính O
+hoá_đơn B-finance_keyword
+sang O
+bills B-finance_category
+
+rename O
+finance O
+category O
+shopping B-finance_keyword
+to O
+mua_sắm B-finance_category
+
+xoá O
+danh_mục O
+tài_chính O
+ăn_uống B-finance_category
+
+xoá O
+category O
+finance O
+di_chuyển B-finance_category
+
+delete O
+finance O
+category O
+shopping B-finance_category
+
+remove O
+expense O
+category O
+hoá_đơn B-finance_category
+
 tạo O
 note O
 ý_tưởng B-note_title

@@ -23,6 +23,8 @@ import { cn } from "@/lib/utils";
 import { useChatSessionStore } from "@/lib/chat-session-store";
 import { useTaskStore } from "@/lib/task-store";
 import { useNoteStore } from "@/lib/note-store";
+import { useFinanceStore } from "@/lib/finance-store";
+import { useFinanceCategoryStore } from "@/lib/finance-category-store";
 import { useTaskActions } from "@/hooks/use-task-actions";
 import { useSpeechRecognition } from "@/hooks/use-speech-recognition";
 import { useSpeechSynthesis } from "@/hooks/use-speech-synthesis";
@@ -31,12 +33,13 @@ import { TaskDetailDialog } from "@/components/task/task-detail-dialog";
 import { TaskModal } from "@/components/task/task-modal";
 import { DeleteDialog } from "@/components/task/delete-dialog";
 import { NoteEditorDialog } from "@/components/notes/note-editor-dialog";
+import { FinanceEntryDialog } from "@/components/finance/finance-entry-dialog";
 
 import { ChatMessageList } from "@/components/javis/chat-message-list";
 import { ChatInputBar } from "@/components/javis/chat-input-bar";
 import { useResolvedTasks } from "@/components/javis/use-resolved-tasks";
 import { parseAssistantPayload } from "@/components/javis/chat-utils";
-import type { ChatMessageRole, Note } from "@/lib/types";
+import type { ChatMessageRole, Note, FinanceEntry } from "@/lib/types";
 
 const READ_REPLIES_STORAGE_KEY = "taskify.ai.read-replies-aloud";
 
@@ -70,6 +73,16 @@ export default function AILayoutPage() {
   const [noteDialogOpen, setNoteDialogOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
 
+  const {
+    refresh: refreshFinance,
+    createEntry: createFinanceEntry,
+    updateEntry: updateFinanceEntry,
+  } = useFinanceStore();
+  const { categories, fetchCategories } = useFinanceCategoryStore();
+  const [financeDialogOpen, setFinanceDialogOpen] = useState(false);
+  const [editingFinanceEntry, setEditingFinanceEntry] =
+    useState<FinanceEntry | null>(null);
+
   const handleNoteSave = async (payload: {
     title: string;
     content?: string;
@@ -84,6 +97,25 @@ export default function AILayoutPage() {
       setNoteDialogOpen(false);
     } catch {
       toast.error("Lưu ghi chú thất bại");
+    }
+  };
+
+  const handleFinanceEntrySave = async (payload: {
+    date: string;
+    category: string;
+    description?: string;
+    amount: number;
+  }) => {
+    try {
+      if (editingFinanceEntry) {
+        await updateFinanceEntry(editingFinanceEntry.id, payload);
+      } else {
+        await createFinanceEntry(payload);
+      }
+      setFinanceDialogOpen(false);
+      setEditingFinanceEntry(null);
+    } catch {
+      toast.error("Lưu mục tài chính thất bại");
     }
   };
 
@@ -156,6 +188,11 @@ export default function AILayoutPage() {
   useEffect(() => {
     void init();
   }, [init]);
+
+  useEffect(() => {
+    fetchCategories().catch(() => {});
+    refreshFinance().catch(() => {});
+  }, [fetchCategories, refreshFinance]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -248,6 +285,8 @@ export default function AILayoutPage() {
 
     try {
       const responseMessages = await sendPersistedMessage(msg, metadata);
+      refreshFinance().catch(() => {});
+      fetchCategories().catch(() => {});
       if (readRepliesAloud && isSpeechSynthesisSupported) {
         const replies = responseMessages
           .filter((m) => m.role === "assistant")
@@ -346,6 +385,16 @@ export default function AILayoutPage() {
                 toast.error("Ghim ghi chú thất bại");
               }
             }}
+            onFinanceEntryEdit={(entry) => {
+              setEditingFinanceEntry(entry);
+              setFinanceDialogOpen(true);
+            }}
+            onFinanceEntryDelete={(entry) => {
+              void handleSend("xóa chi tiêu", {
+                action: "confirm_delete_finance_entry",
+                entryIds: [entry.id],
+              });
+            }}
           />
 
           {/* Input area */}
@@ -396,6 +445,16 @@ export default function AILayoutPage() {
           onOpenChange={setNoteDialogOpen}
           onSave={handleNoteSave}
           note={editingNote ?? undefined}
+        />
+        <FinanceEntryDialog
+          open={financeDialogOpen}
+          onOpenChange={(open) => {
+            setFinanceDialogOpen(open);
+            if (!open) setEditingFinanceEntry(null);
+          }}
+          entry={editingFinanceEntry}
+          categories={categories}
+          onSave={handleFinanceEntrySave}
         />
       </div>
     </div>

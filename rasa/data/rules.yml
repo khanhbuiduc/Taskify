@@ -53,3 +53,53 @@ rules:
   steps:
   - intent: filter_tasks
   - action: action_filter_tasks
+
+- rule: Create finance entry directly
+  steps:
+  - intent: create_finance_entry
+  - action: action_create_finance_entry
+
+- rule: List finance entries directly
+  steps:
+  - intent: list_finance_entries
+  - action: action_list_finance_entries
+
+- rule: Search finance entries directly
+  steps:
+  - intent: search_finance_entries
+  - action: action_search_finance_entries
+
+- rule: Update finance entry directly
+  steps:
+  - intent: update_finance_entry
+  - action: action_update_finance_entry
+
+- rule: Delete finance entry directly
+  steps:
+  - intent: delete_finance_entry
+  - action: action_delete_finance_entry
+
+- rule: Summarize finance directly
+  steps:
+  - intent: summarize_finance
+  - action: action_summarize_finance
+
+- rule: Create finance category directly
+  steps:
+  - intent: create_finance_category
+  - action: action_create_finance_category
+
+- rule: List finance categories directly
+  steps:
+  - intent: list_finance_categories
+  - action: action_list_finance_categories
+
+- rule: Update finance category directly
+  steps:
+  - intent: update_finance_category
+  - action: action_update_finance_category
+
+- rule: Delete finance category directly
+  steps:
+  - intent: delete_finance_category
+  - action: action_delete_finance_category

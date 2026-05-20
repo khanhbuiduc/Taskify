@@ -17,6 +17,16 @@ intents:
   - pin_note
   - update_note
   - delete_note
+  - create_finance_entry
+  - list_finance_entries
+  - search_finance_entries
+  - update_finance_entry
+  - delete_finance_entry
+  - summarize_finance
+  - create_finance_category
+  - list_finance_categories
+  - update_finance_category
+  - delete_finance_category
   - delete_task
   - confirm_delete_selection
   - undo_delete_task
@@ -38,6 +48,11 @@ entities:
   - note_text
   - note_keyword
   - pin_state
+  - finance_amount
+  - finance_category
+  - finance_description
+  - finance_date
+  - finance_keyword
 
 slots:
   task_title:
@@ -162,6 +177,41 @@ slots:
       - type: from_entity
         entity: pin_state
 
+  finance_amount:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: finance_amount
+
+  finance_category:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: finance_category
+
+  finance_description:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: finance_description
+
+  finance_date:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: finance_date
+
+  finance_keyword:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: finance_keyword
+
   delete_task_id:
     type: text
     influence_conversation: false
@@ -258,6 +308,16 @@ actions:
   - action_toggle_pin_note
   - action_update_note
   - action_delete_note
+  - action_create_finance_entry
+  - action_list_finance_entries
+  - action_search_finance_entries
+  - action_update_finance_entry
+  - action_delete_finance_entry
+  - action_summarize_finance
+  - action_list_finance_categories
+  - action_create_finance_category
+  - action_update_finance_category
+  - action_delete_finance_category
   - action_handle_confirmation
   - action_fallback_gemini
 

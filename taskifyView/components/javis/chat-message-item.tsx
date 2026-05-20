@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState, type MutableRefObject } from "react";
-import { Bot, User } from "lucide-react";
+import { Bot, Pencil, Trash2, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TaskCard } from "@/components/task/task-card";
 import { NoteCard } from "@/components/notes/note-card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import type { Task, ChatMessageRole, Note } from "@/lib/types";
+import type { Task, ChatMessageRole, Note, FinanceEntry } from "@/lib/types";
 import {
   parseCreateTaskBlock,
   parseTaskListBlock,
@@ -20,6 +20,9 @@ import {
   type TaskPickerPayload,
   type NotePickerPayload,
   type TaskListPagePayload,
+  type FinanceEntryListPayload,
+  type FinanceSummaryPayload,
+  type FinanceCategoryListPayload,
 } from "./chat-utils";
 
 export interface DisplayMessage {
@@ -49,6 +52,8 @@ interface ChatMessageItemProps {
   onNoteCardEdit?: (note: Note) => void;
   onNoteCardDelete?: (note: Note) => void;
   onNoteCardTogglePin?: (note: Note) => void;
+  onFinanceEntryEdit?: (entry: FinanceEntry) => void;
+  onFinanceEntryDelete?: (entry: FinanceEntry) => void;
   isSending: boolean;
 }
 
@@ -207,6 +212,130 @@ function NotePickerPayloadView({
   );
 }
 
+function formatMoney(amount: number) {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+    maximumFractionDigits: 0,
+  }).format(amount || 0);
+}
+
+function formatDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString("vi-VN");
+}
+
+function FinanceEntryPayloadView({
+  payload,
+  messageContent,
+  onEdit,
+  onDelete,
+}: {
+  payload: FinanceEntryListPayload;
+  messageContent: string;
+  onEdit?: (entry: FinanceEntry) => void;
+  onDelete?: (entry: FinanceEntry) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <TextBubble content={payload.prompt || messageContent} />
+      <div className="space-y-2">
+        {payload.entries.map((entry) => (
+          <div
+            key={entry.id}
+            className="rounded-md border border-border/70 bg-card/90 p-3 text-foreground"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold">{formatMoney(entry.amount)}</p>
+                <p className="text-xs text-muted-foreground">
+                  {entry.category} - {formatDate(entry.date)}
+                </p>
+                {entry.description && (
+                  <p className="mt-1 text-sm leading-snug">{entry.description}</p>
+                )}
+              </div>
+              <div className="flex shrink-0 gap-1">
+                {onEdit && (
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8"
+                    onClick={() => onEdit(entry)}
+                    aria-label="Sua muc tai chinh"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                )}
+                {onDelete && (
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 text-destructive hover:text-destructive"
+                    onClick={() => onDelete(entry)}
+                    aria-label="Xoa muc tai chinh"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FinanceSummaryPayloadView({ payload, messageContent }: {
+  payload: FinanceSummaryPayload;
+  messageContent: string;
+}) {
+  return (
+    <div className="space-y-2">
+      <TextBubble content={messageContent} />
+      <div className="grid grid-cols-3 gap-2">
+        <div className="rounded-md border border-border/70 bg-card/90 p-2">
+          <p className="text-xs text-muted-foreground">Tong</p>
+          <p className="text-sm font-semibold">{formatMoney(payload.summary.totalAmount)}</p>
+        </div>
+        <div className="rounded-md border border-border/70 bg-card/90 p-2">
+          <p className="text-xs text-muted-foreground">So muc</p>
+          <p className="text-sm font-semibold">{payload.summary.count}</p>
+        </div>
+        <div className="rounded-md border border-border/70 bg-card/90 p-2">
+          <p className="text-xs text-muted-foreground">TB</p>
+          <p className="text-sm font-semibold">{formatMoney(payload.summary.averageAmount)}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FinanceCategoryPayloadView({ payload, messageContent }: {
+  payload: FinanceCategoryListPayload;
+  messageContent: string;
+}) {
+  return (
+    <div className="space-y-2">
+      <TextBubble content={messageContent} />
+      <div className="flex flex-wrap gap-1.5">
+        {payload.categories.map((category) => (
+          <span
+            key={category.id}
+            className="rounded-md border border-border/70 bg-card/90 px-2 py-1 text-xs text-foreground"
+          >
+            {category.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function resolveListItem(item: ParsedTaskListItem, tasks: Task[]): Task {
   const normalized = foldText(item.title);
   const found = tasks.find((task) => foldText(task.title) === normalized);
@@ -287,6 +416,8 @@ export function ChatMessageItem({
   onNoteCardEdit,
   onNoteCardDelete,
   onNoteCardTogglePin,
+  onFinanceEntryEdit,
+  onFinanceEntryDelete,
   isSending,
 }: ChatMessageItemProps) {
   const assistantPayload =
@@ -381,6 +512,24 @@ export function ChatMessageItem({
             onTaskStatusToggle={onTaskListItemStatusToggle}
             onTaskFilterPage={onTaskFilterPage}
             isSending={isSending}
+          />
+        ) : assistantPayload?.type === "finance_entry_list" ||
+          assistantPayload?.type === "finance_entry_picker" ? (
+          <FinanceEntryPayloadView
+            payload={assistantPayload}
+            messageContent={message.content}
+            onEdit={onFinanceEntryEdit}
+            onDelete={onFinanceEntryDelete}
+          />
+        ) : assistantPayload?.type === "finance_summary" ? (
+          <FinanceSummaryPayloadView
+            payload={assistantPayload}
+            messageContent={message.content}
+          />
+        ) : assistantPayload?.type === "finance_category_list" ? (
+          <FinanceCategoryPayloadView
+            payload={assistantPayload}
+            messageContent={message.content}
           />
         ) : taskListBlock ? (
           <TaskListBlockView

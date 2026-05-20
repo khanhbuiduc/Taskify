@@ -18,12 +18,16 @@ namespace TaskifyAPI.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IRasaChatService _rasaChatService;
+        private readonly IAiFallbackService _aiFallbackService;
         private readonly ApplicationDbContext _dbContext;
+        private readonly ILogger<ChatController> _logger;
 
-        public ChatController(IRasaChatService rasaChatService, ApplicationDbContext dbContext)
+        public ChatController(IRasaChatService rasaChatService, IAiFallbackService aiFallbackService, ApplicationDbContext dbContext, ILogger<ChatController> logger)
         {
             _rasaChatService = rasaChatService;
+            _aiFallbackService = aiFallbackService;
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         [HttpGet("sessions")]
@@ -130,6 +134,13 @@ namespace TaskifyAPI.Controllers
                 await _dbContext.ChatSessions.AddAsync(session, cancellationToken).ConfigureAwait(false);
             }
 
+            // Fetch history before adding the new message
+            var history = await _dbContext.ChatMessages
+                .Where(m => m.SessionId == session.Id)
+                .OrderBy(m => m.SentAt)
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
+
             session.UpdatedAt = now;
 
             var userMessage = new ChatMessage
@@ -144,9 +155,22 @@ namespace TaskifyAPI.Controllers
             await _dbContext.ChatMessages.AddAsync(userMessage, cancellationToken).ConfigureAwait(false);
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
+            var normalizedMessage = await _aiFallbackService
+                .NormalizeContextAsync(userId, dto.Message, history, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (normalizedMessage != dto.Message)
+            {
+                _logger.LogInformation("Context Normalized: [{Original}] -> [{Normalized}]", dto.Message, normalizedMessage);
+            }
+            else
+            {
+                _logger.LogInformation("Context Normalization unchanged: [{Original}]", dto.Message);
+            }
+
             var senderId = $"{userId}:{session.Id}";
             var replies = await _rasaChatService
-                .SendMessageAsync(senderId, dto.Message, dto.MetadataJson, cancellationToken)
+                .SendMessageAsync(senderId, normalizedMessage, dto.MetadataJson, cancellationToken)
                 .ConfigureAwait(false);
 
             var assistantMessages = new List<ChatMessage>();

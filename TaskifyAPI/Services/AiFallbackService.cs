@@ -210,6 +210,59 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async Task<string> NormalizeContextAsync(
+            string userId,
+            string messageText,
+            IReadOnlyList<ChatMessage> history,
+            CancellationToken cancellationToken = default)
+        {
+            var settings = await _dbContext.UserAiFallbackSettings
+                .FirstOrDefaultAsync(item => item.UserId == userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (settings?.ActiveProvider == null)
+            {
+                return messageText;
+            }
+
+            if (settings.ActiveProvider == AiProvider.Gemini)
+            {
+                return await _geminiCredentialService
+                    .NormalizeContextAsync(userId, messageText, history, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            try
+            {
+                await ValidateStoredOllamaConfigurationAsync(settings, cancellationToken).ConfigureAwait(false);
+                var text = await _ollamaFallbackService
+                    .NormalizeContextAsync(
+                        settings.OllamaBaseUrl!,
+                        settings.OllamaModel!,
+                        messageText,
+                        history,
+                        cancellationToken)
+                    .ConfigureAwait(false);
+
+                settings.LastOllamaValidatedAtUtc = DateTime.UtcNow;
+                settings.LastOllamaValidationError = null;
+                settings.UpdatedAtUtc = DateTime.UtcNow;
+                await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+                return text;
+            }
+            catch (OllamaStoredConfigurationException ex)
+            {
+                await MarkOllamaErrorAsync(settings, ex.Message, cancellationToken).ConfigureAwait(false);
+                return messageText;
+            }
+            catch (OllamaRuntimeException ex)
+            {
+                await MarkOllamaErrorAsync(settings, ex.Message, cancellationToken).ConfigureAwait(false);
+                return messageText;
+            }
+        }
+
         private async Task<UserAiFallbackSettings> GetOrCreateSettingsEntityAsync(string userId, CancellationToken cancellationToken)
         {
             var settings = await _dbContext.UserAiFallbackSettings

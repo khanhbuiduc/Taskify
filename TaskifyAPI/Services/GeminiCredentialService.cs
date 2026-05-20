@@ -183,6 +183,44 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async Task<string> NormalizeContextAsync(
+            string userId,
+            string messageText,
+            IReadOnlyList<ChatMessage> history,
+            CancellationToken cancellationToken = default)
+        {
+            var credential = await _dbContext.UserGeminiCredentials
+                .FirstOrDefaultAsync(item => item.UserId == userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (credential == null || string.IsNullOrWhiteSpace(credential.EncryptedApiKey))
+            {
+                return messageText;
+            }
+
+            string apiKey;
+            try
+            {
+                apiKey = _protector.Unprotect(credential.EncryptedApiKey);
+            }
+            catch (CryptographicException)
+            {
+                return messageText;
+            }
+
+            var prompt = AiFallbackPromptBuilder.BuildNormalizationPrompt(messageText, history);
+
+            try
+            {
+                var answer = await CallGeminiAsync(apiKey, prompt, cancellationToken).ConfigureAwait(false);
+                return string.IsNullOrWhiteSpace(answer) ? messageText : answer;
+            }
+            catch (Exception)
+            {
+                return messageText;
+            }
+        }
+
         private async Task<string> CallGeminiAsync(string apiKey, string prompt, CancellationToken cancellationToken)
         {
             using var request = new HttpRequestMessage(HttpMethod.Post, $"/v1beta/models/{_model}:generateContent");

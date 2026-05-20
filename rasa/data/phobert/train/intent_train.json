@@ -1,5 +1,321 @@
 [
   {
+    "text": "thêm chi_tiêu 50000 danh_mục ăn_uống mô_tả cơm trưa",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "ghi_nhận chi_phí 120k cho cà_phê với team danh_mục ăn_uống",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "hôm_nay tôi tiêu 250000 cho đổ xăng loại di_chuyển",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thêm giao_dịch 1.2 tr danh_mục mua_sắm nội_dung mua bàn_phím",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tạo chi_phí 85000 ngày hôm_nay cho ăn tối",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "add expense 15 category food description lunch",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "record expense 200000 for grab bike in di_chuyển",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "lưu chi_tiêu 300k ngày_mai danh_mục hoá_đơn",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mình vừa chi 45000 mua trà sữa",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thêm khoản chi 700000 cho tiền điện danh_mục hoá_đơn",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "ghi lại 35000 tiền gửi xe vào di_chuyển",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tạo finance entry 99000 cho sách category học_tập",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "xem chi_tiêu gần đây",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "liệt_kê finance",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "danh_sách giao_dịch tài_chính",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "xem các khoản chi",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "mở danh_sách chi_tiêu",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "show my expenses",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "list finance entries",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "xem chi_tiêu hôm_nay",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "liệt_kê khoản chi danh_mục ăn_uống",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "xem giao_dịch ngày_mai",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "cho tôi xem sổ chi_tiêu",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "hiển_thị các mục finance mới nhất",
+    "intent": "list_finance_entries"
+  },
+  {
+    "text": "tìm chi_tiêu cà_phê",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm khoản chi chứa grab",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "search expenses for lunch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "lọc chi_tiêu danh_mục ăn_uống",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "có khoản chi nào về đổ xăng",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm giao_dịch tiền điện",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm finance mua_sắm",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem chi_phí liên_quan team",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "lọc finance category di_chuyển",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm khoản tài_chính có bàn_phím",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "sửa chi_tiêu cà_phê thành 60000",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "cập_nhật khoản chi grab danh_mục di_chuyển",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "đổi giao_dịch ăn tối thành 120000",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "update expense lunch amount 20",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "sửa finance tiền điện mô_tả tiền điện tháng này",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "cập_nhật chi_phí trà sữa ngày hôm_nay",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "đổi danh_mục khoản chi bàn_phím sang mua_sắm",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "sửa khoản tài_chính đổ xăng thành 300000",
+    "intent": "update_finance_entry"
+  },
+  {
+    "text": "xoá chi_tiêu cà_phê",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "xoá khoản chi grab",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "delete expense lunch",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "remove finance entry tiền điện",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "xoá giao_dịch tài_chính trà sữa",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "xoá chi_phí danh_mục ăn_uống",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "xoá khoản finance đổ xăng",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "gỡ mục chi_tiêu bàn_phím",
+    "intent": "delete_finance_entry"
+  },
+  {
+    "text": "tổng_kết chi_tiêu",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "thống_kê tài_chính",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "tháng này tôi tiêu bao_nhiêu",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "tổng_chi hôm_nay",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "báo_cáo finance",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "summarize my expenses",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "finance summary",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "tổng_kết danh_mục ăn_uống",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "thống_kê chi_tiêu hôm_nay",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "tính tổng khoản chi",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "cho tôi báo_cáo chi_phí",
+    "intent": "summarize_finance"
+  },
+  {
+    "text": "tạo danh_mục tài_chính ăn_uống",
+    "intent": "create_finance_category"
+  },
+  {
+    "text": "thêm category finance di_chuyển",
+    "intent": "create_finance_category"
+  },
+  {
+    "text": "tạo loại chi_tiêu hoá_đơn",
+    "intent": "create_finance_category"
+  },
+  {
+    "text": "add finance category shopping",
+    "intent": "create_finance_category"
+  },
+  {
+    "text": "thêm danh_mục giải_trí cho finance",
+    "intent": "create_finance_category"
+  },
+  {
+    "text": "xem danh_mục tài_chính",
+    "intent": "list_finance_categories"
+  },
+  {
+    "text": "liệt_kê category finance",
+    "intent": "list_finance_categories"
+  },
+  {
+    "text": "danh_sách loại chi_tiêu",
+    "intent": "list_finance_categories"
+  },
+  {
+    "text": "show finance categories",
+    "intent": "list_finance_categories"
+  },
+  {
+    "text": "xem các danh_mục chi_tiêu",
+    "intent": "list_finance_categories"
+  },
+  {
+    "text": "đổi danh_mục ăn_uống thành food",
+    "intent": "update_finance_category"
+  },
+  {
+    "text": "sửa category di_chuyển thành transport",
+    "intent": "update_finance_category"
+  },
+  {
+    "text": "cập_nhật danh_mục tài_chính hoá_đơn sang bills",
+    "intent": "update_finance_category"
+  },
+  {
+    "text": "rename finance category shopping to mua_sắm",
+    "intent": "update_finance_category"
+  },
+  {
+    "text": "xoá danh_mục tài_chính ăn_uống",
+    "intent": "delete_finance_category"
+  },
+  {
+    "text": "xoá category finance di_chuyển",
+    "intent": "delete_finance_category"
+  },
+  {
+    "text": "delete finance category shopping",
+    "intent": "delete_finance_category"
+  },
+  {
+    "text": "remove expense category hoá_đơn",
+    "intent": "delete_finance_category"
+  },
+  {
     "text": "tạo note ý_tưởng sprint",
     "intent": "create_note"
   },

@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 from typing import Dict, List
 
+from nlu_gen.finance import FINANCE_INTENT_ORDER, FINANCE_REGEX, get_finance_intents
 from nlu_gen.note import NOTE_INTENT_ORDER, get_note_intents
 from nlu_gen.render import render_nlu_document, write_document
 from nlu_gen.shared import (
@@ -25,8 +26,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--domains",
-        default="task,note,shared",
-        help="Comma-separated domains to generate. Supported: task,note,shared",
+        default="task,note,shared,finance",
+        help="Comma-separated domains to generate. Supported: task,note,shared,finance",
     )
     parser.add_argument(
         "--out",
@@ -46,6 +47,7 @@ def _domain_generators():
         ),
         "task": (get_task_intents, TASK_INTENT_ORDER, None, None),
         "note": (get_note_intents, NOTE_INTENT_ORDER, None, None),
+        "finance": (get_finance_intents, FINANCE_INTENT_ORDER, None, FINANCE_REGEX),
     }
 
 
@@ -79,4 +81,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

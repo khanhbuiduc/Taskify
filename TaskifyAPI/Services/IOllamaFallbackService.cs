@@ -12,6 +12,13 @@ namespace TaskifyAPI.Services
             string messageText,
             string locale,
             CancellationToken cancellationToken = default);
+
+        Task<string> NormalizeContextAsync(
+            string baseUrl,
+            string model,
+            string messageText,
+            IReadOnlyList<Model.ChatMessage> history,
+            CancellationToken cancellationToken = default);
     }
 
     public sealed class OllamaValidationException : Exception

@@ -21,6 +21,19 @@ namespace TaskifyAPI.Services
                 + $"User message: {userText}";
         }
 
+        public static string BuildNormalizationPrompt(string userText, IReadOnlyList<Model.ChatMessage> history)
+        {
+            var historyText = string.Join("\n", history.Select(m => $"{m.Role}: {m.Text}"));
+            return
+                "You are an AI assistant that normalizes user queries for a task management chatbot.\n"
+                + "Rewrite the user's latest message to be a clear, standalone request by resolving any pronouns or implied context using the chat history.\n"
+                + "If the message is already clear or requires no context, return it exactly as is.\n"
+                + "Do not answer the user's request. Just provide the rewritten message.\n\n"
+                + $"Chat history:\n{historyText}\n\n"
+                + $"User's latest message: {userText}\n\n"
+                + "Rewritten message:";
+        }
+
         public static string BuildRetryPrompt(string prompt, string locale)
         {
             return locale.StartsWith("vi", StringComparison.OrdinalIgnoreCase)

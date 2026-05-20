@@ -8,7 +8,7 @@
 
 import { useRef, useEffect, type MutableRefObject } from "react";
 import { Bot } from "lucide-react";
-import type { Task, TaskStatus } from "@/lib/types";
+import type { FinanceEntry, Task } from "@/lib/types";
 import { ChatMessageItem, type DisplayMessage } from "./chat-message-item";
 import type { ParsedCreateTaskBlock } from "./chat-utils";
 
@@ -32,6 +32,8 @@ interface ChatMessageListProps {
   onNoteCardEdit?: (note: any) => void;
   onNoteCardDelete?: (note: any) => void;
   onNoteCardTogglePin?: (note: any) => void;
+  onFinanceEntryEdit?: (entry: FinanceEntry) => void;
+  onFinanceEntryDelete?: (entry: FinanceEntry) => void;
 }
 
 export function ChatMessageList({
@@ -48,6 +50,8 @@ export function ChatMessageList({
   onNoteCardEdit,
   onNoteCardDelete,
   onNoteCardTogglePin,
+  onFinanceEntryEdit,
+  onFinanceEntryDelete,
 }: ChatMessageListProps) {
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +83,8 @@ export function ChatMessageList({
           onNoteCardEdit={onNoteCardEdit}
           onNoteCardDelete={onNoteCardDelete}
           onNoteCardTogglePin={onNoteCardTogglePin}
+          onFinanceEntryEdit={onFinanceEntryEdit}
+          onFinanceEntryDelete={onFinanceEntryDelete}
           isSending={isSending}
         />
       ))}

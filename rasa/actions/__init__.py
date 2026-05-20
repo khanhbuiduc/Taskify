@@ -20,5 +20,19 @@ from actions.note.note_actions import (  # noqa: F401
     ActionListNotes,
     ActionSearchNotes,
     ActionTogglePinNote,
+    ActionUpdateNote,
+    ActionDeleteNote,
+)
+from actions.finance.finance_actions import (  # noqa: F401
+    ActionCreateFinanceEntry,
+    ActionListFinanceEntries,
+    ActionSearchFinanceEntries,
+    ActionUpdateFinanceEntry,
+    ActionDeleteFinanceEntry,
+    ActionSummarizeFinance,
+    ActionListFinanceCategories,
+    ActionCreateFinanceCategory,
+    ActionUpdateFinanceCategory,
+    ActionDeleteFinanceCategory,
 )
 from actions.fallback_actions import ActionFallbackGemini  # noqa: F401
