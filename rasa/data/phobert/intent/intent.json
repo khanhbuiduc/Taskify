@@ -1,0 +1,16 @@
+{
+  "0": "nlu_fallback",
+  "1": "greet",
+  "2": "goodbye",
+  "3": "affirm",
+  "4": "deny",
+  "5": "create_task",
+  "6": "delete_task",
+  "7": "search_tasks",
+  "8": "create_note",
+  "9": "delete_note",
+  "10": "search_notes",
+  "11": "create_finance_entry",
+  "12": "delete_finance_entry",
+  "13": "search_finance_entries"
+}

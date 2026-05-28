@@ -3,39 +3,30 @@ recipe: default.v1
 language: vi
 
 pipeline:
-# 1. Word Segmentation tiếng Việt bằng VnCoreNLP
-- name: "custom_components.vncorenlp_tokenizer.VnCoreNLPTokenizer"
-
-# 2. Phân loại Intent bằng PhoBERT fine-tuned
-- name: "custom_components.phobert_intent.PhobertIntentClassifier"
-
-# 3. Rút trích Entity bằng PhoBERT NER fine-tuned
-- name: "custom_components.phobert_ner.PhobertEntityExtractor"
-
-# 4. Duckling bắt thời gian/ngày tháng tuyệt đối (2025-04-12T09:00...)
-- name: DucklingEntityExtractor
-  url: "http://localhost:8000"
-  dimensions:
-    - time
-  locale: "vi_VN"
-  timezone: "Asia/Ho_Chi_Minh"
-
-# 5. Chuẩn hoá synonym entity
-- name: EntitySynonymMapper
-
-# 6. Fallback nếu confidence thấp
-- name: FallbackClassifier
-  threshold: 0.5
-  ambiguity_threshold: 0.1
+  - name: "custom_components.vncorenlp_tokenizer.VnCoreNLPTokenizer"
+  - name: "custom_components.phobert_intent.PhobertIntentClassifier"
+  - name: "custom_components.gemini_metadata_entity_extractor.GeminiMetadataEntityExtractor"
+  - name: "custom_components.phobert_ner.PhobertEntityExtractor"
+  - name: DucklingEntityExtractor
+    url: "http://localhost:8000"
+    dimensions:
+      - time
+    locale: "vi_VN"
+    timezone: "Asia/Ho_Chi_Minh"
+  - name: EntitySynonymMapper
+  - name: FallbackClassifier
+    threshold: 0.5
+    ambiguity_threshold: 0.1
 
 policies:
-- name: MemoizationPolicy
-- name: RulePolicy
-- name: UnexpecTEDIntentPolicy
-  max_history: 5
-  epochs: 100
-- name: TEDPolicy
-  max_history: 5
-  epochs: 100
-  constrain_similarities: true
+  - name: MemoizationPolicy
+  - name: RulePolicy
+  - name: UnexpecTEDIntentPolicy
+    max_history: 5
+    epochs: 100
+  - name: TEDPolicy
+    max_history: 5
+    epochs: 100
+    constrain_similarities: true
+
 assistant_id: 20260202-114354-beveled-tube

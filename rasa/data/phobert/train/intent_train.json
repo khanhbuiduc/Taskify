@@ -1,1039 +1,2335 @@
 [
   {
-    "text": "thêm chi_tiêu 50000 danh_mục ăn_uống mô_tả cơm trưa",
+    "text": "đúng",
+    "intent": "affirm"
+  },
+  {
+    "text": "chuẩn",
+    "intent": "affirm"
+  },
+  {
+    "text": "chuẩn rồi",
+    "intent": "affirm"
+  },
+  {
+    "text": "đúng r",
+    "intent": "affirm"
+  },
+  {
+    "text": "đr",
+    "intent": "affirm"
+  },
+  {
+    "text": "chuẩn cmnr",
+    "intent": "affirm"
+  },
+  {
+    "text": "okee",
+    "intent": "affirm"
+  },
+  {
+    "text": "ok",
+    "intent": "affirm"
+  },
+  {
+    "text": "okie",
+    "intent": "affirm"
+  },
+  {
+    "text": "okela",
+    "intent": "affirm"
+  },
+  {
+    "text": "duyệt",
+    "intent": "affirm"
+  },
+  {
+    "text": "chốt",
+    "intent": "affirm"
+  },
+  {
+    "text": "đúng vậy",
+    "intent": "affirm"
+  },
+  {
+    "text": "đồng_ý",
+    "intent": "affirm"
+  },
+  {
+    "text": "ừ",
+    "intent": "affirm"
+  },
+  {
+    "text": "uhm",
+    "intent": "affirm"
+  },
+  {
+    "text": "uh",
+    "intent": "affirm"
+  },
+  {
+    "text": "uhhh",
+    "intent": "affirm"
+  },
+  {
+    "text": "yesss",
+    "intent": "affirm"
+  },
+  {
+    "text": "yes",
+    "intent": "affirm"
+  },
+  {
+    "text": "chuẩn luôn",
+    "intent": "affirm"
+  },
+  {
+    "text": "chính_xác",
+    "intent": "affirm"
+  },
+  {
+    "text": "chí_lí",
+    "intent": "affirm"
+  },
+  {
+    "text": "hợp_lý",
+    "intent": "affirm"
+  },
+  {
+    "text": "quá hợp_lý",
+    "intent": "affirm"
+  },
+  {
+    "text": "chuẩn bài",
+    "intent": "affirm"
+  },
+  {
+    "text": "đúng thế",
+    "intent": "affirm"
+  },
+  {
+    "text": "đ",
+    "intent": "affirm"
+  },
+  {
+    "text": "d",
+    "intent": "affirm"
+  },
+  {
+    "text": "k sai",
+    "intent": "affirm"
+  },
+  {
+    "text": "đúng mẹ r",
+    "intent": "affirm"
+  },
+  {
+    "text": "oke b",
+    "intent": "affirm"
+  },
+  {
+    "text": "ok bạn",
+    "intent": "affirm"
+  },
+  {
+    "text": "ok nha",
+    "intent": "affirm"
+  },
+  {
+    "text": "vâng",
+    "intent": "affirm"
+  },
+  {
+    "text": "dạ",
+    "intent": "affirm"
+  },
+  {
+    "text": "dạ vâng",
+    "intent": "affirm"
+  },
+  {
+    "text": "dạ đúng",
+    "intent": "affirm"
+  },
+  {
+    "text": "uk",
+    "intent": "affirm"
+  },
+  {
+    "text": "ukm",
+    "intent": "affirm"
+  },
+  {
+    "text": "ukie",
+    "intent": "affirm"
+  },
+  {
+    "text": "dc",
+    "intent": "affirm"
+  },
+  {
+    "text": "đc",
+    "intent": "affirm"
+  },
+  {
+    "text": "được",
+    "intent": "affirm"
+  },
+  {
+    "text": "oke nha",
+    "intent": "affirm"
+  },
+  {
+    "text": "ừm",
+    "intent": "affirm"
+  },
+  {
+    "text": "um",
+    "intent": "affirm"
+  },
+  {
+    "text": "ummm",
+    "intent": "affirm"
+  },
+  {
+    "text": "uh huh",
+    "intent": "affirm"
+  },
+  {
+    "text": "tuyệt",
+    "intent": "affirm"
+  },
+  {
+    "text": "nghe hợp_lý",
+    "intent": "affirm"
+  },
+  {
+    "text": "10 điểm",
+    "intent": "affirm"
+  },
+  {
+    "text": "duyệt luôn",
+    "intent": "affirm"
+  },
+  {
+    "text": "chi 50k",
     "intent": "create_finance_entry"
   },
   {
-    "text": "ghi_nhận chi_phí 120k cho cà_phê với team danh_mục ăn_uống",
+    "text": "mới tiêu 2 loét",
     "intent": "create_finance_entry"
   },
   {
-    "text": "hôm_nay tôi tiêu 250000 cho đổ xăng loại di_chuyển",
+    "text": "tốn 5 củ",
     "intent": "create_finance_entry"
   },
   {
-    "text": "thêm giao_dịch 1.2 tr danh_mục mua_sắm nội_dung mua bàn_phím",
+    "text": "thu 10 củ",
     "intent": "create_finance_entry"
   },
   {
-    "text": "tạo chi_phí 85000 ngày hôm_nay cho ăn tối",
+    "text": "hnay chi 100k",
     "intent": "create_finance_entry"
   },
   {
-    "text": "add expense 15 category food description lunch",
+    "text": "thu_nhập 5 triệu",
     "intent": "create_finance_entry"
   },
   {
-    "text": "record expense 200000 for grab bike in di_chuyển",
+    "text": "vừa ăn bún 35k",
     "intent": "create_finance_entry"
   },
   {
-    "text": "lưu chi_tiêu 300k ngày_mai danh_mục hoá_đơn",
+    "text": "mua áo hết 2 lít",
     "intent": "create_finance_entry"
   },
   {
-    "text": "mình vừa chi 45000 mua trà sữa",
+    "text": "đổ xăng 50 cành",
     "intent": "create_finance_entry"
   },
   {
-    "text": "thêm khoản chi 700000 cho tiền điện danh_mục hoá_đơn",
+    "text": "đi siêu_thị 500k",
     "intent": "create_finance_entry"
   },
   {
-    "text": "ghi lại 35000 tiền gửi xe vào di_chuyển",
+    "text": "nhận lương 20 củ",
     "intent": "create_finance_entry"
   },
   {
-    "text": "tạo finance entry 99000 cho sách category học_tập",
+    "text": "tiền thưởng 3 củ rưỡi",
     "intent": "create_finance_entry"
   },
   {
-    "text": "xem chi_tiêu gần đây",
-    "intent": "list_finance_entries"
+    "text": "tốn 1 củ tiền nhà",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "liệt_kê finance",
-    "intent": "list_finance_entries"
+    "text": "mua sách 1 loét",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "danh_sách giao_dịch tài_chính",
-    "intent": "list_finance_entries"
+    "text": "nạp thẻ 20k",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "xem các khoản chi",
-    "intent": "list_finance_entries"
+    "text": "rút 5 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "mở danh_sách chi_tiêu",
-    "intent": "list_finance_entries"
+    "text": "vừa nhặt dc 5 lít",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "show my expenses",
-    "intent": "list_finance_entries"
+    "text": "gửi xe 5k",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "list finance entries",
-    "intent": "list_finance_entries"
+    "text": "ăn sáng 3 chục",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "xem chi_tiêu hôm_nay",
-    "intent": "list_finance_entries"
+    "text": "cafe 45 cành",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "liệt_kê khoản chi danh_mục ăn_uống",
-    "intent": "list_finance_entries"
+    "text": "nhậu hết 2 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "xem giao_dịch ngày_mai",
-    "intent": "list_finance_entries"
+    "text": "vay 10 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "cho tôi xem sổ chi_tiêu",
-    "intent": "list_finance_entries"
+    "text": "trả nợ 5 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "hiển_thị các mục finance mới nhất",
-    "intent": "list_finance_entries"
+    "text": "mua đth 15 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "tìm chi_tiêu cà_phê",
-    "intent": "search_finance_entries"
+    "text": "thu họ 3 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "tìm khoản chi chứa grab",
-    "intent": "search_finance_entries"
+    "text": "tiền điện 1 củ 2",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "search expenses for lunch",
-    "intent": "search_finance_entries"
+    "text": "trả tiền nước 3 loét",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "lọc chi_tiêu danh_mục ăn_uống",
-    "intent": "search_finance_entries"
+    "text": "mua giày 1 củ rưỡi",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "có khoản chi nào về đổ xăng",
-    "intent": "search_finance_entries"
+    "text": "sắm đồ 3 lít",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "tìm giao_dịch tiền điện",
-    "intent": "search_finance_entries"
+    "text": "chi mớ rau 10k",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "tìm finance mua_sắm",
-    "intent": "search_finance_entries"
+    "text": "thu tiền bán hàng 5 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "xem chi_phí liên_quan team",
-    "intent": "search_finance_entries"
+    "text": "mới lụm đc 2 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "lọc finance category di_chuyển",
-    "intent": "search_finance_entries"
+    "text": "mua vé phim 2 lít",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "tìm khoản tài_chính có bàn_phím",
-    "intent": "search_finance_entries"
+    "text": "chi 1 lít uống nước",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "sửa chi_tiêu cà_phê thành 60000",
-    "intent": "update_finance_entry"
+    "text": "mua vé_số 10k",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "cập_nhật khoản chi grab danh_mục di_chuyển",
-    "intent": "update_finance_entry"
+    "text": "ăn vặt 50k",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "đổi giao_dịch ăn tối thành 120000",
-    "intent": "update_finance_entry"
+    "text": "tốn 3 củ tiền mạng",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "update expense lunch amount 20",
-    "intent": "update_finance_entry"
+    "text": "lương về 30 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "sửa finance tiền điện mô_tả tiền điện tháng này",
-    "intent": "update_finance_entry"
+    "text": "nhận 5 lít tiền hoàn",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "cập_nhật chi_phí trà sữa ngày hôm_nay",
-    "intent": "update_finance_entry"
+    "text": "cọc tiền nhà 3 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "đổi danh_mục khoản chi bàn_phím sang mua_sắm",
-    "intent": "update_finance_entry"
+    "text": "trả_góp 2 củ",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "sửa khoản tài_chính đổ xăng thành 300000",
-    "intent": "update_finance_entry"
+    "text": "tiêu bậy 5 lít",
+    "intent": "create_finance_entry"
   },
   {
-    "text": "xoá chi_tiêu cà_phê",
+    "text": "chi 20 cành mua bút",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thu 500k tiền nợ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "đi chơi hết 1 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tiền taxi 2 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua quà 5 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thu_nhập thêm 2 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua thuốc 3 loét",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "đóng học 5 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "đóng phí 2 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tiền phạt 1 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tiền gửi đồ 5k",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "nhận 100k",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "vừa chi 3 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "xài 5 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "bay mất 2 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "được cho 1 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "húp 2 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thu vô 5 triệu",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "chi ra 3 trăm",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "đóng tiền 2 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "góp 1 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua game 5 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mất 3 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "bị rớt 50k",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua trà sữa 60k",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "ăn ốc 3 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "cắt tóc 1 loét",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "gội đầu 50 cành",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua bao 1 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua quần 3 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tiền nhà 4 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "bán xe đc 15 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "bán chó 2 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua chuột 3 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thay màn_hình 1 củ rưỡi",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "chi mua bàn 5 trăm",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "hnay xài 2 củ nha",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "nhớ ghi thu 5 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tạo khoản chi 2 loét",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tạo thu 10 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thu 3 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tiền tiêu vặt 2 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "thu_nhập thụ_động 5 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "mua_sắm linh_tinh 5 loét",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "lỡ tay tiêu 1 củ",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "nạp game 2 lít",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "donate 50k",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tiền xăng 1 loét",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "ăn_nhậu 500 cành",
+    "intent": "create_finance_entry"
+  },
+  {
+    "text": "tạo ghi_chú",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi sổ_tay",
+    "intent": "create_note"
+  },
+  {
+    "text": "note vào",
+    "intent": "create_note"
+  },
+  {
+    "text": "viết note",
+    "intent": "create_note"
+  },
+  {
+    "text": "thêm ghi_chú",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu lại",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_nhớ",
+    "intent": "create_note"
+  },
+  {
+    "text": "note cái này",
+    "intent": "create_note"
+  },
+  {
+    "text": "tao muốn lưu lại",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo note mới",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chép lại",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu mật_khẩu là abc",
+    "intent": "create_note"
+  },
+  {
+    "text": "note : mk fb 1234",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú mua sữa",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu_ý mai đi sớm",
+    "intent": "create_note"
+  },
+  {
+    "text": "note mai nhớ mang sách",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi lại nha",
+    "intent": "create_note"
+  },
+  {
+    "text": "chép lại",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại giúp t",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi vô sổ",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú bài_học",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu công_thức nấu_ăn",
+    "intent": "create_note"
+  },
+  {
+    "text": "note stk ngân_hàng",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_nhớ ngày_mai sinh_nhật",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu lại sdt này",
+    "intent": "create_note"
+  },
+  {
+    "text": "note sđt 098",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú pass wifi",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo 1 ghi_chú",
+    "intent": "create_note"
+  },
+  {
+    "text": "viết vào note",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi lại thông_tin này",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại id pass",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu vô note",
+    "intent": "create_note"
+  },
+  {
+    "text": "thêm 1 cái note",
+    "intent": "create_note"
+  },
+  {
+    "text": "note giùm",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú mua đồ",
+    "intent": "create_note"
+  },
+  {
+    "text": "list đồ cần mua",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại ds đi chợ",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi sổ chi_tiết",
+    "intent": "create_note"
+  },
+  {
+    "text": "nhớ nha",
+    "intent": "create_note"
+  },
+  {
+    "text": "nhắc tao",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu ghi_chú",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại địa_chỉ nhà",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú mật_mã tủ",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại câu này hay nè",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo note pass đth",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu cho tao cái này",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú ý_tưởng",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại idea",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu bài thơ",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú tiền nợ",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu_danh sách bạn_bè",
+    "intent": "create_note"
+  },
+  {
+    "text": "note điểm_số",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi lại kết_quả",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo note mua_sắm",
+    "intent": "create_note"
+  },
+  {
+    "text": "note nhắc mua quà",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu pass game",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi sổ đi chơi",
+    "intent": "create_note"
+  },
+  {
+    "text": "note chuyến đi đà_lạt",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu đồ cần chuẩn_bị",
+    "intent": "create_note"
+  },
+  {
+    "text": "note ds quần_áo",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi lại số_đo",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo note học tiếng_anh",
+    "intent": "create_note"
+  },
+  {
+    "text": "note từ_vựng",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu lại link này",
+    "intent": "create_note"
+  },
+  {
+    "text": "note link web",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú tài_liệu",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu link gg drive",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo sổ_tay mới",
+    "intent": "create_note"
+  },
+  {
+    "text": "mở sổ ghi lại",
+    "intent": "create_note"
+  },
+  {
+    "text": "note mớ rau 5k",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu lại hoá_đơn",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú thuốc cần mua",
+    "intent": "create_note"
+  },
+  {
+    "text": "note lại liều dùng",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chép lịch_trình",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu lại ngày kỷ_niệm",
+    "intent": "create_note"
+  },
+  {
+    "text": "note sn n.y",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu lại btvn",
+    "intent": "create_note"
+  },
+  {
+    "text": "note bài_tập toán",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú sách cần đọc",
+    "intent": "create_note"
+  },
+  {
+    "text": "note list phim",
+    "intent": "create_note"
+  },
+  {
+    "text": "lưu_danh sách nhạc hay",
+    "intent": "create_note"
+  },
+  {
+    "text": "ghi_chú số tài_khoản",
+    "intent": "create_note"
+  },
+  {
+    "text": "tạo task ngày_mai",
+    "intent": "create_task"
+  },
+  {
+    "text": "thêm việc sáng_mai",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc đi học lúc 7h",
+    "intent": "create_task"
+  },
+  {
+    "text": "lịch họp 3h chiều",
+    "intent": "create_task"
+  },
+  {
+    "text": "hẹn 8h tối nha",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng_mai 9h đi bơi",
+    "intent": "create_task"
+  },
+  {
+    "text": "tuần sau đi làm",
+    "intent": "create_task"
+  },
+  {
+    "text": "thứ 2 tuần sau nộp báo_cáo",
+    "intent": "create_task"
+  },
+  {
+    "text": "mai_mốt đi chơi",
+    "intent": "create_task"
+  },
+  {
+    "text": "chiều nay 5h nhậu",
+    "intent": "create_task"
+  },
+  {
+    "text": "tạo hẹn tối nay",
+    "intent": "create_task"
+  },
+  {
+    "text": "trưa mai 12h ăn cơm",
+    "intent": "create_task"
+  },
+  {
+    "text": "ngày mốt đi khám",
+    "intent": "create_task"
+  },
+  {
+    "text": "10h sáng_mai họp",
+    "intent": "create_task"
+  },
+  {
+    "text": "chủ_nhật này đi coi phim",
+    "intent": "create_task"
+  },
+  {
+    "text": "t7 tuần sau thi",
+    "intent": "create_task"
+  },
+  {
+    "text": "8h tối gọi cho mẹ",
+    "intent": "create_task"
+  },
+  {
+    "text": "khuya nay 12h chạy deadline",
+    "intent": "create_task"
+  },
+  {
+    "text": "chiều mai 2h gặp khách",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng t2 8h chào cờ",
+    "intent": "create_task"
+  },
+  {
+    "text": "thứ 6 3h chiều đi làm",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc t 9h sáng_mai dậy",
+    "intent": "create_task"
+  },
+  {
+    "text": "cuối tuần đi dã_ngoại",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng_mai đi chợ sớm",
+    "intent": "create_task"
+  },
+  {
+    "text": "6h chiều t6 đón con",
+    "intent": "create_task"
+  },
+  {
+    "text": "1h trưa mai họp nhóm",
+    "intent": "create_task"
+  },
+  {
+    "text": "tối nay 7h học bài",
+    "intent": "create_task"
+  },
+  {
+    "text": "tạo task",
+    "intent": "create_task"
+  },
+  {
+    "text": "thêm cviec",
+    "intent": "create_task"
+  },
+  {
+    "text": "việc mới nè",
+    "intent": "create_task"
+  },
+  {
+    "text": "mai 10h sáng khám răng",
+    "intent": "create_task"
+  },
+  {
+    "text": "chiều kia 4h đá bóng",
+    "intent": "create_task"
+  },
+  {
+    "text": "5h chiều nay ra bến_xe",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc tao 9h tối coi bóng_đá",
+    "intent": "create_task"
+  },
+  {
+    "text": "thứ tư tuần sau nộp bài",
+    "intent": "create_task"
+  },
+  {
+    "text": "t5 tuần sau đi chơi",
+    "intent": "create_task"
+  },
+  {
+    "text": "thứ ba 10h có hẹn",
+    "intent": "create_task"
+  },
+  {
+    "text": "11h đêm nay thức khuya",
+    "intent": "create_task"
+  },
+  {
+    "text": "8h sáng ngày_mai nộp dl",
+    "intent": "create_task"
+  },
+  {
+    "text": "tháng sau đi đà_lạt",
+    "intent": "create_task"
+  },
+  {
+    "text": "tuần tới bận cả tuần",
+    "intent": "create_task"
+  },
+  {
+    "text": "hẹn 2h chiều đi cafe",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng sớm_mai 5h chạy bộ",
+    "intent": "create_task"
+  },
+  {
+    "text": "tạo task hẹn_hò 7h tối",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc_nhở 8h tối nay làm bài",
+    "intent": "create_task"
+  },
+  {
+    "text": "trưa mai 11h rưỡi ăn trưa",
+    "intent": "create_task"
+  },
+  {
+    "text": "thêm lịch t3 9h",
+    "intent": "create_task"
+  },
+  {
+    "text": "chủ_nhật tuần sau đi thi",
+    "intent": "create_task"
+  },
+  {
+    "text": "mốt đi đá banh",
+    "intent": "create_task"
+  },
+  {
+    "text": "ngày_kia 10h đi làm giấy_tờ",
+    "intent": "create_task"
+  },
+  {
+    "text": "chiều nay 3 rưỡi có lịch",
+    "intent": "create_task"
+  },
+  {
+    "text": "tối mốt 8h sinh_nhật",
+    "intent": "create_task"
+  },
+  {
+    "text": "t6 tuần tới nghỉ_phép",
+    "intent": "create_task"
+  },
+  {
+    "text": "cuối tháng đóng tiền nhà",
+    "intent": "create_task"
+  },
+  {
+    "text": "mai gửi báo_cáo",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc gửi mail lúc 2h chiều nay",
+    "intent": "create_task"
+  },
+  {
+    "text": "9h tối mai học t.a",
+    "intent": "create_task"
+  },
+  {
+    "text": "thứ bảy 7h sáng đi bơi",
+    "intent": "create_task"
+  },
+  {
+    "text": "tạo lịch đi tour ngày_mai",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc t nhớ uống thuốc 8h sáng",
+    "intent": "create_task"
+  },
+  {
+    "text": "7h tối nấu cơm",
+    "intent": "create_task"
+  },
+  {
+    "text": "trưa 12h ngủ",
+    "intent": "create_task"
+  },
+  {
+    "text": "chiều 5h tập gym",
+    "intent": "create_task"
+  },
+  {
+    "text": "tối 9h đọc sách",
+    "intent": "create_task"
+  },
+  {
+    "text": "tạo to do",
+    "intent": "create_task"
+  },
+  {
+    "text": "note lại mai làm",
+    "intent": "create_task"
+  },
+  {
+    "text": "lên lịch mai đi quẩy",
+    "intent": "create_task"
+  },
+  {
+    "text": "10h tối mai chạy dl sấp_mặt",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc t 3h chiều đi hốt họ",
+    "intent": "create_task"
+  },
+  {
+    "text": "4h chiều mai lấy đồ",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng t4 đi ăn cưới",
+    "intent": "create_task"
+  },
+  {
+    "text": "trưa chủ_nhật đi ăn giỗ",
+    "intent": "create_task"
+  },
+  {
+    "text": "7h sáng thứ 2 đi cày",
+    "intent": "create_task"
+  },
+  {
+    "text": "8h tối thứ 6 nhậu_nhẹt",
+    "intent": "create_task"
+  },
+  {
+    "text": "tuần sau bay",
+    "intent": "create_task"
+  },
+  {
+    "text": "2h chiều hnay đi gặp sếp",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng mốt đi phỏng_vấn",
+    "intent": "create_task"
+  },
+  {
+    "text": "tạo task cho chiều mai",
+    "intent": "create_task"
+  },
+  {
+    "text": "lên hẹn tối nay",
+    "intent": "create_task"
+  },
+  {
+    "text": "6h tối đi chợ",
+    "intent": "create_task"
+  },
+  {
+    "text": "nhắc 11h trưa cắm cơm",
+    "intent": "create_task"
+  },
+  {
+    "text": "4h chiều đi đón e",
+    "intent": "create_task"
+  },
+  {
+    "text": "9 rưỡi tối coi phim",
+    "intent": "create_task"
+  },
+  {
+    "text": "hẹn bạn 8h cafe",
+    "intent": "create_task"
+  },
+  {
+    "text": "trưa mai 12h rưỡi đi cắt tóc",
+    "intent": "create_task"
+  },
+  {
+    "text": "tuần sau sửa xe",
+    "intent": "create_task"
+  },
+  {
+    "text": "đặt báo_thức 5h sáng",
+    "intent": "create_task"
+  },
+  {
+    "text": "chiều thứ hai 3h nộp bài",
+    "intent": "create_task"
+  },
+  {
+    "text": "sáng chủ_nhật 8h đi chơi",
+    "intent": "create_task"
+  },
+  {
+    "text": "xoá khoản chi",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "xoá khoản chi grab",
+    "text": "xoá giao_dịch",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "delete expense lunch",
+    "text": "bỏ khoản tiêu này",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "remove finance entry tiền điện",
+    "text": "xoá thu_chi",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "xoá giao_dịch tài_chính trà sữa",
+    "text": "xoá cái giao_dịch vừa nhập",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "xoá chi_phí danh_mục ăn_uống",
+    "text": "xoá 1 khoản",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "xoá khoản finance đổ xăng",
+    "text": "del giao_dịch",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "gỡ mục chi_tiêu bàn_phím",
+    "text": "bỏ khoản thu",
     "intent": "delete_finance_entry"
   },
   {
-    "text": "tổng_kết chi_tiêu",
-    "intent": "summarize_finance"
+    "text": "xoá mục tài_chính",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thống_kê tài_chính",
-    "intent": "summarize_finance"
+    "text": "xoá bớt chi_tiêu",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tháng này tôi tiêu bao_nhiêu",
-    "intent": "summarize_finance"
+    "text": "xoá thu_nhập",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tổng_chi hôm_nay",
-    "intent": "summarize_finance"
+    "text": "xoá đi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "báo_cáo finance",
-    "intent": "summarize_finance"
+    "text": "xoá dòng tiền",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "summarize my expenses",
-    "intent": "summarize_finance"
+    "text": "huỷ giao_dịch",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "finance summary",
-    "intent": "summarize_finance"
+    "text": "gỡ khoản chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tổng_kết danh_mục ăn_uống",
-    "intent": "summarize_finance"
+    "text": "xoá tiền ăn",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thống_kê chi_tiêu hôm_nay",
-    "intent": "summarize_finance"
+    "text": "xoá ghi_chép tiền_bạc",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tính tổng khoản chi",
-    "intent": "summarize_finance"
+    "text": "xoá bill",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "cho tôi báo_cáo chi_phí",
-    "intent": "summarize_finance"
+    "text": "delete giao_dịch",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo danh_mục tài_chính ăn_uống",
-    "intent": "create_finance_category"
+    "text": "xoá mẹ cái khoản chi đó đi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm category finance di_chuyển",
-    "intent": "create_finance_category"
+    "text": "xoá cái tiền",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo loại chi_tiêu hoá_đơn",
-    "intent": "create_finance_category"
+    "text": "huỷ thu_chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "add finance category shopping",
-    "intent": "create_finance_category"
+    "text": "xoá chi_tiêu hqua",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm danh_mục giải_trí cho finance",
-    "intent": "create_finance_category"
+    "text": "bỏ khoản này nha",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "xem danh_mục tài_chính",
-    "intent": "list_finance_categories"
+    "text": "gỡ chi_tiêu",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "liệt_kê category finance",
-    "intent": "list_finance_categories"
+    "text": "xoá khoản 50k",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "danh_sách loại chi_tiêu",
-    "intent": "list_finance_categories"
+    "text": "xoá khoản thu 1 củ",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "show finance categories",
-    "intent": "list_finance_categories"
+    "text": "xoá nhầm thì xoá tnao",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "xem các danh_mục chi_tiêu",
-    "intent": "list_finance_categories"
+    "text": "bỏ cái vừa nhập",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "đổi danh_mục ăn_uống thành food",
-    "intent": "update_finance_category"
+    "text": "huỷ cái thu_chi kia",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "sửa category di_chuyển thành transport",
-    "intent": "update_finance_category"
+    "text": "xoá nó đi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "cập_nhật danh_mục tài_chính hoá_đơn sang bills",
-    "intent": "update_finance_category"
+    "text": "xoá",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "rename finance category shopping to mua_sắm",
-    "intent": "update_finance_category"
+    "text": "xoá ngay",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "xoá danh_mục tài_chính ăn_uống",
-    "intent": "delete_finance_category"
+    "text": "delete entry",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "xoá category finance di_chuyển",
-    "intent": "delete_finance_category"
+    "text": "clear giao_dịch",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "delete finance category shopping",
-    "intent": "delete_finance_category"
+    "text": "clear khoản chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "remove expense category hoá_đơn",
-    "intent": "delete_finance_category"
+    "text": "gỡ ghi_chép",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note ý_tưởng sprint",
-    "intent": "create_note"
+    "text": "del khoản chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm ghi_chú shopping list",
-    "intent": "create_note"
+    "text": "remove giao_dịch",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note họp tuần nội_dung chốt deadline",
-    "intent": "create_note"
+    "text": "remove thu_chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "ghi_chú học rasa",
-    "intent": "create_note"
+    "text": "xoá bớt đi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo ghi_chú nhanh fix bug list",
-    "intent": "create_note"
+    "text": "huỷ ghi_chép tài_chính",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "create note project ideas",
-    "intent": "create_note"
+    "text": "gỡ mục thu_chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "add note meeting notes",
-    "intent": "create_note"
+    "text": "xoá chi_tiêu sai",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "new note retro",
-    "intent": "create_note"
+    "text": "bỏ chi_tiêu kia",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note kế_hoạch tuần",
-    "intent": "create_note"
+    "text": "xoá entry",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm note đọc sách",
-    "intent": "create_note"
+    "text": "xoá thu_chi này",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note ý_tưởng sprint giúp mình",
-    "intent": "create_note"
+    "text": "xoá mịa đi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm ghi_chú shopping list nha",
-    "intent": "create_note"
+    "text": "dẹp giao_dịch",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note họp tuần nội_dung chốt deadline ngay",
-    "intent": "create_note"
+    "text": "dẹp khoản này",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "ghi_chú học rasa với",
-    "intent": "create_note"
+    "text": "bỏ khoản tiền kia",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo ghi_chú nhanh fix bug list đi",
-    "intent": "create_note"
+    "text": "xoá bản ghi thu_chi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "create note project ideas cho tôi",
-    "intent": "create_note"
+    "text": "gỡ record chi_tiêu",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "add note meeting notes nhé",
-    "intent": "create_note"
+    "text": "delete record tài_chính",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "new note retro liền",
-    "intent": "create_note"
+    "text": "xoá cmn đi",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note kế_hoạch tuần giúp mình",
-    "intent": "create_note"
+    "text": "xoá giao_dịch nha b",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm note đọc sách nha",
-    "intent": "create_note"
+    "text": "clear tài_chính",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "tạo note ý_tưởng sprint ngay",
-    "intent": "create_note"
+    "text": "remove cái này",
+    "intent": "delete_finance_entry"
   },
   {
-    "text": "thêm ghi_chú shopping list với",
-    "intent": "create_note"
-  },
-  {
-    "text": "tạo note họp tuần nội_dung chốt deadline đi",
-    "intent": "create_note"
-  },
-  {
-    "text": "ghi_chú học rasa cho tôi",
-    "intent": "create_note"
-  },
-  {
-    "text": "tạo ghi_chú nhanh fix bug list nhé",
-    "intent": "create_note"
-  },
-  {
-    "text": "create note project ideas liền",
-    "intent": "create_note"
-  },
-  {
-    "text": "add note meeting notes giúp mình",
-    "intent": "create_note"
-  },
-  {
-    "text": "new note retro nha",
-    "intent": "create_note"
-  },
-  {
-    "text": "tạo note kế_hoạch tuần ngay",
-    "intent": "create_note"
-  },
-  {
-    "text": "thêm note đọc sách với",
-    "intent": "create_note"
-  },
-  {
-    "text": "xem danh_sách note",
-    "intent": "list_notes"
-  },
-  {
-    "text": "liệt_kê ghi_chú",
-    "intent": "list_notes"
-  },
-  {
-    "text": "cho tôi xem note",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem note gần đây",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem note đã ghim",
-    "intent": "list_notes"
-  },
-  {
-    "text": "list notes",
-    "intent": "list_notes"
-  },
-  {
-    "text": "show my notes",
-    "intent": "list_notes"
-  },
-  {
-    "text": "show pinned notes",
-    "intent": "list_notes"
-  },
-  {
-    "text": "mở danh_sách ghi_chú",
-    "intent": "list_notes"
-  },
-  {
-    "text": "hiển_thị toàn_bộ note",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem danh_sách note giúp mình",
-    "intent": "list_notes"
-  },
-  {
-    "text": "liệt_kê ghi_chú nha",
-    "intent": "list_notes"
-  },
-  {
-    "text": "cho tôi xem note ngay",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem note gần đây với",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem note đã ghim đi",
-    "intent": "list_notes"
-  },
-  {
-    "text": "list notes cho tôi",
-    "intent": "list_notes"
-  },
-  {
-    "text": "show my notes nhé",
-    "intent": "list_notes"
-  },
-  {
-    "text": "show pinned notes liền",
-    "intent": "list_notes"
-  },
-  {
-    "text": "mở danh_sách ghi_chú giúp mình",
-    "intent": "list_notes"
-  },
-  {
-    "text": "hiển_thị toàn_bộ note nha",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem danh_sách note ngay",
-    "intent": "list_notes"
-  },
-  {
-    "text": "liệt_kê ghi_chú với",
-    "intent": "list_notes"
-  },
-  {
-    "text": "cho tôi xem note đi",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem note gần đây cho tôi",
-    "intent": "list_notes"
-  },
-  {
-    "text": "xem note đã ghim nhé",
-    "intent": "list_notes"
-  },
-  {
-    "text": "list notes liền",
-    "intent": "list_notes"
-  },
-  {
-    "text": "show my notes giúp mình",
-    "intent": "list_notes"
-  },
-  {
-    "text": "show pinned notes nha",
-    "intent": "list_notes"
-  },
-  {
-    "text": "mở danh_sách ghi_chú ngay",
-    "intent": "list_notes"
-  },
-  {
-    "text": "hiển_thị toàn_bộ note với",
-    "intent": "list_notes"
-  },
-  {
-    "text": "tìm note về kế_hoạch",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm ghi_chú chứa bug",
-    "intent": "search_notes"
-  },
-  {
-    "text": "search notes for idea",
-    "intent": "search_notes"
-  },
-  {
-    "text": "find notes about meeting",
-    "intent": "search_notes"
-  },
-  {
-    "text": "có note nào chứa retro",
-    "intent": "search_notes"
-  },
-  {
-    "text": "lọc note theo shopping",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm note rasa",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm giúp mình ghi_chú deadline",
-    "intent": "search_notes"
-  },
-  {
-    "text": "search note keyword project",
-    "intent": "search_notes"
-  },
-  {
-    "text": "kiểm_tra note có sql",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm note về kế_hoạch giúp mình",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm ghi_chú chứa bug nha",
-    "intent": "search_notes"
-  },
-  {
-    "text": "search notes for idea ngay",
-    "intent": "search_notes"
-  },
-  {
-    "text": "find notes about meeting với",
-    "intent": "search_notes"
-  },
-  {
-    "text": "có note nào chứa retro đi",
-    "intent": "search_notes"
-  },
-  {
-    "text": "lọc note theo shopping cho tôi",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm note rasa nhé",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm giúp mình ghi_chú deadline liền",
-    "intent": "search_notes"
-  },
-  {
-    "text": "search note keyword project giúp mình",
-    "intent": "search_notes"
-  },
-  {
-    "text": "kiểm_tra note có sql nha",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm note về kế_hoạch ngay",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm ghi_chú chứa bug với",
-    "intent": "search_notes"
-  },
-  {
-    "text": "search notes for idea đi",
-    "intent": "search_notes"
-  },
-  {
-    "text": "find notes about meeting cho tôi",
-    "intent": "search_notes"
-  },
-  {
-    "text": "có note nào chứa retro nhé",
-    "intent": "search_notes"
-  },
-  {
-    "text": "lọc note theo shopping liền",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm note rasa giúp mình",
-    "intent": "search_notes"
-  },
-  {
-    "text": "tìm giúp mình ghi_chú deadline nha",
-    "intent": "search_notes"
-  },
-  {
-    "text": "search note keyword project ngay",
-    "intent": "search_notes"
-  },
-  {
-    "text": "kiểm_tra note có sql với",
-    "intent": "search_notes"
-  },
-  {
-    "text": "ghim note này",
-    "intent": "pin_note"
-  },
-  {
-    "text": "bỏ ghim note này",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim note vừa tạo",
-    "intent": "pin_note"
-  },
-  {
-    "text": "huỷ ghim note đó",
-    "intent": "pin_note"
-  },
-  {
-    "text": "pin this note",
-    "intent": "pin_note"
-  },
-  {
-    "text": "unpin this note",
-    "intent": "pin_note"
-  },
-  {
-    "text": "pin note shopping list",
-    "intent": "pin_note"
-  },
-  {
-    "text": "unpin note retro",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim ghi_chú họp tuần",
-    "intent": "pin_note"
-  },
-  {
-    "text": "bỏ ghim ghi_chú ý_tưởng sprint",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim note này giúp mình",
-    "intent": "pin_note"
-  },
-  {
-    "text": "bỏ ghim note này nha",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim note vừa tạo ngay",
-    "intent": "pin_note"
-  },
-  {
-    "text": "huỷ ghim note đó với",
-    "intent": "pin_note"
-  },
-  {
-    "text": "pin this note đi",
-    "intent": "pin_note"
-  },
-  {
-    "text": "unpin this note cho tôi",
-    "intent": "pin_note"
-  },
-  {
-    "text": "pin note shopping list nhé",
-    "intent": "pin_note"
-  },
-  {
-    "text": "unpin note retro liền",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim ghi_chú họp tuần giúp mình",
-    "intent": "pin_note"
-  },
-  {
-    "text": "bỏ ghim ghi_chú ý_tưởng sprint nha",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim note này ngay",
-    "intent": "pin_note"
-  },
-  {
-    "text": "bỏ ghim note này với",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim note vừa tạo đi",
-    "intent": "pin_note"
-  },
-  {
-    "text": "huỷ ghim note đó cho tôi",
-    "intent": "pin_note"
-  },
-  {
-    "text": "pin this note nhé",
-    "intent": "pin_note"
-  },
-  {
-    "text": "unpin this note liền",
-    "intent": "pin_note"
-  },
-  {
-    "text": "pin note shopping list giúp mình",
-    "intent": "pin_note"
-  },
-  {
-    "text": "unpin note retro nha",
-    "intent": "pin_note"
-  },
-  {
-    "text": "ghim ghi_chú họp tuần ngay",
-    "intent": "pin_note"
-  },
-  {
-    "text": "bỏ ghim ghi_chú ý_tưởng sprint với",
-    "intent": "pin_note"
-  },
-  {
-    "text": "sửa note họp tuần",
-    "intent": "update_note"
-  },
-  {
-    "text": "cập_nhật note meeting thành meeting v2",
-    "intent": "update_note"
-  },
-  {
-    "text": "thay_đổi note idea nội_dung triển_khai giai_đoạn 2",
-    "intent": "update_note"
-  },
-  {
-    "text": "update note retro",
-    "intent": "update_note"
-  },
-  {
-    "text": "edit note project ideas",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa ghi_chú shopping list",
-    "intent": "update_note"
-  },
-  {
-    "text": "cập_nhật ghi_chú kế_hoạch",
-    "intent": "update_note"
-  },
-  {
-    "text": "update note title họp team",
-    "intent": "update_note"
-  },
-  {
-    "text": "thay nội_dung note bug list thành fix payment bug",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa note rasa",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa note họp tuần giúp mình",
-    "intent": "update_note"
-  },
-  {
-    "text": "cập_nhật note meeting thành meeting v2 nha",
-    "intent": "update_note"
-  },
-  {
-    "text": "thay_đổi note idea nội_dung triển_khai giai_đoạn 2 ngay",
-    "intent": "update_note"
-  },
-  {
-    "text": "update note retro với",
-    "intent": "update_note"
-  },
-  {
-    "text": "edit note project ideas đi",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa ghi_chú shopping list cho tôi",
-    "intent": "update_note"
-  },
-  {
-    "text": "cập_nhật ghi_chú kế_hoạch nhé",
-    "intent": "update_note"
-  },
-  {
-    "text": "update note title họp team liền",
-    "intent": "update_note"
-  },
-  {
-    "text": "thay nội_dung note bug list thành fix payment bug giúp mình",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa note rasa nha",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa note họp tuần ngay",
-    "intent": "update_note"
-  },
-  {
-    "text": "cập_nhật note meeting thành meeting v2 với",
-    "intent": "update_note"
-  },
-  {
-    "text": "thay_đổi note idea nội_dung triển_khai giai_đoạn 2 đi",
-    "intent": "update_note"
-  },
-  {
-    "text": "update note retro cho tôi",
-    "intent": "update_note"
-  },
-  {
-    "text": "edit note project ideas nhé",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa ghi_chú shopping list liền",
-    "intent": "update_note"
-  },
-  {
-    "text": "cập_nhật ghi_chú kế_hoạch giúp mình",
-    "intent": "update_note"
-  },
-  {
-    "text": "update note title họp team nha",
-    "intent": "update_note"
-  },
-  {
-    "text": "thay nội_dung note bug list thành fix payment bug ngay",
-    "intent": "update_note"
-  },
-  {
-    "text": "sửa note rasa với",
-    "intent": "update_note"
-  },
-  {
-    "text": "xoá note shopping",
+    "text": "xoá note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note họp tuần",
+    "text": "bỏ note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá ghi_chú nháp",
+    "text": "huỷ ghi_chú",
     "intent": "delete_note"
   },
   {
-    "text": "delete note meeting notes",
+    "text": "del note",
     "intent": "delete_note"
   },
   {
-    "text": "remove note idea",
+    "text": "remove note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note tên bug list",
+    "text": "clear note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá giúp mình note kế_hoạch",
+    "text": "xoá ghi_chép",
     "intent": "delete_note"
   },
   {
-    "text": "delete this note retro",
+    "text": "gỡ note",
     "intent": "delete_note"
   },
   {
-    "text": "remove note project ideas",
+    "text": "delete note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá ghi_chú rasa",
+    "text": "xoá_sổ tay",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note shopping giúp mình",
+    "text": "dẹp cái note này",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note họp tuần nha",
+    "text": "xoá note hnay",
     "intent": "delete_note"
   },
   {
-    "text": "xoá ghi_chú nháp ngay",
+    "text": "xoá note sai",
     "intent": "delete_note"
   },
   {
-    "text": "delete note meeting notes với",
+    "text": "bỏ ghi_chú đi",
     "intent": "delete_note"
   },
   {
-    "text": "remove note idea đi",
+    "text": "xoá đi",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note tên bug list cho tôi",
+    "text": "bỏ đi",
     "intent": "delete_note"
   },
   {
-    "text": "xoá giúp mình note kế_hoạch nhé",
+    "text": "xoá mịa note đi",
     "intent": "delete_note"
   },
   {
-    "text": "delete this note retro liền",
+    "text": "del ghi_chú",
     "intent": "delete_note"
   },
   {
-    "text": "remove note project ideas giúp mình",
+    "text": "gỡ bỏ note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá ghi_chú rasa nha",
+    "text": "xoá bớt note",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note shopping ngay",
+    "text": "dẹp ghi_chú",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note họp tuần với",
+    "text": "xoá mẹ note r",
     "intent": "delete_note"
   },
   {
-    "text": "xoá ghi_chú nháp đi",
+    "text": "xoá cmn note",
     "intent": "delete_note"
   },
   {
-    "text": "delete note meeting notes cho tôi",
+    "text": "huỷ note",
     "intent": "delete_note"
   },
   {
-    "text": "remove note idea nhé",
+    "text": "xoá note kia",
     "intent": "delete_note"
   },
   {
-    "text": "xoá note tên bug list liền",
+    "text": "bỏ note nhé",
     "intent": "delete_note"
   },
   {
-    "text": "xoá giúp mình note kế_hoạch giúp mình",
+    "text": "xoá ngay ghi_chú",
     "intent": "delete_note"
   },
   {
-    "text": "delete this note retro nha",
+    "text": "clear ghi_chú",
     "intent": "delete_note"
   },
   {
-    "text": "remove note project ideas ngay",
+    "text": "remove ghi_chép",
     "intent": "delete_note"
   },
   {
-    "text": "xoá ghi_chú rasa với",
+    "text": "xoá nó",
     "intent": "delete_note"
+  },
+  {
+    "text": "xoá cái note vừa tạo",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note nháp",
+    "intent": "delete_note"
+  },
+  {
+    "text": "bỏ bản nháp",
+    "intent": "delete_note"
+  },
+  {
+    "text": "delete ghi_chú",
+    "intent": "delete_note"
+  },
+  {
+    "text": "dẹp note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "clear sổ_tay",
+    "intent": "delete_note"
+  },
+  {
+    "text": "gỡ ghi_chú ra",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note đó",
+    "intent": "delete_note"
+  },
+  {
+    "text": "del sổ_tay",
+    "intent": "delete_note"
+  },
+  {
+    "text": "dell note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá cái vừa lưu",
+    "intent": "delete_note"
+  },
+  {
+    "text": "huỷ cái vừa lưu",
+    "intent": "delete_note"
+  },
+  {
+    "text": "bỏ phần note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá nội_dung note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note thừa",
+    "intent": "delete_note"
+  },
+  {
+    "text": "bỏ đi cái note này",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá ghi_chú nha mày",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá cho tao cái note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá lun đi",
+    "intent": "delete_note"
+  },
+  {
+    "text": "gỡ note sai",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note tên",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note abc",
+    "intent": "delete_note"
+  },
+  {
+    "text": "dọn note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "clear bớt note",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note cũ",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá note hôm_qua",
+    "intent": "delete_note"
+  },
+  {
+    "text": "bỏ note lưu sai",
+    "intent": "delete_note"
+  },
+  {
+    "text": "xoá việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ lịch",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ lịch hẹn",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá cv",
+    "intent": "delete_task"
+  },
+  {
+    "text": "del task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "remove công_việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá to do",
+    "intent": "delete_task"
+  },
+  {
+    "text": "gỡ lịch",
+    "intent": "delete_task"
+  },
+  {
+    "text": "dẹp việc này",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ cuộc hẹn",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá việc đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá task nha",
+    "intent": "delete_task"
+  },
+  {
+    "text": "delete cviec",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá bớt task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ bớt việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá mẹ lịch đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ mẹ lịch r",
+    "intent": "delete_task"
+  },
+  {
+    "text": "gỡ cviec",
+    "intent": "delete_task"
+  },
+  {
+    "text": "clear task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "del to do",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá việc hnay",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ task ngày_mai",
+    "intent": "delete_task"
+  },
+  {
+    "text": "gỡ task đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "dẹp luôn cái task này",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá nó",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá lịch học",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá lịch họp",
+    "intent": "delete_task"
+  },
+  {
+    "text": "remove lịch",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ công_việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ công_việc này",
+    "intent": "delete_task"
+  },
+  {
+    "text": "ko làm nữa xoá đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá task sai",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ hẹn",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ hẹn",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá lịch khám",
+    "intent": "delete_task"
+  },
+  {
+    "text": "clear việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "dẹp task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "gỡ việc ra",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá to-do",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá khỏi danh_sách",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá khỏi list việc",
+    "intent": "delete_task"
+  },
+  {
+    "text": "gỡ to do list",
+    "intent": "delete_task"
+  },
+  {
+    "text": "delete to do",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá nhanh task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá việc kia",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ nó",
+    "intent": "delete_task"
+  },
+  {
+    "text": "remove task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "clear lịch",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá cho t cái task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ_mẹ cái task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "xoá cmn task đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "dell task",
+    "intent": "delete_task"
+  },
+  {
+    "text": "del cv",
+    "intent": "delete_task"
+  },
+  {
+    "text": "huỷ cv",
+    "intent": "delete_task"
+  },
+  {
+    "text": "bỏ mịe task đi",
+    "intent": "delete_task"
+  },
+  {
+    "text": "sai",
+    "intent": "deny"
+  },
+  {
+    "text": "sai rồi",
+    "intent": "deny"
+  },
+  {
+    "text": "không",
+    "intent": "deny"
+  },
+  {
+    "text": "k",
+    "intent": "deny"
+  },
+  {
+    "text": "ko",
+    "intent": "deny"
+  },
+  {
+    "text": "khong",
+    "intent": "deny"
+  },
+  {
+    "text": "khum",
+    "intent": "deny"
+  },
+  {
+    "text": "hông",
+    "intent": "deny"
+  },
+  {
+    "text": "nope",
+    "intent": "deny"
+  },
+  {
+    "text": "đéo",
+    "intent": "deny"
+  },
+  {
+    "text": "đ",
+    "intent": "deny"
+  },
+  {
+    "text": "đếu",
+    "intent": "deny"
+  },
+  {
+    "text": "no",
+    "intent": "deny"
+  },
+  {
+    "text": "đíu",
+    "intent": "deny"
+  },
+  {
+    "text": "không phải",
+    "intent": "deny"
+  },
+  {
+    "text": "sai cmnr",
+    "intent": "deny"
+  },
+  {
+    "text": "k đúng",
+    "intent": "deny"
+  },
+  {
+    "text": "chưa đúng",
+    "intent": "deny"
+  },
+  {
+    "text": "nhầm rồi",
+    "intent": "deny"
+  },
+  {
+    "text": "k nha",
+    "intent": "deny"
+  },
+  {
+    "text": "ko nha",
+    "intent": "deny"
+  },
+  {
+    "text": "hông phải",
+    "intent": "deny"
+  },
+  {
+    "text": "k phai",
+    "intent": "deny"
+  },
+  {
+    "text": "không đâu",
+    "intent": "deny"
+  },
+  {
+    "text": "k đồng_ý",
+    "intent": "deny"
+  },
+  {
+    "text": "từ_chối",
+    "intent": "deny"
+  },
+  {
+    "text": "k dc",
+    "intent": "deny"
+  },
+  {
+    "text": "k đc",
+    "intent": "deny"
+  },
+  {
+    "text": "ko được",
+    "intent": "deny"
+  },
+  {
+    "text": "ko dc",
+    "intent": "deny"
+  },
+  {
+    "text": "never",
+    "intent": "deny"
+  },
+  {
+    "text": "đ bao_giờ",
+    "intent": "deny"
+  },
+  {
+    "text": "no no",
+    "intent": "deny"
+  },
+  {
+    "text": "sai bét",
+    "intent": "deny"
+  },
+  {
+    "text": "vớ_vẩn",
+    "intent": "deny"
+  },
+  {
+    "text": "xàm",
+    "intent": "deny"
+  },
+  {
+    "text": "điêu",
+    "intent": "deny"
+  },
+  {
+    "text": "tào_lao",
+    "intent": "deny"
+  },
+  {
+    "text": "k có",
+    "intent": "deny"
+  },
+  {
+    "text": "khum có",
+    "intent": "deny"
+  },
+  {
+    "text": "kkk",
+    "intent": "deny"
+  },
+  {
+    "text": "ko chịu",
+    "intent": "deny"
+  },
+  {
+    "text": "ko hề",
+    "intent": "deny"
+  },
+  {
+    "text": "k hề",
+    "intent": "deny"
+  },
+  {
+    "text": "bậy",
+    "intent": "deny"
+  },
+  {
+    "text": "bậy_bạ",
+    "intent": "deny"
+  },
+  {
+    "text": "tầm_bậy",
+    "intent": "deny"
+  },
+  {
+    "text": "sai_lầm",
+    "intent": "deny"
+  },
+  {
+    "text": "ko đúng",
+    "intent": "deny"
+  },
+  {
+    "text": "chả phải",
+    "intent": "deny"
+  },
+  {
+    "text": "tạm_biệt",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bye",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bye nha",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bb",
+    "intent": "goodbye"
+  },
+  {
+    "text": "pp",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bái bai",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bai",
+    "intent": "goodbye"
+  },
+  {
+    "text": "chào tạm_biệt",
+    "intent": "goodbye"
+  },
+  {
+    "text": "gặp lại sau",
+    "intent": "goodbye"
+  },
+  {
+    "text": "hẹn gặp lại",
+    "intent": "goodbye"
+  },
+  {
+    "text": "t đi đây",
+    "intent": "goodbye"
+  },
+  {
+    "text": "té đây",
+    "intent": "goodbye"
+  },
+  {
+    "text": "t out nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "see ya",
+    "intent": "goodbye"
+  },
+  {
+    "text": "cút đây",
+    "intent": "goodbye"
+  },
+  {
+    "text": "pp nha",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bb nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "tôi đi đây",
+    "intent": "goodbye"
+  },
+  {
+    "text": "đi ngủ đây",
+    "intent": "goodbye"
+  },
+  {
+    "text": "thôi bye",
+    "intent": "goodbye"
+  },
+  {
+    "text": "thôi t nghỉ",
+    "intent": "goodbye"
+  },
+  {
+    "text": "chào nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "chào nha",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bai bai",
+    "intent": "goodbye"
+  },
+  {
+    "text": "nghỉ nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "thôi nghỉ",
+    "intent": "goodbye"
+  },
+  {
+    "text": "end",
+    "intent": "goodbye"
+  },
+  {
+    "text": "kết_thúc",
+    "intent": "goodbye"
+  },
+  {
+    "text": "thoát",
+    "intent": "goodbye"
+  },
+  {
+    "text": "quit",
+    "intent": "goodbye"
+  },
+  {
+    "text": "exit",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bái bai nha",
+    "intent": "goodbye"
+  },
+  {
+    "text": "hẹn mai nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "tí gặp lại",
+    "intent": "goodbye"
+  },
+  {
+    "text": "đi ăn đã",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bye bye",
+    "intent": "goodbye"
+  },
+  {
+    "text": "good bye",
+    "intent": "goodbye"
+  },
+  {
+    "text": "gud bai",
+    "intent": "goodbye"
+  },
+  {
+    "text": "bai nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "b nhé",
+    "intent": "goodbye"
+  },
+  {
+    "text": "dừng",
+    "intent": "goodbye"
+  },
+  {
+    "text": "tạm dẹp",
+    "intent": "goodbye"
+  },
+  {
+    "text": "hẹn lần sau",
+    "intent": "goodbye"
   },
   {
     "text": "xin chào",
@@ -1044,7 +2340,7 @@
     "intent": "greet"
   },
   {
-    "text": "hello",
+    "text": "chào nha",
     "intent": "greet"
   },
   {
@@ -1052,7 +2348,31 @@
     "intent": "greet"
   },
   {
-    "text": "alo",
+    "text": "hello",
+    "intent": "greet"
+  },
+  {
+    "text": "helo",
+    "intent": "greet"
+  },
+  {
+    "text": "hế lô",
+    "intent": "greet"
+  },
+  {
+    "text": "xin chao",
+    "intent": "greet"
+  },
+  {
+    "text": "chao",
+    "intent": "greet"
+  },
+  {
+    "text": "hi bồ",
+    "intent": "greet"
+  },
+  {
+    "text": "chào đằng_ấy",
     "intent": "greet"
   },
   {
@@ -1060,51 +2380,51 @@
     "intent": "greet"
   },
   {
+    "text": "chào buổi chiều",
+    "intent": "greet"
+  },
+  {
     "text": "chào buổi tối",
     "intent": "greet"
   },
   {
-    "text": "mình cần hỗ_trợ",
+    "text": "alo",
     "intent": "greet"
   },
   {
-    "text": "chào trợ_lý",
+    "text": "alo nghe",
     "intent": "greet"
   },
   {
-    "text": "xin chào giúp mình",
+    "text": "có ai k",
     "intent": "greet"
   },
   {
-    "text": "chào bạn nha",
+    "text": "ơii",
     "intent": "greet"
   },
   {
-    "text": "hello ngay",
+    "text": "có đó ko",
     "intent": "greet"
   },
   {
-    "text": "hi với",
+    "text": "ê",
     "intent": "greet"
   },
   {
-    "text": "alo đi",
+    "text": "ê helo",
     "intent": "greet"
   },
   {
-    "text": "chào buổi sáng cho tôi",
+    "text": "chào thím",
     "intent": "greet"
   },
   {
-    "text": "chào buổi tối nhé",
+    "text": "chào các đồng_chí",
     "intent": "greet"
   },
   {
-    "text": "mình cần hỗ_trợ liền",
-    "intent": "greet"
-  },
-  {
-    "text": "chào trợ_lý giúp mình",
+    "text": "chào chủ thớt",
     "intent": "greet"
   },
   {
@@ -1112,1667 +2432,1623 @@
     "intent": "greet"
   },
   {
-    "text": "chào bạn ngay",
+    "text": "chào mày",
     "intent": "greet"
   },
   {
-    "text": "hello với",
+    "text": "hello bạn",
     "intent": "greet"
   },
   {
-    "text": "hi đi",
+    "text": "hi ad",
     "intent": "greet"
   },
   {
-    "text": "alo cho tôi",
+    "text": "cho hỏi xíu",
     "intent": "greet"
   },
   {
-    "text": "chào buổi sáng nhé",
+    "text": "hello ngày mới",
     "intent": "greet"
   },
   {
-    "text": "chào buổi tối liền",
+    "text": "chào buổi sáng tốt_lành nha",
     "intent": "greet"
   },
   {
-    "text": "tạm_biệt",
-    "intent": "goodbye"
+    "text": "ê cho tao hỏi cái",
+    "intent": "greet"
   },
   {
-    "text": "chào tạm_biệt",
-    "intent": "goodbye"
+    "text": "hi em",
+    "intent": "greet"
   },
   {
-    "text": "bye",
-    "intent": "goodbye"
+    "text": "hi_anh",
+    "intent": "greet"
   },
   {
-    "text": "goodbye",
-    "intent": "goodbye"
+    "text": "chào chị",
+    "intent": "greet"
   },
   {
-    "text": "hẹn gặp lại",
-    "intent": "goodbye"
+    "text": "b ơi",
+    "intent": "greet"
   },
   {
-    "text": "mình thoát nhé",
-    "intent": "goodbye"
+    "text": "cậu ơi",
+    "intent": "greet"
   },
   {
-    "text": "kết_thúc ở đây",
-    "intent": "goodbye"
+    "text": "ad ơi",
+    "intent": "greet"
   },
   {
-    "text": "cảm_ơn nhé tạm_biệt",
-    "intent": "goodbye"
+    "text": "heloo",
+    "intent": "greet"
   },
   {
-    "text": "mình đi đây",
-    "intent": "goodbye"
+    "text": "helou",
+    "intent": "greet"
   },
   {
-    "text": "see you",
-    "intent": "goodbye"
+    "text": "xin chào nhé",
+    "intent": "greet"
   },
   {
-    "text": "tạm_biệt giúp mình",
-    "intent": "goodbye"
+    "text": "mày tên gì",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chào tạm_biệt nha",
-    "intent": "goodbye"
+    "text": "thời_tiết hnay sao",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "bye ngay",
-    "intent": "goodbye"
+    "text": "mấy giờ rồi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "goodbye với",
-    "intent": "goodbye"
+    "text": "bot ngu",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "hẹn gặp lại đi",
-    "intent": "goodbye"
+    "text": "mày là ai",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "mình thoát nhé cho tôi",
-    "intent": "goodbye"
+    "text": "có biết làm thơ k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "kết_thúc ở đây nhé",
-    "intent": "goodbye"
+    "text": "hát đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "cảm_ơn nhé tạm_biệt liền",
-    "intent": "goodbye"
+    "text": "kể chuyện nghe coi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "mình đi đây giúp mình",
-    "intent": "goodbye"
+    "text": "trưa nay ăn gì",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "see you nha",
-    "intent": "goodbye"
+    "text": "ăn cơm chưa",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "tạm_biệt ngay",
-    "intent": "goodbye"
+    "text": "tao đang buồn",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chào tạm_biệt với",
-    "intent": "goodbye"
+    "text": "yêu tao k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "bye đi",
-    "intent": "goodbye"
+    "text": "hát 1 bài",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "goodbye cho tôi",
-    "intent": "goodbye"
+    "text": "kể chuyện cười",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "hẹn gặp lại nhé",
-    "intent": "goodbye"
+    "text": "mày làm đc gì",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đúng rồi",
-    "intent": "affirm"
+    "text": "chán quá",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đồng_ý",
-    "intent": "affirm"
+    "text": "nay xui vãi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ok",
-    "intent": "affirm"
+    "text": "hnay tao vui",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "oke",
-    "intent": "affirm"
+    "text": "trời nóng quá",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "yes",
-    "intent": "affirm"
+    "text": "đm",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chính_xác",
-    "intent": "affirm"
+    "text": "vcl",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "xác_nhận",
-    "intent": "affirm"
+    "text": "vl",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "được",
-    "intent": "affirm"
+    "text": "wtf",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chuẩn",
-    "intent": "affirm"
+    "text": "cái gì dể",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ừ đúng",
-    "intent": "affirm"
+    "text": "sao đấy",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đúng rồi giúp mình",
-    "intent": "affirm"
+    "text": "s z",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đồng_ý nha",
-    "intent": "affirm"
+    "text": "làm người_yêu tao nhé",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ok ngay",
-    "intent": "affirm"
+    "text": "bot dỏm",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "oke với",
-    "intent": "affirm"
+    "text": "chửi lộn k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "yes đi",
-    "intent": "affirm"
+    "text": "mày bao tuổi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chính_xác cho tôi",
-    "intent": "affirm"
+    "text": "ở đâu_đấy",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "xác_nhận nhé",
-    "intent": "affirm"
+    "text": "làm_bạn không",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "được liền",
-    "intent": "affirm"
+    "text": "m là nam hay nữ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chuẩn giúp mình",
-    "intent": "affirm"
+    "text": "t đập m giờ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ừ đúng nha",
-    "intent": "affirm"
+    "text": "hnay ngày mấy",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đúng rồi ngay",
-    "intent": "affirm"
+    "text": "bao_nhiêu độ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đồng_ý với",
-    "intent": "affirm"
+    "text": "sủa",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ok đi",
-    "intent": "affirm"
+    "text": "gâu gâu",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "oke cho tôi",
-    "intent": "affirm"
+    "text": "meo meo",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "yes nhé",
-    "intent": "affirm"
+    "text": "con c",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không",
-    "intent": "deny"
+    "text": "vãi l",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không đồng_ý",
-    "intent": "deny"
+    "text": "m có bị ngu k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "huỷ",
-    "intent": "deny"
+    "text": "khùng hả",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "thôi",
-    "intent": "deny"
+    "text": "điên à",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "no",
-    "intent": "deny"
+    "text": "dở_hơi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không phải",
-    "intent": "deny"
+    "text": "đồ ngốc",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "bỏ_qua",
-    "intent": "deny"
+    "text": "câm đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đừng làm_vậy",
-    "intent": "deny"
+    "text": "đéo hiểu",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không cần",
-    "intent": "deny"
+    "text": "chả hiểu gì",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "stop",
-    "intent": "deny"
+    "text": "nhảm",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không giúp mình",
-    "intent": "deny"
+    "text": "tao mệt",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không đồng_ý nha",
-    "intent": "deny"
+    "text": "buồn_ngủ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "huỷ ngay",
-    "intent": "deny"
+    "text": "t đói",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "thôi với",
-    "intent": "deny"
+    "text": "mày ăn k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "no đi",
-    "intent": "deny"
+    "text": "đánh liên_quân k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không phải cho tôi",
-    "intent": "deny"
+    "text": "chơi game k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "bỏ_qua nhé",
-    "intent": "deny"
+    "text": "cho vay 100k đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đừng làm_vậy liền",
-    "intent": "deny"
+    "text": "xin 5 lít",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không cần giúp mình",
-    "intent": "deny"
+    "text": "cho tiền đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "stop nha",
-    "intent": "deny"
+    "text": "mày giàu k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không ngay",
-    "intent": "deny"
+    "text": "tao nghèo quá",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "không đồng_ý với",
-    "intent": "deny"
-  },
-  {
-    "text": "huỷ đi",
-    "intent": "deny"
-  },
-  {
-    "text": "thôi cho tôi",
-    "intent": "deny"
-  },
-  {
-    "text": "no nhé",
-    "intent": "deny"
-  },
-  {
-    "text": "bạn giúp được gì",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn làm được gì",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "mình cần hướng_dẫn",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "hỗ_trợ mình với",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "tôi có_thể nhờ gì",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "show me what you can do",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "how can you help",
-    "intent": "ask_howcanhelp"
+    "text": "cứu tao",
+    "intent": "nlu_fallback"
   },
   {
     "text": "help me",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "liệt_kê chức_năng của bạn",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn hỗ_trợ tác_vụ nào",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn giúp được gì giúp mình",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn làm được gì nha",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "mình cần hướng_dẫn ngay",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "hỗ_trợ mình với với",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "tôi có_thể nhờ gì đi",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "show me what you can do cho tôi",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "how can you help nhé",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "help me liền",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "liệt_kê chức_năng của bạn giúp mình",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn hỗ_trợ tác_vụ nào nha",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn giúp được gì ngay",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn làm được gì với",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "mình cần hướng_dẫn đi",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "hỗ_trợ mình với cho tôi",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "tôi có_thể nhờ gì nhé",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "show me what you can do liền",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "how can you help giúp mình",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "help me nha",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "liệt_kê chức_năng của bạn ngay",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "bạn hỗ_trợ tác_vụ nào với",
-    "intent": "ask_howcanhelp"
-  },
-  {
-    "text": "asdf",
     "intent": "nlu_fallback"
   },
   {
-    "text": "qwerty",
+    "text": "cíu",
     "intent": "nlu_fallback"
   },
   {
-    "text": "zxczxc",
+    "text": "hu_hu",
     "intent": "nlu_fallback"
   },
   {
-    "text": "aaaabbbb",
+    "text": "sầu",
     "intent": "nlu_fallback"
   },
   {
-    "text": "123123",
+    "text": "trầm_cảm",
     "intent": "nlu_fallback"
   },
   {
-    "text": "? ? ?",
+    "text": "đố mày biết",
     "intent": "nlu_fallback"
   },
   {
-    "text": "....",
+    "text": "giải toán đi",
     "intent": "nlu_fallback"
   },
   {
-    "text": "ơ ơ ơ",
+    "text": "1+1 bằng mấy",
     "intent": "nlu_fallback"
   },
   {
-    "text": "blabla",
+    "text": "tính giùm tao",
     "intent": "nlu_fallback"
   },
   {
-    "text": "xoá",
+    "text": "hát quốc_ca",
     "intent": "nlu_fallback"
   },
   {
-    "text": "undo",
+    "text": "tao đấm mày",
     "intent": "nlu_fallback"
   },
   {
-    "text": "ngày_mai",
+    "text": "rủ đi chơi",
     "intent": "nlu_fallback"
   },
   {
-    "text": "task",
+    "text": "bao_giờ lấy vợ",
     "intent": "nlu_fallback"
   },
   {
-    "text": "điều gì đó",
+    "text": "khi nào giàu",
     "intent": "nlu_fallback"
   },
   {
-    "text": "hmmmmm",
+    "text": "tao đẹp_trai k",
     "intent": "nlu_fallback"
   },
   {
-    "text": "kkkk",
+    "text": "khen t đi",
     "intent": "nlu_fallback"
   },
   {
-    "text": "random text",
+    "text": "mày đẹp quá",
     "intent": "nlu_fallback"
   },
   {
-    "text": "không liên_quan",
+    "text": "xin_lỗi nha",
     "intent": "nlu_fallback"
   },
   {
-    "text": "gibberish input",
+    "text": "ko sao",
     "intent": "nlu_fallback"
   },
   {
-    "text": "lorem ipsum",
+    "text": "dm bot",
     "intent": "nlu_fallback"
   },
   {
-    "text": "tóm_tắt tuần này",
-    "intent": "summarize_week"
+    "text": "đm m",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "báo_cáo tuần",
-    "intent": "summarize_week"
+    "text": "mày bị lỗi à",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "cho mình tổng_kết tuần",
-    "intent": "summarize_week"
+    "text": "lag à",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "tuần này mình làm được gì",
-    "intent": "summarize_week"
+    "text": "đơ à",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đánh_giá hiệu_suất tuần",
-    "intent": "summarize_week"
+    "text": "lag vl",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "weekly summary",
-    "intent": "summarize_week"
+    "text": "hỏng rồi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "summarize my week",
-    "intent": "summarize_week"
+    "text": "fix bug đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "show week progress",
-    "intent": "summarize_week"
+    "text": "code lỏ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "kết_quả làm_việc tuần này",
-    "intent": "summarize_week"
+    "text": "app rác",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "xem thống_kê tuần",
-    "intent": "summarize_week"
+    "text": "đồ bỏ đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "tóm_tắt tuần này giúp mình",
-    "intent": "summarize_week"
+    "text": "rác_rưởi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "báo_cáo tuần nha",
-    "intent": "summarize_week"
+    "text": "m cut di",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "cho mình tổng_kết tuần ngay",
-    "intent": "summarize_week"
+    "text": "sủa tiếp đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "tuần này mình làm được gì với",
-    "intent": "summarize_week"
+    "text": "tao đang ị",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đánh_giá hiệu_suất tuần đi",
-    "intent": "summarize_week"
+    "text": "tao mắc ỉa",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "weekly summary cho tôi",
-    "intent": "summarize_week"
+    "text": "đi ỉa",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "summarize my week nhé",
-    "intent": "summarize_week"
+    "text": "đi đái",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "show week progress liền",
-    "intent": "summarize_week"
+    "text": "đi tắm đây",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "kết_quả làm_việc tuần này giúp mình",
-    "intent": "summarize_week"
+    "text": "ngủ ngon",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "xem thống_kê tuần nha",
-    "intent": "summarize_week"
+    "text": "tao đag rảnh",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "tóm_tắt tuần này ngay",
-    "intent": "summarize_week"
+    "text": "nói_chuyện đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "báo_cáo tuần với",
-    "intent": "summarize_week"
+    "text": "tám chuyện",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "cho mình tổng_kết tuần đi",
-    "intent": "summarize_week"
+    "text": "buôn dưa_lê",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "tuần này mình làm được gì cho tôi",
-    "intent": "summarize_week"
+    "text": "chém gió k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đánh_giá hiệu_suất tuần nhé",
-    "intent": "summarize_week"
+    "text": "tâm_sự đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ưu_tiên việc nào trước",
-    "intent": "help_prioritize"
+    "text": "bot mlem",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "task nào quan_trọng nhất",
-    "intent": "help_prioritize"
+    "text": "vú",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "mình nên làm gì trước",
-    "intent": "help_prioritize"
+    "text": "lồn",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "gợi_ý thứ_tự công_việc",
-    "intent": "help_prioritize"
+    "text": "cu",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "việc nào cấp_bách",
-    "intent": "help_prioritize"
+    "text": "bậy_bạ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "prioritize my tasks",
-    "intent": "help_prioritize"
+    "text": "tục_tĩu",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "what is most important",
-    "intent": "help_prioritize"
+    "text": "vãi nồi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "sắp_xếp ưu_tiên giúp mình",
-    "intent": "help_prioritize"
+    "text": "ảo ma",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chọn task cần làm ngay",
-    "intent": "help_prioritize"
+    "text": "chúa_tể",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đâu là việc nên xử_lý trước",
-    "intent": "help_prioritize"
+    "text": "ngạo_nghễ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ưu_tiên việc nào trước giúp mình",
-    "intent": "help_prioritize"
+    "text": "đỉnh vãi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "task nào quan_trọng nhất nha",
-    "intent": "help_prioritize"
+    "text": "kinh",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "mình nên làm gì trước ngay",
-    "intent": "help_prioritize"
+    "text": "rén k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "gợi_ý thứ_tự công_việc với",
-    "intent": "help_prioritize"
+    "text": "t sợ",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "việc nào cấp_bách đi",
-    "intent": "help_prioritize"
+    "text": "ma",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "prioritize my tasks cho tôi",
-    "intent": "help_prioritize"
+    "text": "sợ ma",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "what is most important nhé",
-    "intent": "help_prioritize"
+    "text": "hát đê",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "sắp_xếp ưu_tiên giúp mình liền",
-    "intent": "help_prioritize"
+    "text": "rap đi",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "chọn task cần làm ngay giúp mình",
-    "intent": "help_prioritize"
+    "text": "beatbox xem",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "đâu là việc nên xử_lý trước nha",
-    "intent": "help_prioritize"
+    "text": "biết sơn tùng k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "ưu_tiên việc nào trước ngay",
-    "intent": "help_prioritize"
+    "text": "sếp Tùng",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "task nào quan_trọng nhất với",
-    "intent": "help_prioritize"
+    "text": "skyler",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "mình nên làm gì trước đi",
-    "intent": "help_prioritize"
+    "text": "gắt",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "gợi_ý thứ_tự công_việc cho tôi",
-    "intent": "help_prioritize"
+    "text": "wibu",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "việc nào cấp_bách nhé",
-    "intent": "help_prioritize"
+    "text": "wibu rách",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "xem task",
-    "intent": "filter_tasks"
+    "text": "otaku",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "liệt_kê task",
-    "intent": "filter_tasks"
+    "text": "simp",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "danh_sách công_việc",
-    "intent": "filter_tasks"
+    "text": "simp chúa",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "show tasks",
-    "intent": "filter_tasks"
+    "text": "chúa hề",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "list my tasks",
-    "intent": "filter_tasks"
+    "text": "làm hề k",
+    "intent": "nlu_fallback"
   },
   {
-    "text": "lọc task",
-    "intent": "filter_tasks"
+    "text": "tấu hài đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cười lên",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "haha",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "kkk",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "hihi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "hoho",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "hehe",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "đùa à",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "troll tao à",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "giỡn mặt hả",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "thích gì",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "muốn ăn đấm k",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "có tin tao búng lỗ tai mày k",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "bóp_cổ m giờ",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cắn m bây_giờ",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "đỉ",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "ml",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "đb",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "ccc",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "xàm l",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "t xạo đấy",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "đùa thôi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "mày tin à",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "nhóc ác",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "ranh_con",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "nhãi_ranh",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "đại_ca",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "sếp",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "chủ_tịch",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "giả_vờ",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "khóc đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cười đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "vỗ_tay",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "bái_phục",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "quỳ",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "lạy",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cạn_lời",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "hết cứu",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "ôi dồi ôi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "úi dồi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "dở_khóc_dở_cười",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "bó_tay",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "nhức đầu",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "điên_đầu",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cho thuốc đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "m có bồ chưa",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "m có chồng chưa",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "kết_hôn đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cưới nha",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "sinh con k",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "haha bot ngu học",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "dạy mày nè",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "học đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "dốt",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "ngu như bò",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "óc chó",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "não phẳng",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "óc heo",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cc",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "dm",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "cl",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "dkm",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "dcm",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "vãi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "ủa",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "thế á",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "thật à",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "điêu",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "xạo chó",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "vớ_vẩn",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "tào_lao bí_đao",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "đậu_xanh",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "hết tiền",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "thôi im đi",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "lắm_mồm",
+    "intent": "nlu_fallback"
+  },
+  {
+    "text": "tìm khoản chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem_lại tiền tiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tháng này tiêu bn rồi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "kiếm giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "coi lại sổ thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tra_cứu tiền_bạc",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "search giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tra lịch_sử giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm khoản thu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tháng qua thu bao_nhiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "coi tiêu_pha tnao",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "check thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "check giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "check ví",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "cho xem_lại tiền",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "hnay tiêu j r",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm ghi_chép tài_chính",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "kê_khai chi_tiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem chi_tiêu hôm_nay",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "ds thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "danh_sách giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem giao_dịch ăn_uống",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm tiền ăn",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm khoản lương",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "lọc khoản chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "lọc thu_nhập",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tra_cứu chi_tiêu tháng 10",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "lịch_sử tiêu tiền",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm khoản 500k",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "coi tháng này dư nhiu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "check tài_chính",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem tiền",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "còn nhiu tiền",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem coi tiền_bạc sao r",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "thống_kê thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "thống_kê giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "ds chi_tiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "hiển_thị giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "show giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "mở lịch_sử chi_tiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "coi tiền_lương",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tra tiền nhà",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm mục mua_sắm",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "list khoản chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem thu_chi tuần này",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "kiếm khoản đã chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem biến_động số_dư",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "check số_dư",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem dòng tiền",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "liệt_kê chi_tiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "truy_vấn giao_dịch",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "kê chi_tiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "kê thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "hnay tiêu bao_nhiêu",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tuần rồi tiêu bn",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "list thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "xem bảng thu_chi",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "show tiền_bạc",
+    "intent": "search_finance_entries"
+  },
+  {
+    "text": "tìm ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "mở note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "check note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "kiếm note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem_lại ghi_chép",
+    "intent": "search_notes"
+  },
+  {
+    "text": "đọc ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "show note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "list note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "ds note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "ds ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tra ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "lọc note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm sổ_tay",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem sổ",
+    "intent": "search_notes"
+  },
+  {
+    "text": "coi note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "có ghi_chú nào ko",
+    "intent": "search_notes"
+  },
+  {
+    "text": "liệt_kê ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "list ghi_chép",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem note hnay",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm lại note hqua",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm ghi_chú học_tập",
+    "intent": "search_notes"
+  },
+  {
+    "text": "coi lại ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "đọc lại note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "mở note coi",
+    "intent": "search_notes"
+  },
+  {
+    "text": "check lại sổ",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm note mật_khẩu",
+    "intent": "search_notes"
+  },
+  {
+    "text": "kiếm ghi_chú công_việc",
+    "intent": "search_notes"
+  },
+  {
+    "text": "show các note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "liệt_kê các ghi_chép",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem_lại mấy cái note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm phần ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "coi sổ_tay",
+    "intent": "search_notes"
+  },
+  {
+    "text": "mở sổ_tay",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem danh_sách ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "đọc list note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "search note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tra_cứu ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "check phần note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem có lưu gì ko",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm xem có note k",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tra note cũ",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem note tháng trước",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem nội_dung note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "đọc note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm note bài_học",
+    "intent": "search_notes"
+  },
+  {
+    "text": "coi note họp",
+    "intent": "search_notes"
+  },
+  {
+    "text": "mở ghi_chép",
+    "intent": "search_notes"
+  },
+  {
+    "text": "kiếm lại note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem đã ghi gì",
+    "intent": "search_notes"
+  },
+  {
+    "text": "list sổ_tay",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm cái note đó",
+    "intent": "search_notes"
+  },
+  {
+    "text": "coi mấy dòng note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tra sổ ghi_chép",
+    "intent": "search_notes"
+  },
+  {
+    "text": "tìm mục note",
+    "intent": "search_notes"
+  },
+  {
+    "text": "list các ghi_chú",
+    "intent": "search_notes"
+  },
+  {
+    "text": "show ghi_chú ra",
+    "intent": "search_notes"
+  },
+  {
+    "text": "xem lịch_trình",
+    "intent": "search_tasks"
   },
   {
     "text": "tìm task",
-    "intent": "filter_tasks"
+    "intent": "search_tasks"
   },
   {
-    "text": "task nào quá hạn",
-    "intent": "filter_tasks"
+    "text": "check việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê task trễ hạn",
-    "intent": "filter_tasks"
+    "text": "hnay có việc gì k",
+    "intent": "search_tasks"
   },
   {
-    "text": "show overdue tasks",
-    "intent": "filter_tasks"
+    "text": "tuần này có gì",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem việc đã quá deadline",
-    "intent": "filter_tasks"
+    "text": "xem lịch",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task hôm_nay",
-    "intent": "filter_tasks"
+    "text": "coi task",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê công_việc đến hạn hôm_nay",
-    "intent": "filter_tasks"
+    "text": "xem danh_sách việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "task due hôm_nay",
-    "intent": "filter_tasks"
+    "text": "ds task",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task ngày_mai",
-    "intent": "filter_tasks"
+    "text": "list task",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê công_việc đến hạn ngày_mai",
-    "intent": "filter_tasks"
+    "text": "xem cv",
+    "intent": "search_tasks"
   },
   {
-    "text": "task due ngày_mai",
-    "intent": "filter_tasks"
+    "text": "hiển_thị công_việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task ngày_kia",
-    "intent": "filter_tasks"
+    "text": "tìm cv",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê công_việc đến hạn ngày_kia",
-    "intent": "filter_tasks"
+    "text": "kiếm cviec",
+    "intent": "search_tasks"
   },
   {
-    "text": "task due ngày_kia",
-    "intent": "filter_tasks"
+    "text": "xem to do",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task tuần sau",
-    "intent": "filter_tasks"
+    "text": "check to do list",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê công_việc đến hạn tuần sau",
-    "intent": "filter_tasks"
+    "text": "hnay làm j",
+    "intent": "search_tasks"
   },
   {
-    "text": "task due tuần sau",
-    "intent": "filter_tasks"
+    "text": "mai làm_gì",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task thứ hai",
-    "intent": "filter_tasks"
+    "text": "tra việc cần làm",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê công_việc đến hạn thứ hai",
-    "intent": "filter_tasks"
+    "text": "ds cviec",
+    "intent": "search_tasks"
   },
   {
-    "text": "task due thứ hai",
-    "intent": "filter_tasks"
+    "text": "có lịch gì k",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task 30/4",
-    "intent": "filter_tasks"
+    "text": "có hẹn k",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê công_việc đến hạn 30/4",
-    "intent": "filter_tasks"
+    "text": "xem lịch hẹn",
+    "intent": "search_tasks"
   },
   {
-    "text": "task due 30/4",
-    "intent": "filter_tasks"
+    "text": "check lịch hẹn",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task trạng_thái todo",
-    "intent": "filter_tasks"
+    "text": "tìm lịch họp",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task trạng_thái in-progress",
-    "intent": "filter_tasks"
+    "text": "kiếm task",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task trạng_thái completed",
-    "intent": "filter_tasks"
+    "text": "lọc task",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task trạng_thái chưa làm",
-    "intent": "filter_tasks"
+    "text": "lọc công_việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task trạng_thái đang làm",
-    "intent": "filter_tasks"
+    "text": "tra task",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task trạng_thái hoàn_thành",
-    "intent": "filter_tasks"
+    "text": "show lịch_trình",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task ưu_tiên cao",
-    "intent": "filter_tasks"
+    "text": "show việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task ưu_tiên trung_bình",
-    "intent": "filter_tasks"
+    "text": "liệt_kê công_việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task ưu_tiên thấp",
-    "intent": "filter_tasks"
+    "text": "những việc chưa làm",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task ưu_tiên high",
-    "intent": "filter_tasks"
+    "text": "xem task done",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task ưu_tiên medium",
-    "intent": "filter_tasks"
+    "text": "ds cv chưa hoàn_thành",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task ưu_tiên low",
-    "intent": "filter_tasks"
+    "text": "to do hnay",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task nhãn work",
-    "intent": "filter_tasks"
+    "text": "xem công_việc tuần này",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task nhãn personal",
-    "intent": "filter_tasks"
+    "text": "hôm_nay bận gì k",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task nhãn học_tập",
-    "intent": "filter_tasks"
+    "text": "coi lịch",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task nhãn khách_hàng",
-    "intent": "filter_tasks"
+    "text": "coi thời_khoá_biểu",
+    "intent": "search_tasks"
   },
   {
-    "text": "tìm task chứa báo_cáo",
-    "intent": "filter_tasks"
+    "text": "xem thời_khoá_biểu",
+    "intent": "search_tasks"
   },
   {
-    "text": "filter tasks contains báo_cáo",
-    "intent": "filter_tasks"
+    "text": "kiếm xem có hẹn gì k",
+    "intent": "search_tasks"
   },
   {
-    "text": "tìm task chứa meeting",
-    "intent": "filter_tasks"
+    "text": "kiểm_tra task",
+    "intent": "search_tasks"
   },
   {
-    "text": "filter tasks contains meeting",
-    "intent": "filter_tasks"
+    "text": "tìm việc tên là học bài",
+    "intent": "search_tasks"
   },
   {
-    "text": "tìm task chứa sql",
-    "intent": "filter_tasks"
+    "text": "tìm task học_tập",
+    "intent": "search_tasks"
   },
   {
-    "text": "filter tasks contains sql",
-    "intent": "filter_tasks"
+    "text": "xem mục công_việc",
+    "intent": "search_tasks"
   },
   {
-    "text": "tìm task chứa proposal",
-    "intent": "filter_tasks"
+    "text": "mở task",
+    "intent": "search_tasks"
   },
   {
-    "text": "filter tasks contains proposal",
-    "intent": "filter_tasks"
+    "text": "hiển_thị các task",
+    "intent": "search_tasks"
   },
   {
-    "text": "tìm task chứa email",
-    "intent": "filter_tasks"
+    "text": "lịch rảnh",
+    "intent": "search_tasks"
   },
   {
-    "text": "filter tasks contains email",
-    "intent": "filter_tasks"
+    "text": "xem to-do list",
+    "intent": "search_tasks"
   },
   {
-    "text": "lọc task todo ưu_tiên cao",
-    "intent": "filter_tasks"
+    "text": "check deadline",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task đang làm nhãn work",
-    "intent": "filter_tasks"
+    "text": "xem deadline",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê task quá hạn ưu_tiên high",
-    "intent": "filter_tasks"
+    "text": "tìm dl",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task ngày_mai ưu_tiên cao",
-    "intent": "filter_tasks"
+    "text": "hnay có deadline k",
+    "intent": "search_tasks"
   },
   {
-    "text": "tìm task chứa báo_cáo nhãn work",
-    "intent": "filter_tasks"
+    "text": "hnay dealine gì",
+    "intent": "search_tasks"
   },
   {
-    "text": "show overdue tasks with high priority",
-    "intent": "filter_tasks"
+    "text": "coi có việc k",
+    "intent": "search_tasks"
   },
   {
-    "text": "xem task giúp mình",
-    "intent": "filter_tasks"
+    "text": "xem t có rảnh k",
+    "intent": "search_tasks"
   },
   {
-    "text": "liệt_kê task nha",
-    "intent": "filter_tasks"
+    "text": "báo_cáo việc cần làm",
+    "intent": "search_tasks"
   },
   {
-    "text": "danh_sách công_việc ngay",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "show tasks với",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "list my tasks đi",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "lọc task cho tôi",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "tìm task nhé",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "task nào quá hạn liền",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "liệt_kê task trễ hạn giúp mình",
-    "intent": "filter_tasks"
-  },
-  {
-    "text": "tạo task viết báo_cáo",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task viết báo_cáo ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task viết báo_cáo ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task viết báo_cáo ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task viết báo_cáo hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task học sql",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task học sql ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task học sql ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task học sql ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task học sql hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task review code",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task review code ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task review code ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task review code ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task review code hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gọi khách_hàng",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gọi khách_hàng ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gọi khách_hàng ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gọi khách_hàng ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gọi khách_hàng hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chuẩn_bị slide",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chuẩn_bị slide ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chuẩn_bị slide ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chuẩn_bị slide ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chuẩn_bị slide hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task làm bài_tập",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task làm bài_tập ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task làm bài_tập ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task làm bài_tập ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task làm bài_tập hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task đọc tài_liệu",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task đọc tài_liệu ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task đọc tài_liệu ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task đọc tài_liệu ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task đọc tài_liệu hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chốt proposal",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chốt proposal ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chốt proposal ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chốt proposal ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task chốt proposal hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task họp team",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task họp team ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task họp team ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task họp team ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task họp team hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gửi email",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gửi email ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gửi email ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gửi email ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "tạo task gửi email hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task viết báo_cáo",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task viết báo_cáo ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task viết báo_cáo ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task viết báo_cáo ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task viết báo_cáo hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task học sql",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task học sql ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task học sql ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task học sql ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task học sql hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task review code",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task review code ngày_mai",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task review code ngày_mai 14h",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task review code ưu_tiên cao",
-    "intent": "create_task"
-  },
-  {
-    "text": "thêm task review code hạn 16h",
-    "intent": "create_task"
-  },
-  {
-    "text": "xoá task viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task review code",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên review code",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task gọi khách_hàng",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên gọi khách_hàng",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task chuẩn_bị slide",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên chuẩn_bị slide",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task làm bài_tập",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên làm bài_tập",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task họp team",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên họp team",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task gửi email",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên gửi email",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task fix bug",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên fix bug",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task mua đồ",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá task có tên mua đồ",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên viết báo_cáo",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên học sql",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ review code",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên review code",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ gọi khách_hàng",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên gọi khách_hàng",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ chuẩn_bị slide",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên chuẩn_bị slide",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ làm bài_tập",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên làm bài_tập",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ họp team",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên họp team",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ gửi email",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên gửi email",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ fix bug",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên fix bug",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ mua đồ",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xoá nhiệm_vụ có tên mua đồ",
-    "intent": "delete_task"
-  },
-  {
-    "text": "xác_nhận xoá các task đã chọn",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "ok xoá các task đã chọn",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "đồng_ý xoá danh_sách vừa chọn",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "confirm delete selected tasks",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xoá hết những task đã chọn",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "tiếp_tục xoá các mục đã chọn",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "chắc_chắn xoá các task này",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xoá các task đã đánh_dấu",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "yes delete selected tasks",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "tiến_hành xoá lựa_chọn",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xác_nhận xoá các task đã chọn giúp mình",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "ok xoá các task đã chọn nha",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "đồng_ý xoá danh_sách vừa chọn ngay",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "confirm delete selected tasks với",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xoá hết những task đã chọn đi",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "tiếp_tục xoá các mục đã chọn cho tôi",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "chắc_chắn xoá các task này nhé",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xoá các task đã đánh_dấu liền",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "yes delete selected tasks giúp mình",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "tiến_hành xoá lựa_chọn nha",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xác_nhận xoá các task đã chọn ngay",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "ok xoá các task đã chọn với",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "đồng_ý xoá danh_sách vừa chọn đi",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "confirm delete selected tasks cho tôi",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xoá hết những task đã chọn nhé",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "tiếp_tục xoá các mục đã chọn liền",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "chắc_chắn xoá các task này giúp mình",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "xoá các task đã đánh_dấu nha",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "yes delete selected tasks ngay",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "tiến_hành xoá lựa_chọn với",
-    "intent": "confirm_delete_selection"
-  },
-  {
-    "text": "hoàn tác xoá task",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "undo xoá task",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "khôi_phục task vừa xoá",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "lấy lại task vừa xoá",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "undo delete task",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "phục_hồi task mới xoá",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "trả lại task đã xoá",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "rollback thao_tác xoá task",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "huỷ xoá task",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "restore deleted task",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "hoàn tác xoá task giúp mình",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "undo xoá task nha",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "khôi_phục task vừa xoá ngay",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "lấy lại task vừa xoá với",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "undo delete task đi",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "phục_hồi task mới xoá cho tôi",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "trả lại task đã xoá nhé",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "rollback thao_tác xoá task liền",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "huỷ xoá task giúp mình",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "restore deleted task nha",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "hoàn tác xoá task ngay",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "undo xoá task với",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "khôi_phục task vừa xoá đi",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "lấy lại task vừa xoá cho tôi",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "undo delete task nhé",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "phục_hồi task mới xoá liền",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "trả lại task đã xoá giúp mình",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "rollback thao_tác xoá task nha",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "huỷ xoá task ngay",
-    "intent": "undo_delete_task"
-  },
-  {
-    "text": "restore deleted task với",
-    "intent": "undo_delete_task"
+    "text": "tìm lại cv hôm_qua",
+    "intent": "search_tasks"
   }
 ]

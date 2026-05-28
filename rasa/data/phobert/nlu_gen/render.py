@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional
 
 HEADER = [
-    '# NLU training data for Taskify assistant (Vietnamese-first)',
+    "# Dữ liệu huấn luyện NLU cho trợ lý Taskify",
     'version: "3.1"',
     "",
     "nlu:",
@@ -47,4 +47,3 @@ def render_nlu_document(
 def write_document(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
-

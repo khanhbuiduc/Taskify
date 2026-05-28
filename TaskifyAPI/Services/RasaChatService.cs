@@ -96,6 +96,126 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async Task<RasaParseResult?> ParseIntentAsync(
+            string messageText,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(messageText))
+            {
+                return null;
+            }
+
+            var token = _configuration["Rasa:Token"];
+            var query = string.IsNullOrWhiteSpace(token) ? "" : $"?token={Uri.EscapeDataString(token)}";
+            var url = $"/model/parse{query}";
+
+            try
+            {
+                var response = await _httpClient
+                    .PostAsJsonAsync(url, new { text = messageText }, cancellationToken)
+                    .ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogDebug(
+                        "Rasa parse endpoint returned {StatusCode} while analyzing message",
+                        response.StatusCode);
+                    return null;
+                }
+
+                var payload = await response.Content
+                    .ReadFromJsonAsync<JsonElement>(cancellationToken)
+                    .ConfigureAwait(false);
+
+                if (payload.ValueKind != JsonValueKind.Object)
+                {
+                    return null;
+                }
+
+                var result = new RasaParseResult
+                {
+                    Text = payload.TryGetProperty("text", out var textNode)
+                        && textNode.ValueKind == JsonValueKind.String
+                        ? textNode.GetString() ?? messageText
+                        : messageText,
+                };
+
+                if (payload.TryGetProperty("intent", out var intentNode)
+                    && intentNode.ValueKind == JsonValueKind.Object)
+                {
+                    result.IntentName = intentNode.TryGetProperty("name", out var nameNode)
+                        && nameNode.ValueKind == JsonValueKind.String
+                        ? nameNode.GetString()
+                        : null;
+                    result.Confidence = intentNode.TryGetProperty("confidence", out var confidenceNode)
+                        && confidenceNode.TryGetDouble(out var confidence)
+                        ? confidence
+                        : 0d;
+                }
+
+                var ranking = new List<RasaIntentPrediction>();
+                if (payload.TryGetProperty("intent_ranking", out var rankingNode)
+                    && rankingNode.ValueKind == JsonValueKind.Array)
+                {
+                    foreach (var item in rankingNode.EnumerateArray())
+                    {
+                        if (item.ValueKind != JsonValueKind.Object)
+                        {
+                            continue;
+                        }
+
+                        var name = item.TryGetProperty("name", out var rankingNameNode)
+                            && rankingNameNode.ValueKind == JsonValueKind.String
+                            ? rankingNameNode.GetString()
+                            : null;
+
+                        var score = item.TryGetProperty("confidence", out var rankingConfidenceNode)
+                            && rankingConfidenceNode.TryGetDouble(out var rankingConfidence)
+                            ? rankingConfidence
+                            : 0d;
+
+                        if (string.IsNullOrWhiteSpace(name))
+                        {
+                            continue;
+                        }
+
+                        ranking.Add(new RasaIntentPrediction
+                        {
+                            Name = name,
+                            Confidence = score,
+                        });
+                    }
+                }
+
+                if (ranking.Count == 0 && !string.IsNullOrWhiteSpace(result.IntentName))
+                {
+                    ranking.Add(new RasaIntentPrediction
+                    {
+                        Name = result.IntentName,
+                        Confidence = result.Confidence,
+                    });
+                }
+
+                result.IntentRanking = ranking;
+                return result;
+            }
+            catch (TaskCanceledException)
+            {
+                _logger.LogDebug("Rasa parse request timed out");
+                return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogDebug(ex, "Rasa parse request failed");
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogDebug(ex, "Rasa parse response was not valid JSON");
+                return null;
+            }
+        }
+
         private static object BuildRasaRequestBody(string userId, string messageText, string? metadataJson)
         {
             if (!string.IsNullOrWhiteSpace(metadataJson))

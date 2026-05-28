@@ -293,6 +293,81 @@ def extract_duckling_time_window(
     return None
 
 
+def extract_duckling_datetime_value(
+    latest_message: Dict[str, Any],
+) -> Optional[Tuple[datetime, Optional[str]]]:
+    entities = latest_message.get("entities", []) or []
+    for entity in entities:
+        if entity.get("entity") != "time":
+            continue
+
+        additional_info = entity.get("additional_info")
+        if isinstance(additional_info, dict):
+            if additional_info.get("type") == "value":
+                value_dt = parse_datetime_value(additional_info.get("value"))
+                if value_dt:
+                    grain = additional_info.get("grain")
+                    return value_dt, str(grain) if grain else None
+
+            if additional_info.get("type") == "interval":
+                from_info = additional_info.get("from")
+                from_value = from_info.get("value") if isinstance(from_info, dict) else from_info
+                value_dt = parse_datetime_value(from_value)
+                if value_dt:
+                    grain = (
+                        from_info.get("grain")
+                        if isinstance(from_info, dict)
+                        else additional_info.get("grain")
+                    )
+                    return value_dt, str(grain) if grain else None
+
+        value = entity.get("value")
+        if isinstance(value, str):
+            value_dt = parse_datetime_value(value)
+            if value_dt:
+                return value_dt, None
+        elif isinstance(value, dict):
+            from_info = value.get("from")
+            from_value = from_info.get("value") if isinstance(from_info, dict) else from_info
+            value_dt = parse_datetime_value(from_value)
+            if value_dt:
+                grain = from_info.get("grain") if isinstance(from_info, dict) else None
+                return value_dt, str(grain) if grain else None
+
+    return None
+
+
+def extract_duckling_date_value(latest_message: Dict[str, Any]) -> Optional[str]:
+    duckling_value = extract_duckling_datetime_value(latest_message)
+    if duckling_value:
+        value_dt, _grain = duckling_value
+        return value_dt.date().isoformat()
+
+    interval = extract_duckling_time_window(latest_message)
+    if interval:
+        return interval[0].date().isoformat()
+
+    return None
+
+
+def build_due_datetime_from_latest_message(
+    latest_message: Dict[str, Any],
+    date_str: Optional[str],
+    time_str: Optional[str],
+) -> datetime:
+    if date_str or time_str:
+        return build_due_datetime(date_str, time_str)
+
+    duckling_value = extract_duckling_datetime_value(latest_message)
+    if duckling_value:
+        value_dt, grain = duckling_value
+        if grain in {"year", "quarter", "month", "week", "day"}:
+            return value_dt.replace(hour=23, minute=59, second=59, microsecond=0)
+        return value_dt.replace(microsecond=0)
+
+    return build_due_datetime(date_str, time_str)
+
+
 def parse_task_due_datetime(task: Dict[str, Any]) -> Optional[datetime]:
     due_date = task.get("dueDate")
     return parse_datetime_value(due_date)

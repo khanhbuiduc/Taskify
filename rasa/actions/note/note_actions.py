@@ -17,6 +17,7 @@ from rasa_sdk.executor import CollectingDispatcher
 
 from actions.config import TASKIFY_API_URL, REQUEST_TIMEOUT
 from actions.common.api_utils import get_api_headers, split_sender
+from actions.common.text_utils import tracker_slot_or_entity
 
 logger = logging.getLogger(__name__)
 
@@ -39,8 +40,8 @@ class ActionCreateNote(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        note_title = tracker.get_slot("note_title")
-        note_text = tracker.get_slot("note_text")
+        note_title = tracker_slot_or_entity(tracker, "note_title")
+        note_text = tracker_slot_or_entity(tracker, "note_text")
         user_message = tracker.latest_message.get("text", "").strip()
 
         # Derive title if missing
@@ -138,7 +139,11 @@ class ActionSearchNotes(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        keyword = tracker.get_slot("note_keyword") or tracker.latest_message.get("text", "")
+        keyword = (
+            tracker_slot_or_entity(tracker, "note_keyword")
+            or tracker_slot_or_entity(tracker, "note_title")
+            or tracker.latest_message.get("text", "")
+        )
         keyword = keyword.strip()
 
         if not keyword:
@@ -194,14 +199,22 @@ class ActionTogglePinNote(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        pin_state_text = (tracker.get_slot("pin_state") or "").lower()
+        pin_state_text = (
+            tracker.get_slot("pin_state")
+            or tracker.latest_message.get("text", "")
+            or ""
+        ).lower()
         desired_pin = None
         if "bỏ" in pin_state_text or "unpin" in pin_state_text or "off" in pin_state_text:
             desired_pin = False
         elif "ghim" in pin_state_text or "pin" in pin_state_text or "on" in pin_state_text:
             desired_pin = True
 
-        keyword = tracker.get_slot("note_title") or tracker.get_slot("note_keyword") or ""
+        keyword = (
+            tracker_slot_or_entity(tracker, "note_title")
+            or tracker_slot_or_entity(tracker, "note_keyword")
+            or ""
+        )
 
         try:
             search_param = keyword.strip() if keyword else ""
@@ -254,9 +267,13 @@ class ActionUpdateNote(Action):
         domain: Dict[Text, Any],
     ) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        keyword = tracker.get_slot("note_keyword") or tracker.get_slot("note_title") or ""
-        new_title = tracker.get_slot("note_title")
-        new_text = tracker.get_slot("note_text")
+        keyword = (
+            tracker_slot_or_entity(tracker, "note_keyword")
+            or tracker_slot_or_entity(tracker, "note_title")
+            or ""
+        )
+        new_title = tracker_slot_or_entity(tracker, "note_title")
+        new_text = tracker_slot_or_entity(tracker, "note_text")
 
         try:
             url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=3&search={keyword.strip()}"
@@ -325,7 +342,11 @@ class ActionDeleteNote(Action):
                     dispatcher.utter_message(text="Có lỗi khi xóa note.")
                     return []
 
-        keyword = tracker.get_slot("note_keyword") or tracker.get_slot("note_title") or tracker.latest_message.get("text", "")
+        keyword = (
+            tracker_slot_or_entity(tracker, "note_title")
+            or tracker_slot_or_entity(tracker, "note_keyword")
+            or tracker.latest_message.get("text", "")
+        )
 
         try:
             url = f"{TASKIFY_API_URL}/api/internal/notes/{user_id}?limit=3&search={keyword.strip()}"

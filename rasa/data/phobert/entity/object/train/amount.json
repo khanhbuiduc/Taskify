@@ -1,0 +1,25 @@
+{
+  "entity": "amount",
+  "sentences": [
+    "thêm chi tiêu [120k](amount) cho trà sữa",
+    "ghi nhận khoản chi [350000](amount) mua văn phòng phẩm",
+    "tạo chi phí [1.5tr](amount) cho vé máy bay",
+    "lưu giao dịch [85000](amount) gửi xe",
+    "thêm khoản chi [2 triệu](amount) đặt cọc địa điểm",
+    "ghi lại [480k](amount) tiền tiếp khách",
+    "tạo mục tài chính [99.000](amount) cho sách",
+    "chi hôm nay [75000](amount) ăn trưa",
+    "sửa giao dịch thành [3.2tr](amount)",
+    "lưu chi tiêu [540000](amount) mua quà",
+    "ghi nhận [65k](amount) tiền taxi",
+    "tạo khoản chi [12.500](amount) photo tài liệu",
+    "thêm giao dịch [4tr](amount) cho workshop",
+    "chi [275000](amount) cho bảo trì máy in",
+    "lưu khoản [890k](amount) chạy quảng cáo",
+    "ghi lại [1500000](amount) mua màn hình cũ",
+    "tạo chi phí [45k](amount) mua nước",
+    "cập nhật số tiền thành [210000](amount)",
+    "thêm khoản chi [6tr](amount) mua laptop cũ",
+    "ghi nhận [320000](amount) tiền hoa"
+  ]
+}

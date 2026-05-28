@@ -1,4 +1,4 @@
-# NLU training data for Taskify assistant (Vietnamese-first)
+# Dữ liệu huấn luyện NLU cho trợ lý Taskify
 version: "3.1"
 
 nlu:
@@ -9,9 +9,9 @@ nlu:
       - cho mình tổng kết tuần
       - tuần này mình làm được gì
       - đánh giá hiệu suất tuần
-      - weekly summary
-      - summarize my week
-      - show week progress
+      - tóm lược tuần này
+      - tổng kết công việc trong tuần
+      - xem tiến độ tuần này
       - kết quả làm việc tuần này
       - xem thống kê tuần
       - tóm tắt tuần này giúp mình
@@ -19,9 +19,9 @@ nlu:
       - cho mình tổng kết tuần ngay
       - tuần này mình làm được gì với
       - đánh giá hiệu suất tuần đi
-      - weekly summary cho tôi
-      - summarize my week nhé
-      - show week progress liền
+      - tóm lược tuần này cho tôi
+      - tổng kết công việc trong tuần nhé
+      - xem tiến độ tuần này liền
       - kết quả làm việc tuần này giúp mình
       - xem thống kê tuần nha
       - tóm tắt tuần này ngay
@@ -33,302 +33,302 @@ nlu:
   - intent: help_prioritize
     examples: |
       - ưu tiên việc nào trước
-      - task nào quan trọng nhất
+      - công việc nào quan trọng nhất
       - mình nên làm gì trước
       - gợi ý thứ tự công việc
       - việc nào cấp bách
-      - prioritize my tasks
-      - what is most important
+      - giúp mình sắp xếp ưu tiên công việc
+      - việc nào cần làm trước tiên
       - sắp xếp ưu tiên giúp mình
-      - chọn task cần làm ngay
+      - chọn công việc cần làm ngay
       - đâu là việc nên xử lý trước
       - ưu tiên việc nào trước giúp mình
-      - task nào quan trọng nhất nha
+      - công việc nào quan trọng nhất nha
       - mình nên làm gì trước ngay
       - gợi ý thứ tự công việc với
       - việc nào cấp bách đi
-      - prioritize my tasks cho tôi
-      - what is most important nhé
+      - giúp mình sắp xếp ưu tiên công việc cho tôi
+      - việc nào cần làm trước tiên nhé
       - sắp xếp ưu tiên giúp mình liền
-      - chọn task cần làm ngay giúp mình
+      - chọn công việc cần làm ngay giúp mình
       - đâu là việc nên xử lý trước nha
       - ưu tiên việc nào trước ngay
-      - task nào quan trọng nhất với
+      - công việc nào quan trọng nhất với
       - mình nên làm gì trước đi
       - gợi ý thứ tự công việc cho tôi
       - việc nào cấp bách nhé
 
   - intent: filter_tasks
     examples: |
-      - xem task
-      - liệt kê task
+      - xem công việc
+      - liệt kê công việc
       - danh sách công việc
-      - show tasks
-      - list my tasks
-      - lọc task
-      - tìm task
-      - task nào [quá hạn](task_due_state)
-      - liệt kê task [trễ hạn](task_due_state)
-      - show [overdue](task_due_state) tasks
-      - xem việc [đã quá deadline](task_due_state)
-      - xem task [hôm nay](due_date)
+      - cho tôi xem danh sách công việc
+      - mở danh sách việc cần làm
+      - lọc công việc
+      - tìm công việc
+      - công việc nào [quá hạn](task_due_state)
+      - liệt kê công việc [trễ hạn](task_due_state)
+      - xem các việc [quá hạn](task_due_state)
+      - xem việc [đã quá hạn chót](task_due_state)
+      - xem công việc [hôm nay](due_date)
       - liệt kê công việc đến hạn [hôm nay](due_date)
-      - task due [hôm nay](due_date)
-      - xem task [ngày mai](due_date)
+      - công việc đến hạn [hôm nay](due_date)
+      - xem công việc [ngày mai](due_date)
       - liệt kê công việc đến hạn [ngày mai](due_date)
-      - task due [ngày mai](due_date)
-      - xem task [ngày kia](due_date)
+      - công việc đến hạn [ngày mai](due_date)
+      - xem công việc [ngày kia](due_date)
       - liệt kê công việc đến hạn [ngày kia](due_date)
-      - task due [ngày kia](due_date)
-      - xem task [tuần sau](due_date)
+      - công việc đến hạn [ngày kia](due_date)
+      - xem công việc [tuần sau](due_date)
       - liệt kê công việc đến hạn [tuần sau](due_date)
-      - task due [tuần sau](due_date)
-      - xem task [thứ hai](due_date)
+      - công việc đến hạn [tuần sau](due_date)
+      - xem công việc [thứ hai](due_date)
       - liệt kê công việc đến hạn [thứ hai](due_date)
-      - task due [thứ hai](due_date)
-      - xem task [30/4](due_date)
+      - công việc đến hạn [thứ hai](due_date)
+      - xem công việc [30/4](due_date)
       - liệt kê công việc đến hạn [30/4](due_date)
-      - task due [30/4](due_date)
-      - lọc task trạng thái [todo](task_status)
-      - lọc task trạng thái [in-progress](task_status)
-      - lọc task trạng thái [completed](task_status)
-      - lọc task trạng thái [chưa làm](task_status)
-      - lọc task trạng thái [đang làm](task_status)
-      - lọc task trạng thái [hoàn thành](task_status)
-      - lọc task ưu tiên [cao](priority)
-      - lọc task ưu tiên [trung bình](priority)
-      - lọc task ưu tiên [thấp](priority)
-      - lọc task ưu tiên [high](priority)
-      - lọc task ưu tiên [medium](priority)
-      - lọc task ưu tiên [low](priority)
-      - lọc task nhãn [work](task_label)
-      - lọc task nhãn [personal](task_label)
-      - lọc task nhãn [học tập](task_label)
-      - lọc task nhãn [khách hàng](task_label)
-      - tìm task chứa [báo cáo](search_query)
-      - filter tasks contains [báo cáo](search_query)
-      - tìm task chứa [meeting](search_query)
-      - filter tasks contains [meeting](search_query)
-      - tìm task chứa [sql](search_query)
-      - filter tasks contains [sql](search_query)
-      - tìm task chứa [proposal](search_query)
-      - filter tasks contains [proposal](search_query)
-      - tìm task chứa [email](search_query)
-      - filter tasks contains [email](search_query)
-      - lọc task [todo](task_status) ưu tiên [cao](priority)
-      - xem task [đang làm](task_status) nhãn [work](task_label)
-      - liệt kê task [quá hạn](task_due_state) ưu tiên [high](priority)
-      - xem task [ngày mai](due_date) ưu tiên [cao](priority)
-      - tìm task chứa [báo cáo](search_query) nhãn [work](task_label)
-      - show [overdue](task_due_state) tasks with [high](priority) priority
-      - xem task giúp mình
-      - liệt kê task nha
+      - công việc đến hạn [30/4](due_date)
+      - lọc công việc trạng thái [chưa làm](task_status)
+      - lọc công việc trạng thái [đang làm](task_status)
+      - lọc công việc trạng thái [hoàn thành](task_status)
+      - lọc công việc ưu tiên [cao](priority)
+      - lọc công việc ưu tiên [trung bình](priority)
+      - lọc công việc ưu tiên [thấp](priority)
+      - lọc công việc nhãn [công việc](task_label)
+      - lọc công việc nhãn [cá nhân](task_label)
+      - lọc công việc nhãn [học tập](task_label)
+      - lọc công việc nhãn [khách hàng](task_label)
+      - tìm công việc chứa [báo cáo](search_query)
+      - lọc công việc có [báo cáo](search_query)
+      - tìm công việc chứa [cuộc họp](search_query)
+      - lọc công việc có [cuộc họp](search_query)
+      - tìm công việc chứa [học bài](search_query)
+      - lọc công việc có [học bài](search_query)
+      - tìm công việc chứa [đề xuất](search_query)
+      - lọc công việc có [đề xuất](search_query)
+      - tìm công việc chứa [thư điện tử](search_query)
+      - lọc công việc có [thư điện tử](search_query)
+      - lọc công việc [chưa làm](task_status) ưu tiên [cao](priority)
+      - xem công việc [đang làm](task_status) nhãn [công việc](task_label)
+      - liệt kê công việc [quá hạn](task_due_state) ưu tiên [cao](priority)
+      - xem công việc [ngày mai](due_date) ưu tiên [cao](priority)
+      - tìm công việc chứa [báo cáo](search_query) nhãn [công việc](task_label)
+      - xem các việc [quá hạn](task_due_state) có ưu tiên [cao](priority)
+      - xem công việc giúp mình
+      - liệt kê công việc nha
       - danh sách công việc ngay
-      - show tasks với
-      - list my tasks đi
-      - lọc task cho tôi
-      - tìm task nhé
-      - task nào [quá hạn](task_due_state) liền
-      - liệt kê task [trễ hạn](task_due_state) giúp mình
+      - cho tôi xem danh sách công việc với
+      - mở danh sách việc cần làm đi
+      - lọc công việc cho tôi
+      - tìm công việc nhé
+      - công việc nào [quá hạn](task_due_state) liền
+      - liệt kê công việc [trễ hạn](task_due_state) giúp mình
+      - xem các việc [quá hạn](task_due_state) nha
+      - xem việc [đã quá hạn chót](task_due_state) ngay
+      - xem công việc [hôm nay](due_date) với
+      - liệt kê công việc đến hạn [hôm nay](due_date) đi
+      - công việc đến hạn [hôm nay](due_date) cho tôi
+      - xem công việc [ngày mai](due_date) nhé
 
   - intent: create_task
     examples: |
-      - tạo task [viết báo cáo](task_title)
-      - tạo task [viết báo cáo](task_title) [ngày mai](due_date)
-      - tạo task [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [viết báo cáo](task_title) ưu tiên [cao](priority)
-      - tạo task [viết báo cáo](task_title) hạn [16h](due_time)
-      - tạo task [học sql](task_title)
-      - tạo task [học sql](task_title) [ngày mai](due_date)
-      - tạo task [học sql](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [học sql](task_title) ưu tiên [cao](priority)
-      - tạo task [học sql](task_title) hạn [16h](due_time)
-      - tạo task [review code](task_title)
-      - tạo task [review code](task_title) [ngày mai](due_date)
-      - tạo task [review code](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [review code](task_title) ưu tiên [cao](priority)
-      - tạo task [review code](task_title) hạn [16h](due_time)
-      - tạo task [gọi khách hàng](task_title)
-      - tạo task [gọi khách hàng](task_title) [ngày mai](due_date)
-      - tạo task [gọi khách hàng](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [gọi khách hàng](task_title) ưu tiên [cao](priority)
-      - tạo task [gọi khách hàng](task_title) hạn [16h](due_time)
-      - tạo task [chuẩn bị slide](task_title)
-      - tạo task [chuẩn bị slide](task_title) [ngày mai](due_date)
-      - tạo task [chuẩn bị slide](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [chuẩn bị slide](task_title) ưu tiên [cao](priority)
-      - tạo task [chuẩn bị slide](task_title) hạn [16h](due_time)
-      - tạo task [làm bài tập](task_title)
-      - tạo task [làm bài tập](task_title) [ngày mai](due_date)
-      - tạo task [làm bài tập](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [làm bài tập](task_title) ưu tiên [cao](priority)
-      - tạo task [làm bài tập](task_title) hạn [16h](due_time)
-      - tạo task [đọc tài liệu](task_title)
-      - tạo task [đọc tài liệu](task_title) [ngày mai](due_date)
-      - tạo task [đọc tài liệu](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [đọc tài liệu](task_title) ưu tiên [cao](priority)
-      - tạo task [đọc tài liệu](task_title) hạn [16h](due_time)
-      - tạo task [chốt proposal](task_title)
-      - tạo task [chốt proposal](task_title) [ngày mai](due_date)
-      - tạo task [chốt proposal](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [chốt proposal](task_title) ưu tiên [cao](priority)
-      - tạo task [chốt proposal](task_title) hạn [16h](due_time)
-      - tạo task [họp team](task_title)
-      - tạo task [họp team](task_title) [ngày mai](due_date)
-      - tạo task [họp team](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [họp team](task_title) ưu tiên [cao](priority)
-      - tạo task [họp team](task_title) hạn [16h](due_time)
-      - tạo task [gửi email](task_title)
-      - tạo task [gửi email](task_title) [ngày mai](due_date)
-      - tạo task [gửi email](task_title) [ngày mai](due_date) [14h](due_time)
-      - tạo task [gửi email](task_title) ưu tiên [cao](priority)
-      - tạo task [gửi email](task_title) hạn [16h](due_time)
-      - thêm task [viết báo cáo](task_title)
-      - thêm task [viết báo cáo](task_title) [ngày mai](due_date)
-      - thêm task [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
-      - thêm task [viết báo cáo](task_title) ưu tiên [cao](priority)
-      - thêm task [viết báo cáo](task_title) hạn [16h](due_time)
-      - thêm task [học sql](task_title)
-      - thêm task [học sql](task_title) [ngày mai](due_date)
-      - thêm task [học sql](task_title) [ngày mai](due_date) [14h](due_time)
-      - thêm task [học sql](task_title) ưu tiên [cao](priority)
-      - thêm task [học sql](task_title) hạn [16h](due_time)
-      - thêm task [review code](task_title)
-      - thêm task [review code](task_title) [ngày mai](due_date)
-      - thêm task [review code](task_title) [ngày mai](due_date) [14h](due_time)
-      - thêm task [review code](task_title) ưu tiên [cao](priority)
-      - thêm task [review code](task_title) hạn [16h](due_time)
+      - tạo công việc [viết báo cáo](task_title)
+      - tạo công việc [viết báo cáo](task_title) [ngày mai](due_date)
+      - tạo công việc [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [viết báo cáo](task_title) ưu tiên [cao](priority)
+      - tạo công việc [viết báo cáo](task_title) hạn [16h](due_time)
+      - tạo công việc [học truy vấn dữ liệu](task_title)
+      - tạo công việc [học truy vấn dữ liệu](task_title) [ngày mai](due_date)
+      - tạo công việc [học truy vấn dữ liệu](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [học truy vấn dữ liệu](task_title) ưu tiên [cao](priority)
+      - tạo công việc [học truy vấn dữ liệu](task_title) hạn [16h](due_time)
+      - tạo công việc [xem lại mã nguồn](task_title)
+      - tạo công việc [xem lại mã nguồn](task_title) [ngày mai](due_date)
+      - tạo công việc [xem lại mã nguồn](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [xem lại mã nguồn](task_title) ưu tiên [cao](priority)
+      - tạo công việc [xem lại mã nguồn](task_title) hạn [16h](due_time)
+      - tạo công việc [gọi khách hàng](task_title)
+      - tạo công việc [gọi khách hàng](task_title) [ngày mai](due_date)
+      - tạo công việc [gọi khách hàng](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [gọi khách hàng](task_title) ưu tiên [cao](priority)
+      - tạo công việc [gọi khách hàng](task_title) hạn [16h](due_time)
+      - tạo công việc [chuẩn bị bản trình chiếu](task_title)
+      - tạo công việc [chuẩn bị bản trình chiếu](task_title) [ngày mai](due_date)
+      - tạo công việc [chuẩn bị bản trình chiếu](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [chuẩn bị bản trình chiếu](task_title) ưu tiên [cao](priority)
+      - tạo công việc [chuẩn bị bản trình chiếu](task_title) hạn [16h](due_time)
+      - tạo công việc [làm bài tập](task_title)
+      - tạo công việc [làm bài tập](task_title) [ngày mai](due_date)
+      - tạo công việc [làm bài tập](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [làm bài tập](task_title) ưu tiên [cao](priority)
+      - tạo công việc [làm bài tập](task_title) hạn [16h](due_time)
+      - tạo công việc [đọc tài liệu](task_title)
+      - tạo công việc [đọc tài liệu](task_title) [ngày mai](due_date)
+      - tạo công việc [đọc tài liệu](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [đọc tài liệu](task_title) ưu tiên [cao](priority)
+      - tạo công việc [đọc tài liệu](task_title) hạn [16h](due_time)
+      - tạo công việc [chốt đề xuất](task_title)
+      - tạo công việc [chốt đề xuất](task_title) [ngày mai](due_date)
+      - tạo công việc [chốt đề xuất](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [chốt đề xuất](task_title) ưu tiên [cao](priority)
+      - tạo công việc [chốt đề xuất](task_title) hạn [16h](due_time)
+      - tạo công việc [họp nhóm](task_title)
+      - tạo công việc [họp nhóm](task_title) [ngày mai](due_date)
+      - tạo công việc [họp nhóm](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [họp nhóm](task_title) ưu tiên [cao](priority)
+      - tạo công việc [họp nhóm](task_title) hạn [16h](due_time)
+      - tạo công việc [gửi thư điện tử](task_title)
+      - tạo công việc [gửi thư điện tử](task_title) [ngày mai](due_date)
+      - tạo công việc [gửi thư điện tử](task_title) [ngày mai](due_date) [14h](due_time)
+      - tạo công việc [gửi thư điện tử](task_title) ưu tiên [cao](priority)
+      - tạo công việc [gửi thư điện tử](task_title) hạn [16h](due_time)
+      - thêm công việc [viết báo cáo](task_title)
+      - thêm công việc [viết báo cáo](task_title) [ngày mai](due_date)
+      - thêm công việc [viết báo cáo](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm công việc [viết báo cáo](task_title) ưu tiên [cao](priority)
+      - thêm công việc [viết báo cáo](task_title) hạn [16h](due_time)
+      - thêm công việc [học truy vấn dữ liệu](task_title)
+      - thêm công việc [học truy vấn dữ liệu](task_title) [ngày mai](due_date)
+      - thêm công việc [học truy vấn dữ liệu](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm công việc [học truy vấn dữ liệu](task_title) ưu tiên [cao](priority)
+      - thêm công việc [học truy vấn dữ liệu](task_title) hạn [16h](due_time)
+      - thêm công việc [xem lại mã nguồn](task_title)
+      - thêm công việc [xem lại mã nguồn](task_title) [ngày mai](due_date)
+      - thêm công việc [xem lại mã nguồn](task_title) [ngày mai](due_date) [14h](due_time)
+      - thêm công việc [xem lại mã nguồn](task_title) ưu tiên [cao](priority)
+      - thêm công việc [xem lại mã nguồn](task_title) hạn [16h](due_time)
 
   - intent: delete_task
     examples: |
-      - xóa task [viết báo cáo](task_title)
-      - xóa task có tên [viết báo cáo](task_title)
-      - xóa task [học sql](task_title)
-      - xóa task có tên [học sql](task_title)
-      - xóa task [review code](task_title)
-      - xóa task có tên [review code](task_title)
-      - xóa task [gọi khách hàng](task_title)
-      - xóa task có tên [gọi khách hàng](task_title)
-      - xóa task [chuẩn bị slide](task_title)
-      - xóa task có tên [chuẩn bị slide](task_title)
-      - xóa task [làm bài tập](task_title)
-      - xóa task có tên [làm bài tập](task_title)
-      - xóa task [họp team](task_title)
-      - xóa task có tên [họp team](task_title)
-      - xóa task [gửi email](task_title)
-      - xóa task có tên [gửi email](task_title)
-      - xóa task [fix bug](task_title)
-      - xóa task có tên [fix bug](task_title)
-      - xóa task [mua đồ](task_title)
-      - xóa task có tên [mua đồ](task_title)
-      - xoá task [viết báo cáo](task_title)
-      - xoá task có tên [viết báo cáo](task_title)
-      - xoá task [học sql](task_title)
-      - xoá task có tên [học sql](task_title)
-      - xoá task [review code](task_title)
-      - xoá task có tên [review code](task_title)
-      - xoá task [gọi khách hàng](task_title)
-      - xoá task có tên [gọi khách hàng](task_title)
-      - xoá task [chuẩn bị slide](task_title)
-      - xoá task có tên [chuẩn bị slide](task_title)
-      - xoá task [làm bài tập](task_title)
-      - xoá task có tên [làm bài tập](task_title)
-      - xoá task [họp team](task_title)
-      - xoá task có tên [họp team](task_title)
-      - xoá task [gửi email](task_title)
-      - xoá task có tên [gửi email](task_title)
-      - xoá task [fix bug](task_title)
-      - xoá task có tên [fix bug](task_title)
-      - xoá task [mua đồ](task_title)
-      - xoá task có tên [mua đồ](task_title)
+      - xóa công việc [viết báo cáo](task_title)
+      - xóa công việc có tên [viết báo cáo](task_title)
+      - xóa công việc [học truy vấn dữ liệu](task_title)
+      - xóa công việc có tên [học truy vấn dữ liệu](task_title)
+      - xóa công việc [xem lại mã nguồn](task_title)
+      - xóa công việc có tên [xem lại mã nguồn](task_title)
+      - xóa công việc [gọi khách hàng](task_title)
+      - xóa công việc có tên [gọi khách hàng](task_title)
+      - xóa công việc [chuẩn bị bản trình chiếu](task_title)
+      - xóa công việc có tên [chuẩn bị bản trình chiếu](task_title)
+      - xóa công việc [làm bài tập](task_title)
+      - xóa công việc có tên [làm bài tập](task_title)
+      - xóa công việc [họp nhóm](task_title)
+      - xóa công việc có tên [họp nhóm](task_title)
+      - xóa công việc [gửi thư điện tử](task_title)
+      - xóa công việc có tên [gửi thư điện tử](task_title)
+      - xóa công việc [sửa lỗi](task_title)
+      - xóa công việc có tên [sửa lỗi](task_title)
+      - xóa công việc [mua đồ](task_title)
+      - xóa công việc có tên [mua đồ](task_title)
+      - xoá công việc [viết báo cáo](task_title)
+      - xoá công việc có tên [viết báo cáo](task_title)
+      - xoá công việc [học truy vấn dữ liệu](task_title)
+      - xoá công việc có tên [học truy vấn dữ liệu](task_title)
+      - xoá công việc [xem lại mã nguồn](task_title)
+      - xoá công việc có tên [xem lại mã nguồn](task_title)
+      - xoá công việc [gọi khách hàng](task_title)
+      - xoá công việc có tên [gọi khách hàng](task_title)
+      - xoá công việc [chuẩn bị bản trình chiếu](task_title)
+      - xoá công việc có tên [chuẩn bị bản trình chiếu](task_title)
+      - xoá công việc [làm bài tập](task_title)
+      - xoá công việc có tên [làm bài tập](task_title)
+      - xoá công việc [họp nhóm](task_title)
+      - xoá công việc có tên [họp nhóm](task_title)
+      - xoá công việc [gửi thư điện tử](task_title)
+      - xoá công việc có tên [gửi thư điện tử](task_title)
+      - xoá công việc [sửa lỗi](task_title)
+      - xoá công việc có tên [sửa lỗi](task_title)
+      - xoá công việc [mua đồ](task_title)
+      - xoá công việc có tên [mua đồ](task_title)
       - xóa nhiệm vụ [viết báo cáo](task_title)
       - xóa nhiệm vụ có tên [viết báo cáo](task_title)
-      - xóa nhiệm vụ [học sql](task_title)
-      - xóa nhiệm vụ có tên [học sql](task_title)
-      - xóa nhiệm vụ [review code](task_title)
-      - xóa nhiệm vụ có tên [review code](task_title)
+      - xóa nhiệm vụ [học truy vấn dữ liệu](task_title)
+      - xóa nhiệm vụ có tên [học truy vấn dữ liệu](task_title)
+      - xóa nhiệm vụ [xem lại mã nguồn](task_title)
+      - xóa nhiệm vụ có tên [xem lại mã nguồn](task_title)
       - xóa nhiệm vụ [gọi khách hàng](task_title)
       - xóa nhiệm vụ có tên [gọi khách hàng](task_title)
-      - xóa nhiệm vụ [chuẩn bị slide](task_title)
-      - xóa nhiệm vụ có tên [chuẩn bị slide](task_title)
+      - xóa nhiệm vụ [chuẩn bị bản trình chiếu](task_title)
+      - xóa nhiệm vụ có tên [chuẩn bị bản trình chiếu](task_title)
       - xóa nhiệm vụ [làm bài tập](task_title)
       - xóa nhiệm vụ có tên [làm bài tập](task_title)
-      - xóa nhiệm vụ [họp team](task_title)
-      - xóa nhiệm vụ có tên [họp team](task_title)
-      - xóa nhiệm vụ [gửi email](task_title)
-      - xóa nhiệm vụ có tên [gửi email](task_title)
-      - xóa nhiệm vụ [fix bug](task_title)
-      - xóa nhiệm vụ có tên [fix bug](task_title)
+      - xóa nhiệm vụ [họp nhóm](task_title)
+      - xóa nhiệm vụ có tên [họp nhóm](task_title)
+      - xóa nhiệm vụ [gửi thư điện tử](task_title)
+      - xóa nhiệm vụ có tên [gửi thư điện tử](task_title)
+      - xóa nhiệm vụ [sửa lỗi](task_title)
+      - xóa nhiệm vụ có tên [sửa lỗi](task_title)
       - xóa nhiệm vụ [mua đồ](task_title)
       - xóa nhiệm vụ có tên [mua đồ](task_title)
       - xoá nhiệm vụ [viết báo cáo](task_title)
       - xoá nhiệm vụ có tên [viết báo cáo](task_title)
-      - xoá nhiệm vụ [học sql](task_title)
-      - xoá nhiệm vụ có tên [học sql](task_title)
-      - xoá nhiệm vụ [review code](task_title)
+      - xoá nhiệm vụ [học truy vấn dữ liệu](task_title)
+      - xoá nhiệm vụ có tên [học truy vấn dữ liệu](task_title)
+      - xoá nhiệm vụ [xem lại mã nguồn](task_title)
 
   - intent: confirm_delete_selection
     examples: |
-      - xác nhận xóa các task đã chọn
-      - ok xóa các task đã chọn
+      - xác nhận xóa các công việc đã chọn
+      - được xóa các công việc đã chọn
       - đồng ý xóa danh sách vừa chọn
-      - confirm delete selected tasks
-      - xóa hết những task đã chọn
+      - xác nhận xóa các mục đã chọn
+      - xóa hết những công việc đã chọn
       - tiếp tục xóa các mục đã chọn
-      - chắc chắn xóa các task này
-      - xóa các task đã đánh dấu
-      - yes delete selected tasks
+      - chắc chắn xóa các công việc này
+      - xóa các công việc đã đánh dấu
+      - đúng rồi xóa các mục đã chọn
       - tiến hành xóa lựa chọn
-      - xác nhận xóa các task đã chọn giúp mình
-      - ok xóa các task đã chọn nha
+      - xác nhận xóa các công việc đã chọn giúp mình
+      - được xóa các công việc đã chọn nha
       - đồng ý xóa danh sách vừa chọn ngay
-      - confirm delete selected tasks với
-      - xóa hết những task đã chọn đi
+      - xác nhận xóa các mục đã chọn với
+      - xóa hết những công việc đã chọn đi
       - tiếp tục xóa các mục đã chọn cho tôi
-      - chắc chắn xóa các task này nhé
-      - xóa các task đã đánh dấu liền
-      - yes delete selected tasks giúp mình
+      - chắc chắn xóa các công việc này nhé
+      - xóa các công việc đã đánh dấu liền
+      - đúng rồi xóa các mục đã chọn giúp mình
       - tiến hành xóa lựa chọn nha
-      - xác nhận xóa các task đã chọn ngay
-      - ok xóa các task đã chọn với
+      - xác nhận xóa các công việc đã chọn ngay
+      - được xóa các công việc đã chọn với
       - đồng ý xóa danh sách vừa chọn đi
-      - confirm delete selected tasks cho tôi
-      - xóa hết những task đã chọn nhé
+      - xác nhận xóa các mục đã chọn cho tôi
+      - xóa hết những công việc đã chọn nhé
       - tiếp tục xóa các mục đã chọn liền
-      - chắc chắn xóa các task này giúp mình
-      - xóa các task đã đánh dấu nha
-      - yes delete selected tasks ngay
+      - chắc chắn xóa các công việc này giúp mình
+      - xóa các công việc đã đánh dấu nha
+      - đúng rồi xóa các mục đã chọn ngay
       - tiến hành xóa lựa chọn với
 
   - intent: undo_delete_task
     examples: |
-      - hoàn tác xóa task
-      - undo xóa task
-      - khôi phục task vừa xóa
-      - lấy lại task vừa xóa
-      - undo delete task
-      - phục hồi task mới xóa
-      - trả lại task đã xóa
-      - rollback thao tác xóa task
-      - hủy xóa task
-      - restore deleted task
-      - hoàn tác xóa task giúp mình
-      - undo xóa task nha
-      - khôi phục task vừa xóa ngay
-      - lấy lại task vừa xóa với
-      - undo delete task đi
-      - phục hồi task mới xóa cho tôi
-      - trả lại task đã xóa nhé
-      - rollback thao tác xóa task liền
-      - hủy xóa task giúp mình
-      - restore deleted task nha
-      - hoàn tác xóa task ngay
-      - undo xóa task với
-      - khôi phục task vừa xóa đi
-      - lấy lại task vừa xóa cho tôi
-      - undo delete task nhé
-      - phục hồi task mới xóa liền
-      - trả lại task đã xóa giúp mình
-      - rollback thao tác xóa task nha
-      - hủy xóa task ngay
-      - restore deleted task với
+      - hoàn tác xóa công việc
+      - khôi phục công việc vừa xóa
+      - lấy lại công việc vừa xóa
+      - phục hồi công việc mới xóa
+      - trả lại công việc đã xóa
+      - quay lại thao tác xóa công việc
+      - hủy xóa công việc
+      - khôi phục mục vừa xóa
+      - trả lại việc vừa xóa
+      - lấy lại mục bị xóa
+      - hoàn tác xóa công việc giúp mình
+      - khôi phục công việc vừa xóa nha
+      - lấy lại công việc vừa xóa ngay
+      - phục hồi công việc mới xóa với
+      - trả lại công việc đã xóa đi
+      - quay lại thao tác xóa công việc cho tôi
+      - hủy xóa công việc nhé
+      - khôi phục mục vừa xóa liền
+      - trả lại việc vừa xóa giúp mình
+      - lấy lại mục bị xóa nha
+      - hoàn tác xóa công việc ngay
+      - khôi phục công việc vừa xóa với
+      - lấy lại công việc vừa xóa đi
+      - phục hồi công việc mới xóa cho tôi
+      - trả lại công việc đã xóa nhé
+      - quay lại thao tác xóa công việc liền
+      - hủy xóa công việc giúp mình
+      - khôi phục mục vừa xóa nha
+      - trả lại việc vừa xóa ngay
+      - lấy lại mục bị xóa với

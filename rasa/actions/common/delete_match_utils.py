@@ -75,10 +75,12 @@ def extract_delete_query(latest_message: Dict[str, Any], slot_title: Optional[st
 
     task_title_entity = None
     for entity in latest_message.get("entities", []) or []:
-        if entity.get("entity") == "task_title":
-            candidate = entity.get("value")
-            if isinstance(candidate, str) and candidate.strip():
-                task_title_entity = candidate
+        if entity.get("entity") not in {"task_title", "object_name", "keyword"}:
+            continue
+        candidate = entity.get("value")
+        if isinstance(candidate, str) and candidate.strip():
+            task_title_entity = candidate
+            if entity.get("entity") in {"task_title", "object_name"}:
                 break
 
     candidates = [slot_title, task_title_entity, latest_text]

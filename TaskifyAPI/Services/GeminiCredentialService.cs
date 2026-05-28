@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using TaskifyAPI.Data;
@@ -221,6 +222,82 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async Task<GeminiEntityExtractionResultDto> ExtractEntitiesAsync(
+            string userId,
+            string messageText,
+            CancellationToken cancellationToken = default)
+        {
+            var credential = await _dbContext.UserGeminiCredentials
+                .FirstOrDefaultAsync(item => item.UserId == userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (credential == null || string.IsNullOrWhiteSpace(credential.EncryptedApiKey))
+            {
+                throw new GeminiNotConfiguredException();
+            }
+
+            if (string.IsNullOrWhiteSpace(messageText))
+            {
+                return new GeminiEntityExtractionResultDto();
+            }
+
+            string apiKey;
+            try
+            {
+                apiKey = _protector.Unprotect(credential.EncryptedApiKey);
+            }
+            catch (CryptographicException ex)
+            {
+                await MarkCredentialStateAsync(
+                    credential,
+                    GeminiCredentialStatus.ValidationFailed,
+                    "Stored Gemini API key could not be decrypted.",
+                    cancellationToken).ConfigureAwait(false);
+                throw new GeminiStoredCredentialException("Stored Gemini API key could not be decrypted.", ex);
+            }
+
+            var prompt = BuildEntityExtractionPrompt(messageText);
+
+            try
+            {
+                var answer = await CallGeminiAsync(apiKey, prompt, cancellationToken).ConfigureAwait(false);
+                var entities = ParseEntityExtractionResponse(answer, messageText);
+
+                credential.Status = GeminiCredentialStatus.Valid;
+                credential.LastValidatedAtUtc = DateTime.UtcNow;
+                credential.LastValidationError = null;
+                credential.UpdatedAtUtc = DateTime.UtcNow;
+                await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+                return new GeminiEntityExtractionResultDto
+                {
+                    Entities = entities
+                };
+            }
+            catch (GeminiInvalidApiKeyException ex)
+            {
+                await MarkCredentialStateAsync(
+                    credential,
+                    GeminiCredentialStatus.Invalid,
+                    ex.Message,
+                    cancellationToken).ConfigureAwait(false);
+                throw;
+            }
+            catch (GeminiStoredCredentialException)
+            {
+                throw;
+            }
+            catch (GeminiValidationFailedException ex)
+            {
+                await MarkCredentialStateAsync(
+                    credential,
+                    GeminiCredentialStatus.ValidationFailed,
+                    ex.Message,
+                    cancellationToken).ConfigureAwait(false);
+                throw;
+            }
+        }
+
         private async Task<string> CallGeminiAsync(string apiKey, string prompt, CancellationToken cancellationToken)
         {
             using var request = new HttpRequestMessage(HttpMethod.Post, $"/v1beta/models/{_model}:generateContent");
@@ -340,6 +417,155 @@ namespace TaskifyAPI.Services
         private static string BuildValidationPrompt()
         {
             return "Reply with exactly OK.";
+        }
+
+        private static string BuildEntityExtractionPrompt(string messageText)
+        {
+            return
+                "You are an entity extraction engine for the Taskify assistant.\n"
+                + "Extract only these entities when they are explicitly present as exact spans from the user message:\n"
+                + "- object_name: exact task or note name\n"
+                + "- keyword: search/reference phrase for task, note, finance entry, or old finance category name\n"
+                + "- content: note body or finance description\n"
+                + "- category: finance category OR task label\n"
+                + "- amount: money amount\n\n"
+                + "Do NOT extract time/date, priority, task status, overdue state, or pin state.\n"
+                + "Return JSON only with this exact shape:\n"
+                + "{\"entities\":[{\"entity\":\"object_name\",\"value\":\"...\"}]}\n"
+                + "Rules:\n"
+                + "- value must be copied exactly from the user message.\n"
+                + "- if no entity exists, return {\"entities\":[]}.\n"
+                + "- do not add explanations, markdown, or code fences.\n\n"
+                + $"User message: {messageText}";
+        }
+
+        private static IReadOnlyList<GeminiExtractedEntityDto> ParseEntityExtractionResponse(
+            string answer,
+            string originalText)
+        {
+            var normalized = ExtractJsonPayload(answer);
+
+            try
+            {
+                using var document = JsonDocument.Parse(normalized);
+                var root = document.RootElement;
+                if (!root.TryGetProperty("entities", out var entitiesNode)
+                    || entitiesNode.ValueKind != JsonValueKind.Array)
+                {
+                    throw new GeminiValidationFailedException("Gemini entity extraction returned invalid JSON shape.");
+                }
+
+                var extracted = new List<GeminiExtractedEntityDto>();
+                var occupiedSpans = new List<(int Start, int End)>();
+
+                foreach (var item in entitiesNode.EnumerateArray())
+                {
+                    if (item.ValueKind != JsonValueKind.Object)
+                    {
+                        continue;
+                    }
+
+                    var entity = item.TryGetProperty("entity", out var entityNode)
+                        && entityNode.ValueKind == JsonValueKind.String
+                        ? (entityNode.GetString() ?? string.Empty).Trim()
+                        : string.Empty;
+                    var value = item.TryGetProperty("value", out var valueNode)
+                        && valueNode.ValueKind == JsonValueKind.String
+                        ? (valueNode.GetString() ?? string.Empty).Trim()
+                        : string.Empty;
+
+                    if (!IsSupportedEntity(entity) || string.IsNullOrWhiteSpace(value))
+                    {
+                        continue;
+                    }
+
+                    if (!TryLocateSpan(originalText, value, occupiedSpans, out var start, out var end))
+                    {
+                        continue;
+                    }
+
+                    occupiedSpans.Add((start, end));
+                    extracted.Add(new GeminiExtractedEntityDto
+                    {
+                        Entity = entity,
+                        Value = originalText.Substring(start, end - start),
+                        Start = start,
+                        End = end,
+                        Confidence = 1.0d,
+                    });
+                }
+
+                return extracted
+                    .OrderBy(item => item.Start)
+                    .ThenBy(item => item.End)
+                    .ToArray();
+            }
+            catch (JsonException ex)
+            {
+                throw new GeminiValidationFailedException("Gemini entity extraction returned malformed JSON.", ex);
+            }
+        }
+
+        private static string ExtractJsonPayload(string answer)
+        {
+            var trimmed = (answer ?? string.Empty).Trim();
+            if (trimmed.StartsWith("```", StringComparison.Ordinal))
+            {
+                trimmed = Regex.Replace(trimmed, "^```(?:json)?\\s*", string.Empty, RegexOptions.IgnoreCase);
+                trimmed = Regex.Replace(trimmed, "\\s*```$", string.Empty, RegexOptions.IgnoreCase);
+            }
+
+            var start = trimmed.IndexOf('{');
+            var end = trimmed.LastIndexOf('}');
+            if (start >= 0 && end >= start)
+            {
+                return trimmed[start..(end + 1)];
+            }
+
+            return trimmed;
+        }
+
+        private static bool IsSupportedEntity(string entity)
+        {
+            return entity is "object_name" or "keyword" or "content" or "category" or "amount";
+        }
+
+        private static bool TryLocateSpan(
+            string originalText,
+            string value,
+            IReadOnlyList<(int Start, int End)> occupiedSpans,
+            out int start,
+            out int end)
+        {
+            start = -1;
+            end = -1;
+            if (string.IsNullOrWhiteSpace(originalText) || string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            var searchIndex = 0;
+            while (searchIndex < originalText.Length)
+            {
+                var index = originalText.IndexOf(value, searchIndex, StringComparison.OrdinalIgnoreCase);
+                if (index < 0)
+                {
+                    return false;
+                }
+
+                var candidateEnd = index + value.Length;
+                var overlaps = occupiedSpans.Any(span => index < span.End && candidateEnd > span.Start);
+                if (!overlaps)
+                {
+                    start = index;
+                    end = candidateEnd;
+                    return true;
+                }
+
+                searchIndex = index + 1;
+            }
+
+            return false;
         }
 
         private async Task MarkCredentialStateAsync(

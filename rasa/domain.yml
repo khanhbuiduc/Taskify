@@ -33,6 +33,11 @@ intents:
   - nlu_fallback
 
 entities:
+  - object_name
+  - keyword
+  - content
+  - category
+  - amount
   - task_title
   - due_date
   - time
@@ -60,6 +65,8 @@ slots:
     influence_conversation: true
     mappings:
       - type: from_entity
+        entity: object_name
+      - type: from_entity
         entity: task_title
       - type: from_text
         intent: create_task
@@ -72,34 +79,32 @@ slots:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: due_date
+      - type: custom
 
   due_time:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: due_time
+      - type: custom
 
   priority:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: priority
+      - type: custom
 
   task_status:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: task_status
+      - type: custom
 
   task_label:
     type: text
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: category
       - type: from_entity
         entity: task_label
 
@@ -107,27 +112,26 @@ slots:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: task_due_state
+      - type: custom
 
   due_from:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: due_from
+      - type: custom
 
   due_to:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: due_to
+      - type: custom
 
   search_query:
     type: text
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: keyword
       - type: from_entity
         entity: search_query
 
@@ -154,12 +158,16 @@ slots:
     influence_conversation: true
     mappings:
       - type: from_entity
+        entity: object_name
+      - type: from_entity
         entity: note_title
 
   note_text:
     type: text
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: content
       - type: from_entity
         entity: note_text
 
@@ -168,19 +176,22 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_entity
+        entity: keyword
+      - type: from_entity
         entity: note_keyword
 
   pin_state:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: pin_state
+      - type: custom
 
   finance_amount:
     type: text
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: amount
       - type: from_entity
         entity: finance_amount
 
@@ -189,6 +200,8 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_entity
+        entity: category
+      - type: from_entity
         entity: finance_category
 
   finance_description:
@@ -196,19 +209,22 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_entity
+        entity: content
+      - type: from_entity
         entity: finance_description
 
   finance_date:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: finance_date
+      - type: custom
 
   finance_keyword:
     type: text
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: keyword
       - type: from_entity
         entity: finance_keyword
 
@@ -216,6 +232,8 @@ slots:
     type: text
     influence_conversation: false
     mappings:
+      - type: from_entity
+        entity: object_name
       - type: from_entity
         entity: task_title
 

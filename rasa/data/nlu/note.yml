@@ -1,201 +1,201 @@
-# NLU training data for Taskify assistant (Vietnamese-first)
+# Dữ liệu huấn luyện NLU cho trợ lý Taskify
 version: "3.1"
 
 nlu:
   - intent: create_note
     examples: |
-      - tạo note [ý tưởng sprint](note_title)
-      - thêm ghi chú [shopping list](note_title)
-      - tạo note [họp tuần](note_title) nội dung [chốt deadline](note_text)
+      - tạo ghi chú [ý tưởng đợt làm việc](note_title)
+      - thêm ghi chú [danh sách mua sắm](note_title)
+      - tạo ghi chú [họp tuần](note_title) nội dung [chốt hạn cuối](note_text)
       - ghi chú [học rasa](note_title)
-      - tạo ghi chú nhanh [fix bug list](note_title)
-      - create note [project ideas](note_title)
-      - add note [meeting notes](note_title)
-      - new note [retro](note_title)
-      - tạo note [kế hoạch tuần](note_title)
-      - thêm note [đọc sách](note_title)
-      - tạo note [ý tưởng sprint](note_title) giúp mình
-      - thêm ghi chú [shopping list](note_title) nha
-      - tạo note [họp tuần](note_title) nội dung [chốt deadline](note_text) ngay
+      - tạo ghi chú nhanh [danh sách lỗi cần sửa](note_title)
+      - tạo ghi chú [ý tưởng dự án](note_title)
+      - thêm ghi chú [nội dung cuộc họp](note_title)
+      - tạo ghi chú [tổng kết tuần](note_title)
+      - tạo ghi chú [kế hoạch tuần](note_title)
+      - thêm ghi chú [đọc sách](note_title)
+      - tạo ghi chú [ý tưởng đợt làm việc](note_title) giúp mình
+      - thêm ghi chú [danh sách mua sắm](note_title) nha
+      - tạo ghi chú [họp tuần](note_title) nội dung [chốt hạn cuối](note_text) ngay
       - ghi chú [học rasa](note_title) với
-      - tạo ghi chú nhanh [fix bug list](note_title) đi
-      - create note [project ideas](note_title) cho tôi
-      - add note [meeting notes](note_title) nhé
-      - new note [retro](note_title) liền
-      - tạo note [kế hoạch tuần](note_title) giúp mình
-      - thêm note [đọc sách](note_title) nha
-      - tạo note [ý tưởng sprint](note_title) ngay
-      - thêm ghi chú [shopping list](note_title) với
-      - tạo note [họp tuần](note_title) nội dung [chốt deadline](note_text) đi
+      - tạo ghi chú nhanh [danh sách lỗi cần sửa](note_title) đi
+      - tạo ghi chú [ý tưởng dự án](note_title) cho tôi
+      - thêm ghi chú [nội dung cuộc họp](note_title) nhé
+      - tạo ghi chú [tổng kết tuần](note_title) liền
+      - tạo ghi chú [kế hoạch tuần](note_title) giúp mình
+      - thêm ghi chú [đọc sách](note_title) nha
+      - tạo ghi chú [ý tưởng đợt làm việc](note_title) ngay
+      - thêm ghi chú [danh sách mua sắm](note_title) với
+      - tạo ghi chú [họp tuần](note_title) nội dung [chốt hạn cuối](note_text) đi
       - ghi chú [học rasa](note_title) cho tôi
-      - tạo ghi chú nhanh [fix bug list](note_title) nhé
-      - create note [project ideas](note_title) liền
-      - add note [meeting notes](note_title) giúp mình
-      - new note [retro](note_title) nha
-      - tạo note [kế hoạch tuần](note_title) ngay
-      - thêm note [đọc sách](note_title) với
+      - tạo ghi chú nhanh [danh sách lỗi cần sửa](note_title) nhé
+      - tạo ghi chú [ý tưởng dự án](note_title) liền
+      - thêm ghi chú [nội dung cuộc họp](note_title) giúp mình
+      - tạo ghi chú [tổng kết tuần](note_title) nha
+      - tạo ghi chú [kế hoạch tuần](note_title) ngay
+      - thêm ghi chú [đọc sách](note_title) với
 
   - intent: list_notes
     examples: |
-      - xem danh sách note
+      - xem danh sách ghi chú
       - liệt kê ghi chú
-      - cho tôi xem note
-      - xem note gần đây
-      - xem note đã ghim
-      - list notes
-      - show my notes
-      - show pinned notes
+      - cho tôi xem ghi chú
+      - xem ghi chú gần đây
+      - xem ghi chú đã ghim
+      - mở các ghi chú của tôi
+      - hiển thị các ghi chú đã lưu
+      - cho xem các ghi chú đã ghim
       - mở danh sách ghi chú
-      - hiển thị toàn bộ note
-      - xem danh sách note giúp mình
+      - hiển thị toàn bộ ghi chú
+      - xem danh sách ghi chú giúp mình
       - liệt kê ghi chú nha
-      - cho tôi xem note ngay
-      - xem note gần đây với
-      - xem note đã ghim đi
-      - list notes cho tôi
-      - show my notes nhé
-      - show pinned notes liền
+      - cho tôi xem ghi chú ngay
+      - xem ghi chú gần đây với
+      - xem ghi chú đã ghim đi
+      - mở các ghi chú của tôi cho tôi
+      - hiển thị các ghi chú đã lưu nhé
+      - cho xem các ghi chú đã ghim liền
       - mở danh sách ghi chú giúp mình
-      - hiển thị toàn bộ note nha
-      - xem danh sách note ngay
+      - hiển thị toàn bộ ghi chú nha
+      - xem danh sách ghi chú ngay
       - liệt kê ghi chú với
-      - cho tôi xem note đi
-      - xem note gần đây cho tôi
-      - xem note đã ghim nhé
-      - list notes liền
-      - show my notes giúp mình
-      - show pinned notes nha
+      - cho tôi xem ghi chú đi
+      - xem ghi chú gần đây cho tôi
+      - xem ghi chú đã ghim nhé
+      - mở các ghi chú của tôi liền
+      - hiển thị các ghi chú đã lưu giúp mình
+      - cho xem các ghi chú đã ghim nha
       - mở danh sách ghi chú ngay
-      - hiển thị toàn bộ note với
+      - hiển thị toàn bộ ghi chú với
 
   - intent: search_notes
     examples: |
-      - tìm note về [kế hoạch](note_keyword)
-      - tìm ghi chú chứa [bug](note_keyword)
-      - search notes for [idea](note_keyword)
-      - find notes about [meeting](note_keyword)
-      - có note nào chứa [retro](note_keyword)
-      - lọc note theo [shopping](note_keyword)
-      - tìm note [rasa](note_keyword)
-      - tìm giúp mình ghi chú [deadline](note_keyword)
-      - search note keyword [project](note_keyword)
-      - kiểm tra note có [sql](note_keyword)
-      - tìm note về [kế hoạch](note_keyword) giúp mình
-      - tìm ghi chú chứa [bug](note_keyword) nha
-      - search notes for [idea](note_keyword) ngay
-      - find notes about [meeting](note_keyword) với
-      - có note nào chứa [retro](note_keyword) đi
-      - lọc note theo [shopping](note_keyword) cho tôi
-      - tìm note [rasa](note_keyword) nhé
-      - tìm giúp mình ghi chú [deadline](note_keyword) liền
-      - search note keyword [project](note_keyword) giúp mình
-      - kiểm tra note có [sql](note_keyword) nha
-      - tìm note về [kế hoạch](note_keyword) ngay
-      - tìm ghi chú chứa [bug](note_keyword) với
-      - search notes for [idea](note_keyword) đi
-      - find notes about [meeting](note_keyword) cho tôi
-      - có note nào chứa [retro](note_keyword) nhé
-      - lọc note theo [shopping](note_keyword) liền
-      - tìm note [rasa](note_keyword) giúp mình
-      - tìm giúp mình ghi chú [deadline](note_keyword) nha
-      - search note keyword [project](note_keyword) ngay
-      - kiểm tra note có [sql](note_keyword) với
+      - tìm ghi chú về [kế hoạch](note_keyword)
+      - tìm ghi chú chứa [lỗi](note_keyword)
+      - tìm ghi chú có [ý tưởng](note_keyword)
+      - tìm ghi chú về [cuộc họp](note_keyword)
+      - có ghi chú nào chứa [tổng kết](note_keyword)
+      - lọc ghi chú theo [mua sắm](note_keyword)
+      - tìm ghi chú [rasa](note_keyword)
+      - tìm giúp mình ghi chú [hạn chót](note_keyword)
+      - tìm ghi chú với từ khóa [dự án](note_keyword)
+      - kiểm tra ghi chú có [truy vấn](note_keyword)
+      - tìm ghi chú về [kế hoạch](note_keyword) giúp mình
+      - tìm ghi chú chứa [lỗi](note_keyword) nha
+      - tìm ghi chú có [ý tưởng](note_keyword) ngay
+      - tìm ghi chú về [cuộc họp](note_keyword) với
+      - có ghi chú nào chứa [tổng kết](note_keyword) đi
+      - lọc ghi chú theo [mua sắm](note_keyword) cho tôi
+      - tìm ghi chú [rasa](note_keyword) nhé
+      - tìm giúp mình ghi chú [hạn chót](note_keyword) liền
+      - tìm ghi chú với từ khóa [dự án](note_keyword) giúp mình
+      - kiểm tra ghi chú có [truy vấn](note_keyword) nha
+      - tìm ghi chú về [kế hoạch](note_keyword) ngay
+      - tìm ghi chú chứa [lỗi](note_keyword) với
+      - tìm ghi chú có [ý tưởng](note_keyword) đi
+      - tìm ghi chú về [cuộc họp](note_keyword) cho tôi
+      - có ghi chú nào chứa [tổng kết](note_keyword) nhé
+      - lọc ghi chú theo [mua sắm](note_keyword) liền
+      - tìm ghi chú [rasa](note_keyword) giúp mình
+      - tìm giúp mình ghi chú [hạn chót](note_keyword) nha
+      - tìm ghi chú với từ khóa [dự án](note_keyword) ngay
+      - kiểm tra ghi chú có [truy vấn](note_keyword) với
 
   - intent: pin_note
     examples: |
-      - ghim note này
-      - bỏ ghim note này
-      - ghim note vừa tạo
-      - hủy ghim note đó
-      - pin this note
-      - unpin this note
-      - pin note [shopping list](note_title)
-      - unpin note [retro](note_title)
+      - ghim ghi chú này
+      - bỏ ghim ghi chú này
+      - ghim ghi chú vừa tạo
+      - hủy ghim ghi chú đó
+      - ghim ghi chú [danh sách mua sắm](note_title)
+      - bỏ ghim ghi chú [tổng kết tuần](note_title)
       - ghim ghi chú [họp tuần](note_title)
-      - bỏ ghim ghi chú [ý tưởng sprint](note_title)
-      - ghim note này giúp mình
-      - bỏ ghim note này nha
-      - ghim note vừa tạo ngay
-      - hủy ghim note đó với
-      - pin this note đi
-      - unpin this note cho tôi
-      - pin note [shopping list](note_title) nhé
-      - unpin note [retro](note_title) liền
+      - bỏ ghim ghi chú [ý tưởng đợt làm việc](note_title)
+      - giữ ghi chú này ở đầu danh sách
+      - bỏ giữ ghi chú này ở đầu danh sách
+      - ghim ghi chú này giúp mình
+      - bỏ ghim ghi chú này nha
+      - ghim ghi chú vừa tạo ngay
+      - hủy ghim ghi chú đó với
+      - ghim ghi chú [danh sách mua sắm](note_title) đi
+      - bỏ ghim ghi chú [tổng kết tuần](note_title) cho tôi
+      - ghim ghi chú [họp tuần](note_title) nhé
+      - bỏ ghim ghi chú [ý tưởng đợt làm việc](note_title) liền
+      - giữ ghi chú này ở đầu danh sách giúp mình
+      - bỏ giữ ghi chú này ở đầu danh sách nha
+      - ghim ghi chú này ngay
+      - bỏ ghim ghi chú này với
+      - ghim ghi chú vừa tạo đi
+      - hủy ghim ghi chú đó cho tôi
+      - ghim ghi chú [danh sách mua sắm](note_title) nhé
+      - bỏ ghim ghi chú [tổng kết tuần](note_title) liền
       - ghim ghi chú [họp tuần](note_title) giúp mình
-      - bỏ ghim ghi chú [ý tưởng sprint](note_title) nha
-      - ghim note này ngay
-      - bỏ ghim note này với
-      - ghim note vừa tạo đi
-      - hủy ghim note đó cho tôi
-      - pin this note nhé
-      - unpin this note liền
-      - pin note [shopping list](note_title) giúp mình
-      - unpin note [retro](note_title) nha
-      - ghim ghi chú [họp tuần](note_title) ngay
-      - bỏ ghim ghi chú [ý tưởng sprint](note_title) với
+      - bỏ ghim ghi chú [ý tưởng đợt làm việc](note_title) nha
+      - giữ ghi chú này ở đầu danh sách ngay
+      - bỏ giữ ghi chú này ở đầu danh sách với
 
   - intent: update_note
     examples: |
-      - sửa note [họp tuần](note_keyword)
-      - cập nhật note [meeting](note_keyword) thành [meeting v2](note_title)
-      - thay đổi note [idea](note_keyword) nội dung [triển khai giai đoạn 2](note_text)
-      - update note [retro](note_keyword)
-      - edit note [project ideas](note_keyword)
-      - sửa ghi chú [shopping list](note_keyword)
+      - sửa ghi chú [họp tuần](note_keyword)
+      - cập nhật ghi chú [cuộc họp](note_keyword) thành [họp tuần bản mới](note_title)
+      - thay đổi ghi chú [ý tưởng](note_keyword) nội dung [triển khai giai đoạn 2](note_text)
+      - cập nhật ghi chú [tổng kết](note_keyword)
+      - chỉnh sửa ghi chú [ý tưởng dự án](note_keyword)
+      - sửa ghi chú [danh sách mua sắm](note_keyword)
       - cập nhật ghi chú [kế hoạch](note_keyword)
-      - update note title [họp team](note_title)
-      - thay nội dung note [bug list](note_keyword) thành [fix payment bug](note_text)
-      - sửa note [rasa](note_keyword)
-      - sửa note [họp tuần](note_keyword) giúp mình
-      - cập nhật note [meeting](note_keyword) thành [meeting v2](note_title) nha
-      - thay đổi note [idea](note_keyword) nội dung [triển khai giai đoạn 2](note_text) ngay
-      - update note [retro](note_keyword) với
-      - edit note [project ideas](note_keyword) đi
-      - sửa ghi chú [shopping list](note_keyword) cho tôi
+      - cập nhật tiêu đề ghi chú [họp nhóm](note_title)
+      - thay nội dung ghi chú [danh sách lỗi](note_keyword) thành [sửa lỗi thanh toán](note_text)
+      - sửa ghi chú [rasa](note_keyword)
+      - sửa ghi chú [họp tuần](note_keyword) giúp mình
+      - cập nhật ghi chú [cuộc họp](note_keyword) thành [họp tuần bản mới](note_title) nha
+      - thay đổi ghi chú [ý tưởng](note_keyword) nội dung [triển khai giai đoạn 2](note_text) ngay
+      - cập nhật ghi chú [tổng kết](note_keyword) với
+      - chỉnh sửa ghi chú [ý tưởng dự án](note_keyword) đi
+      - sửa ghi chú [danh sách mua sắm](note_keyword) cho tôi
       - cập nhật ghi chú [kế hoạch](note_keyword) nhé
-      - update note title [họp team](note_title) liền
-      - thay nội dung note [bug list](note_keyword) thành [fix payment bug](note_text) giúp mình
-      - sửa note [rasa](note_keyword) nha
-      - sửa note [họp tuần](note_keyword) ngay
-      - cập nhật note [meeting](note_keyword) thành [meeting v2](note_title) với
-      - thay đổi note [idea](note_keyword) nội dung [triển khai giai đoạn 2](note_text) đi
-      - update note [retro](note_keyword) cho tôi
-      - edit note [project ideas](note_keyword) nhé
-      - sửa ghi chú [shopping list](note_keyword) liền
+      - cập nhật tiêu đề ghi chú [họp nhóm](note_title) liền
+      - thay nội dung ghi chú [danh sách lỗi](note_keyword) thành [sửa lỗi thanh toán](note_text) giúp mình
+      - sửa ghi chú [rasa](note_keyword) nha
+      - sửa ghi chú [họp tuần](note_keyword) ngay
+      - cập nhật ghi chú [cuộc họp](note_keyword) thành [họp tuần bản mới](note_title) với
+      - thay đổi ghi chú [ý tưởng](note_keyword) nội dung [triển khai giai đoạn 2](note_text) đi
+      - cập nhật ghi chú [tổng kết](note_keyword) cho tôi
+      - chỉnh sửa ghi chú [ý tưởng dự án](note_keyword) nhé
+      - sửa ghi chú [danh sách mua sắm](note_keyword) liền
       - cập nhật ghi chú [kế hoạch](note_keyword) giúp mình
-      - update note title [họp team](note_title) nha
-      - thay nội dung note [bug list](note_keyword) thành [fix payment bug](note_text) ngay
-      - sửa note [rasa](note_keyword) với
+      - cập nhật tiêu đề ghi chú [họp nhóm](note_title) nha
+      - thay nội dung ghi chú [danh sách lỗi](note_keyword) thành [sửa lỗi thanh toán](note_text) ngay
+      - sửa ghi chú [rasa](note_keyword) với
 
   - intent: delete_note
     examples: |
-      - xóa note [shopping](note_keyword)
-      - xoá note [họp tuần](note_keyword)
+      - xóa ghi chú [mua sắm](note_keyword)
+      - xoá ghi chú [họp tuần](note_keyword)
       - xóa ghi chú [nháp](note_keyword)
-      - delete note [meeting notes](note_keyword)
-      - remove note [idea](note_keyword)
-      - xóa note tên [bug list](note_keyword)
-      - xóa giúp mình note [kế hoạch](note_keyword)
-      - delete this note [retro](note_keyword)
-      - remove note [project ideas](note_keyword)
+      - xóa ghi chú [nội dung cuộc họp](note_keyword)
+      - bỏ ghi chú [ý tưởng](note_keyword)
+      - xóa ghi chú tên [danh sách lỗi](note_keyword)
+      - xóa giúp mình ghi chú [kế hoạch](note_keyword)
+      - xóa ghi chú [tổng kết tuần](note_keyword)
+      - bỏ ghi chú [ý tưởng dự án](note_keyword)
       - xoá ghi chú [rasa](note_keyword)
-      - xóa note [shopping](note_keyword) giúp mình
-      - xoá note [họp tuần](note_keyword) nha
+      - xóa ghi chú [mua sắm](note_keyword) giúp mình
+      - xoá ghi chú [họp tuần](note_keyword) nha
       - xóa ghi chú [nháp](note_keyword) ngay
-      - delete note [meeting notes](note_keyword) với
-      - remove note [idea](note_keyword) đi
-      - xóa note tên [bug list](note_keyword) cho tôi
-      - xóa giúp mình note [kế hoạch](note_keyword) nhé
-      - delete this note [retro](note_keyword) liền
-      - remove note [project ideas](note_keyword) giúp mình
+      - xóa ghi chú [nội dung cuộc họp](note_keyword) với
+      - bỏ ghi chú [ý tưởng](note_keyword) đi
+      - xóa ghi chú tên [danh sách lỗi](note_keyword) cho tôi
+      - xóa giúp mình ghi chú [kế hoạch](note_keyword) nhé
+      - xóa ghi chú [tổng kết tuần](note_keyword) liền
+      - bỏ ghi chú [ý tưởng dự án](note_keyword) giúp mình
       - xoá ghi chú [rasa](note_keyword) nha
-      - xóa note [shopping](note_keyword) ngay
-      - xoá note [họp tuần](note_keyword) với
+      - xóa ghi chú [mua sắm](note_keyword) ngay
+      - xoá ghi chú [họp tuần](note_keyword) với
       - xóa ghi chú [nháp](note_keyword) đi
-      - delete note [meeting notes](note_keyword) cho tôi
-      - remove note [idea](note_keyword) nhé
-      - xóa note tên [bug list](note_keyword) liền
-      - xóa giúp mình note [kế hoạch](note_keyword) giúp mình
-      - delete this note [retro](note_keyword) nha
-      - remove note [project ideas](note_keyword) ngay
+      - xóa ghi chú [nội dung cuộc họp](note_keyword) cho tôi
+      - bỏ ghi chú [ý tưởng](note_keyword) nhé
+      - xóa ghi chú tên [danh sách lỗi](note_keyword) liền
+      - xóa giúp mình ghi chú [kế hoạch](note_keyword) giúp mình
+      - xóa ghi chú [tổng kết tuần](note_keyword) nha
+      - bỏ ghi chú [ý tưởng dự án](note_keyword) ngay
       - xoá ghi chú [rasa](note_keyword) với

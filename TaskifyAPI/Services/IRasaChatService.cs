@@ -1,5 +1,19 @@
 namespace TaskifyAPI.Services
 {
+    public class RasaIntentPrediction
+    {
+        public string Name { get; set; } = string.Empty;
+        public double Confidence { get; set; }
+    }
+
+    public class RasaParseResult
+    {
+        public string Text { get; set; } = string.Empty;
+        public string? IntentName { get; set; }
+        public double Confidence { get; set; }
+        public IReadOnlyList<RasaIntentPrediction> IntentRanking { get; set; } = Array.Empty<RasaIntentPrediction>();
+    }
+
     public class RasaAssistantReply
     {
         public string Text { get; set; } = string.Empty;
@@ -24,6 +38,13 @@ namespace TaskifyAPI.Services
             string userId,
             string messageText,
             string? metadataJson = null,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Parses a user message using Rasa NLU and returns top intent predictions for logging/debugging.
+        /// </summary>
+        Task<RasaParseResult?> ParseIntentAsync(
+            string messageText,
             CancellationToken cancellationToken = default);
     }
 }

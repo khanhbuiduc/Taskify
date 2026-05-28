@@ -1,3858 +1,1055 @@
 thêm O
 chi_tiêu O
-50000 B-finance_amount
-danh_mục O
-ăn_uống B-finance_category
-mô_tả O
-cơm B-finance_description
-trưa I-finance_description
+120k B-amount
+cho O
+trà O
+sữa O
 
 ghi_nhận O
-chi_phí O
-120k B-finance_amount
-cho O
-cà_phê B-finance_description
-với I-finance_description
-team I-finance_description
-danh_mục O
-ăn_uống B-finance_category
-
-hôm_nay O
-tôi O
-tiêu O
-250000 B-finance_amount
-cho O
-đổ B-finance_description
-xăng I-finance_description
-loại O
-di_chuyển B-finance_category
-
-thêm O
-giao_dịch O
-1.2 B-finance_amount
-tr I-finance_amount
-danh_mục O
-mua_sắm B-finance_category
-nội_dung O
-mua B-finance_description
-bàn_phím I-finance_description
+khoản O
+chi O
+350000 B-amount
+mua O
+văn_phòng_phẩm O
 
 tạo O
 chi_phí O
-85000 B-finance_amount
-ngày O
-hôm_nay B-finance_date
+1.5 B-amount
+tr I-amount
 cho O
-ăn B-finance_description
-tối I-finance_description
-
-add O
-expense O
-15 B-finance_amount
-category O
-food B-finance_category
-description O
-lunch B-finance_description
-
-record O
-expense O
-200000 B-finance_amount
-for O
-grab B-finance_description
-bike I-finance_description
-in O
-di_chuyển B-finance_category
+vé O
+máy_bay O
 
 lưu O
-chi_tiêu O
-300k B-finance_amount
-ngày_mai B-finance_date
-danh_mục O
-hoá_đơn B-finance_category
-
-mình O
-vừa O
-chi O
-45000 B-finance_amount
-mua O
-trà B-finance_description
-sữa I-finance_description
+giao_dịch O
+85000 B-amount
+gửi O
+xe O
 
 thêm O
 khoản O
 chi O
-700000 B-finance_amount
-cho O
-tiền B-finance_description
-điện I-finance_description
-danh_mục O
-hoá_đơn B-finance_category
+2 B-amount
+triệu I-amount
+đặt_cọc O
+địa_điểm O
 
 ghi O
 lại O
-35000 B-finance_amount
+480k B-amount
 tiền O
-gửi B-finance_description
-xe I-finance_description
-vào O
-di_chuyển B-finance_category
+tiếp O
+khách O
 
 tạo O
-finance O
-entry O
-99000 B-finance_amount
-cho O
-sách B-finance_description
-category O
-học_tập B-finance_category
-
-xem O
-chi_tiêu O
-gần O
-đây O
-
-liệt_kê O
-finance O
-
-danh_sách O
-giao_dịch O
-tài_chính O
-
-xem O
-các O
-khoản O
-chi O
-
-mở O
-danh_sách O
-chi_tiêu O
-
-show O
-my O
-expenses O
-
-list O
-finance O
-entries O
-
-xem O
-chi_tiêu O
-hôm_nay B-finance_date
-
-liệt_kê O
-khoản O
-chi O
-danh_mục O
-ăn_uống B-finance_category
-
-xem O
-giao_dịch O
-ngày_mai B-finance_date
-
-cho O
-tôi O
-xem O
-sổ O
-chi_tiêu O
-
-hiển_thị O
-các O
 mục O
-finance O
-mới O
-nhất O
-
-tìm O
-chi_tiêu O
-cà_phê B-finance_keyword
-
-tìm O
-khoản O
-chi O
-chứa O
-grab B-finance_keyword
-
-search O
-expenses O
-for O
-lunch B-finance_keyword
-
-lọc O
-chi_tiêu O
-danh_mục O
-ăn_uống B-finance_category
-
-có O
-khoản O
-chi O
-nào O
-về O
-đổ B-finance_keyword
-xăng I-finance_keyword
-
-tìm O
-giao_dịch O
-tiền B-finance_keyword
-điện I-finance_keyword
-
-tìm O
-finance O
-mua_sắm B-finance_keyword
-
-xem O
-chi_phí O
-liên_quan O
-team B-finance_keyword
-
-lọc O
-finance O
-category O
-di_chuyển B-finance_category
-
-tìm O
-khoản O
 tài_chính O
-có O
-bàn_phím B-finance_keyword
+99.000 B-amount
+cho O
+sách O
 
-sửa O
-chi_tiêu O
-cà_phê B-finance_keyword
-thành O
-60000 B-finance_amount
-
-cập_nhật O
-khoản O
 chi O
-grab B-finance_keyword
-danh_mục O
-di_chuyển B-finance_category
-
-đổi O
-giao_dịch O
-ăn B-finance_keyword
-tối I-finance_keyword
-thành O
-120000 B-finance_amount
-
-update O
-expense O
-lunch B-finance_keyword
-amount O
-20 B-finance_amount
-
-sửa O
-finance O
-tiền B-finance_keyword
-điện I-finance_keyword
-mô_tả O
-tiền B-finance_description
-điện I-finance_description
-tháng I-finance_description
-này I-finance_description
-
-cập_nhật O
-chi_phí O
-trà B-finance_keyword
-sữa I-finance_keyword
-ngày O
-hôm_nay B-finance_date
-
-đổi O
-danh_mục O
-khoản O
-chi O
-bàn_phím B-finance_keyword
-sang O
-mua_sắm B-finance_category
-
-sửa O
-khoản O
-tài_chính O
-đổ B-finance_keyword
-xăng I-finance_keyword
-thành O
-300000 B-finance_amount
-
-xoá O
-chi_tiêu O
-cà_phê B-finance_keyword
-
-xoá O
-khoản O
-chi O
-grab B-finance_keyword
-
-delete O
-expense O
-lunch B-finance_keyword
-
-remove O
-finance O
-entry O
-tiền B-finance_keyword
-điện I-finance_keyword
-
-xoá O
-giao_dịch O
-tài_chính O
-trà B-finance_keyword
-sữa I-finance_keyword
-
-xoá O
-chi_phí O
-danh_mục O
-ăn_uống B-finance_category
-
-xoá O
-khoản O
-finance O
-đổ B-finance_keyword
-xăng I-finance_keyword
-
-gỡ O
-mục O
-chi_tiêu O
-bàn_phím B-finance_keyword
-
-tổng_kết O
-chi_tiêu O
-
-thống_kê O
-tài_chính O
-
-tháng O
-này O
-tôi O
-tiêu O
-bao_nhiêu O
-
-tổng_chi O
 hôm_nay O
+75000 B-amount
+ăn O
+trưa O
 
-báo_cáo O
-finance O
+sửa O
+giao_dịch O
+thành O
+3.2 B-amount
+tr I-amount
 
-summarize O
-my O
-expenses O
-
-finance O
-summary O
-
-tổng_kết O
-danh_mục O
-ăn_uống B-finance_category
-
-thống_kê O
+lưu O
 chi_tiêu O
-hôm_nay B-finance_date
+540000 B-amount
+mua O
+quà O
 
-tính O
-tổng O
+ghi_nhận O
+65k B-amount
+tiền O
+taxi O
+
+tạo O
 khoản O
 chi O
+12.500 B-amount
+photo O
+tài_liệu O
 
+thêm O
+giao_dịch O
+4tr B-amount
 cho O
-tôi O
-báo_cáo O
+workshop O
+
+chi O
+275000 B-amount
+cho O
+bảo_trì O
+máy_in O
+
+lưu O
+khoản O
+890k B-amount
+chạy O
+quảng_cáo O
+
+ghi O
+lại O
+1500000 B-amount
+mua O
+màn_hình O
+cũ O
+
+tạo O
 chi_phí O
+45k B-amount
+mua O
+nước O
 
-tạo O
-danh_mục O
-tài_chính O
-ăn_uống B-finance_category
-
-thêm O
-category O
-finance O
-di_chuyển B-finance_category
-
-tạo O
-loại O
-chi_tiêu O
-hoá_đơn B-finance_category
-
-add O
-finance O
-category O
-shopping B-finance_category
+cập_nhật O
+số O
+tiền O
+thành O
+210000 B-amount
 
 thêm O
+khoản O
+chi O
+6tr B-amount
+mua O
+laptop O
+cũ O
+
+ghi_nhận O
+320000 B-amount
+tiền O
+hoa O
+
+thêm O
+chi_tiêu O
+120k O
 danh_mục O
-giải_trí B-finance_category
-cho O
-finance O
+ăn_uống B-category
 
-xem O
-danh_mục O
-tài_chính O
+tạo O
+khoản O
+chi O
+3tr O
+vào O
+đi_lại B-category
 
-liệt_kê O
-category O
-finance O
-
-danh_sách O
+ghi_nhận O
+giao_dịch O
+450k O
 loại O
+hoá_đơn B-category
+
+lưu O
 chi_tiêu O
-
-show O
-finance O
-categories O
-
-xem O
-các O
+900k O
 danh_mục O
-chi_tiêu O
+mua_sắm B-category
+văn_phòng I-category
+
+tạo O
+chi_phí O
+2tr O
+nhóm O
+marketing B-category
+
+thêm O
+giao_dịch O
+150k O
+vào O
+giải_trí B-category
+nội_bộ I-category
+
+cập_nhật O
+khoản O
+chi O
+trà O
+sữa O
+sang O
+tiếp B-category
+khách I-category
 
 đổi O
 danh_mục O
-ăn_uống B-finance_keyword
+cũ O
+abc O
 thành O
-food B-finance_category
+chi_phí B-category
+cố_định I-category
 
-sửa O
-category O
-di_chuyển B-finance_keyword
-thành O
-transport B-finance_category
-
-cập_nhật O
+tạo O
 danh_mục O
 tài_chính O
-hoá_đơn B-finance_keyword
+phần_mềm B-category
+dịch_vụ I-category
+
+thêm O
+danh_mục O
+đào_tạo B-category
+nhân_sự I-category
+
+ghi_nhận O
+khoản O
+chi O
+80k O
+danh_mục O
+gửi B-category
+xe I-category
+
+lưu O
+giao_dịch O
+6tr O
+loại O
+thiết_bị B-category
+công_nghệ I-category
+
+tạo O
+khoản O
+chi O
+500k O
+vào O
+sự_kiện B-category
+
+cập_nhật O
+giao_dịch O
+aws O
 sang O
-bills B-finance_category
+hạ_tầng B-category
+cloud I-category
 
-rename O
-finance O
-category O
-shopping B-finance_keyword
-to O
-mua_sắm B-finance_category
+đổi O
+tên O
+danh_mục O
+thành O
+quà B-category
+tặng I-category
+khách_hàng I-category
+
+tạo O
+danh_mục O
+tài_chính O
+chi_phí B-category
+công_tác I-category
+
+thêm O
+danh_mục O
+nghiên_cứu B-category
+sản_phẩm I-category
+
+ghi_nhận O
+chi_tiêu O
+250k O
+loại O
+vật_tư B-category
+văn_phòng I-category
+
+cập_nhật O
+khoản O
+chi O
+miền O
+trung O
+vào O
+từ_thiện B-category
+cộng_đồng I-category
+
+thêm O
+giao_dịch O
+1tr O
+danh_mục O
+bảo_trì B-category
+hệ_thống I-category
+
+tạo O
+ghi_chú O
+họp O
+tuần O
+nội_dung O
+chốt B-content
+deadline I-content
+bản I-content
+demo I-content
+và I-content
+người I-content
+phụ_trách I-content
+
+thêm O
+note O
+sprint O
+planning O
+với O
+nội_dung O
+ưu_tiên B-content
+fix I-content
+crash I-content
+ios I-content
+trước I-content
+release I-content
+
+tạo O
+ghi_chú O
+nhanh O
+nội_dung O
+liên_hệ B-content
+đối_tác I-content
+vào I-content
+thứ I-content
+ba I-content
+để I-content
+xác_nhận I-content
+booth I-content
+
+cập_nhật O
+note O
+roadmap O
+thành_nội O
+dung O
+đẩy B-content
+mốc I-content
+beta I-content
+sang I-content
+giữa I-content
+tháng I-content
+tám I-content
+
+thêm O
+chi_tiêu O
+120k O
+cho O
+cà_phê B-content
+cùng I-content
+đội I-content
+thiết_kế I-content
+sau I-content
+buổi I-content
+review I-content
+
+ghi_nhận O
+khoản O
+chi O
+350000 O
+mô_tả O
+mua B-content
+dây_cáp I-content
+hdmi I-content
+cho I-content
+phòng I-content
+họp I-content
+
+tạo O
+chi_phí O
+80k O
+với O
+nội_dung O
+ăn B-content
+trưa I-content
+cùng I-content
+khách_hàng I-content
+nhật I-content
+
+sửa O
+giao_dịch O
+trà O
+sữa O
+thành O
+mô_tả O
+trà B-content
+sữa I-content
+cho I-content
+nhóm I-content
+marketing I-content
+chạy I-content
+đêm I-content
+
+tạo O
+note O
+biên_bản O
+họp O
+nội_dung O
+team B-content
+backend I-content
+cần I-content
+chốt I-content
+schema I-content
+trước I-content
+thứ I-content
+năm I-content
+
+ghi_chú O
+onboarding O
+nội_dung O
+chuẩn_bị B-content
+tài_khoản I-content
+github I-content
+email I-content
+và I-content
+notion I-content
+cho I-content
+nhân_sự I-content
+mới I-content
+
+lưu O
+chi_tiêu O
+2tr O
+cho O
+đặt_cọc B-content
+phòng I-content
+workshop I-content
+tháng I-content
+tới I-content
+
+thêm O
+giao_dịch O
+65k O
+mô_tả O
+gửi B-content
+xe I-content
+và I-content
+mua I-content
+nước I-content
+cho I-content
+sự_kiện I-content
+
+tạo O
+note O
+với O
+nội_dung O
+đặt B-content
+câu I-content
+hỏi I-content
+về I-content
+retention I-content
+và I-content
+activation I-content
+trong I-content
+buổi I-content
+interview I-content
+
+cập_nhật O
+ghi_chú O
+project O
+x O
+thành_nội O
+dung O
+cần B-content
+thống_nhất I-content
+màu I-content
+thương_hiệu I-content
+trước I-content
+khi I-content
+lên I-content
+banner I-content
+
+ghi_nhận O
+khoản O
+chi O
+99000 O
+cho O
+mua B-content
+sách I-content
+clean I-content
+architecture I-content
+bản I-content
+tiếng I-content
+việt I-content
+
+tạo O
+chi_phí O
+450k O
+nội_dung O
+đặt B-content
+hoa I-content
+cho I-content
+lễ I-content
+ký_kết I-content
+với I-content
+đối_tác I-content
+
+thêm O
+ghi_chú O
+khách O
+vip O
+nội_dung O
+gửi B-content
+bản I-content
+chào_giá I-content
+mới I-content
+sau I-content
+khi I-content
+duyệt I-content
+giảm_giá I-content
+
+cập_nhật O
+note O
+daily O
+nội_dung O
+nhắc B-content
+team I-content
+check I-content
+lỗi I-content
+thanh_toán I-content
+momo I-content
+lúc I-content
+9 I-content
+giờ I-content
+sáng I-content
+
+lưu O
+chi_tiêu O
+180k O
+mô_tả O
+ăn B-content
+tối I-content
+với I-content
+đội I-content
+sales I-content
+sau I-content
+buổi I-content
+training I-content
+
+tạo O
+khoản O
+chi O
+520k O
+cho O
+mua B-content
+adapter I-content
+và I-content
+pin I-content
+cho I-content
+bộ I-content
+mic I-content
+hội_thảo I-content
+
+thêm O
+note O
+recap O
+nội_dung O
+tổng_hợp B-content
+ba I-content
+insight I-content
+chính I-content
+từ I-content
+khảo_sát I-content
+tháng I-content
+này I-content
+
+ghi_chú O
+tuyển_dụng O
+nội_dung O
+ứng_viên B-content
+mạnh I-content
+về I-content
+nodejs I-content
+nhưng I-content
+cần I-content
+bổ_sung I-content
+kinh_nghiệm I-content
+system I-content
+design I-content
+
+cập_nhật O
+giao_dịch O
+taxi O
+mô_tả O
+taxi B-content
+đón I-content
+khách I-content
+từ I-content
+sân_bay I-content
+về I-content
+văn_phòng I-content
+
+tạo O
+chi_tiêu O
+230k O
+cho O
+in B-content
+standee I-content
+mini I-content
+cho I-content
+quầy I-content
+checkin I-content
+
+tìm O
+công_việc O
+chứa O
+báo_cáo B-keyword
+
+lọc O
+task O
+có O
+khách_hàng B-keyword
+
+xoá O
+task O
+về O
+postgres B-keyword
+
+xoá O
+công_việc O
+có O
+chữ O
+demo B-keyword
+
+tìm O
+note O
+về O
+onboarding B-keyword
+
+tìm O
+ghi_chú O
+chứa O
+launch B-keyword
+plan I-keyword
+
+xoá O
+note O
+có O
+từ O
+weekly B-keyword
+
+cập_nhật O
+note O
+về O
+biên_bản B-keyword
+họp I-keyword
+
+ghim O
+ghi_chú O
+liên_quan O
+roadmap B-keyword
+
+bỏ O
+ghim O
+note O
+có O
+chữ O
+survey B-keyword
+
+tìm O
+chi_tiêu O
+trà B-keyword
+sữa I-keyword
+
+xoá O
+giao_dịch O
+tiền B-keyword
+điện I-keyword
+
+sửa O
+khoản O
+chi O
+grab B-keyword
+đi I-keyword
+sân_bay I-keyword
+
+tìm O
+giao_dịch O
+chứa O
+aws B-keyword
+
+thống_kê O
+khoản O
+chi O
+về O
+marketing B-keyword
+
+đổi O
+danh_mục O
+ăn_uống B-keyword
+thành O
+ẩm_thực O
 
 xoá O
 danh_mục O
+mua_sắm B-keyword
+
+cập_nhật O
+danh_mục O
+cũ O
+chi_phí B-keyword
+cố_định I-keyword
+
+lọc O
+công_việc O
+chứa O
+bug B-keyword
+production I-keyword
+
+tìm O
+task O
+về O
+redis B-keyword
+
+xoá O
+việc O
+có O
+chữ O
+workshop B-keyword
+
+tìm O
+ghi_chú O
+có O
+user B-keyword
+interview I-keyword
+
+sửa O
+note O
+mang O
+chủ_đề O
+agency B-keyword
+
+xoá O
+note O
+chứa O
+mini B-keyword
+app I-keyword
+
+tìm O
+chi_tiêu O
+về O
+cà_phê B-keyword
+khách_hàng I-keyword
+
+cập_nhật O
+giao_dịch O
+đổ B-keyword
+xăng I-keyword
+
+xoá O
+khoản O
+chi O
+có O
+chữ O
+microsoft B-keyword
+365 I-keyword
+
+tìm O
 tài_chính O
-ăn_uống B-finance_category
-
-xoá O
-category O
-finance O
-di_chuyển B-finance_category
-
-delete O
-finance O
-category O
-shopping B-finance_category
-
-remove O
-expense O
-category O
-hoá_đơn B-finance_category
-
-tạo O
-note O
-ý_tưởng B-note_title
-sprint I-note_title
-
-thêm O
-ghi_chú O
-shopping B-note_title
-list I-note_title
-
-tạo O
-note O
-họp B-note_title
-tuần I-note_title
-nội_dung O
-chốt B-note_text
-deadline I-note_text
-
-ghi_chú O
-học B-note_title
-rasa I-note_title
-
-tạo O
-ghi_chú O
-nhanh O
-fix B-note_title
-bug I-note_title
-list I-note_title
-
-create O
-note O
-project B-note_title
-ideas I-note_title
-
-add O
-note O
-meeting B-note_title
-notes I-note_title
-
-new O
-note O
-retro B-note_title
-
-tạo O
-note O
-kế_hoạch B-note_title
-tuần I-note_title
-
-thêm O
-note O
-đọc B-note_title
-sách I-note_title
-
-tạo O
-note O
-ý_tưởng B-note_title
-sprint I-note_title
-giúp O
-mình O
-
-thêm O
-ghi_chú O
-shopping B-note_title
-list I-note_title
-nha O
-
-tạo O
-note O
-họp B-note_title
-tuần I-note_title
-nội_dung O
-chốt B-note_text
-deadline I-note_text
-ngay O
-
-ghi_chú O
-học B-note_title
-rasa I-note_title
-với O
-
-tạo O
-ghi_chú O
-nhanh O
-fix B-note_title
-bug I-note_title
-list I-note_title
-đi O
-
-create O
-note O
-project B-note_title
-ideas I-note_title
-cho O
-tôi O
-
-add O
-note O
-meeting B-note_title
-notes I-note_title
-nhé O
-
-new O
-note O
-retro B-note_title
-liền O
-
-tạo O
-note O
-kế_hoạch B-note_title
-tuần I-note_title
-giúp O
-mình O
-
-thêm O
-note O
-đọc B-note_title
-sách I-note_title
-nha O
-
-tạo O
-note O
-ý_tưởng B-note_title
-sprint I-note_title
-ngay O
-
-thêm O
-ghi_chú O
-shopping B-note_title
-list I-note_title
-với O
-
-tạo O
-note O
-họp B-note_title
-tuần I-note_title
-nội_dung O
-chốt B-note_text
-deadline I-note_text
-đi O
-
-ghi_chú O
-học B-note_title
-rasa I-note_title
-cho O
-tôi O
-
-tạo O
-ghi_chú O
-nhanh O
-fix B-note_title
-bug I-note_title
-list I-note_title
-nhé O
-
-create O
-note O
-project B-note_title
-ideas I-note_title
-liền O
-
-add O
-note O
-meeting B-note_title
-notes I-note_title
-giúp O
-mình O
-
-new O
-note O
-retro B-note_title
-nha O
-
-tạo O
-note O
-kế_hoạch B-note_title
-tuần I-note_title
-ngay O
-
-thêm O
-note O
-đọc B-note_title
-sách I-note_title
-với O
-
-xem O
-danh_sách O
-note O
-
-liệt_kê O
-ghi_chú O
-
-cho O
-tôi O
-xem O
-note O
-
-xem O
-note O
-gần O
-đây O
-
-xem O
-note O
-đã O
-ghim O
-
-list O
-notes O
-
-show O
-my O
-notes O
-
-show O
-pinned O
-notes O
-
-mở O
-danh_sách O
-ghi_chú O
-
-hiển_thị O
-toàn_bộ O
-note O
-
-xem O
-danh_sách O
-note O
-giúp O
-mình O
-
-liệt_kê O
-ghi_chú O
-nha O
-
-cho O
-tôi O
-xem O
-note O
-ngay O
-
-xem O
-note O
-gần O
-đây O
-với O
-
-xem O
-note O
-đã O
-ghim O
-đi O
-
-list O
-notes O
-cho O
-tôi O
-
-show O
-my O
-notes O
-nhé O
-
-show O
-pinned O
-notes O
-liền O
-
-mở O
-danh_sách O
-ghi_chú O
-giúp O
-mình O
-
-hiển_thị O
-toàn_bộ O
-note O
-nha O
-
-xem O
-danh_sách O
-note O
-ngay O
-
-liệt_kê O
-ghi_chú O
-với O
-
-cho O
-tôi O
-xem O
-note O
-đi O
-
-xem O
-note O
-gần O
-đây O
-cho O
-tôi O
-
-xem O
-note O
-đã O
-ghim O
-nhé O
-
-list O
-notes O
-liền O
-
-show O
-my O
-notes O
-giúp O
-mình O
-
-show O
-pinned O
-notes O
-nha O
-
-mở O
-danh_sách O
-ghi_chú O
-ngay O
-
-hiển_thị O
-toàn_bộ O
-note O
-với O
-
-tìm O
-note O
-về O
-kế_hoạch B-note_keyword
-
-tìm O
-ghi_chú O
-chứa O
-bug B-note_keyword
-
-search O
-notes O
-for O
-idea B-note_keyword
-
-find O
-notes O
-about O
-meeting B-note_keyword
-
-có O
-note O
-nào O
-chứa O
-retro B-note_keyword
-
-lọc O
-note O
-theo O
-shopping B-note_keyword
-
-tìm O
-note O
-rasa B-note_keyword
-
-tìm O
-giúp O
-mình O
-ghi_chú O
-deadline B-note_keyword
-
-search O
-note O
-keyword O
-project B-note_keyword
-
-kiểm_tra O
-note O
-có O
-sql B-note_keyword
-
-tìm O
-note O
-về O
-kế_hoạch B-note_keyword
-giúp O
-mình O
-
-tìm O
-ghi_chú O
-chứa O
-bug B-note_keyword
-nha O
-
-search O
-notes O
-for O
-idea B-note_keyword
-ngay O
-
-find O
-notes O
-about O
-meeting B-note_keyword
-với O
-
-có O
-note O
-nào O
-chứa O
-retro B-note_keyword
-đi O
-
-lọc O
-note O
-theo O
-shopping B-note_keyword
-cho O
-tôi O
-
-tìm O
-note O
-rasa B-note_keyword
-nhé O
-
-tìm O
-giúp O
-mình O
-ghi_chú O
-deadline B-note_keyword
-liền O
-
-search O
-note O
-keyword O
-project B-note_keyword
-giúp O
-mình O
-
-kiểm_tra O
-note O
-có O
-sql B-note_keyword
-nha O
-
-tìm O
-note O
-về O
-kế_hoạch B-note_keyword
-ngay O
-
-tìm O
-ghi_chú O
-chứa O
-bug B-note_keyword
-với O
-
-search O
-notes O
-for O
-idea B-note_keyword
-đi O
-
-find O
-notes O
-about O
-meeting B-note_keyword
-cho O
-tôi O
-
-có O
-note O
-nào O
-chứa O
-retro B-note_keyword
-nhé O
-
-lọc O
-note O
-theo O
-shopping B-note_keyword
-liền O
-
-tìm O
-note O
-rasa B-note_keyword
-giúp O
-mình O
-
-tìm O
-giúp O
-mình O
-ghi_chú O
-deadline B-note_keyword
-nha O
-
-search O
-note O
-keyword O
-project B-note_keyword
-ngay O
-
-kiểm_tra O
-note O
-có O
-sql B-note_keyword
-với O
-
-ghim O
-note O
-này O
-
-bỏ O
-ghim O
-note O
-này O
-
-ghim O
-note O
-vừa O
-tạo O
-
-huỷ O
-ghim O
-note O
-đó O
-
-pin O
-this O
-note O
-
-unpin O
-this O
-note O
-
-pin O
-note O
-shopping B-note_title
-list I-note_title
-
-unpin O
-note O
-retro B-note_title
-
-ghim O
-ghi_chú O
-họp B-note_title
-tuần I-note_title
-
-bỏ O
-ghim O
-ghi_chú O
-ý_tưởng B-note_title
-sprint I-note_title
-
-ghim O
-note O
-này O
-giúp O
-mình O
-
-bỏ O
-ghim O
-note O
-này O
-nha O
-
-ghim O
-note O
-vừa O
-tạo O
-ngay O
-
-huỷ O
-ghim O
-note O
-đó O
-với O
-
-pin O
-this O
-note O
-đi O
-
-unpin O
-this O
-note O
-cho O
-tôi O
-
-pin O
-note O
-shopping B-note_title
-list I-note_title
-nhé O
-
-unpin O
-note O
-retro B-note_title
-liền O
-
-ghim O
-ghi_chú O
-họp B-note_title
-tuần I-note_title
-giúp O
-mình O
-
-bỏ O
-ghim O
-ghi_chú O
-ý_tưởng B-note_title
-sprint I-note_title
-nha O
-
-ghim O
-note O
-này O
-ngay O
-
-bỏ O
-ghim O
-note O
-này O
-với O
-
-ghim O
-note O
-vừa O
-tạo O
-đi O
-
-huỷ O
-ghim O
-note O
-đó O
-cho O
-tôi O
-
-pin O
-this O
-note O
-nhé O
-
-unpin O
-this O
-note O
-liền O
-
-pin O
-note O
-shopping B-note_title
-list I-note_title
-giúp O
-mình O
-
-unpin O
-note O
-retro B-note_title
-nha O
-
-ghim O
-ghi_chú O
-họp B-note_title
-tuần I-note_title
-ngay O
-
-bỏ O
-ghim O
-ghi_chú O
-ý_tưởng B-note_title
-sprint I-note_title
-với O
-
-sửa O
-note O
-họp B-note_keyword
-tuần I-note_keyword
-
-cập_nhật O
-note O
-meeting B-note_keyword
-thành O
-meeting B-note_title
-v2 I-note_title
-
-thay_đổi O
-note O
-idea B-note_keyword
-nội_dung O
-triển_khai B-note_text
-giai_đoạn I-note_text
-2 I-note_text
-
-update O
-note O
-retro B-note_keyword
-
-edit O
-note O
-project B-note_keyword
-ideas I-note_keyword
-
-sửa O
-ghi_chú O
-shopping B-note_keyword
-list I-note_keyword
-
-cập_nhật O
-ghi_chú O
-kế_hoạch B-note_keyword
-
-update O
-note O
-title O
-họp B-note_title
-team I-note_title
-
-thay O
-nội_dung O
-note O
-bug B-note_keyword
-list I-note_keyword
-thành O
-fix B-note_text
-payment I-note_text
-bug I-note_text
-
-sửa O
-note O
-rasa B-note_keyword
-
-sửa O
-note O
-họp B-note_keyword
-tuần I-note_keyword
-giúp O
-mình O
-
-cập_nhật O
-note O
-meeting B-note_keyword
-thành O
-meeting B-note_title
-v2 I-note_title
-nha O
-
-thay_đổi O
-note O
-idea B-note_keyword
-nội_dung O
-triển_khai B-note_text
-giai_đoạn I-note_text
-2 I-note_text
-ngay O
-
-update O
-note O
-retro B-note_keyword
-với O
-
-edit O
-note O
-project B-note_keyword
-ideas I-note_keyword
-đi O
-
-sửa O
-ghi_chú O
-shopping B-note_keyword
-list I-note_keyword
-cho O
-tôi O
-
-cập_nhật O
-ghi_chú O
-kế_hoạch B-note_keyword
-nhé O
-
-update O
-note O
-title O
-họp B-note_title
-team I-note_title
-liền O
-
-thay O
-nội_dung O
-note O
-bug B-note_keyword
-list I-note_keyword
-thành O
-fix B-note_text
-payment I-note_text
-bug I-note_text
-giúp O
-mình O
-
-sửa O
-note O
-rasa B-note_keyword
-nha O
-
-sửa O
-note O
-họp B-note_keyword
-tuần I-note_keyword
-ngay O
-
-cập_nhật O
-note O
-meeting B-note_keyword
-thành O
-meeting B-note_title
-v2 I-note_title
-với O
-
-thay_đổi O
-note O
-idea B-note_keyword
-nội_dung O
-triển_khai B-note_text
-giai_đoạn I-note_text
-2 I-note_text
-đi O
-
-update O
-note O
-retro B-note_keyword
-cho O
-tôi O
-
-edit O
-note O
-project B-note_keyword
-ideas I-note_keyword
-nhé O
-
-sửa O
-ghi_chú O
-shopping B-note_keyword
-list I-note_keyword
-liền O
-
-cập_nhật O
-ghi_chú O
-kế_hoạch B-note_keyword
-giúp O
-mình O
-
-update O
-note O
-title O
-họp B-note_title
-team I-note_title
-nha O
-
-thay O
-nội_dung O
-note O
-bug B-note_keyword
-list I-note_keyword
-thành O
-fix B-note_text
-payment I-note_text
-bug I-note_text
-ngay O
-
-sửa O
-note O
-rasa B-note_keyword
-với O
-
-xoá O
-note O
-shopping B-note_keyword
-
-xoá O
-note O
-họp B-note_keyword
-tuần I-note_keyword
-
-xoá O
-ghi_chú O
-nháp B-note_keyword
-
-delete O
-note O
-meeting B-note_keyword
-notes I-note_keyword
-
-remove O
-note O
-idea B-note_keyword
-
-xoá O
-note O
-tên O
-bug B-note_keyword
-list I-note_keyword
-
-xoá O
-giúp O
-mình O
-note O
-kế_hoạch B-note_keyword
-
-delete O
-this O
-note O
-retro B-note_keyword
-
-remove O
-note O
-project B-note_keyword
-ideas I-note_keyword
-
-xoá O
-ghi_chú O
-rasa B-note_keyword
-
-xoá O
-note O
-shopping B-note_keyword
-giúp O
-mình O
-
-xoá O
-note O
-họp B-note_keyword
-tuần I-note_keyword
-nha O
-
-xoá O
-ghi_chú O
-nháp B-note_keyword
-ngay O
-
-delete O
-note O
-meeting B-note_keyword
-notes I-note_keyword
-với O
-
-remove O
-note O
-idea B-note_keyword
-đi O
-
-xoá O
-note O
-tên O
-bug B-note_keyword
-list I-note_keyword
-cho O
-tôi O
-
-xoá O
-giúp O
-mình O
-note O
-kế_hoạch B-note_keyword
-nhé O
-
-delete O
-this O
-note O
-retro B-note_keyword
-liền O
-
-remove O
-note O
-project B-note_keyword
-ideas I-note_keyword
-giúp O
-mình O
-
-xoá O
-ghi_chú O
-rasa B-note_keyword
-nha O
-
-xoá O
-note O
-shopping B-note_keyword
-ngay O
-
-xoá O
-note O
-họp B-note_keyword
-tuần I-note_keyword
-với O
-
-xoá O
-ghi_chú O
-nháp B-note_keyword
-đi O
-
-delete O
-note O
-meeting B-note_keyword
-notes I-note_keyword
-cho O
-tôi O
-
-remove O
-note O
-idea B-note_keyword
-nhé O
-
-xoá O
-note O
-tên O
-bug B-note_keyword
-list I-note_keyword
-liền O
-
-xoá O
-giúp O
-mình O
-note O
-kế_hoạch B-note_keyword
-giúp O
-mình O
-
-delete O
-this O
-note O
-retro B-note_keyword
-nha O
-
-remove O
-note O
-project B-note_keyword
-ideas I-note_keyword
-ngay O
-
-xoá O
-ghi_chú O
-rasa B-note_keyword
-với O
-
-xin O
-chào O
-
-chào O
-bạn O
-
-hello O
-
-hi O
-
-alo O
-
-chào O
-buổi O
-sáng O
-
-chào O
-buổi O
-tối O
-
-mình O
-cần O
-hỗ_trợ O
-
-chào O
-trợ_lý O
-
-xin O
-chào O
-giúp O
-mình O
-
-chào O
-bạn O
-nha O
-
-hello O
-ngay O
-
-hi O
-với O
-
-alo O
-đi O
-
-chào O
-buổi O
-sáng O
-cho O
-tôi O
-
-chào O
-buổi O
-tối O
-nhé O
-
-mình O
-cần O
-hỗ_trợ O
-liền O
-
-chào O
-trợ_lý O
-giúp O
-mình O
-
-xin O
-chào O
-nha O
-
-chào O
-bạn O
-ngay O
-
-hello O
-với O
-
-hi O
-đi O
-
-alo O
-cho O
-tôi O
-
-chào O
-buổi O
-sáng O
-nhé O
-
-chào O
-buổi O
-tối O
-liền O
-
-tạm_biệt O
-
-chào O
-tạm_biệt O
-
-bye O
-
-goodbye O
-
-hẹn O
-gặp O
-lại O
-
-mình O
-thoát O
-nhé O
-
-kết_thúc O
-ở O
-đây O
-
-cảm_ơn O
-nhé O
-tạm_biệt O
-
-mình O
-đi O
-đây O
-
-see O
-you O
-
-tạm_biệt O
-giúp O
-mình O
-
-chào O
-tạm_biệt O
-nha O
-
-bye O
-ngay O
-
-goodbye O
-với O
-
-hẹn O
-gặp O
-lại O
-đi O
-
-mình O
-thoát O
-nhé O
-cho O
-tôi O
-
-kết_thúc O
-ở O
-đây O
-nhé O
-
-cảm_ơn O
-nhé O
-tạm_biệt O
-liền O
-
-mình O
-đi O
-đây O
-giúp O
-mình O
-
-see O
-you O
-nha O
-
-tạm_biệt O
-ngay O
-
-chào O
-tạm_biệt O
-với O
-
-bye O
-đi O
-
-goodbye O
-cho O
-tôi O
-
-hẹn O
-gặp O
-lại O
-nhé O
-
-đúng O
-rồi O
-
-đồng_ý O
-
-ok O
-
-oke O
-
-yes O
-
-chính_xác O
-
-xác_nhận O
-
-được O
-
-chuẩn O
-
-ừ O
-đúng O
-
-đúng O
-rồi O
-giúp O
-mình O
-
-đồng_ý O
-nha O
-
-ok O
-ngay O
-
-oke O
-với O
-
-yes O
-đi O
-
-chính_xác O
-cho O
-tôi O
-
-xác_nhận O
-nhé O
-
-được O
-liền O
-
-chuẩn O
-giúp O
-mình O
-
-ừ O
-đúng O
-nha O
-
-đúng O
-rồi O
-ngay O
-
-đồng_ý O
-với O
-
-ok O
-đi O
-
-oke O
-cho O
-tôi O
-
-yes O
-nhé O
-
-không O
-
-không O
-đồng_ý O
-
-huỷ O
-
-thôi O
-
-no O
-
-không O
-phải O
-
-bỏ_qua O
-
-đừng O
-làm_vậy O
-
-không O
-cần O
-
-stop O
-
-không O
-giúp O
-mình O
-
-không O
-đồng_ý O
-nha O
-
-huỷ O
-ngay O
-
-thôi O
-với O
-
-no O
-đi O
-
-không O
-phải O
-cho O
-tôi O
-
-bỏ_qua O
-nhé O
-
-đừng O
-làm_vậy O
-liền O
-
-không O
-cần O
-giúp O
-mình O
-
-stop O
-nha O
-
-không O
-ngay O
-
-không O
-đồng_ý O
-với O
-
-huỷ O
-đi O
-
-thôi O
-cho O
-tôi O
-
-no O
-nhé O
-
-bạn O
-giúp O
-được O
-gì O
-
-bạn O
-làm O
-được O
-gì O
-
-mình O
-cần O
-hướng_dẫn O
-
-hỗ_trợ O
-mình O
-với O
-
-tôi O
-có_thể O
-nhờ O
-gì O
-
-show O
-me O
-what O
-you O
-can O
-do O
-
-how O
-can O
-you O
-help O
-
-help O
-me O
-
-liệt_kê O
-chức_năng O
-của O
-bạn O
-
-bạn O
-hỗ_trợ O
-tác_vụ O
-nào O
-
-bạn O
-giúp O
-được O
-gì O
-giúp O
-mình O
-
-bạn O
-làm O
-được O
-gì O
-nha O
-
-mình O
-cần O
-hướng_dẫn O
-ngay O
-
-hỗ_trợ O
-mình O
-với O
-với O
-
-tôi O
-có_thể O
-nhờ O
-gì O
-đi O
-
-show O
-me O
-what O
-you O
-can O
-do O
-cho O
-tôi O
-
-how O
-can O
-you O
-help O
-nhé O
-
-help O
-me O
-liền O
-
-liệt_kê O
-chức_năng O
-của O
-bạn O
-giúp O
-mình O
-
-bạn O
-hỗ_trợ O
-tác_vụ O
-nào O
-nha O
-
-bạn O
-giúp O
-được O
-gì O
-ngay O
-
-bạn O
-làm O
-được O
-gì O
-với O
-
-mình O
-cần O
-hướng_dẫn O
-đi O
-
-hỗ_trợ O
-mình O
-với O
-cho O
-tôi O
-
-tôi O
-có_thể O
-nhờ O
-gì O
-nhé O
-
-show O
-me O
-what O
-you O
-can O
-do O
-liền O
-
-how O
-can O
-you O
-help O
-giúp O
-mình O
-
-help O
-me O
-nha O
-
-liệt_kê O
-chức_năng O
-của O
-bạn O
-ngay O
-
-bạn O
-hỗ_trợ O
-tác_vụ O
-nào O
-với O
-
-asdf O
-
-qwerty O
-
-zxczxc O
-
-aaaabbbb O
-
-123123 O
-
-? O
-? O
-? O
-
-.... O
-
-ơ O
-ơ O
-ơ O
-
-blabla O
-
-xoá O
-
-undo O
-
-ngày_mai O
-
-task O
-
-điều O
-gì O
-đó O
-
-hmmmmm O
-
-kkkk O
-
-random O
-text O
-
-không O
 liên_quan O
-
-gibberish O
-input O
-
-lorem O
-ipsum O
-
-tóm_tắt O
-tuần O
-này O
-
-báo_cáo O
-tuần O
-
-cho O
-mình O
-tổng_kết O
-tuần O
-
-tuần O
-này O
-mình O
-làm O
-được O
-gì O
-
-đánh_giá O
-hiệu_suất O
-tuần O
-
-weekly O
-summary O
-
-summarize O
-my O
-week O
-
-show O
-week O
-progress O
-
-kết_quả O
-làm_việc O
-tuần O
-này O
-
-xem O
-thống_kê O
-tuần O
-
-tóm_tắt O
-tuần O
-này O
-giúp O
-mình O
-
-báo_cáo O
-tuần O
-nha O
-
-cho O
-mình O
-tổng_kết O
-tuần O
-ngay O
-
-tuần O
-này O
-mình O
-làm O
-được O
-gì O
-với O
-
-đánh_giá O
-hiệu_suất O
-tuần O
-đi O
-
-weekly O
-summary O
-cho O
-tôi O
-
-summarize O
-my O
-week O
-nhé O
-
-show O
-week O
-progress O
-liền O
-
-kết_quả O
-làm_việc O
-tuần O
-này O
-giúp O
-mình O
-
-xem O
-thống_kê O
-tuần O
-nha O
-
-tóm_tắt O
-tuần O
-này O
-ngay O
-
-báo_cáo O
-tuần O
-với O
-
-cho O
-mình O
-tổng_kết O
-tuần O
-đi O
-
-tuần O
-này O
-mình O
-làm O
-được O
-gì O
-cho O
-tôi O
-
-đánh_giá O
-hiệu_suất O
-tuần O
-nhé O
-
-ưu_tiên O
-việc O
-nào O
-trước O
-
-task O
-nào O
-quan_trọng O
-nhất O
-
-mình O
-nên O
-làm O
-gì O
-trước O
-
-gợi_ý O
-thứ_tự O
-công_việc O
-
-việc O
-nào O
-cấp_bách O
-
-prioritize O
-my O
-tasks O
-
-what O
-is O
-most O
-important O
-
-sắp_xếp O
-ưu_tiên O
-giúp O
-mình O
-
-chọn O
-task O
-cần O
-làm O
-ngay O
-
-đâu O
-là O
-việc O
-nên O
-xử_lý O
-trước O
-
-ưu_tiên O
-việc O
-nào O
-trước O
-giúp O
-mình O
-
-task O
-nào O
-quan_trọng O
-nhất O
-nha O
-
-mình O
-nên O
-làm O
-gì O
-trước O
-ngay O
-
-gợi_ý O
-thứ_tự O
-công_việc O
-với O
-
-việc O
-nào O
-cấp_bách O
-đi O
-
-prioritize O
-my O
-tasks O
-cho O
-tôi O
-
-what O
-is O
-most O
-important O
-nhé O
-
-sắp_xếp O
-ưu_tiên O
-giúp O
-mình O
-liền O
-
-chọn O
-task O
-cần O
-làm O
-ngay O
-giúp O
-mình O
-
-đâu O
-là O
-việc O
-nên O
-xử_lý O
-trước O
-nha O
-
-ưu_tiên O
-việc O
-nào O
-trước O
-ngay O
-
-task O
-nào O
-quan_trọng O
-nhất O
-với O
-
-mình O
-nên O
-làm O
-gì O
-trước O
-đi O
-
-gợi_ý O
-thứ_tự O
-công_việc O
-cho O
-tôi O
-
-việc O
-nào O
-cấp_bách O
-nhé O
-
-xem O
-task O
-
-liệt_kê O
-task O
-
-danh_sách O
-công_việc O
-
-show O
-tasks O
-
-list O
-my O
-tasks O
-
-lọc O
-task O
-
-tìm O
-task O
-
-task O
-nào O
-quá B-task_due_state
-hạn I-task_due_state
-
-liệt_kê O
-task O
-trễ B-task_due_state
-hạn I-task_due_state
-
-show O
-overdue B-task_due_state
-tasks O
-
-xem O
-việc O
-đã B-task_due_state
-quá I-task_due_state
-deadline I-task_due_state
-
-xem O
-task O
-hôm_nay B-due_date
-
-liệt_kê O
-công_việc O
-đến O
-hạn O
-hôm_nay B-due_date
-
-task O
-due O
-hôm_nay B-due_date
-
-xem O
-task O
-ngày_mai B-due_date
-
-liệt_kê O
-công_việc O
-đến O
-hạn O
-ngày_mai B-due_date
-
-task O
-due O
-ngày_mai B-due_date
-
-xem O
-task O
-ngày_kia B-due_date
-
-liệt_kê O
-công_việc O
-đến O
-hạn O
-ngày_kia B-due_date
-
-task O
-due O
-ngày_kia B-due_date
-
-xem O
-task O
-tuần B-due_date
-sau I-due_date
-
-liệt_kê O
-công_việc O
-đến O
-hạn O
-tuần B-due_date
-sau I-due_date
-
-task O
-due O
-tuần B-due_date
-sau I-due_date
-
-xem O
-task O
-thứ B-due_date
-hai I-due_date
-
-liệt_kê O
-công_việc O
-đến O
-hạn O
-thứ B-due_date
-hai I-due_date
-
-task O
-due O
-thứ B-due_date
-hai I-due_date
-
-xem O
-task O
-30/4 B-due_date
-
-liệt_kê O
-công_việc O
-đến O
-hạn O
-30/4 B-due_date
-
-task O
-due O
-30/4 B-due_date
-
-lọc O
-task O
-trạng_thái O
-todo B-task_status
-
-lọc O
-task O
-trạng_thái O
-in-progress B-task_status
-
-lọc O
-task O
-trạng_thái O
-completed B-task_status
-
-lọc O
-task O
-trạng_thái O
-chưa B-task_status
-làm I-task_status
-
-lọc O
-task O
-trạng_thái O
-đang B-task_status
-làm I-task_status
-
-lọc O
-task O
-trạng_thái O
-hoàn_thành B-task_status
-
-lọc O
-task O
-ưu_tiên O
-cao B-priority
-
-lọc O
-task O
-ưu_tiên O
-trung_bình B-priority
-
-lọc O
-task O
-ưu_tiên O
-thấp B-priority
-
-lọc O
-task O
-ưu_tiên O
-high B-priority
-
-lọc O
-task O
-ưu_tiên O
-medium B-priority
-
-lọc O
-task O
-ưu_tiên O
-low B-priority
-
-lọc O
-task O
-nhãn O
-work B-task_label
-
-lọc O
-task O
-nhãn O
-personal B-task_label
-
-lọc O
-task O
-nhãn O
-học_tập B-task_label
-
-lọc O
-task O
-nhãn O
-khách_hàng B-task_label
+vé B-keyword
+máy_bay I-keyword
+
+đổi O
+danh_mục O
+giải_trí B-keyword
+thành O
+thư_giãn O
+
+xoá O
+danh_mục O
+cũ O
+đi_lại B-keyword
 
 tìm O
 task O
 chứa O
-báo_cáo B-search_query
+api B-keyword
+public I-keyword
 
-filter O
-tasks O
-contains O
-báo_cáo B-search_query
-
-tìm O
-task O
-chứa O
-meeting B-search_query
-
-filter O
-tasks O
-contains O
-meeting B-search_query
-
-tìm O
-task O
-chứa O
-sql B-search_query
-
-filter O
-tasks O
-contains O
-sql B-search_query
-
-tìm O
-task O
-chứa O
-proposal B-search_query
-
-filter O
-tasks O
-contains O
-proposal B-search_query
-
-tìm O
-task O
-chứa O
-email B-search_query
-
-filter O
-tasks O
-contains O
-email B-search_query
-
-lọc O
-task O
-todo B-task_status
-ưu_tiên O
-cao B-priority
-
-xem O
-task O
-đang B-task_status
-làm I-task_status
-nhãn O
-work B-task_label
-
-liệt_kê O
-task O
-quá B-task_due_state
-hạn I-task_due_state
-ưu_tiên O
-high B-priority
-
-xem O
-task O
-ngày_mai B-due_date
-ưu_tiên O
-cao B-priority
-
-tìm O
-task O
-chứa O
-báo_cáo B-search_query
-nhãn O
-work B-task_label
-
-show O
-overdue B-task_due_state
-tasks O
-with O
-high B-priority
-priority O
-
-xem O
-task O
-giúp O
-mình O
-
-liệt_kê O
-task O
-nha O
-
-danh_sách O
+xoá O
 công_việc O
-ngay O
-
-show O
-tasks O
-với O
-
-list O
-my O
-tasks O
-đi O
-
-lọc O
-task O
-cho O
-tôi O
+có O
+từ O
+upload B-keyword
+ảnh I-keyword
 
 tìm O
-task O
-nhé O
+ghi_chú O
+về O
+chiến_dịch B-keyword
+mùa I-keyword
+hè I-keyword
 
-task O
-nào O
-quá B-task_due_state
-hạn I-task_due_state
-liền O
+ghim O
+note O
+chứa O
+demo B-keyword
+hội_thảo I-keyword
 
-liệt_kê O
-task O
-trễ B-task_due_state
-hạn I-task_due_state
-giúp O
-mình O
+xoá O
+note O
+có O
+chữ O
+quà B-keyword
+tặng I-keyword
 
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
+tìm O
+khoản O
+chi O
+facebook B-keyword
+ads I-keyword
 
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
+sửa O
+chi_tiêu O
+liên_quan O
+domain B-keyword
+renew I-keyword
 
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
-14h B-due_time
+xoá O
+giao_dịch O
+chứa O
+bút B-keyword
+ký I-keyword
 
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ưu_tiên O
-cao B-priority
+đổi O
+danh_mục O
+chi_tiêu B-keyword
+linh_tinh I-keyword
+thành O
+khác O
 
-tạo O
-task O
-viết B-task_title
-báo_cáo I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
+tìm O
+công_việc O
+về O
+recap B-keyword
 
 tạo O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-học B-task_title
-sql I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-review B-task_title
-code I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-làm B-task_title
-bài_tập I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-đọc B-task_title
-tài_liệu I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-chốt B-task_title
-proposal I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-họp B-task_title
-team I-task_title
-hạn O
-16h B-due_time
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-ngày_mai B-due_date
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-ưu_tiên O
-cao B-priority
-
-tạo O
-task O
-gửi B-task_title
-email I-task_title
-hạn O
-16h B-due_time
+công_việc O
+viết B-object_name
+báo_cáo I-object_name
+tuần I-object_name
 
 thêm O
 task O
-viết B-task_title
-báo_cáo I-task_title
+gọi B-object_name
+khách_hàng I-object_name
+acme I-object_name
+
+xoá O
+công_việc O
+chuẩn_bị B-object_name
+slide I-object_name
+demo I-object_name
+
+xoá O
+task O
+học B-object_name
+truy_vấn I-object_name
+postgres I-object_name
+
+tạo O
+nhiệm_vụ O
+soạn B-object_name
+proposal I-object_name
+quý I-object_name
+ba I-object_name
+
+thêm O
+công_việc O
+kiểm_tra B-object_name
+backlog I-object_name
+sprint I-object_name
+
+tạo O
+ghi_chú O
+họp B-object_name
+weekly I-object_name
+product I-object_name
+
+thêm O
+note O
+ý_tưởng B-object_name
+landing I-object_name
+page I-object_name
+mới I-object_name
+
+ghim O
+note O
+kế_hoạch B-object_name
+ra_mắt I-object_name
+beta I-object_name
+
+bỏ O
+ghim O
+ghi_chú O
+tổng_kết B-object_name
+tuần I-object_name
+1 I-object_name
+
+xoá O
+ghi_chú O
+danh_sách B-object_name
+bug I-object_name
+production I-object_name
+
+sửa O
+note O
+ghi_chú B-object_name
+onboarding I-object_name
+sales I-object_name
+
+tạo O
+công_việc O
+review B-object_name
+pull I-object_name
+request I-object_name
+thanh_toán I-object_name
+
+thêm O
+việc O
+đặt B-object_name
+lịch I-object_name
+demo I-object_name
+khách I-object_name
+nhật I-object_name
+
+xoá O
+nhiệm_vụ O
+gửi B-object_name
+báo_giá I-object_name
+tháng I-object_name
+sáu I-object_name
+
+tạo O
+note O
+biên_bản B-object_name
+họp I-object_name
+đối_tác I-object_name
+
+ghim O
+ghi_chú O
+checklist B-object_name
+triển_khai I-object_name
+server I-object_name
+
+bỏ O
+ghim O
+note O
+ý_tưởng B-object_name
+automation I-object_name
+báo_cáo I-object_name
+
+xoá O
+note O
+nháp B-object_name
+email I-object_name
+chăm_sóc I-object_name
+khách_hàng I-object_name
 
 thêm O
 task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
+đọc B-object_name
+tài_liệu I-object_name
+redis I-object_name
+cluster I-object_name
+
+tạo O
+công_việc O
+sửa B-object_name
+lỗi I-object_name
+đăng_nhập I-object_name
+ios I-object_name
+
+xoá O
+task O
+chốt B-object_name
+ngân_sách I-object_name
+workshop I-object_name
+
+tạo O
+ghi_chú O
+script B-object_name
+gọi I-object_name
+điện I-object_name
+khách I-object_name
+vip I-object_name
+
+thêm O
+ghi_chú O
+timeline B-object_name
+chiến_dịch I-object_name
+mùa I-object_name
+hè I-object_name
+
+ghim O
+note O
+todo B-object_name
+tối_ưu I-object_name
+trang I-object_name
+dashboard I-object_name
+
+bỏ O
+ghim O
+ghi_chú O
+tổng_hợp B-object_name
+phản_hồi I-object_name
+survey I-object_name
+
+xoá O
+công_việc O
+nhắn_tin B-object_name
+xác_nhận I-object_name
+lịch I-object_name
+họp I-object_name
+
+tạo O
+việc_làm B-object_name
+mockup I-object_name
+trang I-object_name
+pricing I-object_name
 
 thêm O
 task O
-viết B-task_title
-báo_cáo I-task_title
-ngày_mai B-due_date
-14h B-due_time
+cập_nhật B-object_name
+tài_liệu I-object_name
+api I-object_name
+public I-object_name
+
+tạo O
+note O
+ghi_chú B-object_name
+họp I-object_name
+tuyển_dụng I-object_name
+backend I-object_name
+
+ghim O
+ghi_chú O
+kịch_bản B-object_name
+demo I-object_name
+hội_thảo I-object_name
+
+xoá O
+note O
+ý_tưởng B-object_name
+quà I-object_name
+tặng I-object_name
+khách_hàng I-object_name
+
+tạo O
+công_việc O
+đối B-object_name
+soát I-object_name
+hoá_đơn I-object_name
+tháng I-object_name
+này I-object_name
 
 thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-ưu_tiên O
-cao B-priority
-
-thêm O
-task O
-viết B-task_title
-báo_cáo I-task_title
-hạn O
-16h B-due_time
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-ưu_tiên O
-cao B-priority
-
-thêm O
-task O
-học B-task_title
-sql I-task_title
-hạn O
-16h B-due_time
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-ngày_mai B-due_date
-14h B-due_time
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-ưu_tiên O
-cao B-priority
-
-thêm O
-task O
-review B-task_title
-code I-task_title
-hạn O
-16h B-due_time
-
-xoá O
-task O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-có O
-tên O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-có O
-tên O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-có O
-tên O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-có O
-tên O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-có O
-tên O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-có O
-tên O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-có O
-tên O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-task O
-có O
-tên O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-task O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-task O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-task O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-có O
-tên O
-review B-task_title
-code I-task_title
-
-xoá O
-task O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-có O
-tên O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-task O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-có O
-tên O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-task O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-có O
-tên O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-task O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-có O
-tên O
-họp B-task_title
-team I-task_title
-
-xoá O
-task O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-có O
-tên O
-gửi B-task_title
-email I-task_title
-
-xoá O
-task O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-có O
-tên O
-fix B-task_title
-bug I-task_title
-
-xoá O
-task O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-task O
-có O
-tên O
-mua B-task_title
-đồ I-task_title
-
-xoá O
 nhiệm_vụ O
-viết B-task_title
-báo_cáo I-task_title
+gửi B-object_name
+recap I-object_name
+sau I-object_name
+workshop I-object_name
 
-xoá O
-nhiệm_vụ O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-review B-task_title
-code I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-review B-task_title
-code I-task_title
-
-xoá O
-nhiệm_vụ O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-gọi B-task_title
-khách_hàng I-task_title
-
-xoá O
-nhiệm_vụ O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-chuẩn_bị B-task_title
-slide I-task_title
-
-xoá O
-nhiệm_vụ O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-làm B-task_title
-bài_tập I-task_title
-
-xoá O
-nhiệm_vụ O
-họp B-task_title
-team I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-họp B-task_title
-team I-task_title
-
-xoá O
-nhiệm_vụ O
-gửi B-task_title
-email I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-gửi B-task_title
-email I-task_title
-
-xoá O
-nhiệm_vụ O
-fix B-task_title
-bug I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-fix B-task_title
-bug I-task_title
-
-xoá O
-nhiệm_vụ O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-mua B-task_title
-đồ I-task_title
-
-xoá O
-nhiệm_vụ O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-viết B-task_title
-báo_cáo I-task_title
-
-xoá O
-nhiệm_vụ O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-có O
-tên O
-học B-task_title
-sql I-task_title
-
-xoá O
-nhiệm_vụ O
-review B-task_title
-code I-task_title
-
-xác_nhận O
-xoá O
-các O
-task O
-đã O
-chọn O
-
-ok O
-xoá O
-các O
-task O
-đã O
-chọn O
-
-đồng_ý O
-xoá O
-danh_sách O
-vừa O
-chọn O
-
-confirm O
-delete O
-selected O
-tasks O
-
-xoá O
-hết O
-những O
-task O
-đã O
-chọn O
-
-tiếp_tục O
-xoá O
-các O
-mục O
-đã O
-chọn O
-
-chắc_chắn O
-xoá O
-các O
-task O
-này O
-
-xoá O
-các O
-task O
-đã O
-đánh_dấu O
-
-yes O
-delete O
-selected O
-tasks O
-
-tiến_hành O
-xoá O
-lựa_chọn O
-
-xác_nhận O
-xoá O
-các O
-task O
-đã O
-chọn O
-giúp O
-mình O
-
-ok O
-xoá O
-các O
-task O
-đã O
-chọn O
-nha O
-
-đồng_ý O
-xoá O
-danh_sách O
-vừa O
-chọn O
-ngay O
-
-confirm O
-delete O
-selected O
-tasks O
-với O
-
-xoá O
-hết O
-những O
-task O
-đã O
-chọn O
-đi O
-
-tiếp_tục O
-xoá O
-các O
-mục O
-đã O
-chọn O
-cho O
-tôi O
-
-chắc_chắn O
-xoá O
-các O
-task O
-này O
-nhé O
-
-xoá O
-các O
-task O
-đã O
-đánh_dấu O
-liền O
-
-yes O
-delete O
-selected O
-tasks O
-giúp O
-mình O
-
-tiến_hành O
-xoá O
-lựa_chọn O
-nha O
-
-xác_nhận O
-xoá O
-các O
-task O
-đã O
-chọn O
-ngay O
-
-ok O
-xoá O
-các O
-task O
-đã O
-chọn O
-với O
-
-đồng_ý O
-xoá O
-danh_sách O
-vừa O
-chọn O
-đi O
-
-confirm O
-delete O
-selected O
-tasks O
-cho O
-tôi O
-
-xoá O
-hết O
-những O
-task O
-đã O
-chọn O
-nhé O
-
-tiếp_tục O
-xoá O
-các O
-mục O
-đã O
-chọn O
-liền O
-
-chắc_chắn O
-xoá O
-các O
-task O
-này O
-giúp O
-mình O
-
-xoá O
-các O
-task O
-đã O
-đánh_dấu O
-nha O
-
-yes O
-delete O
-selected O
-tasks O
-ngay O
-
-tiến_hành O
-xoá O
-lựa_chọn O
-với O
-
-hoàn O
-tác O
 xoá O
 task O
+refactor B-object_name
+module I-object_name
+upload I-object_name
+ảnh I-object_name
 
-undo O
-xoá O
-task O
-
-khôi_phục O
-task O
-vừa O
-xoá O
-
-lấy O
-lại O
-task O
-vừa O
-xoá O
-
-undo O
-delete O
-task O
-
-phục_hồi O
-task O
-mới O
-xoá O
-
-trả O
-lại O
-task O
-đã O
-xoá O
-
-rollback O
-thao_tác O
-xoá O
-task O
-
-huỷ O
-xoá O
-task O
-
-restore O
-deleted O
-task O
-
-hoàn O
-tác O
-xoá O
-task O
-giúp O
-mình O
-
-undo O
-xoá O
-task O
-nha O
-
-khôi_phục O
-task O
-vừa O
-xoá O
-ngay O
-
-lấy O
-lại O
-task O
-vừa O
-xoá O
-với O
-
-undo O
-delete O
-task O
-đi O
-
-phục_hồi O
-task O
-mới O
-xoá O
-cho O
-tôi O
-
-trả O
-lại O
-task O
-đã O
-xoá O
-nhé O
-
-rollback O
-thao_tác O
-xoá O
-task O
-liền O
-
-huỷ O
-xoá O
-task O
-giúp O
-mình O
-
-restore O
-deleted O
-task O
-nha O
-
-hoàn O
-tác O
-xoá O
-task O
-ngay O
-
-undo O
-xoá O
-task O
-với O
-
-khôi_phục O
-task O
-vừa O
-xoá O
-đi O
-
-lấy O
-lại O
-task O
-vừa O
-xoá O
-cho O
-tôi O
-
-undo O
-delete O
-task O
-nhé O
-
-phục_hồi O
-task O
-mới O
-xoá O
-liền O
-
-trả O
-lại O
-task O
-đã O
-xoá O
-giúp O
-mình O
-
-rollback O
-thao_tác O
-xoá O
-task O
-nha O
-
-huỷ O
-xoá O
-task O
-ngay O
-
-restore O
-deleted O
-task O
-với O
+tạo O
+ghi_chú O
+danh_sách B-object_name
+câu I-object_name
+hỏi I-object_name
+user I-object_name
+interview I-object_name
 

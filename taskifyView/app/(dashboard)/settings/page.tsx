@@ -101,6 +101,69 @@ function formatJsonForView(raw?: string | null): string | null {
   }
 }
 
+type IntentLogItem = {
+  name: string;
+  confidence: number;
+};
+
+type ChatLogMetadata = {
+  normalizedMessage?: string | null;
+  intent?: IntentLogItem | null;
+  intentRanking?: IntentLogItem[] | null;
+};
+
+function formatConfidence(confidence?: number | null): string {
+  if (typeof confidence !== "number" || Number.isNaN(confidence)) {
+    return "0.0%";
+  }
+  return `${(confidence * 100).toFixed(1)}%`;
+}
+
+function parseChatLogMetadata(raw?: string | null): ChatLogMetadata | null {
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw) as {
+      chatLog?: {
+        normalizedMessage?: unknown;
+        intent?: { name?: unknown; confidence?: unknown } | null;
+        intentRanking?: Array<{ name?: unknown; confidence?: unknown }> | null;
+      } | null;
+    };
+
+    const chatLog = parsed?.chatLog;
+    if (!chatLog || typeof chatLog !== "object") {
+      return null;
+    }
+
+    const normalizeItem = (item: { name?: unknown; confidence?: unknown } | null | undefined): IntentLogItem | null => {
+      if (!item || typeof item.name !== "string" || typeof item.confidence !== "number") {
+        return null;
+      }
+
+      return {
+        name: item.name,
+        confidence: item.confidence,
+      };
+    };
+
+    return {
+      normalizedMessage:
+        typeof chatLog.normalizedMessage === "string"
+          ? chatLog.normalizedMessage
+          : null,
+      intent: normalizeItem(chatLog.intent),
+      intentRanking: Array.isArray(chatLog.intentRanking)
+        ? chatLog.intentRanking
+            .map((item) => normalizeItem(item))
+            .filter((item): item is IntentLogItem => item !== null)
+        : [],
+    };
+  } catch {
+    return null;
+  }
+}
+
 function formatGeminiStatusLabel(status: GeminiCredentialStatus): string {
   switch (status) {
     case "Valid":
@@ -701,6 +764,8 @@ function LogTabContent() {
             selectedMessages.map((m) => {
               const prettyMetadata = formatJsonForView(m.metadataJson);
               const isUser = m.role === "user";
+              const chatLogMetadata = isUser ? parseChatLogMetadata(m.metadataJson) : null;
+              const topIntents = (chatLogMetadata?.intentRanking ?? []).slice(0, 3);
               return (
                 <div
                   key={m.id}
@@ -721,6 +786,37 @@ function LogTabContent() {
                   <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">
                     {m.text}
                   </p>
+                  {isUser && topIntents.length > 0 && (
+                    <div className="mt-3 rounded-md border border-sky-200/70 bg-sky-50/70 p-3 dark:border-sky-700 dark:bg-sky-950/30">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-semibold uppercase tracking-wide text-sky-700 dark:text-sky-300">
+                          Intent Top 3
+                        </span>
+                        {chatLogMetadata?.intent && (
+                          <Badge className="bg-sky-100 text-sky-700 dark:bg-sky-500/20 dark:text-sky-300">
+                            Best: {chatLogMetadata.intent.name} {formatConfidence(chatLogMetadata.intent.confidence)}
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {topIntents.map((intent, index) => (
+                          <Badge
+                            key={`${m.id}-${intent.name}-${index}`}
+                            variant="outline"
+                            className="border-sky-300/80 bg-white/70 text-sky-800 dark:border-sky-700 dark:bg-sky-950/20 dark:text-sky-200"
+                          >
+                            #{index + 1} {intent.name} {formatConfidence(intent.confidence)}
+                          </Badge>
+                        ))}
+                      </div>
+                      {chatLogMetadata?.normalizedMessage &&
+                        chatLogMetadata.normalizedMessage !== m.text && (
+                          <p className="mt-2 text-xs text-sky-700/80 dark:text-sky-300/80">
+                            Parsed text: {chatLogMetadata.normalizedMessage}
+                          </p>
+                        )}
+                    </div>
+                  )}
                   {prettyMetadata && (
                     <pre className="mt-3 overflow-auto rounded bg-black/90 p-3 text-xs text-green-200">
                       {prettyMetadata}

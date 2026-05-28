@@ -1,4 +1,4 @@
-# NLU training data for Taskify assistant (Vietnamese-first)
+# Dữ liệu huấn luyện NLU cho trợ lý Taskify
 version: "3.1"
 
 nlu:
@@ -6,8 +6,8 @@ nlu:
     examples: |
       - xin chào
       - chào bạn
-      - hello
-      - hi
+      - chào nhé
+      - chào nha
       - alo
       - chào buổi sáng
       - chào buổi tối
@@ -15,8 +15,8 @@ nlu:
       - chào trợ lý
       - xin chào giúp mình
       - chào bạn nha
-      - hello ngay
-      - hi với
+      - chào nhé ngay
+      - chào nha với
       - alo đi
       - chào buổi sáng cho tôi
       - chào buổi tối nhé
@@ -24,8 +24,8 @@ nlu:
       - chào trợ lý giúp mình
       - xin chào nha
       - chào bạn ngay
-      - hello với
-      - hi đi
+      - chào nhé với
+      - chào nha đi
       - alo cho tôi
       - chào buổi sáng nhé
       - chào buổi tối liền
@@ -34,57 +34,57 @@ nlu:
     examples: |
       - tạm biệt
       - chào tạm biệt
-      - bye
-      - goodbye
+      - tạm biệt nhé
+      - mình chào bạn nha
       - hẹn gặp lại
       - mình thoát nhé
       - kết thúc ở đây
       - cảm ơn nhé tạm biệt
       - mình đi đây
-      - see you
+      - hẹn gặp lại sau
       - tạm biệt giúp mình
       - chào tạm biệt nha
-      - bye ngay
-      - goodbye với
+      - tạm biệt nhé ngay
+      - mình chào bạn nha với
       - hẹn gặp lại đi
       - mình thoát nhé cho tôi
       - kết thúc ở đây nhé
       - cảm ơn nhé tạm biệt liền
       - mình đi đây giúp mình
-      - see you nha
+      - hẹn gặp lại sau nha
       - tạm biệt ngay
       - chào tạm biệt với
-      - bye đi
-      - goodbye cho tôi
+      - tạm biệt nhé đi
+      - mình chào bạn nha cho tôi
       - hẹn gặp lại nhé
 
   - intent: affirm
     examples: |
       - đúng rồi
       - đồng ý
-      - ok
-      - oke
-      - yes
+      - được
+      - ừ
+      - vâng
       - chính xác
       - xác nhận
-      - được
       - chuẩn
       - ừ đúng
       - đúng rồi giúp mình
       - đồng ý nha
-      - ok ngay
-      - oke với
-      - yes đi
+      - được ngay
+      - ừ với
+      - vâng đi
       - chính xác cho tôi
       - xác nhận nhé
-      - được liền
-      - chuẩn giúp mình
-      - ừ đúng nha
-      - đúng rồi ngay
-      - đồng ý với
-      - ok đi
-      - oke cho tôi
-      - yes nhé
+      - chuẩn liền
+      - ừ đúng giúp mình
+      - đúng rồi nha
+      - đồng ý ngay
+      - được với
+      - ừ đi
+      - vâng cho tôi
+      - chính xác nhé
+      - xác nhận liền
 
   - intent: deny
     examples: |
@@ -92,27 +92,27 @@ nlu:
       - không đồng ý
       - hủy
       - thôi
-      - no
+      - không nhé
       - không phải
       - bỏ qua
       - đừng làm vậy
       - không cần
-      - stop
+      - dừng lại
       - không giúp mình
       - không đồng ý nha
       - hủy ngay
       - thôi với
-      - no đi
+      - không nhé đi
       - không phải cho tôi
       - bỏ qua nhé
       - đừng làm vậy liền
       - không cần giúp mình
-      - stop nha
+      - dừng lại nha
       - không ngay
       - không đồng ý với
       - hủy đi
       - thôi cho tôi
-      - no nhé
+      - không nhé nhé
 
   - intent: ask_howcanhelp
     examples: |
@@ -121,9 +121,9 @@ nlu:
       - mình cần hướng dẫn
       - hỗ trợ mình với
       - tôi có thể nhờ gì
-      - show me what you can do
-      - how can you help
-      - help me
+      - bạn hỗ trợ được những gì
+      - bạn có thể giúp mình ra sao
+      - giúp mình với
       - liệt kê chức năng của bạn
       - bạn hỗ trợ tác vụ nào
       - bạn giúp được gì giúp mình
@@ -131,9 +131,9 @@ nlu:
       - mình cần hướng dẫn ngay
       - hỗ trợ mình với với
       - tôi có thể nhờ gì đi
-      - show me what you can do cho tôi
-      - how can you help nhé
-      - help me liền
+      - bạn hỗ trợ được những gì cho tôi
+      - bạn có thể giúp mình ra sao nhé
+      - giúp mình với liền
       - liệt kê chức năng của bạn giúp mình
       - bạn hỗ trợ tác vụ nào nha
       - bạn giúp được gì ngay
@@ -141,9 +141,9 @@ nlu:
       - mình cần hướng dẫn đi
       - hỗ trợ mình với cho tôi
       - tôi có thể nhờ gì nhé
-      - show me what you can do liền
-      - how can you help giúp mình
-      - help me nha
+      - bạn hỗ trợ được những gì liền
+      - bạn có thể giúp mình ra sao giúp mình
+      - giúp mình với nha
       - liệt kê chức năng của bạn ngay
       - bạn hỗ trợ tác vụ nào với
 
@@ -159,48 +159,46 @@ nlu:
       - ơ ơ ơ
       - blabla
       - xóa
-      - undo
+      - hoàn tác
       - ngày mai
-      - task
+      - công việc
       - điều gì đó
       - hmmmmm
       - kkkk
-      - random text
+      - văn bản linh tinh
       - không liên quan
-      - gibberish input
+      - chữ vô nghĩa
       - lorem ipsum
 
   - synonym: high
     examples: |
-      - urgent
-      - critical
-      - important
-      - asap
-      - high priority
       - khẩn cấp
+      - rất gấp
+      - cấp bách
       - quan trọng
       - gấp
       - ưu tiên cao
+      - mức cao
       - cao
 
   - synonym: low
     examples: |
-      - minor
-      - not urgent
-      - whenever
-      - low priority
       - không gấp
+      - ít gấp
+      - để sau cũng được
       - ưu tiên thấp
+      - mức thấp
+      - bình thường thôi
       - khi nào cũng được
       - thấp
 
   - synonym: medium
     examples: |
-      - normal
-      - regular
-      - standard
-      - medium priority
       - bình thường
+      - vừa phải
+      - mức vừa
+      - ưu tiên vừa
+      - trung mức
       - trung bình
 
   - regex: due_time
@@ -214,13 +212,10 @@ nlu:
 
   - regex: due_date
     examples: |
-      - today
-      - tomorrow
-      - next monday
-      - next week
       - hôm nay
       - ngày mai
       - ngày kia
+      - thứ hai tuần tới
       - tuần sau
       - tháng sau
       - chiều nay

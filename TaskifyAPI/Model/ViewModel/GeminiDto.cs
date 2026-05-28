@@ -33,6 +33,28 @@ namespace TaskifyAPI.Model.ViewModel
         public string Text { get; set; } = string.Empty;
     }
 
+    public class GeminiEntityCandidateDto
+    {
+        public string Entity { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+    }
+
+    public class GeminiExtractedEntityDto
+    {
+        public string Entity { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+        public int Start { get; set; }
+        public int End { get; set; }
+        public double Confidence { get; set; } = 1.0d;
+    }
+
+    public class GeminiEntityExtractionResultDto
+    {
+        public string Provider { get; set; } = "gemini";
+        public string SchemaVersion { get; set; } = "taskify-entity-v1";
+        public IReadOnlyList<GeminiExtractedEntityDto> Entities { get; set; } = Array.Empty<GeminiExtractedEntityDto>();
+    }
+
     public class OllamaSettingsStatusDto
     {
         public bool Configured { get; set; }

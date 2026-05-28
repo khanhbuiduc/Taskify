@@ -4,12 +4,25 @@ common/text_utils.py — Xử lý text, phát hiện ngôn ngữ, entity extract
 """
 
 import re
-from typing import Any, Dict, List, Optional, Text, Tuple
+from typing import Any, Dict, Iterable, List, Optional, Text, Tuple
 
 from rasa_sdk import Tracker
 from rasa_sdk.events import ActiveLoop, SlotSet
 
 from actions.config import VIETNAMESE_CHAR_PATTERN, VIETNAMESE_HINT_PATTERN
+
+ENTITY_ALIAS_MAP: Dict[str, List[str]] = {
+    "task_title": ["object_name"],
+    "task_label": ["category"],
+    "note_title": ["object_name"],
+    "note_text": ["content"],
+    "note_keyword": ["keyword"],
+    "finance_amount": ["amount"],
+    "finance_category": ["category"],
+    "finance_description": ["content"],
+    "finance_keyword": ["keyword"],
+    "search_query": ["keyword"],
+}
 
 # ---------------------------------------------------------------------------
 # Locale detection
@@ -361,13 +374,44 @@ def clean_task_title(candidate: Optional[str]) -> Optional[str]:
     return value
 
 
-def first_entity_value(latest_message: Dict[str, Any], entity_name: str) -> Optional[str]:
+def resolve_entity_names(
+    entity_name: str, aliases: Optional[Iterable[str]] = None
+) -> List[str]:
+    names: List[str] = []
+    for candidate in [entity_name, *(ENTITY_ALIAS_MAP.get(entity_name, [])), *(aliases or [])]:
+        if candidate and candidate not in names:
+            names.append(candidate)
+    return names
+
+
+def first_entity_value(
+    latest_message: Dict[str, Any],
+    entity_name: str,
+    aliases: Optional[Iterable[str]] = None,
+) -> Optional[str]:
+    entity_names = resolve_entity_names(entity_name, aliases)
     for entity in latest_message.get("entities", []) or []:
-        if entity.get("entity") == entity_name:
-            value = entity.get("value")
-            if isinstance(value, str) and normalize_whitespace(value):
-                return value
+        if entity.get("entity") not in entity_names:
+            continue
+        value = entity.get("value")
+        if isinstance(value, str) and normalize_whitespace(value):
+            return value
     return None
+
+
+def tracker_slot_or_entity(
+    tracker: Tracker,
+    slot_name: str,
+    entity_name: Optional[str] = None,
+    aliases: Optional[Iterable[str]] = None,
+) -> Optional[str]:
+    slot_value = tracker.get_slot(slot_name)
+    if isinstance(slot_value, str) and normalize_whitespace(slot_value):
+        return slot_value.strip()
+
+    latest_message = tracker.latest_message or {}
+    target_entity = entity_name or slot_name
+    return first_entity_value(latest_message, target_entity, aliases=aliases)
 
 
 def extract_task_title_from_message(
@@ -375,12 +419,16 @@ def extract_task_title_from_message(
 ) -> Optional[str]:
     text = latest_message.get("text", "") or ""
     entities = latest_message.get("entities", []) or []
-    text_without_metadata = strip_entity_spans(text, entities, excluded_entities={"task_title"})
+    text_without_metadata = strip_entity_spans(
+        text, entities, excluded_entities={"task_title", "object_name"}
+    )
     derived_title = clean_task_title(text_without_metadata)
     if derived_title:
         return derived_title
 
-    explicit_title = clean_task_title(first_entity_value(latest_message, "task_title"))
+    explicit_title = clean_task_title(
+        first_entity_value(latest_message, "task_title", aliases=["object_name"])
+    )
     if explicit_title:
         return explicit_title
 

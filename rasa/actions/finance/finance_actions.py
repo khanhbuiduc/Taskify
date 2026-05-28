@@ -15,7 +15,8 @@ from rasa_sdk.executor import CollectingDispatcher
 
 from actions.config import TASKIFY_API_URL, REQUEST_TIMEOUT
 from actions.common.api_utils import get_api_headers, split_sender
-from actions.common.date_utils import parse_due_date
+from actions.common.date_utils import extract_duckling_date_value, parse_due_date
+from actions.common.text_utils import first_entity_value, tracker_slot_or_entity
 
 logger = logging.getLogger(__name__)
 
@@ -31,10 +32,7 @@ def _reset_finance_slots() -> List[Dict[Text, Any]]:
 
 
 def _first_entity(tracker: Tracker, entity_name: Text) -> Optional[str]:
-    for entity in tracker.latest_message.get("entities") or []:
-        if entity.get("entity") == entity_name and entity.get("value") is not None:
-            return str(entity.get("value")).strip()
-    return None
+    return first_entity_value(tracker.latest_message or {}, entity_name)
 
 
 def _fold(value: str) -> str:
@@ -118,6 +116,15 @@ def _parse_date(raw: Optional[str], text: str) -> str:
     return now.date().isoformat()
 
 
+def _resolve_date_value(tracker: Tracker, text: str) -> str:
+    duckling_date = extract_duckling_date_value(tracker.latest_message or {})
+    if duckling_date:
+        return duckling_date
+
+    raw_date = tracker_slot_or_entity(tracker, "finance_date")
+    return _parse_date(raw_date, text)
+
+
 def _extract_after_keywords(text: str, keywords: List[str]) -> Optional[str]:
     folded = _fold(text)
     for keyword in keywords:
@@ -141,10 +148,10 @@ class ActionCreateFinanceEntry(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
         text = tracker.latest_message.get("text", "").strip()
-        amount = _parse_amount(tracker.get_slot("finance_amount") or _first_entity(tracker, "finance_amount"), text)
-        category = tracker.get_slot("finance_category") or _first_entity(tracker, "finance_category") or "Khác"
-        description = tracker.get_slot("finance_description") or _first_entity(tracker, "finance_description")
-        date_value = _parse_date(tracker.get_slot("finance_date") or _first_entity(tracker, "finance_date"), text)
+        amount = _parse_amount(tracker_slot_or_entity(tracker, "finance_amount"), text)
+        category = tracker_slot_or_entity(tracker, "finance_category") or "Khác"
+        description = tracker_slot_or_entity(tracker, "finance_description")
+        date_value = _resolve_date_value(tracker, text)
 
         if amount is None:
             dispatcher.utter_message(text="Bạn muốn ghi nhận số tiền bao nhiêu?")
@@ -199,17 +206,18 @@ def _build_entry_query(tracker: Tracker) -> Dict[str, Any]:
     text = tracker.latest_message.get("text", "").strip()
     params: Dict[str, Any] = {"page": 1, "pageSize": 10}
 
-    category = tracker.get_slot("finance_category") or _first_entity(tracker, "finance_category")
-    keyword = tracker.get_slot("finance_keyword") or _first_entity(tracker, "finance_keyword")
+    category = tracker_slot_or_entity(tracker, "finance_category")
+    keyword = tracker_slot_or_entity(tracker, "finance_keyword")
     if category:
         params["category"] = category.strip()
     if keyword:
         params["search"] = keyword.strip()
 
-    date_phrase = tracker.get_slot("finance_date") or _first_entity(tracker, "finance_date")
+    date_phrase = tracker_slot_or_entity(tracker, "finance_date")
     folded = _fold(text)
-    if date_phrase or any(term in folded for term in ["hom nay", "ngay mai", "ngay kia"]):
-        date_value = _parse_date(date_phrase, text)
+    duckling_date = extract_duckling_date_value(tracker.latest_message or {})
+    if duckling_date or date_phrase or any(term in folded for term in ["hom nay", "ngay mai", "ngay kia"]):
+        date_value = duckling_date or _parse_date(date_phrase, text)
         params["from"] = date_value
         params["to"] = date_value
 
@@ -257,13 +265,14 @@ class ActionUpdateFinanceEntry(Action):
             dispatcher.utter_message(text="Không tìm thấy mục tài chính để cập nhật.")
             return _reset_finance_slots()
 
-        amount = _parse_amount(tracker.get_slot("finance_amount") or _first_entity(tracker, "finance_amount"), text)
-        category = tracker.get_slot("finance_category") or _first_entity(tracker, "finance_category") or target.get("category")
-        description = tracker.get_slot("finance_description") or _first_entity(tracker, "finance_description") or target.get("description")
-        raw_date = tracker.get_slot("finance_date") or _first_entity(tracker, "finance_date")
+        amount = _parse_amount(tracker_slot_or_entity(tracker, "finance_amount"), text)
+        category = tracker_slot_or_entity(tracker, "finance_category") or target.get("category")
+        description = tracker_slot_or_entity(tracker, "finance_description") or target.get("description")
+        raw_date = tracker_slot_or_entity(tracker, "finance_date")
         date_value = str(target.get("date", ""))[:10]
-        if raw_date or any(term in _fold(text) for term in ["hom nay", "ngay mai", "ngay kia", "tuan sau", "thang sau"]):
-            date_value = _parse_date(raw_date, text)
+        duckling_date = extract_duckling_date_value(tracker.latest_message or {})
+        if duckling_date or raw_date or any(term in _fold(text) for term in ["hom nay", "ngay mai", "ngay kia", "tuan sau", "thang sau"]):
+            date_value = duckling_date or _parse_date(raw_date, text)
 
         payload = {
             "date": date_value,
@@ -419,7 +428,7 @@ class ActionCreateFinanceCategory(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        name = tracker.get_slot("finance_category") or _first_entity(tracker, "finance_category")
+        name = tracker_slot_or_entity(tracker, "finance_category")
         if not name:
             dispatcher.utter_message(text="Ban muon tao danh muc tai chinh ten gi?")
             return []
@@ -443,8 +452,8 @@ class ActionUpdateFinanceCategory(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        old_name = tracker.get_slot("finance_keyword") or _first_entity(tracker, "finance_keyword")
-        new_name = tracker.get_slot("finance_category") or _first_entity(tracker, "finance_category")
+        old_name = tracker_slot_or_entity(tracker, "finance_keyword")
+        new_name = tracker_slot_or_entity(tracker, "finance_category")
         if not old_name or not new_name:
             dispatcher.utter_message(text="Hay cho minh biet danh muc cu va ten moi.")
             return []
@@ -474,7 +483,10 @@ class ActionDeleteFinanceCategory(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         user_id, _ = split_sender(tracker.sender_id)
-        name = tracker.get_slot("finance_category") or _first_entity(tracker, "finance_category") or tracker.get_slot("finance_keyword")
+        name = (
+            tracker_slot_or_entity(tracker, "finance_keyword")
+            or tracker_slot_or_entity(tracker, "finance_category")
+        )
         if not name:
             dispatcher.utter_message(text="Ban muon xoa danh muc tai chinh nao?")
             return []

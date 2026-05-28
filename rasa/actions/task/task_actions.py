@@ -30,10 +30,12 @@ from actions.common.text_utils import (
     t,
     clean_task_title,
     extract_task_title_from_message,
+    first_entity_value,
     reset_create_task_slots,
 )
 from actions.common.date_utils import (
     build_due_datetime,
+    build_due_datetime_from_latest_message,
     extract_duckling_time_window,
     normalize_priority,
     parse_due_date,
@@ -65,13 +67,7 @@ def _safe_json_loads(raw: Optional[str]) -> Dict[Text, Any]:
 
 
 def _first_entity(latest_message: Dict[Text, Any], entity_name: Text) -> Optional[str]:
-    entities = latest_message.get("entities") or []
-    for entity in entities:
-        if entity.get("entity") == entity_name:
-            value = entity.get("value")
-            if value is not None:
-                return str(value).strip()
-    return None
+    return first_entity_value(latest_message, entity_name)
 
 
 def _normalize_status_from_text(text: str) -> Optional[str]:
@@ -650,10 +646,12 @@ class ActionCreateTask(Action):
     ) -> List[Dict[Text, Any]]:
         user_id, session_id = split_sender(tracker.sender_id)
         locale = get_locale(tracker)
+        latest_message = tracker.latest_message or {}
+        latest_text = latest_message.get("text", "")
 
         task_title = clean_task_title(tracker.get_slot("task_title"))
         if not task_title:
-            task_title = extract_task_title_from_message(tracker.latest_message)
+            task_title = extract_task_title_from_message(latest_message)
 
         if not task_title:
             utter_ask_task_title(dispatcher, locale)
@@ -661,8 +659,14 @@ class ActionCreateTask(Action):
 
         due_date_str = tracker.get_slot("due_date")
         due_time_str = tracker.get_slot("due_time")
-        priority = normalize_priority(tracker.get_slot("priority"))
-        due_datetime = build_due_datetime(due_date_str, due_time_str)
+        priority = normalize_priority(
+            tracker.get_slot("priority")
+            or _first_entity(latest_message, "priority")
+            or _normalize_priority_from_text(latest_text)
+        )
+        due_datetime = build_due_datetime_from_latest_message(
+            latest_message, due_date_str, due_time_str
+        )
         display_title = task_title[0].upper() + task_title[1:] if task_title else "New Task"
 
         priority_mark = {"high": "!", "medium": "~", "low": "-"}.get(priority, "~")

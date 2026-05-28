@@ -24,6 +24,11 @@ namespace TaskifyAPI.Services
             string messageText,
             IReadOnlyList<Model.ChatMessage> history,
             CancellationToken cancellationToken = default);
+
+        Task<GeminiEntityExtractionResultDto> ExtractEntitiesAsync(
+            string userId,
+            string messageText,
+            CancellationToken cancellationToken = default);
     }
 
     public sealed class GeminiNotConfiguredException : Exception

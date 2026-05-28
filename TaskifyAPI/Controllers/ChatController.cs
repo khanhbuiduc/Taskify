@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using TaskifyAPI.Data;
 using TaskifyAPI.Model;
 using TaskifyAPI.Model.ViewModel;
@@ -19,13 +21,20 @@ namespace TaskifyAPI.Controllers
     {
         private readonly IRasaChatService _rasaChatService;
         private readonly IAiFallbackService _aiFallbackService;
+        private readonly IGeminiCredentialService _geminiCredentialService;
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<ChatController> _logger;
 
-        public ChatController(IRasaChatService rasaChatService, IAiFallbackService aiFallbackService, ApplicationDbContext dbContext, ILogger<ChatController> logger)
+        public ChatController(
+            IRasaChatService rasaChatService,
+            IAiFallbackService aiFallbackService,
+            IGeminiCredentialService geminiCredentialService,
+            ApplicationDbContext dbContext,
+            ILogger<ChatController> logger)
         {
             _rasaChatService = rasaChatService;
             _aiFallbackService = aiFallbackService;
+            _geminiCredentialService = geminiCredentialService;
             _dbContext = dbContext;
             _logger = logger;
         }
@@ -143,18 +152,6 @@ namespace TaskifyAPI.Controllers
 
             session.UpdatedAt = now;
 
-            var userMessage = new ChatMessage
-            {
-                Id = Guid.NewGuid(),
-                SessionId = session.Id,
-                Role = ChatMessageRole.User,
-                Text = dto.Message,
-                MetadataJson = dto.MetadataJson,
-                SentAt = now
-            };
-            await _dbContext.ChatMessages.AddAsync(userMessage, cancellationToken).ConfigureAwait(false);
-            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
             var normalizedMessage = await _aiFallbackService
                 .NormalizeContextAsync(userId, dto.Message, history, cancellationToken)
                 .ConfigureAwait(false);
@@ -168,9 +165,32 @@ namespace TaskifyAPI.Controllers
                 _logger.LogInformation("Context Normalization unchanged: [{Original}]", dto.Message);
             }
 
+            var parsedIntent = await _rasaChatService
+                .ParseIntentAsync(normalizedMessage, cancellationToken)
+                .ConfigureAwait(false);
+
+            var rasaMetadataJson = await BuildRasaMetadataJsonAsync(
+                    userId,
+                    dto.MetadataJson,
+                    normalizedMessage,
+                    cancellationToken)
+                .ConfigureAwait(false);
+
+            var userMessage = new ChatMessage
+            {
+                Id = Guid.NewGuid(),
+                SessionId = session.Id,
+                Role = ChatMessageRole.User,
+                Text = dto.Message,
+                MetadataJson = BuildStoredUserMetadataJson(rasaMetadataJson, normalizedMessage, parsedIntent),
+                SentAt = now
+            };
+            await _dbContext.ChatMessages.AddAsync(userMessage, cancellationToken).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
             var senderId = $"{userId}:{session.Id}";
             var replies = await _rasaChatService
-                .SendMessageAsync(senderId, normalizedMessage, dto.MetadataJson, cancellationToken)
+                .SendMessageAsync(senderId, normalizedMessage, rasaMetadataJson, cancellationToken)
                 .ConfigureAwait(false);
 
             var assistantMessages = new List<ChatMessage>();
@@ -252,6 +272,141 @@ namespace TaskifyAPI.Controllers
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             return NoContent();
+        }
+
+        private static string? BuildStoredUserMetadataJson(
+            string? originalMetadataJson,
+            string normalizedMessage,
+            RasaParseResult? parsedIntent)
+        {
+            JsonObject root;
+
+            if (string.IsNullOrWhiteSpace(originalMetadataJson))
+            {
+                root = new JsonObject();
+            }
+            else
+            {
+                try
+                {
+                    var parsed = JsonNode.Parse(originalMetadataJson);
+                    root = parsed switch
+                    {
+                        JsonObject obj => (JsonObject)obj.DeepClone(),
+                        null => new JsonObject(),
+                        _ => new JsonObject { ["requestMetadata"] = parsed.DeepClone() },
+                    };
+                }
+                catch (JsonException)
+                {
+                    root = new JsonObject
+                    {
+                        ["requestMetadataRaw"] = originalMetadataJson,
+                    };
+                }
+            }
+
+            var intentRanking = new JsonArray();
+            if (parsedIntent?.IntentRanking is not null)
+            {
+                foreach (var item in parsedIntent.IntentRanking.Take(3))
+                {
+                    intentRanking.Add(new JsonObject
+                    {
+                        ["name"] = item.Name,
+                        ["confidence"] = item.Confidence,
+                    });
+                }
+            }
+
+            var chatLog = new JsonObject
+            {
+                ["normalizedMessage"] = normalizedMessage,
+                ["intentRanking"] = intentRanking,
+            };
+
+            if (!string.IsNullOrWhiteSpace(parsedIntent?.IntentName))
+            {
+                chatLog["intent"] = new JsonObject
+                {
+                    ["name"] = parsedIntent.IntentName,
+                    ["confidence"] = parsedIntent.Confidence,
+                };
+            }
+
+            root["chatLog"] = chatLog;
+            return root.ToJsonString(new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        }
+
+        private async Task<string?> BuildRasaMetadataJsonAsync(
+            string userId,
+            string? originalMetadataJson,
+            string normalizedMessage,
+            CancellationToken cancellationToken)
+        {
+            var metadata = ParseMetadataObject(originalMetadataJson);
+
+            try
+            {
+                var extraction = await _geminiCredentialService
+                    .ExtractEntitiesAsync(userId, normalizedMessage, cancellationToken)
+                    .ConfigureAwait(false);
+
+                if (extraction.Entities.Count > 0)
+                {
+                    metadata["geminiEntityExtraction"] = JsonSerializer.SerializeToNode(extraction);
+                }
+            }
+            catch (GeminiNotConfiguredException)
+            {
+                // Gemini entity extraction is optional for chat parsing.
+            }
+            catch (GeminiInvalidApiKeyException ex)
+            {
+                _logger.LogWarning(ex, "Gemini entity extraction skipped due to invalid API key for user {UserId}", userId);
+            }
+            catch (GeminiStoredCredentialException ex)
+            {
+                _logger.LogWarning(ex, "Gemini entity extraction skipped due to stored credential issue for user {UserId}", userId);
+            }
+            catch (GeminiValidationFailedException ex)
+            {
+                _logger.LogWarning(ex, "Gemini entity extraction skipped due to Gemini response issue for user {UserId}", userId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Gemini entity extraction failed for user {UserId}", userId);
+            }
+
+            return metadata.Count == 0
+                ? null
+                : metadata.ToJsonString(new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        }
+
+        private static JsonObject ParseMetadataObject(string? metadataJson)
+        {
+            if (string.IsNullOrWhiteSpace(metadataJson))
+            {
+                return new JsonObject();
+            }
+
+            try
+            {
+                var parsed = JsonNode.Parse(metadataJson);
+                return parsed switch
+                {
+                    JsonObject obj => (JsonObject)obj.DeepClone(),
+                    null => new JsonObject(),
+                    _ => new JsonObject { ["requestMetadata"] = parsed.DeepClone() },
+                };
+            }
+            catch (JsonException)
+            {
+                return new JsonObject
+                {
+                    ["requestMetadataRaw"] = metadataJson,
+                };
+            }
         }
     }
 }

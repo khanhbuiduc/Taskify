@@ -1,0 +1,17 @@
+{
+  "entity": "object_name",
+  "sentences": [
+    "tạo công việc [viết recap buổi họp](object_name)",
+    "thêm task [lên outline bài blog ai](object_name)",
+    "xóa công việc [kiểm tra log payment gateway](object_name)",
+    "tạo ghi chú [nội dung họp với agency](object_name)",
+    "ghim note [kế hoạch tuyển thực tập sinh](object_name)",
+    "bỏ ghim ghi chú [tổng hợp ý tưởng mini app](object_name)",
+    "xóa note [danh sách việc cần follow up](object_name)",
+    "tạo nhiệm vụ [sửa flow thanh toán qr](object_name)",
+    "thêm việc [chuẩn bị quà khách mời](object_name)",
+    "tạo note [ghi chú thử nghiệm tính năng mới](object_name)",
+    "ghim ghi chú [checklist bàn giao server staging](object_name)",
+    "xóa task [gọi lại nhà cung cấp internet](object_name)"
+  ]
+}

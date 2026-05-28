@@ -1,0 +1,372 @@
+thêm O
+chi_tiêu O
+135k B-amount
+cho O
+cafe O
+họp O
+nhanh O
+
+ghi_nhận O
+khoản O
+chi O
+420000 B-amount
+mua O
+banner O
+
+tạo O
+chi_phí O
+2.8 B-amount
+tr I-amount
+cho O
+thuê O
+âm_thanh O
+
+lưu O
+giao_dịch O
+56000 B-amount
+gửi O
+xe O
+hội_trường O
+
+thêm O
+khoản O
+chi O
+7tr B-amount
+đặt_cọc O
+booth O
+
+ghi O
+lại O
+125000 B-amount
+tiền O
+ship O
+hoả_tốc O
+
+cập_nhật O
+số O
+tiền O
+thành O
+930k B-amount
+
+tạo O
+khoản O
+chi O
+18.000 B-amount
+in O
+tài_liệu O
+
+thêm O
+chi_tiêu O
+220k O
+danh_mục O
+chăm_sóc B-category
+khách_hàng I-category
+
+tạo O
+khoản O
+chi O
+1tr O
+vào O
+dịch_vụ B-category
+vận_chuyển I-category
+
+ghi_nhận O
+giao_dịch O
+700k O
+loại O
+quảng_cáo B-category
+online I-category
+
+tạo O
+danh_mục O
+tài_chính O
+phúc_lợi B-category
+nhân_viên I-category
+
+thêm O
+danh_mục O
+thuê B-category
+địa_điểm I-category
+
+cập_nhật O
+giao_dịch O
+qr O
+sang O
+phí B-category
+thanh_toán I-category
+
+đổi O
+tên O
+danh_mục O
+thành_công B-category
+cụ I-category
+cộng_tác I-category
+
+ghi_nhận O
+chi_tiêu O
+350k O
+loại O
+đồ_dùng B-category
+sự_kiện I-category
+
+tạo O
+ghi_chú O
+sprint O
+demo O
+nội_dung O
+chốt B-content
+người I-content
+trình_bày I-content
+và I-content
+thứ_tự I-content
+demo I-content
+sản_phẩm I-content
+
+cập_nhật O
+note O
+onboarding O
+thành_nội O
+dung O
+bổ_sung B-content
+checklist I-content
+cấp I-content
+quyền I-content
+vpn I-content
+cho I-content
+nhân_sự I-content
+mới I-content
+
+thêm O
+chi_tiêu O
+140k O
+cho O
+bữa B-content
+tối I-content
+cùng I-content
+đối_tác I-content
+sau I-content
+khi I-content
+ký I-content
+hợp_đồng I-content
+
+ghi_nhận O
+khoản O
+chi O
+410k O
+mô_tả O
+mua B-content
+ổ_cứng I-content
+di_động I-content
+để I-content
+sao I-content
+lưu I-content
+video I-content
+workshop I-content
+
+tạo O
+note O
+research O
+nội_dung O
+so_sánh B-content
+retention I-content
+của I-content
+hai I-content
+nhóm I-content
+người I-content
+dùng I-content
+trong I-content
+quý I-content
+này I-content
+
+cập_nhật O
+giao_dịch O
+taxi O
+thành O
+mô_tả O
+taxi B-content
+đưa I-content
+diễn_giả I-content
+từ I-content
+khách_sạn I-content
+tới I-content
+hội_trường I-content
+
+thêm O
+ghi_chú O
+pháp_lý O
+nội_dung O
+cần B-content
+rà I-content
+lại I-content
+điều_khoản I-content
+bảo_mật I-content
+trước I-content
+khi I-content
+gửi I-content
+hợp_đồng I-content
+
+tạo O
+chi_phí O
+95k O
+cho O
+mua B-content
+bánh I-content
+ngọt I-content
+cho I-content
+buổi I-content
+họp I-content
+nội_bộ I-content
+
+tìm O
+task O
+chứa O
+gateway B-keyword
+
+xoá O
+công_việc O
+về O
+outline B-keyword
+
+tìm O
+note O
+có O
+agency B-keyword
+
+ghim O
+ghi_chú O
+liên_quan O
+server B-keyword
+staging I-keyword
+
+xoá O
+note O
+có O
+chữ O
+follow B-keyword
+up I-keyword
+
+tìm O
+chi_tiêu O
+khách B-keyword
+mời I-keyword
+
+cập_nhật O
+giao_dịch O
+qr B-keyword
+
+xoá O
+khoản O
+chi O
+có O
+từ O
+hosting B-keyword
+
+đổi O
+danh_mục O
+đào_tạo B-keyword
+nhân_sự I-keyword
+thành O
+học_tập O
+
+xoá O
+danh_mục O
+bảo_trì B-keyword
+hệ_thống I-keyword
+
+tìm O
+công_việc O
+về O
+internet B-keyword
+
+tìm O
+ghi_chú O
+chứa O
+tính_năng B-keyword
+mới I-keyword
+
+tạo O
+công_việc O
+viết B-object_name
+recap I-object_name
+buổi I-object_name
+họp I-object_name
+
+thêm O
+task O
+lên B-object_name
+outline I-object_name
+bài I-object_name
+blog I-object_name
+ai I-object_name
+
+xoá O
+công_việc O
+kiểm_tra B-object_name
+log I-object_name
+payment I-object_name
+gateway I-object_name
+
+tạo O
+ghi_chú O
+nội_dung B-object_name
+họp I-object_name
+với I-object_name
+agency I-object_name
+
+ghim O
+note O
+kế_hoạch B-object_name
+tuyển I-object_name
+thực_tập_sinh I-object_name
+
+bỏ O
+ghim O
+ghi_chú O
+tổng_hợp B-object_name
+ý_tưởng I-object_name
+mini I-object_name
+app I-object_name
+
+xoá O
+note O
+danh_sách B-object_name
+việc I-object_name
+cần I-object_name
+follow I-object_name
+up I-object_name
+
+tạo O
+nhiệm_vụ O
+sửa B-object_name
+flow I-object_name
+thanh_toán I-object_name
+qr I-object_name
+
+thêm O
+việc O
+chuẩn_bị B-object_name
+quà I-object_name
+khách I-object_name
+mời I-object_name
+
+tạo O
+note O
+ghi_chú B-object_name
+thử_nghiệm I-object_name
+tính_năng I-object_name
+mới I-object_name
+
+ghim O
+ghi_chú O
+checklist B-object_name
+bàn_giao I-object_name
+server I-object_name
+staging I-object_name
+
+xoá O
+task O
+gọi B-object_name
+lại I-object_name
+nhà_cung_cấp I-object_name
+internet I-object_name
+

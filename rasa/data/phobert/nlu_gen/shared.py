@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, List
 
-from refactor_nlu_v2 import build_dataset
+from nlu_gen.utils import expand, uniq
 
 SHARED_INTENT_ORDER: List[str] = [
     "greet",
@@ -17,27 +17,25 @@ SHARED_SYNONYMS = [
     {
         "synonym": "high",
         "examples": [
-            "urgent",
-            "critical",
-            "important",
-            "asap",
-            "high priority",
             "khẩn cấp",
+            "rất gấp",
+            "cấp bách",
             "quan trọng",
             "gấp",
             "ưu tiên cao",
+            "mức cao",
             "cao",
         ],
     },
     {
         "synonym": "low",
         "examples": [
-            "minor",
-            "not urgent",
-            "whenever",
-            "low priority",
             "không gấp",
+            "ít gấp",
+            "để sau cũng được",
             "ưu tiên thấp",
+            "mức thấp",
+            "bình thường thôi",
             "khi nào cũng được",
             "thấp",
         ],
@@ -45,11 +43,11 @@ SHARED_SYNONYMS = [
     {
         "synonym": "medium",
         "examples": [
-            "normal",
-            "regular",
-            "standard",
-            "medium priority",
             "bình thường",
+            "vừa phải",
+            "mức vừa",
+            "ưu tiên vừa",
+            "trung mức",
             "trung bình",
         ],
     },
@@ -70,13 +68,10 @@ SHARED_REGEX = [
     {
         "regex": "due_date",
         "examples": [
-            "today",
-            "tomorrow",
-            "next monday",
-            "next week",
             "hôm nay",
             "ngày mai",
             "ngày kia",
+            "thứ hai tuần tới",
             "tuần sau",
             "tháng sau",
             "chiều nay",
@@ -88,6 +83,113 @@ SHARED_REGEX = [
 
 
 def get_shared_intents() -> Dict[str, List[str]]:
-    all_intents = build_dataset()
-    return {intent: all_intents[intent] for intent in SHARED_INTENT_ORDER}
-
+    return {
+        "greet": expand(
+            uniq(
+                [
+                    "xin chào",
+                    "chào bạn",
+                    "chào nhé",
+                    "chào nha",
+                    "alo",
+                    "chào buổi sáng",
+                    "chào buổi tối",
+                    "mình cần hỗ trợ",
+                    "chào trợ lý",
+                ]
+            ),
+            25,
+        ),
+        "goodbye": expand(
+            uniq(
+                [
+                    "tạm biệt",
+                    "chào tạm biệt",
+                    "tạm biệt nhé",
+                    "mình chào bạn nha",
+                    "hẹn gặp lại",
+                    "mình thoát nhé",
+                    "kết thúc ở đây",
+                    "cảm ơn nhé tạm biệt",
+                    "mình đi đây",
+                    "hẹn gặp lại sau",
+                ]
+            ),
+            25,
+        ),
+        "affirm": expand(
+            uniq(
+                [
+                    "đúng rồi",
+                    "đồng ý",
+                    "được",
+                    "ừ",
+                    "vâng",
+                    "chính xác",
+                    "xác nhận",
+                    "được",
+                    "chuẩn",
+                    "ừ đúng",
+                ]
+            ),
+            25,
+        ),
+        "deny": expand(
+            uniq(
+                [
+                    "không",
+                    "không đồng ý",
+                    "hủy",
+                    "thôi",
+                    "không nhé",
+                    "không phải",
+                    "bỏ qua",
+                    "đừng làm vậy",
+                    "không cần",
+                    "dừng lại",
+                ]
+            ),
+            25,
+        ),
+        "ask_howcanhelp": expand(
+            uniq(
+                [
+                    "bạn giúp được gì",
+                    "bạn làm được gì",
+                    "mình cần hướng dẫn",
+                    "hỗ trợ mình với",
+                    "tôi có thể nhờ gì",
+                    "bạn hỗ trợ được những gì",
+                    "bạn có thể giúp mình ra sao",
+                    "giúp mình với",
+                    "liệt kê chức năng của bạn",
+                    "bạn hỗ trợ tác vụ nào",
+                ]
+            ),
+            30,
+        ),
+        "nlu_fallback": uniq(
+            [
+                "asdf",
+                "qwerty",
+                "zxczxc",
+                "aaaabbbb",
+                "123123",
+                "???",
+                "....",
+                "ơ ơ ơ",
+                "blabla",
+                "xóa",
+                "hoàn tác",
+                "ngày mai",
+                "công việc",
+                "điều gì đó",
+                "hmmmmm",
+                "kkkk",
+                "văn bản linh tinh",
+                "không liên quan",
+                "chữ vô nghĩa",
+                "lorem ipsum",
+            ]
+        )[:20],
+    }

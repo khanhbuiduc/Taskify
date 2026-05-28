@@ -7,7 +7,7 @@ from pathlib import Path
 import yaml
 
 
-PHOBERT_DIR = Path(__file__).resolve().parents[1]
+PHOBERT_DIR = Path(__file__).resolve().parents[2]
 if str(PHOBERT_DIR) not in sys.path:
     sys.path.insert(0, str(PHOBERT_DIR))
 
@@ -15,6 +15,7 @@ from nlu_gen.note import get_note_intents
 from nlu_gen.render import render_nlu_document
 from nlu_gen.shared import SHARED_INTENT_ORDER, get_shared_intents
 from nlu_gen.task import TASK_INTENT_ORDER, get_task_intents
+from nlu_gen.note import NOTE_INTENT_ORDER
 
 
 class GenerateNLUTest(unittest.TestCase):
@@ -39,6 +40,7 @@ class GenerateNLUTest(unittest.TestCase):
     def test_note_intents(self):
         intents = get_note_intents()
         self._assert_intents_valid(intents)
+        self.assertEqual(list(intents.keys()), NOTE_INTENT_ORDER)
 
     def test_render_yaml_is_parseable(self):
         text = render_nlu_document(get_task_intents(), TASK_INTENT_ORDER)
@@ -49,4 +51,3 @@ class GenerateNLUTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

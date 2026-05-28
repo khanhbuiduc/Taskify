@@ -1,0 +1,24 @@
+{
+  "intent": "delete_task",
+  "sentences": [
+    "xóa mẹ quả lịch đi chơi chiều nay",
+    "hủy kèo nhậu tối nay đi nha",
+    "bỏ cái task gặp sếp sáng mai m",
+    "xóa báo thức 9h nha tao ngủ nướng",
+    "gạch cái kế hoạch đi đà lạt m",
+    "cancel cái cuộc hẹn lúc 8 củ à nhầm 8 giờ",
+    "del cái task chạy deadline đi",
+    "xóa cái cv đu idol cuối tuần",
+    "hủy cái lịch lấy lương hôm 10 đi",
+    "gỡ lịch cà phê chém gió nha",
+    "xóa luôn quả task 3 rưỡi",
+    "thôi dẹp vụ đi siêu thị lúc 5h chiều",
+    "bỏ cái hẹn lẩu thái nha bồ xù r",
+    "xóa lịch đá bóng t7 tuần này",
+    "cancel cái hẹn đi lượn cn",
+    "xóa báo thức 7h sáng",
+    "hủy cái thông báo 11h đêm",
+    "bỏ qua cv dọn nhà cuối tuần nha",
+    "xóa mẹ cái hẹn chơi game tối nay"
+  ]
+}
