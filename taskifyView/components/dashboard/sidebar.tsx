@@ -10,6 +10,7 @@ import {
   HelpCircle,
   LogOut,
   Timer,
+  Users,
   Book,
   CalendarDays,
   DollarSign,
@@ -257,6 +258,27 @@ export function Sidebar({}: SidebarProps = {}) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
+
+        {user?.roles.includes("Admin") && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Administration</SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname.startsWith("/admin/users")}
+                  tooltip="User Management"
+                  className="data-[active=true]:text-green-600 dark:data-[active=true]:text-green-500"
+                >
+                  <Link href="/admin/users">
+                    <Users className="size-4" />
+                    <span>User Management</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+        )}
       </SidebarContent>
 
       <SidebarFooter className="border-t border-border pt-4 pb-2">

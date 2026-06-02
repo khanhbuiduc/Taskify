@@ -55,6 +55,30 @@ export interface FinanceSummary {
   dailyTotals: FinanceSummaryDaily[]
 }
 
+export interface PagedResult<T> {
+  items: T[]
+  page: number
+  pageSize: number
+  totalCount: number
+  totalPages: number
+  hasPrevious: boolean
+  hasNext: boolean
+}
+
+export type AdminUserRole = "Admin" | "User"
+export type AdminUserStatus = "Active" | "Banned"
+
+export interface AdminUser {
+  userId: string
+  email: string
+  userName: string
+  avatarUrl?: string | null
+  roles: AdminUserRole[]
+  isBanned: boolean
+  lockoutEndUtc?: string | null
+  status: AdminUserStatus
+}
+
 export type ChatMessageRole = "user" | "assistant"
 export type GeminiCredentialStatus = "NotConfigured" | "Valid" | "Invalid" | "ValidationFailed"
 export type AiProvider = "Gemini" | "Ollama"

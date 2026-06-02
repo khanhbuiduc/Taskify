@@ -7,11 +7,20 @@ import { useAuthStore } from "@/lib/auth-store"
 
 interface AuthGuardProps {
   children: React.ReactNode
+  requiredRoles?: string[]
+  fallbackPath?: string
 }
 
-export function AuthGuard({ children }: AuthGuardProps) {
+export function AuthGuard({
+  children,
+  requiredRoles,
+  fallbackPath = "/tasks",
+}: AuthGuardProps) {
   const router = useRouter()
-  const { isAuthenticated, isInitialized, checkAuth, isLoading } = useAuthStore()
+  const { user, isAuthenticated, isInitialized, checkAuth, isLoading } = useAuthStore()
+
+  const hasRequiredRole =
+    !requiredRoles || requiredRoles.some((role) => user?.roles.includes(role))
 
   useEffect(() => {
     checkAuth()
@@ -22,6 +31,12 @@ export function AuthGuard({ children }: AuthGuardProps) {
       router.push("/login")
     }
   }, [isAuthenticated, isInitialized, router])
+
+  useEffect(() => {
+    if (isInitialized && isAuthenticated && !hasRequiredRole) {
+      router.push(fallbackPath)
+    }
+  }, [fallbackPath, hasRequiredRole, isAuthenticated, isInitialized, router])
 
   // Show loading while checking authentication
   if (!isInitialized || isLoading) {
@@ -37,6 +52,10 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   // Don't render children if not authenticated
   if (!isAuthenticated) {
+    return null
+  }
+
+  if (!hasRequiredRole) {
     return null
   }
 

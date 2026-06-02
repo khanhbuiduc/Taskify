@@ -43,6 +43,10 @@ const viewTitles: Record<string, { title: string; subtitle: string }> = {
     title: "Focus Session",
     subtitle: "Stay focused and productive",
   },
+  "/admin/users": {
+    title: "User Management",
+    subtitle: "Create, update, and moderate workspace users",
+  },
 };
 
 function formatTimeAgo(dateString: string): string {

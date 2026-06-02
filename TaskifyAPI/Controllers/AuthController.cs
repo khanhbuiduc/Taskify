@@ -61,7 +61,8 @@ namespace TaskifyAPI.Controllers
                 UserName = dto.Email,
                 Email = dto.Email,
                 EmailConfirmed = true,
-                AvatarUrl = null
+                AvatarUrl = null,
+                LockoutEnabled = true
             };
 
             var result = await _userManager.CreateAsync(user, dto.Password);
@@ -107,6 +108,11 @@ namespace TaskifyAPI.Controllers
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, dto.Password, lockoutOnFailure: false);
+            if (result.IsLockedOut)
+            {
+                return Unauthorized(new { message = "Your account has been banned. Please contact an administrator." });
+            }
+
             if (!result.Succeeded)
             {
                 return Unauthorized(new { message = "Invalid email or password" });

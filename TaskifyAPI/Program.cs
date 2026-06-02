@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 using TaskifyAPI.Data;
@@ -60,6 +61,33 @@ builder.Services.AddAuthentication(options =>
 {
     options.SaveToken = true;
     options.RequireHttpsMetadata = false; // Set to true in production
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = async context =>
+        {
+            var userId = context.Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                context.Fail("Unauthorized");
+                return;
+            }
+
+            var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                context.Fail("Unauthorized");
+                return;
+            }
+
+            if (user.LockoutEnabled &&
+                user.LockoutEnd.HasValue &&
+                user.LockoutEnd.Value > DateTimeOffset.UtcNow)
+            {
+                context.Fail("This account has been banned.");
+            }
+        }
+    };
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
