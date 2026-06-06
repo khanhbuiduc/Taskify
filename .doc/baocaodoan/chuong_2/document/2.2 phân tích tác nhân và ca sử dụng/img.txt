@@ -1,0 +1,2 @@
+1. 2_2_1_use_case_nguoi_dung.png - So do ca su dung tong quat cua nguoi dung cuoi trong he thong Taskify.
+2. 2_2_2_use_case_quan_tri_vien.png - So do ca su dung danh cho quan tri vien va cac thao tac quan ly tai khoan.

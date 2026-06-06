@@ -1,0 +1,31 @@
+flowchart LR
+    subgraph Sidebar["Thanh bên phiên chat"]
+        S1["Nút chat mới"]
+        S2["Danh sách phiên chat"]
+        S3["Nút xóa phiên"]
+    end
+
+    subgraph Main["Khu vực hội thoại"]
+        M1["Thanh trên trợ lý ảo"]
+        M2["Danh sách tin nhắn"]
+        M3["Thẻ task hoặc payload nghiệp vụ"]
+        M4["Trạng thái gõ và trạng thái giọng nói"]
+    end
+
+    subgraph Input["Khu vực nhập lệnh"]
+        I1["Ô nhập nội dung"]
+        I2["Nút gửi"]
+        I3["Nút nhập giọng nói"]
+        I4["Prompt gợi ý"]
+    end
+
+    subgraph Overlay["Phần mở rộng"]
+        O1["Toast hoàn tác xóa"]
+        O2["Hộp thoại task"]
+        O3["Hộp thoại chỉnh sửa note"]
+        O4["Hộp thoại khoản tài chính"]
+    end
+
+    Sidebar --> Main
+    Main --> Input
+    Input --> Overlay

@@ -1,0 +1,5 @@
+Hinh 3.2. Quan he giua intent, entity, slot va action
+Tep anh: img/3_2_quan_he_giua_intent_entity_slot_va_action.png
+Tep Mermaid: mermaid/3_2_quan_he_giua_intent_entity_slot_va_action.mmd
+Goi y mo ta: Hinh nay mo ta moi lien he giua cau lenh nguoi dung va cac thanh phan xu ly hoi thoai trong Rasa, bao gom intent, entity, slot, dialogue policy va custom action. Day la so do quan trong de ly giai cach Taskify luu tru ngu canh va ra quyet dinh nghiep vu khi xu ly lenh bang ngon ngu tu nhien.
+Co so doi chieu code: rasa/domain.yml, rasa/config.yml, rasa/actions/task/task_actions.py

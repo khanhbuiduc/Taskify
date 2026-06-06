@@ -1,0 +1,3 @@
+1. 2_3_1_kien_truc_3_tang.png - So do kien truc tong the 3 tang mo rong cua Taskify.
+2. 2_3_2_kien_truc_chat_ai.png - So do thanh phan ky thuat cua luong chat AI, Rasa va internal API.
+3. 2_3_3_luong_xu_ly_khi_dung_tro_ly_ao.png - So do luong xu ly khi nguoi dung tuong tac voi tro ly ao.

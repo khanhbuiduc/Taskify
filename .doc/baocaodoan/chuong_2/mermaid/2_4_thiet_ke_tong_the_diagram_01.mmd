@@ -1,0 +1,14 @@
+flowchart TB
+    FE[Next.js Frontend]
+    API[ASP.NET Core Web API]
+    DB[(SQL Server)]
+    R[Rasa Server]
+    RA[Rasa Action Server]
+    G[Gemini / AI fallback]
+
+    FE -->|HTTP + JWT| API
+    API -->|EF Core| DB
+    API -->|Webhook REST| R
+    R -->|Custom action| RA
+    RA -->|Internal API Key| API
+    API -->|AI support| G

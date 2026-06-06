@@ -1,0 +1,11 @@
+Hinh 2.1.1. So do phan ra chuc nang cua he thong Taskify
+Tep anh: img/2_1_1_he_thong_chuc_nang_taskify.png
+Tep Mermaid: mermaid/2_1_1_he_thong_chuc_nang_taskify.mmd
+Goi y mo ta: Hinh nay mo ta cac nhom chuc nang chinh cua Taskify duoc trien khai trong source code, bao gom xac thuc, quan ly task, ghi chu, tai chinh, focus, chat AI, cau hinh AI va quan tri nguoi dung. Moi nhom chuc nang deu duoc lien ket voi controller nghiep vu tuong ung o backend, cho thay he thong da duoc thiet ke theo huong tach biet giua giao dien va xu ly nghiep vu.
+Co so doi chieu code: taskifyView/app/(dashboard)/*, TaskifyAPI/Controllers/*, TaskifyAPI/Program.cs
+
+Hinh 2.1.2. So do pham vi nghiep vu va du lieu chinh
+Tep anh: img/2_1_2_pham_vi_nghiep_vu_va_du_lieu.png
+Tep Mermaid: mermaid/2_1_2_pham_vi_nghiep_vu_va_du_lieu.mmd
+Goi y mo ta: Hinh nay the hien moi lien he giua tac nhan su dung, cac phan he nghiep vu va nhung thuc the du lieu chinh ma tung phan he thao tac. Cach trinh bay nay giup xac dinh ro pham vi bai toan va cho thay Taskify khong chi quan ly task ma con bao phu ca note, finance, focus, chat va cau hinh AI.
+Co so doi chieu code: TaskifyAPI/Model/*, TaskifyAPI/Data/ApplicationDbContext.cs, taskifyView/lib/*store.ts

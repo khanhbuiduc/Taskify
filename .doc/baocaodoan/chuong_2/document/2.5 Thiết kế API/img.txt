@@ -1,0 +1,2 @@
+1. 2_5_1_ban_do_api_public_va_internal.png - So do phan lop public API va internal API theo tung nhom client.
+2. 2_5_2_trinh_tu_xu_ly_chat_api.png - So do trinh tu xu ly yeu cau POST chat tai ChatController.

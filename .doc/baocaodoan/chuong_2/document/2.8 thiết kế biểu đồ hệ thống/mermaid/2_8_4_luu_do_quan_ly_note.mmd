@@ -1,0 +1,35 @@
+sequenceDiagram
+    participant U as Người dùng
+    participant FE as Giao diện ghi chú
+    participant API as noteApi
+    participant Ctrl as NotesController
+    participant DB as SQL Server
+
+    U->>FE: Tạo, sửa hoặc ghim note
+    alt Tạo mới note
+        FE->>API: POST /api/Notes
+        API->>Ctrl: create note
+        Ctrl->>DB: Insert Note(UserId, Title, Content)
+        DB-->>Ctrl: created note
+        Ctrl-->>API: NoteDto
+    else Sửa note
+        FE->>API: PUT /api/Notes/{id}
+        API->>Ctrl: update note
+        Ctrl->>DB: Load note by owner
+        alt Note không hợp lệ
+            Ctrl-->>API: 404 / 403
+        else Note hợp lệ
+            Ctrl->>DB: Update Title, Content, UpdatedAt
+            DB-->>Ctrl: updated note
+            Ctrl-->>API: NoteDto
+        end
+    else Ghim note
+        FE->>API: PATCH /api/Notes/{id}/pin
+        API->>Ctrl: pin or unpin note
+        Ctrl->>DB: Load note by owner
+        Ctrl->>DB: Update IsPinned
+        DB-->>Ctrl: updated note
+        Ctrl-->>API: NoteDto
+    end
+    API-->>FE: response
+    FE-->>U: Cập nhật danh sách ghi chú

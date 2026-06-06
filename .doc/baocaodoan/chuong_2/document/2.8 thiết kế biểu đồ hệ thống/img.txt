@@ -1,0 +1,8 @@
+1. 2_8_1_luu_do_dang_nhap_he_thong.png - Bieu do sequence mo ta trinh tu dang nhap va cap token JWT cho nguoi dung.
+2. 2_8_2_luu_do_tao_task_tu_giao_dien.png - Bieu do sequence mo ta trinh tu tao task tu giao dien web.
+3. 2_8_3_luu_do_cap_nhat_hoac_xoa_task.png - Bieu do sequence mo ta trinh tu cap nhat hoac xoa task theo quyen so huu.
+4. 2_8_4_luu_do_quan_ly_note.png - Bieu do sequence mo ta trinh tu tao, sua va ghim ghi chu.
+5. 2_8_5_luu_do_them_khoan_tai_chinh.png - Bieu do sequence mo ta trinh tu them mot khoan thu chi va cap nhat thong ke.
+6. 2_8_6_luu_do_focus_session.png - Bieu do sequence mo ta trinh tu bat dau va ket thuc focus session.
+7. 2_8_7_luu_do_chat_tao_task.png - Bieu do sequence mo ta trinh tu AI chat tao task thong qua Rasa va internal API.
+8. 2_8_8_luu_do_xoa_task_va_undo_qua_chat.png - Bieu do sequence mo ta trinh tu xoa task va hoan tac qua AI chat.

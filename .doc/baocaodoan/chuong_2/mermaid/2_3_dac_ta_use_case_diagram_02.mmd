@@ -1,0 +1,13 @@
+sequenceDiagram
+    actor U as Người dùng
+    participant FE as Frontend
+    participant API as TaskItemController
+    participant DB as SQL Server
+
+    U->>FE: Nhập thông tin công việc
+    FE->>API: POST /api/TaskItem
+    API->>API: Kiểm tra JWT và dữ liệu
+    API->>DB: Lưu TaskItem + Labels
+    DB-->>API: Kết quả lưu
+    API-->>FE: Task đã tạo
+    FE-->>U: Cập nhật giao diện

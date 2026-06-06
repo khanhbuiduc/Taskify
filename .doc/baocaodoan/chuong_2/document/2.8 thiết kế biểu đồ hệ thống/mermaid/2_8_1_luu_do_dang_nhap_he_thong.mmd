@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant U as Người dùng
+    participant FE as Giao diện đăng nhập
+    participant Auth as AuthController
+    participant UM as UserManager
+    participant SI as SignInManager
+
+    U->>FE: Nhập email và mật khẩu
+    FE->>Auth: POST /api/Auth/login
+    Auth->>UM: FindByEmailAsync(email)
+    alt Email không tồn tại
+        UM-->>Auth: null
+        Auth-->>FE: 401 Email hoặc mật khẩu không đúng
+    else Email tồn tại
+        UM-->>Auth: ApplicationUser
+        Auth->>SI: CheckPasswordSignInAsync(user, password)
+        alt Sai mật khẩu hoặc bị khóa
+            SI-->>Auth: Failed / LockedOut
+            Auth-->>FE: 401 Unauthorized
+        else Đăng nhập hợp lệ
+            SI-->>Auth: Succeeded
+            Auth-->>FE: JWT + vai trò + thông tin người dùng
+            FE-->>U: Lưu token và chuyển vào bảng điều khiển
+        end
+    end

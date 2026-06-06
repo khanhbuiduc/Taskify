@@ -1,0 +1,3 @@
+1. 3_11_sequence_luong_tao_cong_viec.png - Sequence diagram luong tao cong viec bang cau lenh tu nhien.
+2. 3_12_sequence_luong_xoa_cong_viec.png - Sequence diagram luong xoa cong viec bang chatbot va tao undo token.
+3. 3_13_flowchart_luong_tra_cuu_cong_viec.png - Flowchart luong tra cuu cong viec theo dieu kien thoi gian.

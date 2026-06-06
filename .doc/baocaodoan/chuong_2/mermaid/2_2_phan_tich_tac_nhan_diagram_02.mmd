@@ -1,0 +1,31 @@
+flowchart LR
+    U[Người dùng]
+    A[Quản trị viên]
+
+    subgraph T[Hệ thống Taskify]
+        UC1(Đăng ký đăng nhập)
+        UC2(Quản lý công việc)
+        UC3(Quản lý nhãn)
+        UC4(Quản lý ghi chú)
+        UC5(Quản lý tài chính)
+        UC6(Quản lý mục tiêu ngày)
+        UC7(Quản lý phiên tập trung)
+        UC8(Chat với trợ lý ảo)
+        UC9(Quản lý hồ sơ)
+        UC10(Quản lý người dùng)
+        UC11(Khóa mở khóa tài khoản)
+    end
+
+    U --> UC1
+    U --> UC2
+    U --> UC3
+    U --> UC4
+    U --> UC5
+    U --> UC6
+    U --> UC7
+    U --> UC8
+    U --> UC9
+
+    A --> UC1
+    A --> UC10
+    A --> UC11

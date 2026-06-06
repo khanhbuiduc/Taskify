@@ -1,0 +1,11 @@
+Hinh 2.2.1. So do ca su dung cua nguoi dung cuoi
+Tep anh: img/2_2_1_use_case_nguoi_dung.png
+Tep Mermaid: mermaid/2_2_1_use_case_nguoi_dung.mmd
+Goi y mo ta: Hinh nay mo ta cac ca su dung chinh cua nguoi dung cuoi trong Taskify, bao gom dang nhap, quan ly task, ghi chu, tai chinh, focus, daily goal, chat AI va cau hinh AI fallback. Chat AI duoc bieu dien nhu mot kenh thao tac bo sung co kha nang tao hoac tim du lieu cho cac phan he nghiep vu khac.
+Co so doi chieu code: taskifyView/app/login/page.tsx, taskifyView/app/(dashboard)/*, TaskifyAPI/Controllers/*
+
+Hinh 2.2.2. So do ca su dung cua quan tri vien
+Tep anh: img/2_2_2_use_case_quan_tri_vien.png
+Tep Mermaid: mermaid/2_2_2_use_case_quan_tri_vien.mmd
+Goi y mo ta: Hinh nay mo ta vai tro quan tri vien, trong do admin vua co the su dung nhung chuc nang nen tang nhu nguoi dung thong thuong, vua co them nghiep vu quan ly tai khoan, loc tim user, cap nhat role va khoa mo khoa tai khoan. So do duoc doi chieu truc tiep voi controller AdminUsersController va cac policy phan quyen trong backend.
+Co so doi chieu code: TaskifyAPI/Controllers/AdminUsersController.cs, TaskifyAPI/Program.cs, taskifyView/app/(dashboard)/admin/users/page.tsx

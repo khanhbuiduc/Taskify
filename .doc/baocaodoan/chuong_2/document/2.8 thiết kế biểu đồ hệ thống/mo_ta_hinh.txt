@@ -1,0 +1,47 @@
+Hinh 2.8.1. Bieu do sequence dang nhap he thong
+Tep anh: img/2_8_1_luu_do_dang_nhap_he_thong.png
+Tep Mermaid: mermaid/2_8_1_luu_do_dang_nhap_he_thong.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu tuong tac khi nguoi dung dang nhap, bat dau tu frontend gui yeu cau den AuthController, backend kiem tra tai khoan, sinh JWT va tra thong tin user ve client. Bieu do sequence giup the hien ro thu tu trao doi du lieu giua cac thanh phan tham gia trong qua trinh xac thuc.
+Co so doi chieu code: TaskifyAPI/Controllers/AuthController.cs, TaskifyAPI/Program.cs, taskifyView/app/login/page.tsx
+
+Hinh 2.8.2. Bieu do sequence tao task tu giao dien web
+Tep anh: img/2_8_2_luu_do_tao_task_tu_giao_dien.png
+Tep Mermaid: mermaid/2_8_2_luu_do_tao_task_tu_giao_dien.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu tao task theo cach su dung truyen thong tren giao dien, bao gom thao tac nhap du lieu, task store goi API, backend kiem tra label, gan UserId va luu TaskItem. Sau khi xu ly xong, ket qua duoc tra lai de frontend dong bo danh sach task.
+Co so doi chieu code: taskifyView/components/task/*, taskifyView/lib/task-store.ts, taskifyView/lib/api/taskApi.ts, TaskifyAPI/Controllers/TaskItemController.cs
+
+Hinh 2.8.3. Bieu do sequence cap nhat hoac xoa task
+Tep anh: img/2_8_3_luu_do_cap_nhat_hoac_xoa_task.png
+Tep Mermaid: mermaid/2_8_3_luu_do_cap_nhat_hoac_xoa_task.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu xu ly task khi nguoi dung chon sua hoac xoa. Bieu do sequence nhan manh cac buoc frontend gui request, backend tai task, kiem tra quyen so huu va thuc hien cap nhat hoac xoa theo luong hop le.
+Co so doi chieu code: TaskifyAPI/Controllers/TaskItemController.cs, TaskifyAPI/Model/TaskItem.cs
+
+Hinh 2.8.4. Bieu do sequence quan ly ghi chu
+Tep anh: img/2_8_4_luu_do_quan_ly_note.png
+Tep Mermaid: mermaid/2_8_4_luu_do_quan_ly_note.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu tao, sua va ghim ghi chu ca nhan trong he thong. Qua bieu do sequence, co the thay ro frontend, NotesController va database phoi hop de dam bao ghi chu duoc cap nhat dung owner va phan hoi lai giao dien.
+Co so doi chieu code: TaskifyAPI/Controllers/NotesController.cs, taskifyView/components/notes/*, taskifyView/lib/note-store.ts
+
+Hinh 2.8.5. Bieu do sequence them khoan tai chinh
+Tep anh: img/2_8_5_luu_do_them_khoan_tai_chinh.png
+Tep Mermaid: mermaid/2_8_5_luu_do_them_khoan_tai_chinh.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu them mot ban ghi tai chinh, trong do frontend gui du lieu, backend kiem tra category va amount, sau do moi luu `FinanceEntry`. Ket qua tra ve duoc su dung de lam moi bang finance va khu vuc thong ke tong hop.
+Co so doi chieu code: TaskifyAPI/Controllers/FinanceEntriesController.cs, TaskifyAPI/Controllers/FinanceCategoriesController.cs, taskifyView/components/finance/*
+
+Hinh 2.8.6. Bieu do sequence focus session
+Tep anh: img/2_8_6_luu_do_focus_session.png
+Tep Mermaid: mermaid/2_8_6_luu_do_focus_session.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu bat dau, theo doi va ket thuc mot phien focus. Bieu do sequence lam ro cac buoc frontend goi API start, backend luu session, sau do frontend goi API end de cap nhat break, trang thai hoan thanh va thong ke.
+Co so doi chieu code: TaskifyAPI/Controllers/FocusSessionController.cs, taskifyView/components/focus/*
+
+Hinh 2.8.7. Bieu do sequence chat AI tao task
+Tep anh: img/2_8_7_luu_do_chat_tao_task.png
+Tep Mermaid: mermaid/2_8_7_luu_do_chat_tao_task.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu nguoi dung tao task bang ngon ngu tu nhien, di qua AI page, ChatController, Rasa, action server, internal task API va database. Day la bieu do sequence quan trong vi no the hien diem khac biet cua Taskify so voi mot he thong CRUD thong thuong.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Controllers/InternalTaskController.cs, rasa/actions/task/task_actions.py
+
+Hinh 2.8.8. Bieu do sequence xoa task va hoan tac qua chat
+Tep anh: img/2_8_8_luu_do_xoa_task_va_undo_qua_chat.png
+Tep Mermaid: mermaid/2_8_8_luu_do_xoa_task_va_undo_qua_chat.mmd
+Goi y mo ta: Hinh nay mo ta trinh tu xoa task thong qua AI chat va co che hoan tac dua tren undo token co thoi han. Bieu do sequence the hien ro duong di cua request xoa, assistant metadata, toast hoan tac va request undo tiep theo de khoi phuc task.
+Co so doi chieu code: taskifyView/app/(dashboard)/ai/page.tsx, TaskifyAPI/Controllers/InternalTaskController.cs, rasa/actions/task/task_actions.py

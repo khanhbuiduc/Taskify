@@ -1,0 +1,11 @@
+Hinh 2.7.1. So do luong xac thuc JWT va phan quyen
+Tep anh: img/2_7_1_luong_xac_thuc_jwt_va_phan_quyen.png
+Tep Mermaid: mermaid/2_7_1_luong_xac_thuc_jwt_va_phan_quyen.mmd
+Goi y mo ta: Hinh nay mo ta cach nguoi dung dang nhap de nhan JWT, cach frontend su dung token nay khi goi API va cach backend kiem tra chu ky, han su dung, issuer, audience cung nhu trang thai khoa tai khoan. Sau khi xac thuc thanh cong, controller moi tiep tuc kiem tra policy nhu AdminOnly, UserOnly hoac AdminOrUser.
+Co so doi chieu code: TaskifyAPI/Program.cs, TaskifyAPI/Controllers/AuthController.cs
+
+Hinh 2.7.2. So do cac lop bao ve internal API va AI fallback
+Tep anh: img/2_7_2_bao_mat_internal_api_va_fallback.png
+Tep Mermaid: mermaid/2_7_2_bao_mat_internal_api_va_fallback.mmd
+Goi y mo ta: Hinh nay nhan manh cac lop bao ve bo sung ngoai JWT, bao gom kiem tra X-Rasa-Token cho internal API, rang buoc userId tren route, owner-based query trong database, co che het han undo token va validate cau hinh Gemini hoac Ollama. Cac lop nay giup phan he AI co the thao tac du lieu that nhung van giu duoc kien truc an toan.
+Co so doi chieu code: TaskifyAPI/Controllers/InternalTaskController.cs, TaskifyAPI/Controllers/InternalNoteController.cs, TaskifyAPI/Controllers/InternalFinanceController.cs, TaskifyAPI/Services/*

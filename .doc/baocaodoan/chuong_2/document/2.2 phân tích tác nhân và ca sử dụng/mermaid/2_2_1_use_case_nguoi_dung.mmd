@@ -1,0 +1,28 @@
+flowchart LR
+    User["User"]
+
+    subgraph UC["Các ca sử dụng chính của User"]
+        UCAuth(["Đăng ký / Đăng nhập"])
+        UCTask(["Quản lý task"])
+        UCViews(["Xem task theo nhiều view"])
+        UCNotes(["Quản lý note"])
+        UCFinance(["Quản lý finance"])
+        UCFocus(["Quản lý focus session"])
+        UCDaily(["Quản lý daily goal"])
+        UCChat(["Chat với AI"])
+        UCSettings(["Cấu hình AI fallback"])
+    end
+
+    User --> UCAuth
+    User --> UCTask
+    User --> UCViews
+    User --> UCNotes
+    User --> UCFinance
+    User --> UCFocus
+    User --> UCDaily
+    User --> UCChat
+    User --> UCSettings
+
+    UCChat -. "tạo / tìm / xoá task" .-> UCTask
+    UCChat -. "tạo / tìm / xoá note" .-> UCNotes
+    UCChat -. "ghi nhận / tra cứu finance" .-> UCFinance

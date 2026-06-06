@@ -1,0 +1,13 @@
+flowchart TD
+    A[Bắt đầu] --> B[Người dùng gửi tin nhắn]
+    B --> C[Kiểm tra JWT và session]
+    C --> D[Chuẩn hóa ngữ cảnh]
+    D --> E[Phân tích intent]
+    E --> F{Có cần hỗ trợ AI fallback?}
+    F -- Có --> G[Trích xuất thực thể]
+    F -- Không --> H[Gửi sang Rasa]
+    G --> H
+    H --> I[Nhận phản hồi hoặc action]
+    I --> J[Lưu lịch sử hội thoại]
+    J --> K[Trả kết quả về giao diện]
+    K --> L[Kết thúc]

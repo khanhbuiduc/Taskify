@@ -1,0 +1,5 @@
+Hinh 3.14. Quy trinh danh gia mo hinh NLU
+Tep anh: img/3_14_quy_trinh_danh_gia_mo_hinh_nlu.png
+Tep Mermaid: mermaid/3_14_quy_trinh_danh_gia_mo_hinh_nlu.mmd
+Goi y mo ta: Hinh nay mo ta quy trinh danh gia mo hinh NLU cua Taskify, tu du lieu da gan nhan, chia train va test, huan luyen, chay `rasa test nlu`, tinh cac chi so Accuracy, Precision, Recall, F1-score va sinh confusion matrix. So do nay phan anh cach nhom phat trien kiem chung chat luong nhan dien y dinh cua he thong.
+Co so doi chieu code: rasa/results/*, rasa/test_queries.py, rasa/test_phobert.py, rasa/data/phobert/*

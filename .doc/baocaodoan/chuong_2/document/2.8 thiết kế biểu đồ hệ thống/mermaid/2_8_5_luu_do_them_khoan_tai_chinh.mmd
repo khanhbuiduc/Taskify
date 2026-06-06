@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant U as Người dùng
+    participant FE as Hộp thoại tài chính
+    participant API as financeApi
+    participant Ctrl as FinanceEntriesController
+    participant CatRepo as FinanceCategoriesRepository
+    participant DB as SQL Server
+
+    U->>FE: Nhập ngày, danh mục, mô tả, số tiền
+    FE->>API: POST /api/FinanceEntries
+    API->>Ctrl: create finance entry
+    Ctrl->>Ctrl: Lấy userId từ JWT
+    alt Thiếu ngày hoặc số tiền <= 0
+        Ctrl-->>API: 400 BadRequest
+    else Dữ liệu cơ bản hợp lệ
+        Ctrl->>CatRepo: GetByUserAndNameAsync(userId, category)
+        CatRepo->>DB: Query FinanceCategory
+        DB-->>CatRepo: category or null
+        alt Danh mục không tồn tại
+            Ctrl-->>API: 400 Danh mục không tồn tại
+        else Danh mục hợp lệ
+            Ctrl->>DB: Insert FinanceEntry
+            DB-->>Ctrl: created entry
+            Ctrl-->>API: FinanceEntryResponseDto
+        end
+    end
+    API-->>FE: response
+    FE-->>U: Cập nhật bảng tài chính và thẻ tổng hợp

@@ -1,0 +1,1 @@
+1. 3_2_quan_he_giua_intent_entity_slot_va_action.png - Quan he giua cau lenh nguoi dung, intent, entity, slot, dialogue policy va custom action.

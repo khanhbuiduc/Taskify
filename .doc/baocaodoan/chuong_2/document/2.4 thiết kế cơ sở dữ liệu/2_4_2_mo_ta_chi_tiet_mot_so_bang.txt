@@ -1,0 +1,125 @@
+2.4.2. Mo ta chi tiet mot so bang
+
+Trong phan nay, he thong duoc mo ta chi tiet qua 10 bang du lieu quan trong nhat, bao phu cac phan he xac thuc nguoi dung, quan ly cong viec, ghi chu, tai chinh, tap trung va hoi thoai AI. Cac bang duoc lua chon dua tren muc do xuat hien trong source code, vai tro nghiep vu va tan suat duoc frontend/backend su dung.
+
+1. Bang ApplicationUser
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `string` | Khoa chinh cua nguoi dung trong he thong Identity, duoc dung de lien ket toi toan bo du lieu ca nhan. |
+| `UserName` | `string` | Ten hien thi cua nguoi dung; trong he thong nay duoc dung nhu full name de hien tren giao dien. |
+| `Email` | `string` | Dia chi email dung de dang nhap va nhan dien tai khoan, yeu cau duy nhat. |
+| `AvatarUrl` | `string?` | Duong dan anh dai dien cua nguoi dung, phuc vu hien thi ho so va top bar. |
+| `LockoutEnabled` | `bool` | Cho biet tai khoan co cho phep khoa hay khong. |
+| `LockoutEnd` | `DateTimeOffset?` | Moc thoi gian khoa tai khoan; neu con hieu luc thi backend tu choi JWT da xac thuc. |
+
+2. Bang TaskItem
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua cong viec. |
+| `Title` | `string` | Tieu de ngan gon cua task, bat buoc phai co. |
+| `Description` | `string` | Mo ta chi tiet cho task, duoc dung trong dialog va chi tiet cong viec. |
+| `Priority` | `TaskPriority` | Muc uu tien cua task, gom `Low`, `Medium`, `High`. |
+| `Status` | `TaskItemStatus` | Trang thai xu ly cua task, gom `Todo`, `InProgress`, `Completed`. |
+| `DueDate` | `DateTime` | Han xu ly cua task, duoc dung tren calendar va logic overdue. |
+| `CreatedAt` | `DateTime` | Thoi diem tao task. |
+| `IsDeleted` | `bool` | Danh dau xoa mem; task bi xoa se an khoi danh sach thong thuong. |
+| `DeletedAt` | `DateTime?` | Thoi diem task bi xoa mem, phuc vu co che undo. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu task. |
+
+3. Bang Label
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua nhan task. |
+| `Name` | `string` | Ten nhan dung de phan loai task, vi du: Hoc tap, Gap, Khancap. |
+| `Color` | `string` | Mau hien thi cua nhan, co the la hex hoac key mau. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu nhan. |
+| `CreatedAt` | `DateTime` | Thoi diem tao nhan. |
+
+4. Bang Note
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua ghi chu. |
+| `Title` | `string` | Tieu de ghi chu, hien thi tren card va danh sach. |
+| `Content` | `string` | Noi dung chi tiet cua ghi chu. |
+| `IsPinned` | `bool` | Danh dau ghi chu duoc ghim len dau danh sach. |
+| `CreatedAt` | `DateTime` | Thoi diem tao ghi chu. |
+| `UpdatedAt` | `DateTime` | Thoi diem cap nhat gan nhat, dung de sap xep. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu ghi chu. |
+
+5. Bang FinanceEntry
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua mot ban ghi thu chi. |
+| `Date` | `DateTime` | Ngay phat sinh khoan thu chi. |
+| `Category` | `string` | Ten danh muc tai chinh duoc ap dung cho ban ghi. |
+| `Description` | `string` | Dien giai them cho giao dich. |
+| `Amount` | `decimal(18,2)` | So tien cua giao dich, backend yeu cau gia tri hop le. |
+| `CreatedAt` | `DateTime` | Thoi diem tao ban ghi. |
+| `UpdatedAt` | `DateTime` | Thoi diem cap nhat ban ghi gan nhat. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu du lieu tai chinh. |
+
+6. Bang FinanceCategory
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua danh muc tai chinh. |
+| `Name` | `string` | Ten danh muc nhu An uong, Di chuyen, Luong, Thuong. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu danh muc. |
+| `CreatedAt` | `DateTime` | Thoi diem tao danh muc. |
+
+7. Bang FocusSession
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua phien tap trung. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu phien tap trung. |
+| `DurationMinutes` | `int` | Tong so phut muc tieu cua phien focus. |
+| `BreaksTaken` | `int` | So lan nghi giai lao trong phien. |
+| `IsCompleted` | `bool` | Cho biet phien da hoan thanh hay ket thuc som. |
+| `StartedAt` | `DateTime` | Thoi diem bat dau phien focus. |
+| `EndedAt` | `DateTime?` | Thoi diem ket thuc phien, co the rong neu phien chua dong. |
+
+8. Bang DailyGoal
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `int` | Khoa chinh cua muc tieu hang ngay. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu muc tieu. |
+| `Title` | `string` | Noi dung muc tieu can hoan thanh trong ngay. |
+| `IsCompleted` | `bool` | Danh dau muc tieu da hoan thanh hay chua. |
+| `CreatedAt` | `DateTime` | Ngay tao muc tieu, duoc dung de loc theo ngay hien tai. |
+
+9. Bang ChatSession
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `Guid` | Khoa chinh cua mot phien hoi thoai AI. |
+| `UserId` | `string` | Khoa ngoai tro toi nguoi so huu phien chat. |
+| `Title` | `string` | Tieu de phien chat, thuong duoc lay tu noi dung tin nhan dau tien. |
+| `CreatedAt` | `DateTime` | Thoi diem tao phien hoi thoai. |
+| `UpdatedAt` | `DateTime` | Thoi diem phien duoc cap nhat tin nhan gan nhat. |
+
+10. Bang ChatMessage
+
+| Truong | Kieu du lieu | Mo ta theo he thong |
+| --- | --- | --- |
+| `Id` | `Guid` | Khoa chinh cua tung tin nhan trong phien chat. |
+| `SessionId` | `Guid` | Khoa ngoai tro toi bang `ChatSession`. |
+| `Text` | `string` | Noi dung tin nhan cua nguoi dung hoac tro ly AI. |
+| `Role` | `ChatMessageRole` | Vai tro cua tin nhan, gom `User` va `Assistant`. |
+| `SentAt` | `DateTime` | Thoi diem gui tin nhan. |
+| `RasaMessageId` | `string?` | Ma lien quan den phan hoi cua Rasa neu co. |
+| `MetadataJson` | `string?` | Du lieu mo rong dang JSON, dung de luu parse intent, undo token, payload giao dien va cac metadata AI khac. |
+
+Nhan xet tong hop:
+- `ApplicationUser` la bang goc de xac dinh chu so huu cua du lieu.
+- `TaskItem`, `Note`, `FinanceEntry`, `FocusSession`, `DailyGoal` la cac bang nghiep vu trung tam cua nguoi dung.
+- `ChatSession` va `ChatMessage` la hai bang quan trong tao nen khac biet cua he thong vi giup AI khong chi chat ma con giu duoc ngu canh hoi thoai.
+- `Label` va `FinanceCategory` la hai bang phan loai bo tro cho task va tai chinh.
+
+Neu can mo rong them cho phan ky thuat, co the bo sung cac bang `TaskDeleteUndoToken`, `UserGeminiCredential` va `UserAiFallbackSettings` vao cuoi muc nay nhu nhom bang phu tro cho AI va co che hoan tac.

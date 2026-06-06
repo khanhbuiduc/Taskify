@@ -1,0 +1,11 @@
+erDiagram
+    ApplicationUser ||--o{ TaskItem : owns
+    ApplicationUser ||--o{ Note : writes
+    ApplicationUser ||--o{ FinanceEntry : records
+    ApplicationUser ||--o{ FinanceCategory : defines
+    ApplicationUser ||--o{ DailyGoal : sets
+    ApplicationUser ||--o{ FocusSession : runs
+    ApplicationUser ||--o{ Label : creates
+    ApplicationUser ||--o{ ChatSession : opens
+    ChatSession ||--o{ ChatMessage : contains
+    TaskItem }o--o{ Label : tagged_by

@@ -1,0 +1,18 @@
+flowchart LR
+    A["Người dùng gửi message"]
+    B["ChatController lưu message và lấy history"]
+    C["AiFallbackService"]
+    D["Gemini"]
+    E["Ollama"]
+    F["RasaChatService"]
+    G["Rasa Server"]
+    H["Action Server"]
+    I["Internal API"]
+    J["SQL Server"]
+    K["Frontend nhận phản hồi"]
+
+    A --> B --> C
+    C --> D
+    C --> E
+    C --> F --> G --> H --> I --> J
+    J --> K

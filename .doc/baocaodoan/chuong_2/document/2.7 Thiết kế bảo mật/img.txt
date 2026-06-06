@@ -1,0 +1,2 @@
+1. 2_7_1_luong_xac_thuc_jwt_va_phan_quyen.png - So do luong dang nhap, cap JWT va truy cap endpoint duoc bao ve.
+2. 2_7_2_bao_mat_internal_api_va_fallback.png - So do cac lop bao ve cho internal API va AI fallback.

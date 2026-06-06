@@ -1,0 +1,14 @@
+flowchart LR
+    U[Người dùng]
+    L[Danh sách công việc]
+    M[Hộp thoại chi tiết]
+    F[Bộ lọc / tìm kiếm]
+    C[Tạo mới]
+
+    U --> L
+    L --> M
+    L --> F
+    L --> C
+    C --> L
+    M --> L
+    F --> L

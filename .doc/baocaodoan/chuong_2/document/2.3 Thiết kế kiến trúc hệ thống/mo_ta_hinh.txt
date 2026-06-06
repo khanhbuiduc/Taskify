@@ -1,0 +1,17 @@
+Hinh 2.3.1. So do kien truc tong the 3 tang mo rong
+Tep anh: img/2_3_1_kien_truc_3_tang.png
+Tep Mermaid: mermaid/2_3_1_kien_truc_3_tang.mmd
+Goi y mo ta: Hinh nay mo ta kien truc tong the cua Taskify voi ba khoi chinh gom frontend Next.js, backend ASP.NET Core va he thong Rasa cho xu ly ngon ngu tu nhien. SQL Server dong vai tro tang luu tru du lieu trung tam, trong khi backend la diem kiem soat chung cho ca giao dien web va luong AI.
+Co so doi chieu code: taskifyView/package.json, TaskifyAPI/Program.cs, rasa/config.yml, rasa/domain.yml
+
+Hinh 2.3.2. So do kien truc chat AI va internal API
+Tep anh: img/2_3_2_kien_truc_chat_ai.png
+Tep Mermaid: mermaid/2_3_2_kien_truc_chat_ai.mmd
+Goi y mo ta: Hinh nay lam ro luong chat thong minh cua he thong, trong do trang AI gui yeu cau den ChatController, backend chuan hoa ngu canh, chuyen tiep sang Rasa, goi action server khi can va truy cap du lieu that thong qua internal API. Dong thoi, he thong con co lop AI fallback su dung Gemini hoac Ollama de xu ly nhung truong hop can bo tro them.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/*, rasa/actions/*, taskifyView/app/(dashboard)/ai/page.tsx
+
+Hinh 2.3.3. So do luong xu ly khi dung tro ly ao
+Tep anh: img/2_3_3_luong_xu_ly_khi_dung_tro_ly_ao.png
+Tep Mermaid: mermaid/2_3_3_luong_xu_ly_khi_dung_tro_ly_ao.mmd
+Goi y mo ta: Hinh nay mo ta luong xu ly khi nguoi dung su dung tro ly ao trong Taskify. Tin nhan duoc gui tu AI Page den ChatController, he thong lay lich su hoi thoai, chuan hoa ngu canh, parse intent, gui sang Rasa va neu can thi action server se goi internal API de thao tac tren du lieu that. Cuoi cung backend luu lai cac chat message va tra ket qua ve giao dien de hien thi cho nguoi dung.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/RasaChatService.cs, TaskifyAPI/Services/AiFallbackService.cs, rasa/actions/*, taskifyView/app/(dashboard)/ai/page.tsx

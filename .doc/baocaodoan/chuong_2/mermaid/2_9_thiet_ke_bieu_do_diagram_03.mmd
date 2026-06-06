@@ -1,0 +1,17 @@
+sequenceDiagram
+    actor A as Quản trị viên
+    participant FE as Frontend
+    participant API as AdminUsersController
+    participant ID as Identity
+    participant DB as Database
+
+    A->>FE: Mở danh sách người dùng
+    FE->>API: GET /api/AdminUsers
+    API->>DB: Truy vấn người dùng và vai trò
+    DB-->>API: Dữ liệu phân trang
+    API-->>FE: Danh sách người dùng
+    A->>FE: Khóa tài khoản
+    FE->>API: POST /api/AdminUsers/{id}/ban
+    API->>ID: Cập nhật lockout
+    ID-->>API: Thành công
+    API-->>FE: Trạng thái mới

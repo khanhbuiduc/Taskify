@@ -1,0 +1,28 @@
+flowchart LR
+    FE[Frontend Next.js]
+    AUTH[Auth API]
+    TASK[Task API]
+    NOTE[Note API]
+    FIN[Finance API]
+    FOCUS[Focus API]
+    CHAT[Chat API]
+    ADMIN[Admin API]
+    DB[(SQL Server)]
+    R[Rasa]
+
+    FE --> AUTH
+    FE --> TASK
+    FE --> NOTE
+    FE --> FIN
+    FE --> FOCUS
+    FE --> CHAT
+    FE --> ADMIN
+
+    AUTH --> DB
+    TASK --> DB
+    NOTE --> DB
+    FIN --> DB
+    FOCUS --> DB
+    ADMIN --> DB
+    CHAT --> DB
+    CHAT --> R

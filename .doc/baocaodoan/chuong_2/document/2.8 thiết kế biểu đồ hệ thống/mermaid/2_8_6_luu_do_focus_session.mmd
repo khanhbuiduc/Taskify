@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant U as Người dùng
+    participant FE as Giao diện Focus
+    participant Ctrl as FocusSessionController
+    participant Repo as FocusSessionRepository
+    participant DB as SQL Server
+
+    U->>FE: Chọn thời lượng focus
+    FE->>Ctrl: POST /api/FocusSession/start
+    Ctrl->>Repo: AddAsync(FocusSession)
+    Repo->>DB: Insert session
+    DB-->>Repo: session created
+    Ctrl-->>FE: FocusSessionResponseDto
+    FE-->>U: Bắt đầu đếm giờ
+
+    U->>FE: Kết thúc focus session
+    FE->>Ctrl: PUT /api/FocusSession/{id}/end
+    Ctrl->>Repo: GetByIdAsync(id)
+    Repo->>DB: Load session
+    DB-->>Repo: session data
+    alt Session không tồn tại hoặc sai owner
+        Ctrl-->>FE: 404 / 403
+    else Hợp lệ
+        Ctrl->>Repo: Update EndedAt, BreaksTaken, IsCompleted
+        Repo->>DB: SaveChanges
+        DB-->>Repo: updated session
+        Ctrl-->>FE: FocusSessionResponseDto
+        FE->>Ctrl: GET /api/FocusSession/stats
+        Ctrl->>Repo: GetByUserIdAndDateAsync / RangeAsync
+        Repo->>DB: Query statistics
+        DB-->>Repo: stats data
+        Ctrl-->>FE: FocusStatsDto
+    end

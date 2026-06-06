@@ -1,0 +1,15 @@
+flowchart TB
+    Action["Rasa Action Server"]
+    Token["Kiểm tra X-Rasa-Token"]
+    RouteUser["userId trên route nội bộ"]
+    OwnerQuery["Query theo UserId và ownership"]
+    Undo["Undo token có hạn sử dụng\nvà chỉ dùng một lần"]
+    Provider["Validate Gemini key / Ollama config"]
+    Internal["Internal Controllers"]
+    Fallback["AiFallbackService"]
+    DB[("SQL Server")]
+
+    Action --> Token --> Internal
+    Internal --> RouteUser --> OwnerQuery --> DB
+    Internal --> Undo
+    Internal --> Fallback --> Provider

@@ -1,0 +1,9 @@
+flowchart TD
+    A["ChatController<br/>nhận yêu cầu chat"]
+    B["RasaChatService<br/>gửi message sang Rasa"]
+    C["Rasa Server<br/>phân tích intent, entity và chọn action"]
+    D["Action Server<br/>xử lý nghiệp vụ chatbot"]
+    E["Internal API<br/>thực thi nghiệp vụ hệ thống"]
+    F["SQL Server<br/>lưu trữ và truy vấn dữ liệu"]
+
+    A --> B --> C --> D --> E --> F

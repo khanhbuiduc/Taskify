@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant User
+    participant FE as Frontend
+    participant Auth as AuthController
+    participant JWT as JWT Middleware
+    participant API as Protected Controller
+    participant DB as Identity / ApplicationDbContext
+
+    User->>FE: Nhập email và mật khẩu
+    FE->>Auth: POST /api/Auth/login
+    Auth->>DB: Kiểm tra tài khoản và role
+    Auth-->>FE: JWT + user info
+    FE->>API: Gọi API với Authorization: Bearer token
+    API->>JWT: Kích hoạt middleware xác thực
+    JWT->>DB: Kiểm tra user tồn tại và chưa bị khóa
+    JWT-->>API: Claims hợp lệ
+    API-->>FE: Trả dữ liệu nếu qua policy và owner check

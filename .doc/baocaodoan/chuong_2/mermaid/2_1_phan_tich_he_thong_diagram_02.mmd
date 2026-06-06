@@ -1,0 +1,18 @@
+flowchart LR
+    U[Người dùng]
+    A[Quản trị viên]
+    T((Hệ thống Taskify))
+    R[Rasa Server]
+    G[Dịch vụ AI fallback / Gemini]
+
+    U -->|Yêu cầu nghiệp vụ, tin nhắn chat| T
+    T -->|Kết quả xử lý, dữ liệu cá nhân, phản hồi chat| U
+
+    A -->|Quản trị tài khoản, giám sát| T
+    T -->|Danh sách người dùng, trạng thái hệ thống| A
+
+    T -->|Webhook chat, parse intent| R
+    R -->|Intent, response, action| T
+
+    T -->|Chuẩn hóa ngữ cảnh, trích xuất thực thể| G
+    G -->|Kết quả hỗ trợ AI| T

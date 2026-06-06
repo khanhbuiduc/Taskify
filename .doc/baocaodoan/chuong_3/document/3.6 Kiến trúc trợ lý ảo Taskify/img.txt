@@ -1,0 +1,4 @@
+1. 3_7_kien_truc_tich_hop_tro_ly_ao_voi_he_thong_taskify.png - Kien truc tong the tich hop tro ly ao voi he thong Taskify.
+2. 3_8_so_do_du_lieu_phuc_vu_tro_ly_ao.png - So do ERD du lieu phuc vu tro ly ao.
+3. 3_9_luong_goi_api_tu_chatbot_den_backend.png - Sequence luong goi API tu chatbot den backend.
+4. 3_10_wireframe_giao_dien_chatbot.png - Wireframe bo cuc giao dien chatbot trong Taskify.

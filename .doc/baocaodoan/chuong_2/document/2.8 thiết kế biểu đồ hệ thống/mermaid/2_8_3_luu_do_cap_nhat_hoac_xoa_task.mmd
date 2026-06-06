@@ -1,0 +1,38 @@
+sequenceDiagram
+    participant U as Người dùng
+    participant FE as Giao diện công việc
+    participant Ctrl as TaskItemController
+    participant Repo as TaskRepository
+    participant DB as SQL Server
+
+    U->>FE: Chọn sửa hoặc xóa task
+    alt Cập nhật task
+        FE->>Ctrl: PUT /api/TaskItem/{id}
+        Ctrl->>Repo: GetByIdWithLabelsAsync(id)
+        Repo->>DB: Load task + labels
+        DB-->>Repo: task data
+        Repo-->>Ctrl: task
+        alt Không tồn tại hoặc không đủ quyền
+            Ctrl-->>FE: 404 / 403
+        else Hợp lệ
+            Ctrl->>Repo: Update(task)
+            Repo->>DB: SaveChanges
+            DB-->>Repo: updated
+            Ctrl-->>FE: TaskItemResponseDto
+        end
+    else Xóa task
+        FE->>Ctrl: DELETE /api/TaskItem/{id}
+        Ctrl->>Repo: GetByIdAsync(id)
+        Repo->>DB: Load task
+        DB-->>Repo: task data
+        Repo-->>Ctrl: task
+        alt Không tồn tại hoặc không đủ quyền
+            Ctrl-->>FE: 404 / 403
+        else Hợp lệ
+            Ctrl->>Repo: Remove/Delete task
+            Repo->>DB: SaveChanges
+            DB-->>Repo: deleted
+            Ctrl-->>FE: 204 NoContent
+        end
+    end
+    FE-->>U: Làm mới danh sách task

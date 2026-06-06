@@ -5,7 +5,7 @@ finance/finance_actions.py - Rasa actions for Taskify finance.
 import logging
 import re
 import unicodedata
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Text
 
 import requests
@@ -15,7 +15,7 @@ from rasa_sdk.executor import CollectingDispatcher
 
 from actions.config import TASKIFY_API_URL, REQUEST_TIMEOUT
 from actions.common.api_utils import get_api_headers, split_sender
-from actions.common.date_utils import extract_duckling_date_value, parse_due_date
+from actions.common.date_utils import extract_duckling_date_value, parse_finance_date
 from actions.common.text_utils import first_entity_value, tracker_slot_or_entity
 
 logger = logging.getLogger(__name__)
@@ -90,26 +90,14 @@ def _parse_date(raw: Optional[str], text: str) -> str:
     phrase = raw or ""
     if not phrase:
         match = re.search(
-            r"(hom nay|ngay mai|ngay kia|tuan sau|thang sau|\d{1,2}/\d{1,2}(?:/\d{2,4})?)",
+            r"(hom nay|ngay mai|ngay kia|tuan sau|thang sau|\d{1,2}/\d{1,2}(?:/\d{2,4})?|\b\d{1,2}\b)",
             _fold(text),
         )
         phrase = match.group(1) if match else ""
 
-    folded_phrase = _fold(phrase)
     now = datetime.now()
-    if folded_phrase == "hom nay":
-        return now.date().isoformat()
-    if folded_phrase == "ngay mai":
-        return (now + timedelta(days=1)).date().isoformat()
-    if folded_phrase == "ngay kia":
-        return (now + timedelta(days=2)).date().isoformat()
-    if folded_phrase == "tuan sau":
-        return (now + timedelta(days=7)).date().isoformat()
-    if folded_phrase == "thang sau":
-        return (now + timedelta(days=30)).date().isoformat()
-
     if phrase:
-        parsed, _inferred_time, had_date = parse_due_date(phrase, datetime.now())
+        parsed, had_date = parse_finance_date(phrase, now)
         if had_date:
             return parsed.date().isoformat()
 
@@ -216,7 +204,7 @@ def _build_entry_query(tracker: Tracker) -> Dict[str, Any]:
     date_phrase = tracker_slot_or_entity(tracker, "finance_date")
     folded = _fold(text)
     duckling_date = extract_duckling_date_value(tracker.latest_message or {})
-    if duckling_date or date_phrase or any(term in folded for term in ["hom nay", "ngay mai", "ngay kia"]):
+    if duckling_date or date_phrase or any(term in folded for term in ["hom nay", "ngay mai", "ngay kia", "tuan sau", "thang sau"]) or re.search(r"\b\d{1,2}(?:/\d{1,2}(?:/\d{2,4})?)?\b", folded):
         date_value = duckling_date or _parse_date(date_phrase, text)
         params["from"] = date_value
         params["to"] = date_value
@@ -271,7 +259,7 @@ class ActionUpdateFinanceEntry(Action):
         raw_date = tracker_slot_or_entity(tracker, "finance_date")
         date_value = str(target.get("date", ""))[:10]
         duckling_date = extract_duckling_date_value(tracker.latest_message or {})
-        if duckling_date or raw_date or any(term in _fold(text) for term in ["hom nay", "ngay mai", "ngay kia", "tuan sau", "thang sau"]):
+        if duckling_date or raw_date or any(term in _fold(text) for term in ["hom nay", "ngay mai", "ngay kia", "tuan sau", "thang sau"]) or re.search(r"\b\d{1,2}(?:/\d{1,2}(?:/\d{2,4})?)?\b", _fold(text)):
             date_value = duckling_date or _parse_date(raw_date, text)
 
         payload = {

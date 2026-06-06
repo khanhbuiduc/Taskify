@@ -1,0 +1,35 @@
+sequenceDiagram
+    autonumber
+    actor U as Người dùng
+    participant FE as AI Page
+    participant Chat as ChatController
+    participant Rasa as Rasa và Action Server
+    participant Internal as InternalTaskController
+    participant DB as SQL Server
+
+    U->>FE: Yêu cầu xóa task qua chat
+    FE->>Chat: POST /api/Chat/{sessionId}/messages
+    Chat->>Rasa: Gửi message xóa task
+    Rasa->>Internal: POST internal delete task API
+    Internal->>DB: Tìm task, soft delete và tạo UndoToken
+    DB-->>Internal: Delete result và undo token
+    Internal-->>Rasa: Delete payload
+    Rasa-->>Chat: Assistant reply kèm metadata undo
+    Chat-->>FE: ChatThreadDto
+    FE-->>U: Hiển thị thông báo Hoàn tác
+
+    U->>FE: Bấm Hoàn tác
+    FE->>Chat: Gui action undo_delete
+    Chat->>Rasa: Gửi undo token
+    Rasa->>Internal: POST internal undo-delete API
+    alt Undo token không hợp lệ
+        Internal-->>Rasa: Error response
+        Rasa-->>Chat: Assistant reply thất bại
+    else Undo thành công
+        Internal->>DB: Khôi phục task và đánh dấu token đã dùng
+        DB-->>Internal: Restored task
+        Internal-->>Rasa: Undo payload
+        Rasa-->>Chat: Assistant reply thành công
+    end
+    Chat-->>FE: ChatThreadDto
+    FE-->>U: Làm mới task và hiển thị kết quả

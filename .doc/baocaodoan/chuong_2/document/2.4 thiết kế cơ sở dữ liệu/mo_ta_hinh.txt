@@ -1,0 +1,17 @@
+Hinh 2.4.1. So do ERD tong the cua he thong
+Tep anh: img/2_4_1_erd_tong_the.png
+Tep Mermaid: mermaid/2_4_1_erd_tong_the.mmd
+Goi y mo ta: Hinh nay mo ta cac thuc the nghiep vu cot loi cua Taskify va quan he giua chung, trong do ApplicationUser la chu so huu cua du lieu ca nhan nhu task, label, note, finance, focus va daily goal. So do cho thay ro mo hinh du lieu cua he thong duoc thiet ke theo huong user ownership de dam bao tach biet du lieu giua cac tai khoan.
+Co so doi chieu code: TaskifyAPI/Model/*, TaskifyAPI/Data/ApplicationDbContext.cs
+
+Hinh 2.4.2. So do ERD cho chat, undo delete va cau hinh AI
+Tep anh: img/2_4_2_erd_chat_va_ai.png
+Tep Mermaid: mermaid/2_4_2_erd_chat_va_ai.mmd
+Goi y mo ta: Hinh nay tap trung vao cac bang phuc vu cho chat AI, co che hoan tac xoa task va cau hinh AI fallback theo tung nguoi dung. Cac bang ChatSession, ChatMessage, TaskDeleteUndoToken, UserGeminiCredential va UserAiFallbackSettings giup he thong vua luu duoc lich su hoi thoai, vua duoc phep khoi phuc thao tac xoa trong thoi gian ngan va ca nhan hoa nha cung cap AI.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Controllers/InternalTaskController.cs, TaskifyAPI/Data/ApplicationDbContext.cs
+
+Hinh 2.4.3. So do ERD cho nguoi dung va phan quyen
+Tep anh: img/2_4_3_erd_nguoi_dung_va_phan_quyen.png
+Tep Mermaid: mermaid/2_4_3_erd_nguoi_dung_va_phan_quyen.mmd
+Goi y mo ta: Hinh nay mo ta cau truc du lieu lien quan truc tiep den tai khoan nguoi dung, bao gom ApplicationUser, role trong ASP.NET Identity, bang lien ket gan role cho user va cac bang cau hinh AI duoc gan theo tung tai khoan. So do nay giup lam ro cach Taskify quan ly danh tinh, phan quyen va ca nhan hoa cau hinh Gemini hoac Ollama tren moi user.
+Co so doi chieu code: TaskifyAPI/Model/ApplicationUser.cs, TaskifyAPI/Data/ApplicationDbContext.cs, TaskifyAPI/Program.cs

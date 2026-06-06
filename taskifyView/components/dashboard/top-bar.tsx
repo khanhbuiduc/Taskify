@@ -83,7 +83,7 @@ export function TopBar({ currentView, onOpenSettings, onNewTask }: TopBarProps =
 
   const activePath = currentView ? viewPathMap[currentView] : pathname;
 
-  let titleData = { title: "TaskFlow", subtitle: "Workspace" };
+  let titleData = { title: "Taskify", subtitle: "Workspace" };
   for (const [path, data] of Object.entries(viewTitles)) {
     if (activePath.startsWith(path)) {
       titleData = data;

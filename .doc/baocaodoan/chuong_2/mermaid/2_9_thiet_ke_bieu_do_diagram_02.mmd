@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> Todo
+    Todo --> InProgress: Bắt đầu thực hiện
+    InProgress --> Completed: Hoàn thành
+    InProgress --> Todo: Hoãn lại
+    Todo --> Completed: Hoàn thành trực tiếp
+    Completed --> [*]

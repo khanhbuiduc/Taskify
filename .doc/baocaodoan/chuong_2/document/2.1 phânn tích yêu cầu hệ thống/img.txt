@@ -1,0 +1,2 @@
+1. 2_1_1_he_thong_chuc_nang_taskify.png - So do phan ra chuc nang cua he thong Taskify theo cac phan he da hien thuc trong code.
+2. 2_1_2_pham_vi_nghiep_vu_va_du_lieu.png - So do pham vi nghiep vu va cac thuc the du lieu chinh ma tung phan he tac dong.

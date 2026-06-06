@@ -1,0 +1,23 @@
+Hinh 3.7. Kien truc tich hop tro ly ao voi he thong Taskify
+Tep anh: img/3_7_kien_truc_tich_hop_tro_ly_ao_voi_he_thong_taskify.png
+Tep Mermaid: mermaid/3_7_kien_truc_tich_hop_tro_ly_ao_voi_he_thong_taskify.mmd
+Goi y mo ta: Hinh nay mo ta kien truc tong the cua phan he tro ly ao trong Taskify, gom AI Page o frontend, ChatController, AiFallbackService, RasaChatService, Rasa Server, Action Server, Internal APIs va SQL Server. So do nay cho thay phan he tro ly ao khong ton tai tach biet ma duoc tich hop chat che vao kien truc tong the cua ung dung.
+Co so doi chieu code: taskifyView/app/(dashboard)/ai/page.tsx, TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/*, rasa/actions/*
+
+Hinh 3.8. So do du lieu phuc vu tro ly ao
+Tep anh: img/3_8_so_do_du_lieu_phuc_vu_tro_ly_ao.png
+Tep Mermaid: mermaid/3_8_so_do_du_lieu_phuc_vu_tro_ly_ao.mmd
+Goi y mo ta: Hinh nay mo ta cac thuc the du lieu phuc vu tro ly ao, bao gom ApplicationUser, ChatSession, ChatMessage, TaskItem, Note, FinanceEntry, UserGeminiCredential, UserAiFallbackSettings va TaskDeleteUndoToken. Day la cac bang co vai tro truc tiep trong viec luu ngu canh chat, thao tac nghiep vu va cau hinh fallback AI theo tung user.
+Co so doi chieu code: TaskifyAPI/Data/ApplicationDbContext.cs, TaskifyAPI/Model/*
+
+Hinh 3.9. Luong goi API tu chatbot den backend
+Tep anh: img/3_9_luong_goi_api_tu_chatbot_den_backend.png
+Tep Mermaid: mermaid/3_9_luong_goi_api_tu_chatbot_den_backend.mmd
+Goi y mo ta: Hinh nay mo ta sequence frontend gui message, backend chuan hoa ngu canh, goi Rasa, action server goi internal API voi X-Rasa-Token, sau do luu du lieu va tra response ve giao dien. So do nay nhan manh duong di cua mot request chat qua nhieu lop he thong.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/RasaChatService.cs, rasa/actions/*, TaskifyAPI/Controllers/Internal*.cs
+
+Hinh 3.10. Wireframe giao dien chatbot
+Tep anh: img/3_10_wireframe_giao_dien_chatbot.png
+Tep Mermaid: mermaid/3_10_wireframe_giao_dien_chatbot.mmd
+Goi y mo ta: Hinh nay mo ta bo cuc giao dien chatbot trong Taskify dua tren implementation cua AI Page, chat sidebar va cac dialog nghiep vu. Wireframe gom khu vuc sidebar phien chat, danh sach tin nhan, o nhap, nut gui, prompt goi y va cac toast hoac dialog mo rong cho task, note, finance.
+Co so doi chieu code: taskifyView/app/(dashboard)/ai/page.tsx, taskifyView/components/javis/*, taskifyView/components/task/*, taskifyView/components/notes/*, taskifyView/components/finance/*

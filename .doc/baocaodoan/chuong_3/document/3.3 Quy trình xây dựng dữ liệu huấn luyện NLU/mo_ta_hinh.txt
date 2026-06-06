@@ -1,0 +1,5 @@
+Hinh 3.3. Quy trinh xay dung du lieu huan luyen NLU
+Tep anh: img/3_3_quy_trinh_xay_dung_du_lieu_huan_luyen_nlu.png
+Tep Mermaid: mermaid/3_3_quy_trinh_xay_dung_du_lieu_huan_luyen_nlu.mmd
+Goi y mo ta: Hinh nay mo ta quy trinh xay dung du lieu huan luyen NLU trong Taskify, bat dau tu viec phan tich nghiep vu, xac dinh intent va entity, viet cau mau, gan nhan entity, chia tap train va validate, huan luyen mo hinh va danh gia ket qua. Quy trinh nay phan anh cach he thong duoc xay dung tu du lieu len mo hinh thay vi chi cau hinh ly thuyet.
+Co so doi chieu code: rasa/data/nlu/*, rasa/data/phobert/*, rasa/data/phobert/generate_nlu.py, rasa/tests/*

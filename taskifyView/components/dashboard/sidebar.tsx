@@ -139,7 +139,7 @@ export function Sidebar({}: SidebarProps = {}) {
               />
             </div>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-bold text-lg">TaskFlow</span>
+              <span className="truncate font-bold text-lg">Taskify</span>
               <span className="truncate text-xs text-muted-foreground">Workspace</span>
             </div>
           </Link>

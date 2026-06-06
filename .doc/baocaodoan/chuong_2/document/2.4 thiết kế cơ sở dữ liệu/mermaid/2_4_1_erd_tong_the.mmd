@@ -1,0 +1,70 @@
+erDiagram
+    ApplicationUser {
+        string Id PK
+        string Email
+        string UserName
+        string AvatarUrl
+    }
+
+    TaskItem {
+        int Id PK
+        string UserId FK
+        string Title
+        string Priority
+        string Status
+        datetime DueDate
+        bool IsDeleted
+    }
+
+    Label {
+        int Id PK
+        string UserId FK
+        string Name
+        string Color
+    }
+
+    Note {
+        int Id PK
+        string UserId FK
+        string Title
+        bool IsPinned
+        datetime UpdatedAt
+    }
+
+    FinanceEntry {
+        int Id PK
+        string UserId FK
+        date Date
+        string Category
+        decimal Amount
+    }
+
+    FinanceCategory {
+        int Id PK
+        string UserId FK
+        string Name
+    }
+
+    FocusSession {
+        int Id PK
+        string UserId FK
+        int DurationMinutes
+        datetime StartedAt
+        bool IsCompleted
+    }
+
+    DailyGoal {
+        int Id PK
+        string UserId FK
+        string Title
+        bool IsCompleted
+    }
+
+    ApplicationUser ||--o{ TaskItem : owns
+    ApplicationUser ||--o{ Label : owns
+    ApplicationUser ||--o{ Note : owns
+    ApplicationUser ||--o{ FinanceEntry : owns
+    ApplicationUser ||--o{ FinanceCategory : owns
+    ApplicationUser ||--o{ FocusSession : owns
+    ApplicationUser ||--o{ DailyGoal : owns
+    TaskItem }o--o{ Label : tagged_with

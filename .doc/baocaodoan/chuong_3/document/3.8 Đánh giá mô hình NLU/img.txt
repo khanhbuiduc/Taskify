@@ -1,0 +1,1 @@
+1. 3_14_quy_trinh_danh_gia_mo_hinh_nlu.png - Quy trinh danh gia mo hinh NLU tu du lieu da gan nhan den cac chi so va confusion matrix.

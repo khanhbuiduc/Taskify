@@ -1,0 +1,5 @@
+Hinh 3.6. Luong ket hop Gemini Ollama voi Rasa
+Tep anh: img/3_6_luong_ket_hop_gemini_ollama_voi_rasa.png
+Tep Mermaid: mermaid/3_6_luong_ket_hop_gemini_ollama_voi_rasa.mmd
+Goi y mo ta: Hinh nay mo ta luong ket hop giua AiFallbackService voi Rasa trong Taskify. He thong co the luu message, lay lich su hoi thoai, chuan hoa ngu canh hoac sinh fallback reply bang Gemini hoac Ollama, sau do van dua cau lenh sang Rasa, action server, internal API va database de bao toan luong nghiep vu chinh.
+Co so doi chieu code: TaskifyAPI/Services/AiFallbackService.cs, TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Controllers/InternalAiFallbackController.cs

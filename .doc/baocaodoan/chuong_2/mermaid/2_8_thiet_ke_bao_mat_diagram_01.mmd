@@ -1,0 +1,15 @@
+flowchart TD
+    U[Request từ client]
+    J[Kiểm tra JWT]
+    R[Kiểm tra role]
+    O[Kiểm tra quyền trên bản ghi]
+    A[Cho phép xử lý]
+    D[Từ chối]
+
+    U --> J
+    J -->|Hợp lệ| R
+    J -->|Không hợp lệ| D
+    R -->|Đúng vai trò| O
+    R -->|Sai vai trò| D
+    O -->|Đúng chủ sở hữu hoặc admin| A
+    O -->|Không có quyền| D

@@ -1,0 +1,12 @@
+flowchart TD
+    A[Bắt đầu] --> B[Người dùng nhập khoản chi]
+    B --> C[Kiểm tra JWT]
+    C --> D[Kiểm tra danh mục]
+    D --> E{Danh mục tồn tại?}
+    E -- Không --> F[Trả lỗi]
+    E -- Có --> G[Kiểm tra số tiền]
+    G --> H{Hợp lệ?}
+    H -- Không --> F
+    H -- Có --> I[Lưu FinanceEntry]
+    I --> J[Cập nhật danh sách và thống kê]
+    J --> K[Kết thúc]

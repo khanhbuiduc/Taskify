@@ -1,0 +1,5 @@
+Hinh 3.1. Tong quan bai toan xu ly ngon ngu tu nhien trong Taskify
+Tep anh: img/3_1_tong_quan_bai_toan_xu_ly_ngon_ngu_tu_nhien_trong_taskify.png
+Tep Mermaid: mermaid/3_1_tong_quan_bai_toan_xu_ly_ngon_ngu_tu_nhien_trong_taskify.mmd
+Goi y mo ta: Hinh nay mo ta bai toan xu ly ngon ngu tu nhien trong Taskify, trong do cau lenh tu nhien cua nguoi dung duoc dua vao luong phan tich NLP, nhan dien intent va entity, chuyen thanh thao tac nghiep vu tren backend, sau do truy van hoac cap nhat database va tra phan hoi ve giao dien. So do nay phan anh ro vai tro trung gian cua phan he NLP trong viec bien ngon ngu tu nhien thanh hanh dong he thong.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/RasaChatService.cs, rasa/config.yml, rasa/actions/*

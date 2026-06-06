@@ -1,0 +1,11 @@
+Hinh 3.4. Pipeline xu ly bang Rasa trong Taskify
+Tep anh: img/3_4_pipeline_xu_ly_bang_rasa_trong_taskify.png
+Tep Mermaid: mermaid/3_4_pipeline_xu_ly_bang_rasa_trong_taskify.mmd
+Goi y mo ta: Hinh nay mo ta pipeline xu ly bang Rasa trong Taskify, trong do ChatController goi RasaChatService, dua yeu cau den Rasa Server, cho qua bo phan intent classifier, entity extractor, dialogue policy, custom action va internal API truoc khi tac dong den SQL Server. So do nay cho thay Rasa duoc tich hop nhu mot lop xu ly thong minh nam giua giao dien chat va du lieu that cua he thong.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/RasaChatService.cs, rasa/config.yml, rasa/actions/*
+
+Hinh 3.5. Luong xu ly khi nguoi dung nhap thieu thong tin
+Tep anh: img/3_5_luong_xu_ly_khi_nguoi_dung_nhap_thieu_thong_tin.png
+Tep Mermaid: mermaid/3_5_luong_xu_ly_khi_nguoi_dung_nhap_thieu_thong_tin.mmd
+Goi y mo ta: Hinh nay mo ta hoi thoai nhieu buoc khi nguoi dung nhap thieu thong tin trong luong tao task. Theo implementation hien tai, create_task_form bat buoc thu thap `task_title`, vi vay he thong se hoi lai thong tin con thieu, cho nguoi dung bo sung, sau do tiep tuc thuc hien action tao task va tra ket qua.
+Co so doi chieu code: rasa/domain.yml, rasa/actions/task/task_actions.py, TaskifyAPI/Controllers/InternalTaskController.cs

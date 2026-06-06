@@ -1,0 +1,11 @@
+flowchart LR
+    A["Dữ liệu NLU đã gán nhãn"]
+    B["Chia train và test"]
+    C["Huấn luyện mô hình"]
+    D["Chạy rasa test nlu"]
+    E["Tính Accuracy Precision Recall F1"]
+    F["Sinh confusion matrix"]
+    G["Phân tích lỗi và tinh chỉnh dữ liệu"]
+
+    A --> B --> C --> D --> E --> F --> G
+    G --> B

@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor U as Người dùng
+    participant FE as Giao diện công việc
+    participant Ctrl as TaskItemController
+    participant DB as SQL Server
+
+    U->>FE: Nhập thông tin và nhấn Tạo task
+    FE->>Ctrl: POST /api/TaskItem
+    Ctrl->>Ctrl: Lấy userId từ JWT<br/>Chuẩn hóa priority, status, due date
+    Ctrl->>DB: Kiểm tra label thuộc người dùng
+    alt Dữ liệu hoặc label không hợp lệ
+        DB-->>Ctrl: Không tìm thấy label hợp lệ
+        Ctrl-->>FE: 400 BadRequest
+        FE-->>U: Hiển thị thông báo lỗi
+    else Dữ liệu hợp lệ
+        DB-->>Ctrl: Danh sách label hợp lệ
+        Ctrl->>DB: Insert TaskItem va SaveChanges
+        DB-->>Ctrl: Trả về task mới
+        Ctrl-->>FE: TaskItemResponseDto
+        FE-->>U: Cập nhật danh sách task
+    end

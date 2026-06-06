@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor U as Người dùng
+    participant FE as AI Page
+    participant Chat as ChatController
+    participant Rasa as Rasa và Form xử lý
+    participant Internal as InternalTaskController
+
+    U->>FE: Gửi lệnh tạo task còn thiếu thông tin
+    FE->>Chat: POST chat message
+    Chat->>Rasa: Gửi message sang Rasa
+    Rasa->>Rasa: Kiểm tra slot bắt buộc
+    Rasa-->>Chat: Yêu cầu bổ sung task_title
+    Chat-->>FE: Phản hồi câu hỏi bổ sung
+    FE-->>U: Hiển thị yêu cầu nhập thêm thông tin
+
+    U->>FE: Trả lời thông tin còn thiếu
+    FE->>Chat: POST chat message tiếp theo
+    Chat->>Rasa: Gửi message đã bổ sung
+    Rasa->>Rasa: Xác thực slot và hoàn tất form
+    Rasa->>Internal: POST internal task API
+    Internal-->>Rasa: Task đã được tạo
+    Rasa-->>Chat: Xác nhận tạo task thành công
+    Chat-->>FE: Thread response
+    FE-->>U: Hiển thị kết quả tạo task

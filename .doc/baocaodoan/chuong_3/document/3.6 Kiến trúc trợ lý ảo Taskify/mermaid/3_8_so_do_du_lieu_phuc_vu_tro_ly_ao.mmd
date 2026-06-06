@@ -1,0 +1,56 @@
+erDiagram
+    ApplicationUser ||--o{ ChatSession : so_huu
+    ChatSession ||--o{ ChatMessage : chua
+    ApplicationUser ||--o{ TaskItem : so_huu
+    ApplicationUser ||--o{ Note : so_huu
+    ApplicationUser ||--o{ FinanceEntry : so_huu
+    ApplicationUser ||--o| UserGeminiCredential : cau_hinh
+    ApplicationUser ||--o| UserAiFallbackSettings : cau_hinh
+    ApplicationUser ||--o{ TaskDeleteUndoToken : tao
+
+    ApplicationUser {
+        string Id PK
+        string Email
+        string UserName
+    }
+    ChatSession {
+        guid Id PK
+        string UserId FK
+        string Title
+    }
+    ChatMessage {
+        guid Id PK
+        guid SessionId FK
+        string Text
+        string MetadataJson
+    }
+    TaskItem {
+        int Id PK
+        string UserId FK
+        string Title
+        string Status
+    }
+    Note {
+        int Id PK
+        string UserId FK
+        string Title
+    }
+    FinanceEntry {
+        int Id PK
+        string UserId FK
+        string Category
+        decimal Amount
+    }
+    UserGeminiCredential {
+        string UserId PK
+        string Status
+    }
+    UserAiFallbackSettings {
+        string UserId PK
+        string ActiveProvider
+    }
+    TaskDeleteUndoToken {
+        string Token PK
+        string UserId FK
+        datetime ExpiresAtUtc
+    }

@@ -1,0 +1,12 @@
+flowchart LR
+    A["Phân tích nghiệp vụ"]
+    B["Xác định intent và entity"]
+    C["Viết câu mẫu"]
+    D["Gán nhãn entity"]
+    E["Chia train và validate"]
+    F["Huấn luyện Rasa NLU"]
+    G["Kiểm thử và đánh giá"]
+    H["Tinh chỉnh dữ liệu"]
+
+    A --> B --> C --> D --> E --> F --> G --> H
+    H --> C

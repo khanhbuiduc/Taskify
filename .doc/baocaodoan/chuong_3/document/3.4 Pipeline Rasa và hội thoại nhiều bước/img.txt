@@ -1,0 +1,2 @@
+1. 3_4_pipeline_xu_ly_bang_rasa_trong_taskify.png - Pipeline xu ly bang Rasa trong Taskify tu ChatController den SQL Server.
+2. 3_5_luong_xu_ly_khi_nguoi_dung_nhap_thieu_thong_tin.png - Sequence xu ly hoi thoai nhieu buoc khi nguoi dung nhap thieu thong tin.

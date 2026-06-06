@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor U as Người dùng
+    participant FE as AI Page
+    participant Chat as ChatController
+    participant Rasa as Rasa và Action Server
+    participant Internal as InternalTaskController
+    participant DB as SQL Server
+
+    U->>FE: Nhập lệnh tạo task
+    FE->>Chat: POST /api/Chat/{sessionId}/messages
+    Chat->>DB: Tạo hoặc lấy ChatSession
+    Chat->>Chat: Chuẩn hóa message và metadata
+    Chat->>DB: Lưu user ChatMessage
+    Chat->>Rasa: Gửi message sang Rasa
+    Rasa->>Rasa: Nhận intent create_task<br/>Gọi custom action
+    Rasa->>Internal: POST internal task API
+    Internal->>DB: Insert TaskItem va SaveChanges
+    DB-->>Internal: Task đã tạo
+    Internal-->>Rasa: Task payload
+    Rasa-->>Chat: Assistant reply
+    Chat->>DB: Lưu assistant ChatMessage
+    Chat-->>FE: ChatThreadDto
+    FE-->>U: Hiển thị phản hồi và task mới

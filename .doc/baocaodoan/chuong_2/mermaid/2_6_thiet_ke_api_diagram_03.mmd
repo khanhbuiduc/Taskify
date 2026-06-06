@@ -1,0 +1,35 @@
+sequenceDiagram
+    actor U as Nguoi dung
+    participant FE as Frontend
+    participant AU as AuthController
+    participant ID as ASP.NET Core Identity
+    participant JWT as JWT Generator
+    participant MW as JWT Bearer Middleware
+    participant PC as Protected Controller
+
+    U->>FE: Dang nhap
+    FE->>AU: POST /api/Auth/login
+    AU->>ID: Kiem tra email va mat khau
+
+    alt Thong tin dang nhap hop le
+        ID-->>AU: Xac thuc thanh cong
+        AU->>JWT: Tao token voi NameIdentifier, Email, Role, Jti
+        JWT-->>AU: JWT token
+        AU-->>FE: 200 OK + token
+        FE->>FE: Luu token
+        FE->>MW: Request toi API + Authorization Bearer token
+        MW->>MW: Kiem tra chu ky, issuer, audience, lifetime
+        MW->>MW: OnTokenValidated kiem tra user ton tai va khong bi khoa
+
+        alt Token hop le va user duoc phep
+            MW->>PC: Chuyen request vao controller co Authorize
+            PC-->>FE: Du lieu hoac ket qua nghiep vu
+        else Token het han hoac khong hop le
+            MW-->>FE: 401 Unauthorized
+        else Tai khoan bi khoa
+            MW-->>FE: 401 Unauthorized
+        end
+    else Sai email hoac mat khau
+        ID-->>AU: Xac thuc that bai
+        AU-->>FE: 401 Unauthorized
+    end

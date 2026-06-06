@@ -1,0 +1,41 @@
+flowchart TD
+    U[Người dùng]
+    P1((1. Tài khoản))
+    P2((2. Công việc và nhãn))
+    P3((3. Ghi chú))
+    P4((4. Tài chính))
+    P5((5. Mục tiêu và tập trung))
+    P6((6. Trợ lý ảo))
+    P7((7. Quản trị))
+
+    D1[(User + Role)]
+    D2[(Task + Label)]
+    D3[(Note)]
+    D4[(Finance)]
+    D5[(DailyGoal + FocusSession)]
+    D6[(ChatSession + ChatMessage)]
+
+    R[Rasa]
+    G[AI fallback]
+
+    U --> P1
+    U --> P2
+    U --> P3
+    U --> P4
+    U --> P5
+    U --> P6
+
+    P1 <--> D1
+    P2 <--> D2
+    P3 <--> D3
+    P4 <--> D4
+    P5 <--> D5
+    P6 <--> D6
+    P6 --> P2
+    P6 --> P3
+    P6 --> P4
+    P6 --> R
+    P6 --> G
+
+    A[Quản trị viên] --> P7
+    P7 <--> D1

@@ -1,0 +1,12 @@
+flowchart LR
+    A["Câu lệnh tự nhiên của người dùng"]
+    B["ChatController nhận message"]
+    C["Tiền xử lý và chuẩn hóa ngữ cảnh"]
+    D["Rasa NLU phân tích intent và entity"]
+    E["Dialogue policy chọn action"]
+    F["Custom action gọi backend API"]
+    G["Truy vấn hoặc cập nhật database"]
+    H["Sinh phản hồi trợ lý ảo"]
+    I["Frontend hiển thị kết quả"]
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I

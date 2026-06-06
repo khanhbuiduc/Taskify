@@ -1,0 +1,12 @@
+sequenceDiagram
+    actor U as Người dùng
+    participant FE as Frontend
+    participant AU as AuthController
+    participant API as Các API nghiệp vụ
+
+    U->>FE: Đăng nhập
+    FE->>AU: POST /api/Auth/login
+    AU-->>FE: JWT token
+    FE->>API: Request + Authorization Bearer Token
+    API->>API: Xác thực và phân quyền
+    API-->>FE: Dữ liệu hoặc lỗi

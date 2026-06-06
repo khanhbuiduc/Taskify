@@ -1,0 +1,21 @@
+flowchart TD
+    A([Nguoi dung nhap lenh vao tro ly ao])
+    B[AI Page gui message toi ChatController]
+    C[Lay hoac tao ChatSession]
+    D[Doc lich su ChatMessage]
+    E[AiFallbackService chuan hoa ngu canh]
+    F[RasaChatService parse intent]
+    G[ChatController luu user message]
+    H[RasaChatService gui message sang Rasa]
+    I{Rasa co can custom action khong?}
+    J[Action Server goi Internal API]
+    K[Internal API doc ghi SQL Server]
+    L[Rasa tra assistant replies]
+    M[ChatController luu assistant messages]
+    N[Tra ChatThreadDto ve frontend]
+    O([Nguoi dung nhan phan hoi tren giao dien])
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I
+    I -- Co --> J --> K --> L
+    I -- Khong --> L
+    L --> M --> N --> O

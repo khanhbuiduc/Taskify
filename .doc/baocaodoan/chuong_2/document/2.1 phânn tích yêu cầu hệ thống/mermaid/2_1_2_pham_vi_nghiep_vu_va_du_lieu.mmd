@@ -1,0 +1,32 @@
+flowchart LR
+    User["User"]
+    Admin["Admin"]
+
+    subgraph Scope["Các phân hệ nằm trong phạm vi hiện thực"]
+        Task["Task"]
+        Note["Note"]
+        Finance["Finance"]
+        Focus["Focus + Daily Goal"]
+        AI["AI Chat"]
+        AdminM["Admin"]
+    end
+
+    Task --> TaskEntity[("TaskItem")]
+    Task --> LabelEntity[("Label")]
+    Note --> NoteEntity[("Note")]
+    Finance --> FinanceEntryEntity[("FinanceEntry")]
+    Finance --> FinanceCategoryEntity[("FinanceCategory")]
+    Focus --> FocusEntity[("FocusSession")]
+    Focus --> GoalEntity[("DailyGoal")]
+    AI --> ChatSessionEntity[("ChatSession")]
+    AI --> ChatMessageEntity[("ChatMessage")]
+    AI --> GeminiEntity[("UserGeminiCredential")]
+    AI --> FallbackEntity[("UserAiFallbackSettings")]
+    AdminM --> UserEntity[("ApplicationUser")]
+
+    User --> Task
+    User --> Note
+    User --> Finance
+    User --> Focus
+    User --> AI
+    Admin --> AdminM

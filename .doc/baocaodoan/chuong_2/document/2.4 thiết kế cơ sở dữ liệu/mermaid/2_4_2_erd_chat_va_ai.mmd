@@ -1,0 +1,50 @@
+erDiagram
+    ApplicationUser {
+        string Id PK
+        string Email
+        string UserName
+    }
+
+    ChatSession {
+        guid Id PK
+        string UserId FK
+        string Title
+        datetime UpdatedAt
+    }
+
+    ChatMessage {
+        guid Id PK
+        guid SessionId FK
+        string Role
+        string Text
+        string MetadataJson
+        datetime SentAt
+    }
+
+    TaskDeleteUndoToken {
+        string Token PK
+        string UserId FK
+        string SessionId
+        string TaskIdsCsv
+        datetime ExpiresAtUtc
+        bool IsUsed
+    }
+
+    UserGeminiCredential {
+        string UserId PK
+        string Status
+        datetime LastValidatedAtUtc
+    }
+
+    UserAiFallbackSettings {
+        string UserId PK
+        string ActiveProvider
+        string OllamaBaseUrl
+        string OllamaModel
+    }
+
+    ApplicationUser ||--o{ ChatSession : owns
+    ChatSession ||--o{ ChatMessage : contains
+    ApplicationUser ||--o{ TaskDeleteUndoToken : creates
+    ApplicationUser ||--o| UserGeminiCredential : configures
+    ApplicationUser ||--o| UserAiFallbackSettings : configures

@@ -1,0 +1,27 @@
+sequenceDiagram
+    participant FE as Giao diện frontend
+    participant Chat as ChatController
+    participant AF as AiFallbackService
+    participant RasaSvc as RasaChatService
+    participant Rasa as Rasa Server
+    participant Act as Action Server
+    participant Internal as Internal API
+    participant DB as SQL Server
+
+    FE->>Chat: POST /api/Chat/{sessionId}/messages
+    Chat->>AF: NormalizeContextAsync(...)
+    AF-->>Chat: message đã chuẩn hóa
+    Chat->>RasaSvc: ParseIntentAsync(...)
+    RasaSvc-->>Chat: intent đã phân tích
+    Chat->>RasaSvc: SendMessageAsync(...)
+    RasaSvc->>Rasa: REST webhook
+    Rasa->>Act: custom action nếu cần
+    Act->>Internal: Gọi API với X-Rasa-Token
+    Internal->>DB: Đọc hoặc ghi dữ liệu
+    DB-->>Internal: kết quả
+    Internal-->>Act: JSON response
+    Act-->>Rasa: payload trợ lý ảo
+    Rasa-->>RasaSvc: reply list
+    RasaSvc-->>Chat: phản hồi trợ lý ảo
+    Chat->>DB: Lưu chat messages
+    Chat-->>FE: ChatThreadDto

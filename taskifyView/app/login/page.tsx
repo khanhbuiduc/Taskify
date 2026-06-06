@@ -60,7 +60,7 @@ export default function SignInPage() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold">TaskFlow</CardTitle>
+          <CardTitle className="text-3xl font-bold">Taskify</CardTitle>
           <CardDescription className="text-base mt-2">
             Sign in to your account
           </CardDescription>

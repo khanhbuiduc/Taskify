@@ -1,0 +1,49 @@
+erDiagram
+    ApplicationUser {
+        string Id PK
+        string UserName
+        string Email
+        string AvatarUrl
+        bool LockoutEnabled
+        datetime LockoutEnd
+    }
+
+    IdentityRole {
+        string Id PK
+        string Name
+        string NormalizedName
+    }
+
+    IdentityUserRole {
+        string UserId FK
+        string RoleId FK
+    }
+
+    UserGeminiCredential {
+        string UserId PK
+        string EncryptedApiKey
+        string Status
+        datetime LastValidatedAtUtc
+        string LastValidationError
+    }
+
+    UserAiFallbackSettings {
+        string UserId PK
+        string ActiveProvider
+        string OllamaBaseUrl
+        string OllamaModel
+        string LastOllamaValidationError
+    }
+
+    ChatSession {
+        guid Id PK
+        string UserId FK
+        string Title
+        datetime UpdatedAt
+    }
+
+    ApplicationUser ||--o{ IdentityUserRole : assigned
+    IdentityRole ||--o{ IdentityUserRole : grants
+    ApplicationUser ||--o| UserGeminiCredential : configures
+    ApplicationUser ||--o| UserAiFallbackSettings : configures
+    ApplicationUser ||--o{ ChatSession : starts

@@ -1,0 +1,13 @@
+flowchart LR
+    U[Người dùng]
+    A[Quản trị viên]
+    R[Rasa Server]
+    G[AI fallback / Gemini]
+    S((Taskify))
+
+    U -->|Sử dụng chức năng cá nhân| S
+    A -->|Quản trị hệ thống| S
+    S -->|Gửi hội thoại, ngữ cảnh| R
+    R -->|Kết quả phân tích và phản hồi| S
+    S -->|Trích xuất thực thể, chuẩn hóa ngữ cảnh| G
+    G -->|Kết quả hỗ trợ| S

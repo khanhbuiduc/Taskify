@@ -1,0 +1,14 @@
+flowchart LR
+    C[Client Browser]
+    N[Web Frontend\nPort 3000]
+    A[TaskifyAPI\nPort 5116]
+    S[(SQL Server)]
+    R[Rasa Server\nPort 5005]
+    AC[Action Server\nPort 5055]
+
+    C --> N
+    N --> A
+    A --> S
+    A --> R
+    R --> AC
+    AC --> A

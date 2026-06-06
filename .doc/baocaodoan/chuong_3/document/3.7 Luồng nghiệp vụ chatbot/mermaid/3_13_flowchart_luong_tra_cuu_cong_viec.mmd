@@ -1,0 +1,12 @@
+flowchart TD
+    A["Người dùng hỏi công việc hôm nay"]
+    B["Frontend gửi chat message"]
+    C["ChatController gọi Rasa"]
+    D["Rasa nhận diện intent search_tasks hoặc filter_tasks"]
+    E["Duckling và entity extractor trích xuất time range"]
+    F["Action Server tạo bộ lọc dueFrom dueTo"]
+    G["InternalTaskController truy vấn task theo user"]
+    H["Tổng hợp danh sách task"]
+    I["Trả phản hồi trợ lý ảo cho frontend"]
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I

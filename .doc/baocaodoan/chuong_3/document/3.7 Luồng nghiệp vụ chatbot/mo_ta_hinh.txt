@@ -1,0 +1,17 @@
+Hinh 3.11. Sequence diagram luong tao cong viec
+Tep anh: img/3_11_sequence_luong_tao_cong_viec.png
+Tep Mermaid: mermaid/3_11_sequence_luong_tao_cong_viec.mmd
+Goi y mo ta: Hinh nay mo ta luong nguoi dung tao task bang cau lenh tu nhien, di qua Frontend, ChatController, AiFallbackService, Rasa, Action Server, Internal API va SQL Server. So do nay la minh hoa chi tiet cho use case chat tao task trong he thong.
+Co so doi chieu code: taskifyView/app/(dashboard)/ai/page.tsx, TaskifyAPI/Controllers/ChatController.cs, rasa/actions/task/task_actions.py, TaskifyAPI/Controllers/InternalTaskController.cs
+
+Hinh 3.12. Sequence diagram luong xoa cong viec
+Tep anh: img/3_12_sequence_luong_xoa_cong_viec.png
+Tep Mermaid: mermaid/3_12_sequence_luong_xoa_cong_viec.mmd
+Goi y mo ta: Hinh nay mo ta luong xoa task bang chatbot, bao gom tim task, soft delete, tao TaskDeleteUndoToken va tra metadata undo ve frontend. Day la luong nghiep vu chat phuc tap hon vi co lien quan den an toan du lieu va kha nang hoan tac.
+Co so doi chieu code: rasa/actions/task/task_actions.py, TaskifyAPI/Controllers/InternalTaskController.cs, taskifyView/app/(dashboard)/ai/page.tsx
+
+Hinh 3.13. Flowchart luong tra cuu cong viec
+Tep anh: img/3_13_flowchart_luong_tra_cuu_cong_viec.png
+Tep Mermaid: mermaid/3_13_flowchart_luong_tra_cuu_cong_viec.mmd
+Goi y mo ta: Hinh nay mo ta luong tra cuu cong viec theo dieu kien nhu hom nay hoac khoang thoi gian, trong do Rasa nhan dien intent tim kiem, trich xuat time range, goi InternalTaskController va tong hop danh sach task tra ve nguoi dung. Luong nay the hien kha nang ket hop NLP va bo loc nghiep vu cua he thong.
+Co so doi chieu code: rasa/actions/task/task_actions.py, TaskifyAPI/Controllers/InternalTaskController.cs, rasa/config.yml

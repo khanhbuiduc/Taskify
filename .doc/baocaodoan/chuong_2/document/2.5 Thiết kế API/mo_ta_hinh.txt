@@ -1,0 +1,11 @@
+Hinh 2.5.1. So do phan lop public API va internal API
+Tep anh: img/2_5_1_ban_do_api_public_va_internal.png
+Tep Mermaid: mermaid/2_5_1_ban_do_api_public_va_internal.mmd
+Goi y mo ta: Hinh nay trinh bay cach he thong tach biet hai nhom API: public API danh cho frontend va internal API danh cho Rasa action server. Public API su dung JWT de bao ve cac controller nghiep vu, trong khi internal API duoc bao ve bang X-Rasa-Token va chi phuc vu thao tac noi bo cua luong AI.
+Co so doi chieu code: TaskifyAPI/Controllers/*, TaskifyAPI/Controllers/Internal*.cs, TaskifyAPI/Program.cs
+
+Hinh 2.5.2. So do trinh tu xu ly yeu cau chat tai ChatController
+Tep anh: img/2_5_2_trinh_tu_xu_ly_chat_api.png
+Tep Mermaid: mermaid/2_5_2_trinh_tu_xu_ly_chat_api.mmd
+Goi y mo ta: Hinh nay mo ta chi tiet cach mot request POST chat duoc xu ly trong backend, tu giai doan tao session, luu tin nhan cua nguoi dung, chuan hoa ngu canh, parse intent, gui sang Rasa cho den khi luu cac message phan hoi cua tro ly. Day la endpoint trung tam cua phan he AI chat.
+Co so doi chieu code: TaskifyAPI/Controllers/ChatController.cs, TaskifyAPI/Services/RasaChatService.cs, TaskifyAPI/Services/AiFallbackService.cs

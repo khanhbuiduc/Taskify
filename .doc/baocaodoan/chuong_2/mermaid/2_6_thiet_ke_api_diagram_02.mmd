@@ -1,0 +1,18 @@
+sequenceDiagram
+    actor U as Người dùng
+    participant FE as Frontend
+    participant C as ChatController
+    participant R as Rasa
+    participant A as Action Server
+    participant I as Internal API
+
+    U->>FE: Gửi tin nhắn
+    FE->>C: POST /api/Chat/{sessionId}/messages
+    C->>C: Chuẩn hóa ngữ cảnh và lưu message
+    C->>R: SendMessageAsync
+    R->>A: Gọi custom action nếu cần
+    A->>I: Gọi internal API bằng API key
+    I-->>A: Dữ liệu nghiệp vụ
+    A-->>R: Kết quả action
+    R-->>C: Phản hồi chat
+    C-->>FE: Chuỗi tin nhắn phản hồi

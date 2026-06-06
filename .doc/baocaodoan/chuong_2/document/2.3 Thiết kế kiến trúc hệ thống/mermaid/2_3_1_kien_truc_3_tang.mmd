@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph FE["Frontend - taskifyView"]
+        Pages["Pages và Components"]
+        Stores["Zustand Stores"]
+        ApiClient["lib/api/*"]
+    end
+
+    subgraph BE["Backend - TaskifyAPI"]
+        Controllers["Controllers"]
+        Services["Services"]
+        Repositories["Repositories + UnitOfWork"]
+        DbContext["ApplicationDbContext"]
+    end
+
+    subgraph AI["AI Layer - rasa"]
+        NLU["NLU + Dialogue"]
+        Actions["Custom Actions"]
+    end
+
+    DB[("SQL Server")]
+
+    Pages --> Stores --> ApiClient --> Controllers
+    Controllers --> Services
+    Controllers --> Repositories --> DbContext --> DB
+    Controllers --> NLU --> Actions --> Controllers

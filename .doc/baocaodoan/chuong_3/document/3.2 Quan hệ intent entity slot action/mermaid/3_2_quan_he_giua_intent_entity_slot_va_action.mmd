@@ -1,0 +1,18 @@
+flowchart TD
+    A["Câu lệnh người dùng"]
+    B["Intent classifier"]
+    C["Entity extractor"]
+    D["Slots lưu ngữ cảnh"]
+    E["Dialogue policy"]
+    F["Custom action"]
+    G["Internal API và backend"]
+    H["Phản hồi trợ lý ảo"]
+
+    A --> B
+    A --> C
+    B --> D
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H

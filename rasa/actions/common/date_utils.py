@@ -4,10 +4,19 @@ common/date_utils.py — Xử lý ngày giờ, parse duckling entity,
 """
 
 import re
+import unicodedata
 from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
 from actions.common.text_utils import normalize_lower
+
+
+def _fold_ascii(value: Optional[str]) -> str:
+    return (
+        unicodedata.normalize("NFD", normalize_lower(value))
+        .encode("ascii", "ignore")
+        .decode("ascii")
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -175,6 +184,66 @@ def build_due_datetime(date_str: Optional[str], time_str: Optional[str]) -> date
     if had_date:
         return result_date.replace(hour=23, minute=59, second=59, microsecond=0)
     return now.replace(hour=23, minute=59, second=59, microsecond=0)
+
+
+def parse_finance_date(date_str: Optional[str], now: datetime) -> Tuple[datetime, bool]:
+    """Parse a finance date without rolling past dates into next year.
+
+    Rules:
+    - dd/MM/yyyy -> keep provided year
+    - dd/MM -> use current year
+    - dd -> use current month and year
+    - natural-language relative dates keep existing finance behavior
+    """
+    result_date = now
+    had_date = False
+
+    if not date_str:
+        return result_date, had_date
+
+    value = normalize_lower(date_str)
+    if not value:
+        return result_date, had_date
+
+    folded_value = _fold_ascii(value)
+
+    had_date = True
+    if folded_value in {"today", "hom nay"}:
+        return now, had_date
+    if folded_value in {"tomorrow", "ngay mai"}:
+        return now + timedelta(days=1), had_date
+    if folded_value in {"ngay kia", "day after tomorrow"}:
+        return now + timedelta(days=2), had_date
+    if folded_value in {"next week", "tuan sau"}:
+        return now + timedelta(days=7), had_date
+    if folded_value in {"next month", "thang sau"}:
+        return now + timedelta(days=30), had_date
+
+    for date_format in ("%Y-%m-%d", "%d/%m/%Y", "%d/%m/%y"):
+        try:
+            parsed = datetime.strptime(value, date_format)
+            return now.replace(year=parsed.year, month=parsed.month, day=parsed.day), had_date
+        except ValueError:
+            continue
+
+    day_month_match = re.fullmatch(r"(\d{1,2})/(\d{1,2})", value)
+    if day_month_match:
+        day = int(day_month_match.group(1))
+        month = int(day_month_match.group(2))
+        try:
+            return now.replace(month=month, day=day), had_date
+        except ValueError:
+            return result_date, False
+
+    day_match = re.fullmatch(r"(\d{1,2})", value)
+    if day_match:
+        day = int(day_match.group(1))
+        try:
+            return now.replace(day=day), had_date
+        except ValueError:
+            return result_date, False
+
+    return result_date, False
 
 
 # ---------------------------------------------------------------------------

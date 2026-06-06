@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant FE as Frontend
+    participant API as ChatController
+    participant DB as ApplicationDbContext
+    participant AF as AiFallbackService
+    participant RasaSvc as RasaChatService
+    participant Rasa as Rasa Server
+
+    FE->>API: POST /api/Chat/{sessionId}/messages
+    API->>DB: Kiểm tra hoặc tạo ChatSession
+    API->>DB: Đọc lịch sử ChatMessage
+    API->>AF: NormalizeContextAsync(userId, message, history)
+    AF-->>API: normalizedMessage
+    API->>RasaSvc: ParseIntentAsync(normalizedMessage)
+    RasaSvc-->>API: parsedIntent
+    API->>DB: Lưu user message + metadata
+    API->>RasaSvc: SendMessageAsync(sender, normalizedMessage, metadataJson)
+    RasaSvc->>Rasa: /webhooks/rest/webhook
+    Rasa-->>RasaSvc: reply list
+    RasaSvc-->>API: assistant replies
+    API->>DB: Lưu assistant messages
+    API-->>FE: ChatThreadDto

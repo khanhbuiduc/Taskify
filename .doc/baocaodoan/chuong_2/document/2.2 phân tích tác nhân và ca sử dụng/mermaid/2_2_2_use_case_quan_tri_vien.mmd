@@ -1,0 +1,18 @@
+flowchart LR
+    Admin["Admin"]
+
+    subgraph UC["Các ca sử dụng chính của Admin"]
+        BaseUser(["Sử dụng các chức năng nền tảng"])
+        ManageUsers(["Quản lý người dùng"])
+        FilterUsers(["Lọc và tìm user"])
+        CreateUsers(["Tạo user mới"])
+        UpdateUsers(["Cập nhật role / trạng thái"])
+        BanUsers(["Khoá hoặc mở khoá tài khoản"])
+    end
+
+    Admin --> BaseUser
+    Admin --> ManageUsers
+    ManageUsers --> FilterUsers
+    ManageUsers --> CreateUsers
+    ManageUsers --> UpdateUsers
+    ManageUsers --> BanUsers

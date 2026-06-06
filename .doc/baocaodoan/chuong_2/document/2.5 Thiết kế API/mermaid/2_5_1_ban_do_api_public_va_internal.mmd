@@ -1,0 +1,29 @@
+flowchart TB
+    FE["Frontend Next.js"]
+    Action["Rasa Action Server"]
+
+    subgraph Public["Public API - bảo vệ bằng JWT"]
+        Auth["AuthController"]
+        Task["TaskItemController"]
+        Note["NotesController"]
+        Finance["FinanceEntriesController\nFinanceCategoriesController"]
+        Focus["FocusSessionController\nDailyGoalController"]
+        Chat["ChatController"]
+        Settings["GeminiSettingsController\nAiFallbackSettingsController"]
+        Admin["AdminUsersController"]
+    end
+
+    subgraph Internal["Internal API - bảo vệ bằng X-Rasa-Token"]
+        InternalTask["InternalTaskController"]
+        InternalNote["InternalNoteController"]
+        InternalFinance["InternalFinanceController"]
+        InternalAi["InternalAiFallbackController"]
+    end
+
+    Repo["Repositories / DbContext"]
+    DB[("SQL Server")]
+
+    FE -->|JWT| Public
+    Action -->|X-Rasa-Token| Internal
+    Public --> Repo --> DB
+    Internal --> Repo

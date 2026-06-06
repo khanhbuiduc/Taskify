@@ -1,0 +1,15 @@
+flowchart LR
+    U["Người dùng"]
+    FE["AI Page và chat-session-store"]
+    Chat["ChatController"]
+    AF["AiFallbackService"]
+    RasaSvc["RasaChatService"]
+    Rasa["Rasa Server"]
+    Action["Action Server"]
+    Internal["Internal APIs"]
+    DB[("SQL Server")]
+
+    U --> FE --> Chat
+    Chat --> AF
+    Chat --> RasaSvc --> Rasa --> Action --> Internal --> DB
+    Chat --> DB
