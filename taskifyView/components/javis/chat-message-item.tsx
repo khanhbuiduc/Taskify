@@ -15,6 +15,7 @@ import {
   findTaskMatches,
   buildPreviewTask,
   foldText,
+  type ThinkingTraceViewModel,
   type ParsedCreateTaskBlock,
   type ParsedTaskListItem,
   type TaskPickerPayload,
@@ -31,6 +32,11 @@ export interface DisplayMessage {
   content: string;
   metadataJson?: string | null;
   timestamp: Date;
+  isStreaming?: boolean;
+  isComplete?: boolean;
+  showThinkingLabel?: boolean;
+  thinkingDurationSeconds?: number;
+  thinkingTrace?: ThinkingTraceViewModel | null;
 }
 
 interface ChatMessageItemProps {
@@ -54,11 +60,26 @@ interface ChatMessageItemProps {
   onNoteCardTogglePin?: (note: Note) => void;
   onFinanceEntryEdit?: (entry: FinanceEntry) => void;
   onFinanceEntryDelete?: (entry: FinanceEntry) => void;
+  isThinkingActive?: boolean;
+  onThinkingLabelToggle?: (messageId: string) => void;
   isSending: boolean;
 }
 
-function TextBubble({ content }: { content: string }) {
-  return <p className="text-sm leading-relaxed whitespace-pre-line">{content}</p>;
+function TextBubble({
+  content,
+  isStreaming = false,
+}: {
+  content: string;
+  isStreaming?: boolean;
+}) {
+  return (
+    <p className="text-sm leading-relaxed whitespace-pre-line">
+      {content}
+      {isStreaming && (
+        <span className="ml-1 inline-block h-4 w-2 animate-pulse rounded-sm bg-current/60 align-middle" />
+      )}
+    </p>
+  );
 }
 
 function TaskPickerPayloadView({
@@ -70,7 +91,9 @@ function TaskPickerPayloadView({
   onConfirmDeleteSelection: (taskIds: string[]) => void;
   isSending: boolean;
 }) {
-  const [selectedTaskIds, setSelectedTaskIds] = useState<Set<string>>(new Set());
+  const [selectedTaskIds, setSelectedTaskIds] = useState<Set<string>>(
+    new Set(),
+  );
 
   useEffect(() => {
     setSelectedTaskIds(new Set(payload.tasks.map((task) => task.id)));
@@ -117,7 +140,7 @@ function TaskPickerPayloadView({
         disabled={selectedCount === 0 || isSending}
         onClick={() => onConfirmDeleteSelection(Array.from(selectedTaskIds))}
       >
-        Xoa {selectedCount > 0 ? `${selectedCount} task` : ""}
+        Xóa {selectedCount > 0 ? `${selectedCount} task` : ""}
       </Button>
     </div>
   );
@@ -139,7 +162,8 @@ function TaskListPagePayloadView({
   return (
     <div className="space-y-2">
       <p className="text-sm">
-        Trang {payload.page}/{Math.max(payload.totalPages || 1, 1)} • {payload.totalCount} task
+        Trang {payload.page}/{Math.max(payload.totalPages || 1, 1)} •{" "}
+        {payload.totalCount} task
       </p>
 
       <div className="space-y-1.5">
@@ -184,7 +208,7 @@ function NotePickerPayloadView({
   messageContent,
   onEdit,
   onDelete,
-  onTogglePin
+  onTogglePin,
 }: {
   payload: NotePickerPayload;
   messageContent: string;
@@ -198,12 +222,12 @@ function NotePickerPayloadView({
       {payload.notes && payload.notes.length > 0 && (
         <div className="grid gap-2 grid-cols-1 md:grid-cols-2 mt-2">
           {payload.notes.map((note) => (
-            <NoteCard 
-              key={note.id} 
-              note={note} 
-              onEdit={onEdit || (() => {})} 
-              onDelete={onDelete || (() => {})} 
-              onTogglePin={onTogglePin || (() => {})} 
+            <NoteCard
+              key={note.id}
+              note={note}
+              onEdit={onEdit || (() => {})}
+              onDelete={onDelete || (() => {})}
+              onTogglePin={onTogglePin || (() => {})}
             />
           ))}
         </div>
@@ -248,12 +272,16 @@ function FinanceEntryPayloadView({
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-sm font-semibold">{formatMoney(entry.amount)}</p>
+                <p className="text-sm font-semibold">
+                  {formatMoney(entry.amount)}
+                </p>
                 <p className="text-xs text-muted-foreground">
                   {entry.category} - {formatDate(entry.date)}
                 </p>
                 {entry.description && (
-                  <p className="mt-1 text-sm leading-snug">{entry.description}</p>
+                  <p className="mt-1 text-sm leading-snug">
+                    {entry.description}
+                  </p>
                 )}
               </div>
               <div className="flex shrink-0 gap-1">
@@ -264,7 +292,7 @@ function FinanceEntryPayloadView({
                     variant="ghost"
                     className="h-8 w-8"
                     onClick={() => onEdit(entry)}
-                    aria-label="Sua muc tai chinh"
+                    aria-label="Sửa mục tài chính"
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -276,7 +304,7 @@ function FinanceEntryPayloadView({
                     variant="ghost"
                     className="h-8 w-8 text-destructive hover:text-destructive"
                     onClick={() => onDelete(entry)}
-                    aria-label="Xoa muc tai chinh"
+                    aria-label="Xóa mục tài chính"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -290,7 +318,10 @@ function FinanceEntryPayloadView({
   );
 }
 
-function FinanceSummaryPayloadView({ payload, messageContent }: {
+function FinanceSummaryPayloadView({
+  payload,
+  messageContent,
+}: {
   payload: FinanceSummaryPayload;
   messageContent: string;
 }) {
@@ -299,23 +330,30 @@ function FinanceSummaryPayloadView({ payload, messageContent }: {
       <TextBubble content={messageContent} />
       <div className="grid grid-cols-3 gap-2">
         <div className="rounded-md border border-border/70 bg-card/90 p-2">
-          <p className="text-xs text-muted-foreground">Tong</p>
-          <p className="text-sm font-semibold">{formatMoney(payload.summary.totalAmount)}</p>
+          <p className="text-xs text-muted-foreground">Tổng</p>
+          <p className="text-sm font-semibold">
+            {formatMoney(payload.summary.totalAmount)}
+          </p>
         </div>
         <div className="rounded-md border border-border/70 bg-card/90 p-2">
-          <p className="text-xs text-muted-foreground">So muc</p>
+          <p className="text-xs text-muted-foreground">Số mục</p>
           <p className="text-sm font-semibold">{payload.summary.count}</p>
         </div>
         <div className="rounded-md border border-border/70 bg-card/90 p-2">
           <p className="text-xs text-muted-foreground">TB</p>
-          <p className="text-sm font-semibold">{formatMoney(payload.summary.averageAmount)}</p>
+          <p className="text-sm font-semibold">
+            {formatMoney(payload.summary.averageAmount)}
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
-function FinanceCategoryPayloadView({ payload, messageContent }: {
+function FinanceCategoryPayloadView({
+  payload,
+  messageContent,
+}: {
   payload: FinanceCategoryListPayload;
   messageContent: string;
 }) {
@@ -418,20 +456,27 @@ export function ChatMessageItem({
   onNoteCardTogglePin,
   onFinanceEntryEdit,
   onFinanceEntryDelete,
+  isThinkingActive,
+  onThinkingLabelToggle,
   isSending,
 }: ChatMessageItemProps) {
+  const canRenderStructuredAssistantContent =
+    message.role === "assistant" && message.isComplete !== false;
+
   const assistantPayload =
-    message.role === "assistant"
+    canRenderStructuredAssistantContent
       ? parseAssistantPayload(message.metadataJson ?? null)
       : null;
 
   const taskListBlock =
-    !assistantPayload && message.role === "assistant"
+    !assistantPayload && canRenderStructuredAssistantContent
       ? parseTaskListBlock(message.content)
       : null;
 
   const parsedCreateTask =
-    !assistantPayload && !taskListBlock && message.role === "assistant"
+    !assistantPayload &&
+    !taskListBlock &&
+    canRenderStructuredAssistantContent
       ? parseCreateTaskBlock(message.content)
       : null;
 
@@ -488,6 +533,24 @@ export function ChatMessageItem({
             : "bg-secondary text-secondary-foreground",
         )}
       >
+        {message.role === "assistant" &&
+          message.showThinkingLabel &&
+          typeof message.thinkingDurationSeconds === "number" && (
+            <button
+              type="button"
+              onClick={() => onThinkingLabelToggle?.(message.id)}
+              className={cn(
+                "mb-1.5 inline-flex items-center rounded-full px-2 py-1 text-[11px] font-medium transition-colors",
+                isThinkingActive
+                  ? "bg-secondary-foreground/12 text-secondary-foreground"
+                  : "text-secondary-foreground/70 hover:bg-secondary-foreground/10 hover:text-secondary-foreground",
+              )}
+              aria-pressed={isThinkingActive}
+            >
+              Đã suy nghĩ trong {message.thinkingDurationSeconds}s
+            </button>
+          )}
+
         {assistantPayload?.type === "task_picker" ? (
           <TaskPickerPayloadView
             payload={assistantPayload}
@@ -561,7 +624,10 @@ export function ChatMessageItem({
             )}
           </div>
         ) : (
-          <TextBubble content={message.content} />
+          <TextBubble
+            content={message.content}
+            isStreaming={message.role === "assistant" && message.isStreaming}
+          />
         )}
 
         <p

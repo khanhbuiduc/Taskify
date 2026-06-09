@@ -142,6 +142,7 @@ builder.Services.AddHttpClient<IOllamaFallbackService, OllamaFallbackService>((s
 });
 
 builder.Services.AddScoped<IAiFallbackService, AiFallbackService>();
+builder.Services.AddScoped<IChatOrchestrationService, ChatOrchestrationService>();
 
 // Configure CORS for frontend (Next.js on localhost:3000)
 // Configure CORS for frontend (Next.js on localhost:3000)

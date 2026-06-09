@@ -210,6 +210,77 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async IAsyncEnumerable<string> StreamFallbackReplyAsync(
+            string userId,
+            string messageText,
+            string locale,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            var settings = await _dbContext.UserAiFallbackSettings
+                .FirstOrDefaultAsync(item => item.UserId == userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (settings?.ActiveProvider == null)
+            {
+                throw new AiFallbackNotConfiguredException("No fallback provider is selected for this user.");
+            }
+
+            if (settings.ActiveProvider == AiProvider.Gemini)
+            {
+                await using var geminiEnumerator = _geminiCredentialService
+                    .StreamFallbackReplyAsync(userId, messageText, locale, cancellationToken)
+                    .GetAsyncEnumerator(cancellationToken);
+
+                while (await geminiEnumerator.MoveNextAsync().ConfigureAwait(false))
+                {
+                    yield return geminiEnumerator.Current;
+                }
+
+                yield break;
+            }
+
+            await ValidateStoredOllamaConfigurationAsync(settings, cancellationToken).ConfigureAwait(false);
+            await using var ollamaEnumerator = _ollamaFallbackService
+                .StreamFallbackReplyAsync(
+                    settings.OllamaBaseUrl!,
+                    settings.OllamaModel!,
+                    messageText,
+                    locale,
+                    cancellationToken)
+                .GetAsyncEnumerator(cancellationToken);
+
+            while (true)
+            {
+                bool hasNext;
+                try
+                {
+                    hasNext = await ollamaEnumerator.MoveNextAsync().ConfigureAwait(false);
+                }
+                catch (OllamaStoredConfigurationException ex)
+                {
+                    await MarkOllamaErrorAsync(settings, ex.Message, cancellationToken).ConfigureAwait(false);
+                    throw;
+                }
+                catch (OllamaRuntimeException ex)
+                {
+                    await MarkOllamaErrorAsync(settings, ex.Message, cancellationToken).ConfigureAwait(false);
+                    throw;
+                }
+
+                if (!hasNext)
+                {
+                    break;
+                }
+
+                yield return ollamaEnumerator.Current;
+            }
+
+            settings.LastOllamaValidatedAtUtc = DateTime.UtcNow;
+            settings.LastOllamaValidationError = null;
+            settings.UpdatedAtUtc = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
         public async Task<string> NormalizeContextAsync(
             string userId,
             string messageText,

@@ -52,4 +52,18 @@ namespace TaskifyAPI.Model.ViewModel
         public ChatSessionDto Session { get; set; } = new ChatSessionDto();
         public IReadOnlyList<ChatMessageDto> Messages { get; set; } = Array.Empty<ChatMessageDto>();
     }
+
+    public class ChatStreamEventDto
+    {
+        public string Type { get; set; } = string.Empty;
+        public ChatSessionDto? Session { get; set; }
+        public ChatMessageDto? Message { get; set; }
+        public string? MessageId { get; set; }
+        public string? DeltaText { get; set; }
+        public string? FullText { get; set; }
+        public string? MetadataJson { get; set; }
+        public string? Stage { get; set; }
+        public DateTime? SentAt { get; set; }
+        public string? ErrorMessage { get; set; }
+    }
 }

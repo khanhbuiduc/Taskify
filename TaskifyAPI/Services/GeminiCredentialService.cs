@@ -184,6 +184,81 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async IAsyncEnumerable<string> StreamFallbackReplyAsync(
+            string userId,
+            string messageText,
+            string locale,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            var credential = await _dbContext.UserGeminiCredentials
+                .FirstOrDefaultAsync(item => item.UserId == userId, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (credential == null || string.IsNullOrWhiteSpace(credential.EncryptedApiKey))
+            {
+                throw new GeminiNotConfiguredException();
+            }
+
+            string apiKey;
+            try
+            {
+                apiKey = _protector.Unprotect(credential.EncryptedApiKey);
+            }
+            catch (CryptographicException ex)
+            {
+                await MarkCredentialStateAsync(
+                    credential,
+                    GeminiCredentialStatus.ValidationFailed,
+                    "Stored Gemini API key could not be decrypted.",
+                    cancellationToken).ConfigureAwait(false);
+                throw new GeminiStoredCredentialException("Stored Gemini API key could not be decrypted.", ex);
+            }
+
+            var prompt = AiFallbackPromptBuilder.BuildPrompt(messageText, locale);
+            await using var enumerator = CallGeminiStreamAsync(apiKey, prompt, cancellationToken)
+                .GetAsyncEnumerator(cancellationToken);
+
+            while (true)
+            {
+                bool hasNext;
+                try
+                {
+                    hasNext = await enumerator.MoveNextAsync().ConfigureAwait(false);
+                }
+                catch (GeminiInvalidApiKeyException ex)
+                {
+                    await MarkCredentialStateAsync(
+                        credential,
+                        GeminiCredentialStatus.Invalid,
+                        ex.Message,
+                        cancellationToken).ConfigureAwait(false);
+                    throw;
+                }
+                catch (GeminiValidationFailedException ex)
+                {
+                    await MarkCredentialStateAsync(
+                        credential,
+                        GeminiCredentialStatus.ValidationFailed,
+                        ex.Message,
+                        cancellationToken).ConfigureAwait(false);
+                    throw;
+                }
+
+                if (!hasNext)
+                {
+                    break;
+                }
+
+                yield return enumerator.Current;
+            }
+
+            credential.Status = GeminiCredentialStatus.Valid;
+            credential.LastValidatedAtUtc = DateTime.UtcNow;
+            credential.LastValidationError = null;
+            credential.UpdatedAtUtc = DateTime.UtcNow;
+            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
         public async Task<string> NormalizeContextAsync(
             string userId,
             string messageText,
@@ -361,6 +436,105 @@ namespace TaskifyAPI.Services
             catch (JsonException ex)
             {
                 throw new GeminiValidationFailedException("Gemini returned malformed JSON.", ex);
+            }
+        }
+
+        private async IAsyncEnumerable<string> CallGeminiStreamAsync(
+            string apiKey,
+            string prompt,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"/v1beta/models/{_model}:streamGenerateContent?alt=sse");
+            request.Headers.TryAddWithoutValidation("X-goog-api-key", apiKey);
+            request.Headers.Accept.ParseAdd("text/event-stream");
+            request.Content = JsonContent.Create(new
+            {
+                contents = new[]
+                {
+                    new
+                    {
+                        parts = new[]
+                        {
+                            new { text = prompt }
+                        }
+                    }
+                },
+                generationConfig = new
+                {
+                    temperature = 0.4,
+                    maxOutputTokens = MaxOutputTokens
+                }
+            });
+
+            using var response = await _httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorBody = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                throw CreateGeminiException(response.StatusCode, errorBody);
+            }
+
+            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+            using var reader = new StreamReader(stream);
+
+            while (!reader.EndOfStream)
+            {
+                var line = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
+                if (string.IsNullOrWhiteSpace(line) || !line.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var payload = line["data:".Length..].Trim();
+                if (payload.Length == 0)
+                {
+                    continue;
+                }
+
+                JsonDocument document;
+                try
+                {
+                    document = JsonDocument.Parse(payload);
+                }
+                catch (JsonException ex)
+                {
+                    throw new GeminiValidationFailedException("Gemini returned malformed JSON.", ex);
+                }
+
+                using (document)
+                {
+                    var root = document.RootElement;
+                    if (!root.TryGetProperty("candidates", out var candidates)
+                        || candidates.ValueKind != JsonValueKind.Array)
+                    {
+                        continue;
+                    }
+
+                    foreach (var candidate in candidates.EnumerateArray())
+                    {
+                        if (!candidate.TryGetProperty("content", out var content)
+                            || !content.TryGetProperty("parts", out var parts)
+                            || parts.ValueKind != JsonValueKind.Array)
+                        {
+                            continue;
+                        }
+
+                        foreach (var part in parts.EnumerateArray())
+                        {
+                            if (part.TryGetProperty("text", out var textNode)
+                                && textNode.ValueKind == JsonValueKind.String)
+                            {
+                                var text = textNode.GetString();
+                                if (!string.IsNullOrEmpty(text))
+                                {
+                                    yield return text;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

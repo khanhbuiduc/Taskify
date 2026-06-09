@@ -13,6 +13,13 @@ namespace TaskifyAPI.Services
             string locale,
             CancellationToken cancellationToken = default);
 
+        IAsyncEnumerable<string> StreamFallbackReplyAsync(
+            string baseUrl,
+            string model,
+            string messageText,
+            string locale,
+            CancellationToken cancellationToken = default);
+
         Task<string> NormalizeContextAsync(
             string baseUrl,
             string model,

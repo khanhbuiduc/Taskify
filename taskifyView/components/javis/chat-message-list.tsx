@@ -16,6 +16,7 @@ interface ChatMessageListProps {
   messages: DisplayMessage[];
   tasks: Task[];
   isSending: boolean;
+  streamStage?: string | null;
   resolvedTaskIdMap: MutableRefObject<Map<string, string>>;
   onTaskCardClick: (
     messageId: string,
@@ -34,12 +35,15 @@ interface ChatMessageListProps {
   onNoteCardTogglePin?: (note: any) => void;
   onFinanceEntryEdit?: (entry: FinanceEntry) => void;
   onFinanceEntryDelete?: (entry: FinanceEntry) => void;
+  activeThinkingMessageId?: string | null;
+  onThinkingLabelToggle?: (messageId: string) => void;
 }
 
 export function ChatMessageList({
   messages,
   tasks,
   isSending,
+  streamStage,
   resolvedTaskIdMap,
   onTaskCardClick,
   onTaskCardStatusToggle,
@@ -52,12 +56,30 @@ export function ChatMessageList({
   onNoteCardTogglePin,
   onFinanceEntryEdit,
   onFinanceEntryDelete,
+  activeThinkingMessageId,
+  onThinkingLabelToggle,
 }: ChatMessageListProps) {
   const endRef = useRef<HTMLDivElement>(null);
+  const hasStreamingAssistantBubble = messages.some(
+    (message) => message.role === "assistant" && message.isStreaming,
+  );
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isSending]);
+
+  const stageLabel =
+    streamStage === "normalizing_context"
+      ? "Dang phan tich yeu cau..."
+      : streamStage === "parsing_intent"
+        ? "Dang xac dinh y dinh..."
+        : streamStage === "waiting_rasa"
+          ? "Dang truy van tro ly..."
+          : streamStage === "persisting_reply"
+            ? "Dang tong hop cau tra loi..."
+            : streamStage === "starting"
+              ? "Dang bat dau phien chat..."
+              : null;
 
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -66,6 +88,14 @@ export function ChatMessageList({
           Hello! I&apos;m your AI assistant for Taskify. Ask anything about your
           tasks or try a suggested prompt below.
         </p>
+      )}
+
+      {isSending && stageLabel && (
+        <div className="flex justify-center">
+          <div className="rounded-full border border-border/70 bg-background/80 px-3 py-1 text-xs text-muted-foreground">
+            {stageLabel}
+          </div>
+        </div>
       )}
 
       {messages.map((message) => (
@@ -85,12 +115,14 @@ export function ChatMessageList({
           onNoteCardTogglePin={onNoteCardTogglePin}
           onFinanceEntryEdit={onFinanceEntryEdit}
           onFinanceEntryDelete={onFinanceEntryDelete}
+          isThinkingActive={activeThinkingMessageId === message.id}
+          onThinkingLabelToggle={onThinkingLabelToggle}
           isSending={isSending}
         />
       ))}
 
       {/* Typing indicator */}
-      {isSending && (
+      {isSending && !hasStreamingAssistantBubble && (
         <div className="flex gap-3">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
             <Bot className="h-4 w-4" />

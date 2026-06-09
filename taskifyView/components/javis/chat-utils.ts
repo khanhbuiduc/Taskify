@@ -121,6 +121,53 @@ export type AssistantPayload =
   | FinanceSummaryPayload
   | FinanceCategoryListPayload;
 
+export type IntentLogItem = {
+  name: string;
+  confidence: number;
+};
+
+export type ChatLogMetadata = {
+  normalizedMessage?: string | null;
+  intent?: IntentLogItem | null;
+  intentRanking?: IntentLogItem[] | null;
+};
+
+export type GeminiExtractedEntityMetadata = {
+  entity: string;
+  value: string;
+  start: number;
+  end: number;
+  confidence: number;
+};
+
+export type GeminiEntityExtractionMetadata = {
+  provider: string;
+  schemaVersion: string;
+  entities: GeminiExtractedEntityMetadata[];
+};
+
+export type UserTraceMetadata = {
+  chatLog: ChatLogMetadata | null;
+  geminiEntityExtraction: GeminiEntityExtractionMetadata | null;
+};
+
+export type ThinkingTraceResult = {
+  kind: string;
+  actionLabel: string;
+  resultLabel: string;
+  summary: string;
+};
+
+export type ThinkingTraceViewModel = {
+  userMessage: string;
+  normalizedMessage?: string | null;
+  intent?: IntentLogItem | null;
+  intentRanking: IntentLogItem[];
+  geminiEntityExtraction?: GeminiEntityExtractionMetadata | null;
+  result: ThinkingTraceResult;
+  thinkingDurationSeconds: number;
+};
+
 // ---------------------------------------------------------------------------
 // Task list parser (Rasa format_task_list output)
 // ---------------------------------------------------------------------------
@@ -248,7 +295,7 @@ function parsePriority(
 
   const normalized = foldText(rawValue);
   if (normalized.includes("high") || normalized.includes("cao")) return "high";
-  if (normalized.includes("low") || normalized.includes("thap")) return "low";
+  if (normalized.includes("low") || normalized.includes("thấp")) return "low";
   return "medium";
 }
 
@@ -289,7 +336,10 @@ export function parseCreateTaskBlock(
 
     const priority = parsePriority(priorityMatch[1], priorityMatch[2] ?? "");
     const prefixText = lines.slice(0, i).join("\n").trim();
-    const suffixText = lines.slice(i + 3).join("\n").trim();
+    const suffixText = lines
+      .slice(i + 3)
+      .join("\n")
+      .trim();
 
     return { prefixText, suffixText, payload: { title, dueDate, priority } };
   }
@@ -319,6 +369,14 @@ export function findTaskMatches(
       task.priority === payload.priority &&
       isDueMatch(task.dueDate, payload.dueDate),
   );
+}
+
+export function formatConfidence(confidence?: number | null): string {
+  if (typeof confidence !== "number" || Number.isNaN(confidence)) {
+    return "0.0%";
+  }
+
+  return `${(confidence * 100).toFixed(1)}%`;
 }
 
 export function buildPreviewTask(
@@ -362,7 +420,10 @@ export function parseAssistantPayload(
     if (parsed.type === "task_list_page") {
       return parsed as TaskListPagePayload;
     }
-    if (parsed.type === "finance_entry_list" || parsed.type === "finance_entry_picker") {
+    if (
+      parsed.type === "finance_entry_list" ||
+      parsed.type === "finance_entry_picker"
+    ) {
       return parsed as FinanceEntryListPayload;
     }
     if (parsed.type === "finance_summary") {
@@ -376,4 +437,271 @@ export function parseAssistantPayload(
   } catch {
     return null;
   }
+}
+
+export function parseChatLogMetadata(
+  raw?: string | null,
+): ChatLogMetadata | null {
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw) as {
+      chatLog?: {
+        normalizedMessage?: unknown;
+        intent?: { name?: unknown; confidence?: unknown } | null;
+        intentRanking?: Array<{ name?: unknown; confidence?: unknown }> | null;
+      } | null;
+    };
+
+    const chatLog = parsed?.chatLog;
+    if (!chatLog || typeof chatLog !== "object") {
+      return null;
+    }
+
+    const normalizeItem = (
+      item: { name?: unknown; confidence?: unknown } | null | undefined,
+    ): IntentLogItem | null => {
+      if (
+        !item ||
+        typeof item.name !== "string" ||
+        typeof item.confidence !== "number"
+      ) {
+        return null;
+      }
+
+      return {
+        name: item.name,
+        confidence: item.confidence,
+      };
+    };
+
+    return {
+      normalizedMessage:
+        typeof chatLog.normalizedMessage === "string"
+          ? chatLog.normalizedMessage
+          : null,
+      intent: normalizeItem(chatLog.intent),
+      intentRanking: Array.isArray(chatLog.intentRanking)
+        ? chatLog.intentRanking
+            .map((item) => normalizeItem(item))
+            .filter((item): item is IntentLogItem => item !== null)
+        : [],
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function parseGeminiEntityExtractionMetadata(
+  raw?: string | null,
+): GeminiEntityExtractionMetadata | null {
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw) as {
+      geminiEntityExtraction?: {
+        provider?: unknown;
+        schemaVersion?: unknown;
+        entities?: Array<{
+          entity?: unknown;
+          value?: unknown;
+          start?: unknown;
+          end?: unknown;
+          confidence?: unknown;
+        }> | null;
+      } | null;
+    };
+
+    const extraction = parsed?.geminiEntityExtraction;
+    if (!extraction || typeof extraction !== "object") {
+      return null;
+    }
+
+    const entities = Array.isArray(extraction.entities)
+      ? extraction.entities
+          .map((entity) => {
+            if (
+              !entity ||
+              typeof entity.entity !== "string" ||
+              typeof entity.value !== "string" ||
+              typeof entity.start !== "number" ||
+              typeof entity.end !== "number"
+            ) {
+              return null;
+            }
+
+            return {
+              entity: entity.entity,
+              value: entity.value,
+              start: entity.start,
+              end: entity.end,
+              confidence:
+                typeof entity.confidence === "number" ? entity.confidence : 1,
+            };
+          })
+          .filter(
+            (entity): entity is GeminiExtractedEntityMetadata =>
+              entity !== null,
+          )
+      : [];
+
+    return {
+      provider:
+        typeof extraction.provider === "string"
+          ? extraction.provider
+          : "gemini",
+      schemaVersion:
+        typeof extraction.schemaVersion === "string"
+          ? extraction.schemaVersion
+          : "taskify-entity-v1",
+      entities,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function parseUserTraceMetadata(raw?: string | null): UserTraceMetadata {
+  return {
+    chatLog: parseChatLogMetadata(raw),
+    geminiEntityExtraction: parseGeminiEntityExtractionMetadata(raw),
+  };
+}
+
+function truncateText(value: string, limit = 140): string {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (normalized.length <= limit) return normalized;
+  return `${normalized.slice(0, Math.max(0, limit - 1)).trimEnd()}…`;
+}
+
+function formatDateTimeSummary(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+
+  return date.toLocaleString("vi-VN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
+function describeAssistantResult(
+  content: string,
+  metadataJson?: string | null,
+): ThinkingTraceResult {
+  const payload = parseAssistantPayload(metadataJson);
+
+  if (payload?.type === "task_picker") {
+    return {
+      kind: payload.type,
+      actionLabel: "Xác nhận thao tác task",
+      resultLabel: "Danh sách task cần xác nhận",
+      summary: `${payload.tasks.length} task được đưa ra để người dùng chọn trước khi xóa.`,
+    };
+  }
+
+  if (payload?.type === "note_picker") {
+    return {
+      kind: payload.type,
+      actionLabel: "Tìm và đối chiếu ghi chú",
+      resultLabel: "Danh sách ghi chú phù hợp",
+      summary: `${payload.notes.length} ghi chú được trả về để người dùng thao tác.`,
+    };
+  }
+
+  if (payload?.type === "task_list_page") {
+    return {
+      kind: payload.type,
+      actionLabel: "Truy vấn danh sách task",
+      resultLabel: "Trang kết quả task",
+      summary: `Trả về trang ${payload.page}/${Math.max(payload.totalPages || 1, 1)} với ${payload.tasks.length} task trong tổng ${payload.totalCount} task.`,
+    };
+  }
+
+  if (
+    payload?.type === "finance_entry_list" ||
+    payload?.type === "finance_entry_picker"
+  ) {
+    return {
+      kind: payload.type,
+      actionLabel: "Truy vấn giao dịch tài chính",
+      resultLabel: "Danh sách mục tài chính",
+      summary: `${payload.entries.length} mục tài chính được trả về để hiển thị hoặc chọn thao tác.`,
+    };
+  }
+
+  if (payload?.type === "finance_summary") {
+    return {
+      kind: payload.type,
+      actionLabel: "Tổng hợp dữ liệu tài chính",
+      resultLabel: "Báo cáo tổng kết tài chính",
+      summary: `${payload.summary.count} mục với tổng giá trị ${new Intl.NumberFormat(
+        "vi-VN",
+        {
+          style: "currency",
+          currency: "VND",
+          maximumFractionDigits: 0,
+        },
+      ).format(payload.summary.totalAmount || 0)}.`,
+    };
+  }
+
+  if (payload?.type === "finance_category_list") {
+    return {
+      kind: payload.type,
+      actionLabel: "Tải danh mục tài chính",
+      resultLabel: "Danh sách danh mục",
+      summary: `${payload.categories.length} danh mục tài chính được trả về.`,
+    };
+  }
+
+  const parsedCreateTask = parseCreateTaskBlock(content);
+  if (parsedCreateTask) {
+    return {
+      kind: "task_created",
+      actionLabel: "Tạo task mới",
+      resultLabel: "Task đã được khởi tạo",
+      summary: `Task "${parsedCreateTask.payload.title}" với hạn ${formatDateTimeSummary(parsedCreateTask.payload.dueDate)} và ưu tiên ${parsedCreateTask.payload.priority}.`,
+    };
+  }
+
+  const parsedTaskList = parseTaskListBlock(content);
+  if (parsedTaskList) {
+    return {
+      kind: "task_list_text",
+      actionLabel: "Tổng hợp danh sách task",
+      resultLabel: "Danh sách task dạng văn bản",
+      summary: `${parsedTaskList.items.length} task được liệt kê trong phản hồi.`,
+    };
+  }
+
+  return {
+    kind: "text_reply",
+    actionLabel: "Phản hồi văn bản",
+    resultLabel: "Nội dung trả lời",
+    summary: truncateText(content, 160),
+  };
+}
+
+export function buildThinkingTraceViewModel(params: {
+  userMessage: string;
+  userMetadata?: UserTraceMetadata | null;
+  assistantContent: string;
+  assistantMetadataJson?: string | null;
+  thinkingDurationSeconds: number;
+}): ThinkingTraceViewModel {
+  const { userMessage, userMetadata, assistantContent, assistantMetadataJson } =
+    params;
+
+  return {
+    userMessage,
+    normalizedMessage: userMetadata?.chatLog?.normalizedMessage ?? null,
+    intent: userMetadata?.chatLog?.intent ?? null,
+    intentRanking: userMetadata?.chatLog?.intentRanking ?? [],
+    geminiEntityExtraction: userMetadata?.geminiEntityExtraction ?? null,
+    result: describeAssistantResult(assistantContent, assistantMetadataJson),
+    thinkingDurationSeconds: params.thinkingDurationSeconds,
+  };
 }

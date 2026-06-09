@@ -87,6 +87,56 @@ namespace TaskifyAPI.Services
             }
         }
 
+        public async IAsyncEnumerable<string> StreamFallbackReplyAsync(
+            string baseUrl,
+            string model,
+            string messageText,
+            string locale,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            var normalizedBaseUrl = NormalizeBaseUrl(baseUrl);
+            var normalizedModel = (model ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(normalizedModel))
+            {
+                throw new OllamaStoredConfigurationException("Stored Ollama model is missing.");
+            }
+
+            var prompt = AiFallbackPromptBuilder.BuildPrompt(messageText, locale);
+            await using var enumerator = CallGenerateStreamAsync(
+                normalizedBaseUrl,
+                normalizedModel,
+                prompt,
+                cancellationToken).GetAsyncEnumerator(cancellationToken);
+
+            while (true)
+            {
+                bool hasNext;
+                try
+                {
+                    hasNext = await enumerator.MoveNextAsync().ConfigureAwait(false);
+                }
+                catch (OllamaStoredConfigurationException)
+                {
+                    throw;
+                }
+                catch (HttpRequestException ex)
+                {
+                    throw new OllamaRuntimeException("Could not reach the Ollama server.", ex);
+                }
+                catch (TaskCanceledException ex)
+                {
+                    throw new OllamaRuntimeException("The Ollama server did not respond in time.", ex);
+                }
+
+                if (!hasNext)
+                {
+                    break;
+                }
+
+                yield return enumerator.Current;
+            }
+        }
+
         public async Task<string> NormalizeContextAsync(
             string baseUrl,
             string model,
@@ -110,6 +160,79 @@ namespace TaskifyAPI.Services
             catch (Exception)
             {
                 return messageText;
+            }
+        }
+
+        private async IAsyncEnumerable<string> CallGenerateStreamAsync(
+            string baseUrl,
+            string model,
+            string prompt,
+            [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{baseUrl}/api/generate");
+            request.Content = JsonContent.Create(new
+            {
+                model,
+                prompt,
+                stream = true
+            });
+
+            using var response = await _httpClient
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var body = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                var message = BuildOllamaErrorMessage(response.StatusCode, body, "Ollama generate failed.");
+                if (response.StatusCode is HttpStatusCode.BadRequest or HttpStatusCode.NotFound)
+                {
+                    throw new OllamaStoredConfigurationException(message);
+                }
+
+                throw new OllamaRuntimeException(message);
+            }
+
+            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+            using var reader = new StreamReader(stream);
+
+            while (!reader.EndOfStream)
+            {
+                var line = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
+                JsonDocument document;
+                try
+                {
+                    document = JsonDocument.Parse(line);
+                }
+                catch (JsonException ex)
+                {
+                    throw new OllamaRuntimeException("Ollama returned malformed JSON.", ex);
+                }
+
+                using (document)
+                {
+                    var root = document.RootElement;
+                    if (root.TryGetProperty("response", out var responseNode)
+                        && responseNode.ValueKind == JsonValueKind.String)
+                    {
+                        var text = responseNode.GetString();
+                        if (!string.IsNullOrEmpty(text))
+                        {
+                            yield return text;
+                        }
+                    }
+
+                    if (root.TryGetProperty("done", out var doneNode)
+                        && doneNode.ValueKind == JsonValueKind.True)
+                    {
+                        yield break;
+                    }
+                }
             }
         }
 

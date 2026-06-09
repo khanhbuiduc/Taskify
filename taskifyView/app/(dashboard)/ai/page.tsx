@@ -37,8 +37,14 @@ import { FinanceEntryDialog } from "@/components/finance/finance-entry-dialog";
 
 import { ChatMessageList } from "@/components/javis/chat-message-list";
 import { ChatInputBar } from "@/components/javis/chat-input-bar";
+import { ChatThinkingPanel } from "@/components/javis/chat-thinking-panel";
+import type { DisplayMessage } from "@/components/javis/chat-message-item";
 import { useResolvedTasks } from "@/components/javis/use-resolved-tasks";
-import { parseAssistantPayload } from "@/components/javis/chat-utils";
+import {
+  buildThinkingTraceViewModel,
+  parseAssistantPayload,
+  parseUserTraceMetadata,
+} from "@/components/javis/chat-utils";
 import type { ChatMessageRole, Note, FinanceEntry } from "@/lib/types";
 
 const READ_REPLIES_STORAGE_KEY = "taskify.ai.read-replies-aloud";
@@ -49,11 +55,12 @@ export default function AILayoutPage() {
     sessions,
     activeSessionId,
     messages: persistedMessages,
+    streamStageBySession,
     init,
     selectSession,
     createNewSession,
     deleteSession,
-    sendMessage: sendPersistedMessage,
+    sendMessageStream,
     isSending,
   } = useChatSessionStore();
 
@@ -61,6 +68,9 @@ export default function AILayoutPage() {
   const [isTyping] = useState(false);
   const [input, setInput] = useState("");
   const [readRepliesAloud, setReadRepliesAloud] = useState(true);
+  const [selectedThinkingMessageId, setSelectedThinkingMessageId] = useState<
+    string | null
+  >(null);
   const [hasLoadedVoicePreference, setHasLoadedVoicePreference] =
     useState(false);
 
@@ -165,13 +175,16 @@ export default function AILayoutPage() {
   const combinedMessages = useMemo(() => {
     if (!activeSessionId) return [];
     const list = persistedMessages[activeSessionId] ?? [];
-    return list
+    const visibleMessages: DisplayMessage[] = list
       .map((m) => ({
         id: m.id,
         role: m.role as ChatMessageRole,
         content: m.text,
         metadataJson: m.metadataJson ?? null,
         timestamp: new Date(m.sentAt),
+        isStreaming: m.isStreaming ?? false,
+        isComplete: m.isComplete ?? true,
+        thinkingTrace: null,
       }))
       .filter((message) => {
         if (message.role !== "assistant") return true;
@@ -182,7 +195,73 @@ export default function AILayoutPage() {
         );
       })
       .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+
+    let latestUserTimestamp: Date | null = null;
+    let latestUserSource:
+      | {
+          content: string;
+          metadataJson?: string | null;
+        }
+      | null = null;
+    let hasShownThinkingLabelForTurn = false;
+
+    return visibleMessages.map((message) => {
+      if (message.role === "user") {
+        latestUserTimestamp = message.timestamp;
+        latestUserSource = {
+          content: message.content,
+          metadataJson: message.metadataJson ?? null,
+        };
+        hasShownThinkingLabelForTurn = false;
+        return message;
+      }
+
+      if (!latestUserTimestamp || hasShownThinkingLabelForTurn) {
+        return message;
+      }
+
+      if (message.isComplete === false) {
+        return message;
+      }
+
+      const elapsedMs = Math.max(
+        0,
+        message.timestamp.getTime() - latestUserTimestamp.getTime(),
+      );
+      const thinkingDurationSeconds = Math.max(1, Math.round(elapsedMs / 1000));
+
+      hasShownThinkingLabelForTurn = true;
+
+      return {
+        ...message,
+        showThinkingLabel: true,
+        thinkingDurationSeconds,
+        thinkingTrace: latestUserSource
+          ? buildThinkingTraceViewModel({
+              userMessage: latestUserSource.content,
+              userMetadata: parseUserTraceMetadata(
+                latestUserSource.metadataJson ?? null,
+              ),
+              assistantContent: message.content,
+              assistantMetadataJson: message.metadataJson ?? null,
+              thinkingDurationSeconds,
+            })
+          : null,
+      };
+    });
   }, [activeSessionId, persistedMessages]);
+
+  const selectedThinkingTrace = useMemo(
+    () =>
+      combinedMessages.find((message) => message.id === selectedThinkingMessageId)
+        ?.thinkingTrace ?? null,
+    [combinedMessages, selectedThinkingMessageId],
+  );
+
+  const activeStreamStage = useMemo(
+    () => (activeSessionId ? streamStageBySession[activeSessionId] ?? null : null),
+    [activeSessionId, streamStageBySession],
+  );
 
   // ── Effects ───────────────────────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -216,6 +295,7 @@ export default function AILayoutPage() {
     resetTranscript();
     cancelSpeech();
     setInput("");
+    setSelectedThinkingMessageId(null);
   }, [activeSessionId, stopListening, resetTranscript, cancelSpeech]);
 
   useEffect(() => {
@@ -284,7 +364,7 @@ export default function AILayoutPage() {
     setInput("");
 
     try {
-      const responseMessages = await sendPersistedMessage(msg, metadata);
+      const responseMessages = await sendMessageStream(msg, metadata);
       refreshFinance().catch(() => {});
       fetchCategories().catch(() => {});
       if (readRepliesAloud && isSpeechSynthesisSupported) {
@@ -341,6 +421,12 @@ export default function AILayoutPage() {
     startListening(input);
   };
 
+  const handleThinkingLabelToggle = (messageId: string) => {
+    setSelectedThinkingMessageId((current) =>
+      current === messageId ? null : messageId,
+    );
+  };
+
   // ── Render ────────────────────────────────────────────────────────────────────────────────────
   return (
     <div className="flex h-[calc(100vh-7rem)] gap-3">
@@ -358,6 +444,7 @@ export default function AILayoutPage() {
             messages={combinedMessages}
             tasks={tasks}
             isSending={isSending}
+            streamStage={activeStreamStage}
             resolvedTaskIdMap={resolvedTaskIdMap}
             onTaskCardClick={handleTaskCardClick}
             onTaskCardStatusToggle={handleTaskCardStatusToggle}
@@ -395,6 +482,8 @@ export default function AILayoutPage() {
                 entryIds: [entry.id],
               });
             }}
+            activeThinkingMessageId={selectedThinkingMessageId}
+            onThinkingLabelToggle={handleThinkingLabelToggle}
           />
 
           {/* Input area */}
@@ -457,6 +546,13 @@ export default function AILayoutPage() {
           onSave={handleFinanceEntrySave}
         />
       </div>
+      <ChatThinkingPanel
+        trace={selectedThinkingTrace}
+        open={Boolean(selectedThinkingTrace)}
+        onOpenChange={(open) => {
+          if (!open) setSelectedThinkingMessageId(null);
+        }}
+      />
     </div>
   );
 }

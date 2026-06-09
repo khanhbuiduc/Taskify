@@ -96,6 +96,8 @@ export interface ChatMessage {
   text: string
   metadataJson?: string | null
   sentAt: string
+  isStreaming?: boolean
+  isComplete?: boolean
 }
 
 export interface GeminiCredentialStatusResponse {

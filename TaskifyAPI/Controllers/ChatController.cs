@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text.Json;
-using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using TaskifyAPI.Data;
-using TaskifyAPI.Model;
 using TaskifyAPI.Model.ViewModel;
 using TaskifyAPI.Services;
 
@@ -19,22 +18,16 @@ namespace TaskifyAPI.Controllers
     [Authorize]
     public class ChatController : ControllerBase
     {
-        private readonly IRasaChatService _rasaChatService;
-        private readonly IAiFallbackService _aiFallbackService;
-        private readonly IGeminiCredentialService _geminiCredentialService;
+        private readonly IChatOrchestrationService _chatOrchestrationService;
         private readonly ApplicationDbContext _dbContext;
         private readonly ILogger<ChatController> _logger;
 
         public ChatController(
-            IRasaChatService rasaChatService,
-            IAiFallbackService aiFallbackService,
-            IGeminiCredentialService geminiCredentialService,
+            IChatOrchestrationService chatOrchestrationService,
             ApplicationDbContext dbContext,
             ILogger<ChatController> logger)
         {
-            _rasaChatService = rasaChatService;
-            _aiFallbackService = aiFallbackService;
-            _geminiCredentialService = geminiCredentialService;
+            _chatOrchestrationService = chatOrchestrationService;
             _dbContext = dbContext;
             _logger = logger;
         }
@@ -124,117 +117,31 @@ namespace TaskifyAPI.Controllers
             if (string.IsNullOrWhiteSpace(dto.Message))
                 return BadRequest("Message is required.");
 
-            var now = DateTime.UtcNow;
-            var session = await _dbContext.ChatSessions
-                .Where(s => s.Id == sessionId && s.UserId == userId)
-                .FirstOrDefaultAsync(cancellationToken)
+            var result = await _chatOrchestrationService
+                .ProcessMessageAsync(sessionId, userId, dto, cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
-
-            if (session == null)
-            {
-                session = new ChatSession
-                {
-                    Id = sessionId,
-                    UserId = userId,
-                    Title = dto.Message.Length > 80 ? dto.Message[..80] : dto.Message,
-                    CreatedAt = now,
-                    UpdatedAt = now
-                };
-                await _dbContext.ChatSessions.AddAsync(session, cancellationToken).ConfigureAwait(false);
-            }
-
-            // Fetch history before adding the new message
-            var history = await _dbContext.ChatMessages
-                .Where(m => m.SessionId == session.Id)
-                .OrderBy(m => m.SentAt)
-                .ToListAsync(cancellationToken)
-                .ConfigureAwait(false);
-
-            session.UpdatedAt = now;
-
-            var normalizedMessage = await _aiFallbackService
-                .NormalizeContextAsync(userId, dto.Message, history, cancellationToken)
-                .ConfigureAwait(false);
-
-            if (normalizedMessage != dto.Message)
-            {
-                _logger.LogInformation("Context Normalized: [{Original}] -> [{Normalized}]", dto.Message, normalizedMessage);
-            }
-            else
-            {
-                _logger.LogInformation("Context Normalization unchanged: [{Original}]", dto.Message);
-            }
-
-            var parsedIntent = await _rasaChatService
-                .ParseIntentAsync(normalizedMessage, cancellationToken)
-                .ConfigureAwait(false);
-
-            var rasaMetadataJson = await BuildRasaMetadataJsonAsync(
-                    userId,
-                    dto.MetadataJson,
-                    normalizedMessage,
-                    cancellationToken)
-                .ConfigureAwait(false);
-
-            var userMessage = new ChatMessage
-            {
-                Id = Guid.NewGuid(),
-                SessionId = session.Id,
-                Role = ChatMessageRole.User,
-                Text = dto.Message,
-                MetadataJson = BuildStoredUserMetadataJson(rasaMetadataJson, normalizedMessage, parsedIntent),
-                SentAt = now
-            };
-            await _dbContext.ChatMessages.AddAsync(userMessage, cancellationToken).ConfigureAwait(false);
-            await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
-            var senderId = $"{userId}:{session.Id}";
-            var replies = await _rasaChatService
-                .SendMessageAsync(senderId, normalizedMessage, rasaMetadataJson, cancellationToken)
-                .ConfigureAwait(false);
-
-            var assistantMessages = new List<ChatMessage>();
-            foreach (var reply in replies)
-            {
-                assistantMessages.Add(new ChatMessage
-                {
-                    Id = Guid.NewGuid(),
-                    SessionId = session.Id,
-                    Role = ChatMessageRole.Assistant,
-                    Text = reply.Text,
-                    MetadataJson = reply.MetadataJson,
-                    SentAt = DateTime.UtcNow
-                });
-            }
-
-            if (assistantMessages.Count > 0)
-            {
-                await _dbContext.ChatMessages.AddRangeAsync(assistantMessages, cancellationToken).ConfigureAwait(false);
-                session.UpdatedAt = assistantMessages.Max(m => m.SentAt);
-                await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            }
 
             var response = new ChatThreadDto
             {
                 Session = new ChatSessionDto
                 {
-                    Id = session.Id,
-                    Title = session.Title,
-                    CreatedAt = session.CreatedAt,
-                    UpdatedAt = session.UpdatedAt
+                    Id = result.Session.Id,
+                    Title = result.Session.Title,
+                    CreatedAt = result.Session.CreatedAt,
+                    UpdatedAt = result.Session.UpdatedAt
                 },
                 Messages = new[]
                 {
                     new ChatMessageDto
                     {
-                        Id = userMessage.Id,
-                        Role = userMessage.Role,
-                        Text = userMessage.Text,
-                        MetadataJson = userMessage.MetadataJson,
-                        SentAt = userMessage.SentAt
+                        Id = result.UserMessage.Id,
+                        Role = result.UserMessage.Role,
+                        Text = result.UserMessage.Text,
+                        MetadataJson = result.UserMessage.MetadataJson,
+                        SentAt = result.UserMessage.SentAt
                     }
                 }
-                .Concat(assistantMessages.Select(m => new ChatMessageDto
+                .Concat(result.AssistantMessages.Select(m => new ChatMessageDto
                 {
                     Id = m.Id,
                     Role = m.Role,
@@ -247,6 +154,66 @@ namespace TaskifyAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost("{sessionId:guid}/messages/stream")]
+        public async Task Stream(Guid sessionId, [FromBody] ChatRequestDto dto, CancellationToken cancellationToken)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Message))
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                await Response.WriteAsync("Message is required.", cancellationToken).ConfigureAwait(false);
+                return;
+            }
+
+            Response.StatusCode = StatusCodes.Status200OK;
+            Response.ContentType = "application/x-ndjson";
+            Response.Headers.CacheControl = "no-cache";
+            Response.Headers.Append("X-Accel-Buffering", "no");
+
+            var serializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+            serializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+            async ValueTask WriteEventAsync(ChatStreamEventDto evt, CancellationToken token)
+            {
+                await Response.WriteAsync(JsonSerializer.Serialize(evt, serializerOptions), token).ConfigureAwait(false);
+                await Response.WriteAsync("\n", token).ConfigureAwait(false);
+                await Response.Body.FlushAsync(token).ConfigureAwait(false);
+            }
+
+            try
+            {
+                await _chatOrchestrationService
+                    .ProcessMessageAsync(sessionId, userId, dto, WriteEventAsync, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("Chat stream cancelled for session {SessionId}", sessionId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Chat stream failed for session {SessionId}", sessionId);
+                if (!Response.HasStarted)
+                {
+                    Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    return;
+                }
+
+                await WriteEventAsync(new ChatStreamEventDto
+                {
+                    Type = "error",
+                    ErrorMessage = "Failed to stream chat response."
+                }, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
         [HttpDelete("{sessionId:guid}")]
         public async Task<IActionResult> DeleteSession(Guid sessionId, CancellationToken cancellationToken)
         {
@@ -272,141 +239,6 @@ namespace TaskifyAPI.Controllers
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             return NoContent();
-        }
-
-        private static string? BuildStoredUserMetadataJson(
-            string? originalMetadataJson,
-            string normalizedMessage,
-            RasaParseResult? parsedIntent)
-        {
-            JsonObject root;
-
-            if (string.IsNullOrWhiteSpace(originalMetadataJson))
-            {
-                root = new JsonObject();
-            }
-            else
-            {
-                try
-                {
-                    var parsed = JsonNode.Parse(originalMetadataJson);
-                    root = parsed switch
-                    {
-                        JsonObject obj => (JsonObject)obj.DeepClone(),
-                        null => new JsonObject(),
-                        _ => new JsonObject { ["requestMetadata"] = parsed.DeepClone() },
-                    };
-                }
-                catch (JsonException)
-                {
-                    root = new JsonObject
-                    {
-                        ["requestMetadataRaw"] = originalMetadataJson,
-                    };
-                }
-            }
-
-            var intentRanking = new JsonArray();
-            if (parsedIntent?.IntentRanking is not null)
-            {
-                foreach (var item in parsedIntent.IntentRanking.Take(3))
-                {
-                    intentRanking.Add(new JsonObject
-                    {
-                        ["name"] = item.Name,
-                        ["confidence"] = item.Confidence,
-                    });
-                }
-            }
-
-            var chatLog = new JsonObject
-            {
-                ["normalizedMessage"] = normalizedMessage,
-                ["intentRanking"] = intentRanking,
-            };
-
-            if (!string.IsNullOrWhiteSpace(parsedIntent?.IntentName))
-            {
-                chatLog["intent"] = new JsonObject
-                {
-                    ["name"] = parsedIntent.IntentName,
-                    ["confidence"] = parsedIntent.Confidence,
-                };
-            }
-
-            root["chatLog"] = chatLog;
-            return root.ToJsonString(new JsonSerializerOptions(JsonSerializerDefaults.Web));
-        }
-
-        private async Task<string?> BuildRasaMetadataJsonAsync(
-            string userId,
-            string? originalMetadataJson,
-            string normalizedMessage,
-            CancellationToken cancellationToken)
-        {
-            var metadata = ParseMetadataObject(originalMetadataJson);
-
-            try
-            {
-                var extraction = await _geminiCredentialService
-                    .ExtractEntitiesAsync(userId, normalizedMessage, cancellationToken)
-                    .ConfigureAwait(false);
-
-                if (extraction.Entities.Count > 0)
-                {
-                    metadata["geminiEntityExtraction"] = JsonSerializer.SerializeToNode(extraction);
-                }
-            }
-            catch (GeminiNotConfiguredException)
-            {
-                // Gemini entity extraction is optional for chat parsing.
-            }
-            catch (GeminiInvalidApiKeyException ex)
-            {
-                _logger.LogWarning(ex, "Gemini entity extraction skipped due to invalid API key for user {UserId}", userId);
-            }
-            catch (GeminiStoredCredentialException ex)
-            {
-                _logger.LogWarning(ex, "Gemini entity extraction skipped due to stored credential issue for user {UserId}", userId);
-            }
-            catch (GeminiValidationFailedException ex)
-            {
-                _logger.LogWarning(ex, "Gemini entity extraction skipped due to Gemini response issue for user {UserId}", userId);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "Gemini entity extraction failed for user {UserId}", userId);
-            }
-
-            return metadata.Count == 0
-                ? null
-                : metadata.ToJsonString(new JsonSerializerOptions(JsonSerializerDefaults.Web));
-        }
-
-        private static JsonObject ParseMetadataObject(string? metadataJson)
-        {
-            if (string.IsNullOrWhiteSpace(metadataJson))
-            {
-                return new JsonObject();
-            }
-
-            try
-            {
-                var parsed = JsonNode.Parse(metadataJson);
-                return parsed switch
-                {
-                    JsonObject obj => (JsonObject)obj.DeepClone(),
-                    null => new JsonObject(),
-                    _ => new JsonObject { ["requestMetadata"] = parsed.DeepClone() },
-                };
-            }
-            catch (JsonException)
-            {
-                return new JsonObject
-                {
-                    ["requestMetadataRaw"] = metadataJson,
-                };
-            }
         }
     }
 }

@@ -19,6 +19,10 @@ import { useChatSessionStore } from "@/lib/chat-session-store";
 import { geminiSettingsApi } from "@/lib/api/geminiSettingsApi";
 import { aiFallbackApi } from "@/lib/api/aiFallbackApi";
 import { ApiError } from "@/lib/api/taskApi";
+import {
+  formatConfidence,
+  parseChatLogMetadata,
+} from "@/components/javis/chat-utils";
 import type {
   AiFallbackSettingsResponse,
   AiProvider,
@@ -98,69 +102,6 @@ function formatJsonForView(raw?: string | null): string | null {
     return JSON.stringify(JSON.parse(raw), null, 2);
   } catch {
     return raw;
-  }
-}
-
-type IntentLogItem = {
-  name: string;
-  confidence: number;
-};
-
-type ChatLogMetadata = {
-  normalizedMessage?: string | null;
-  intent?: IntentLogItem | null;
-  intentRanking?: IntentLogItem[] | null;
-};
-
-function formatConfidence(confidence?: number | null): string {
-  if (typeof confidence !== "number" || Number.isNaN(confidence)) {
-    return "0.0%";
-  }
-  return `${(confidence * 100).toFixed(1)}%`;
-}
-
-function parseChatLogMetadata(raw?: string | null): ChatLogMetadata | null {
-  if (!raw) return null;
-
-  try {
-    const parsed = JSON.parse(raw) as {
-      chatLog?: {
-        normalizedMessage?: unknown;
-        intent?: { name?: unknown; confidence?: unknown } | null;
-        intentRanking?: Array<{ name?: unknown; confidence?: unknown }> | null;
-      } | null;
-    };
-
-    const chatLog = parsed?.chatLog;
-    if (!chatLog || typeof chatLog !== "object") {
-      return null;
-    }
-
-    const normalizeItem = (item: { name?: unknown; confidence?: unknown } | null | undefined): IntentLogItem | null => {
-      if (!item || typeof item.name !== "string" || typeof item.confidence !== "number") {
-        return null;
-      }
-
-      return {
-        name: item.name,
-        confidence: item.confidence,
-      };
-    };
-
-    return {
-      normalizedMessage:
-        typeof chatLog.normalizedMessage === "string"
-          ? chatLog.normalizedMessage
-          : null,
-      intent: normalizeItem(chatLog.intent),
-      intentRanking: Array.isArray(chatLog.intentRanking)
-        ? chatLog.intentRanking
-            .map((item) => normalizeItem(item))
-            .filter((item): item is IntentLogItem => item !== null)
-        : [],
-    };
-  } catch {
-    return null;
   }
 }
 
